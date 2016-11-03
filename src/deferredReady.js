@@ -1,57 +1,28 @@
-import Q from 'q'
-
 /**
  * 1. Create a DeferredReady plugin.
- * 
+ *
  * a. Updates options.configMergeStrategies to handle our new hook correctly (using Promise.all!)
- *     
+ *
  * 2. VueGoogleMaps uses a DeferredReady mixin.
- * 
+ *
  *     a. Each component checks for ancestors that are also DeferredReady (via dispatch/emit)
  *     b. If no, then run DeferredReady after ready.
  *     c. If yes, then run DeferredReady after parent's deferredReady.
- *     
- *     
+ *
+ *
  * Say we have the following inheritance:
- * 
+ *
  * --> == 'child of'
- * 
+ *
  * A --> B --> C
- * 
+ *
  * ready is called in the following order:
- * 
+ *
  * A.ready, B.ready, C.ready
- * 
+ *
  * C.ready -- no further ancestors supporting mixin, so in ready() we run+
- * 
- *     // I believe this executes synchronously.
- *     Vue.$dispatch('register-deferredReadyChild', this);
- * 
- *     if (!this.hasDeferredReadyAncestors) {
- *         (do we need nextTick?)
- *         Vue.nextTick(() => {
- *             Promise.all(this.$options.deferredReady.map(x => x()))
- *             .then(() => this.deferredReadyDeferred.resolve());
- *         })
- *     }
- *     
- *     Event handler:
- *     
- *     'register-deferredReadyChild' (obj) {
- *         if (this == obj)
- *             return true;
- *             
- *         this.hasDeferredReadyAncestors = true;
- *         
- *         this.deferredReadyDeferred.promise.then(() => {
- *             Promise.all(obj.$options.deferredReady.map(x => x()))
- *             .then(() => obj.deferredReadyDeferred.resolve())
- *         });
- *     }
- * 
- * B.ready -- parent C supports deferredReady. 
- *     
-   **/ 
+ *
+   **/
 
 export var DeferredReady = {
   install(Vue, options) {
@@ -66,49 +37,50 @@ function runHooks(vm) {
     hooks = [hooks]
   }
   Promise.all(hooks.map(x => {
-    var rv;
     try {
-      rv = x.apply(vm)
+      return x.apply(vm);
     } catch (err) {
       console.error(err.stack);
     }
-    return rv;
-  })) // execute all handlers, expecting them to return promises
+  }))
+  // execute all handlers, expecting them to return promises
   // wait for the promises to complete, before allowing child to execute
   .then(() => {
-      vm.$deferredReadyDeferred.resolve()
+      vm.$deferredReadyPromiseResolve();
   });
 }
 
 export var DeferredReadyMixin = {
+  /* Resolved after the deferredReady has been called
+    and the (optional) promise it returns has been
+    resolved */
+  $deferredReadyPromise: false,
+  $deferredReadyPromiseResolve: false,
+  $deferredReadyAncestor: false,
+
   created() {
-    this.$hasDeferredReadyAncestors = false;
-    this.$deferredReadyDeferred = Q.defer();
-  },
+    this.$deferredReadyPromise = new Promise((resolve, reject) => {
+      this.$deferredReadyPromiseResolve = resolve;
+    })
 
-  ready() {
-    this.$dispatch('register-deferredReadyChild', this);
-
-    if (!this.$hasDeferredReadyAncestors) {
-      // call deferredReady() hook only after ready() has completed
-      this.$nextTick(() => runHooks(this));
+    let search = this.$parent;
+    while (search) {
+      if (search.$deferredReadyPromise) {
+        this.$deferredReadyAncestor = search;
+        search.$deferredReadyPromise.then(() => {
+          runHooks(this);
+        })
+        break;
+      }
+      search = search.$parent;
     }
-    /* else hooks will be called when parents are done */
   },
 
-  events: {
-    'register-deferredReadyChild' (child) {
-      if (this == child)
-        return true;
-
-      // delay child's execution of its hooks
-      child.$hasDeferredReadyAncestors = true;
-
-      // after we are done running deferredReady()
-      // children should run their deferredReady()
-      this.$deferredReadyDeferred.promise
-      .then(() => runHooks(child));
-    },
+  mounted() {
+    // Execute the hooks only if this is the first
+    // ancestor that is a DeferredReady
+    if (!this.$deferredReadyAncestor) {
+      runHooks(this);
+    }
   },
 };
-
