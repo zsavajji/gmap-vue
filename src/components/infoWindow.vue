@@ -1,11 +1,13 @@
 /* vim: set softtabstop=2 shiftwidth=2 expandtab : */
 
 <template>
-<div>
-  <slot>
-  <div class="you-will-never-find-this"></div>
-  </slot>
-</div>
+  <div>
+    <div ref="flyaway"> <!-- so named because it will fly away to another component -->
+      <slot>
+        <div v-html="content"></div>
+      </slot>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -13,68 +15,59 @@
 import _ from 'lodash'
 import propsBinder from '../utils/propsBinder.js'
 import eventsBinder from '../utils/eventsBinder.js'
-import mutationObserver from '../utils/mutationObserver.js'
 import MapComponent from './mapComponent';
+import Marker from './marker.vue';
 
 const props = {
   options: {
     type: Object,
-    twoWay: false,
     required: false,
     default () {
       return {};
     }
   },
   content: {
-    twoWay: false,
-  default: null
+    default: null
   },
   opened: {
     type: Boolean,
-  default: true,
-    twoWay: true
+    default: true,
   },
   position: {
     type: Object,
-    twoWay: false
+    twoWay: true,
   },
   zIndex: {
     type: Number,
-    twoWay:true
+    twoWay: true,
   }
 }
 
 const events = [
   'domready',
-  'closeclick'
+  'closeclick',
+  'content_changed',
 ]
-
 
 export default MapComponent.extend({
   replace: false,
   props: props,
-  
+
   created() {
-    this.$markerObject = null;
+    this.$markerComponent = this.$findAncestor(
+      (ans) => ans instanceof Marker
+    )
   },
 
-  ready () {
-    this.destroyed = false;
-
-    // if the user set the content of the info window by adding children to the 
-    // InfoWindow element
-    this.$el.style.display='none';
-    if (this.$el.getElementsByClassName('you-will-never-find-this').length === 0) {
-      const innerChanged = () => {
-        this.content = this.$el.innerHTML;
-      }
-      innerChanged();
-      this.disconnect = mutationObserver(this.$el, innerChanged);
-    } 
+  mounted() {
+    const el = this.$refs.flyaway;
+    el.parentNode.removeChild(el);
   },
 
   deferredReady() {
-    this.$dispatch('register-infoWindow', this);
+    if (this.$markerComponent) {
+      this.$markerObject = this.$markerComponent.$markerObject;
+    }
     this.createInfoWindow(this.$map);
   },
 
@@ -85,7 +78,6 @@ export default MapComponent.extend({
     if (this.$infoWindow) {
       this.$infoWindow.setMap(null);
     }
-    this.destroyed = true;
   },
 
   methods: {
@@ -102,18 +94,10 @@ export default MapComponent.extend({
     },
 
     createInfoWindow(map) {
-      if (this.destroyed) return;
-
-      var el = document.createElement('div');
-      el.innerHTML = this.content;
-
-      google.maps.event.addDomListener(el, 'click', (ev) => {
-        this.$emit('g-click', ev);
-      });
-
       // setting options
       const options = _.clone(this.options);
-      options.content = el;
+      options.content = this.$refs.flyaway;
+
       // only set the position if the info window is not bound to a marker
       if (this.$markerObject === null) {
         options.position = this.position;
@@ -127,11 +111,6 @@ export default MapComponent.extend({
       propsBinder(this, this.$infoWindow, propsToBind);
       eventsBinder(this, this.$infoWindow, events);
 
-      // watching
-      this.$infoWindow.addListener('closeclick', () => {
-        this.opened = false;
-      });
-
       this.$watch('opened', () => {
         this.openInfoWindow();
       });
@@ -140,16 +119,6 @@ export default MapComponent.extend({
       this.openInfoWindow();
     }
   },
-
-  events: {
-    'marker-ready' (marker, map) {
-      this.$markerObject = marker.$markerObject;
-      marker.$on('g-click', () => {
-        this.opened = !this.opened;
-      });
-    }
-  }
 })
 
 </script>
-
