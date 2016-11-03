@@ -1,18 +1,17 @@
 /* vim: set softtabstop=2 shiftwidth=2 expandtab : */
 
 import Vue from 'vue';
-import Q from 'q';
 import {DeferredReadyMixin} from '../deferredReady'
 import {DeferredReady} from '../deferredReady.js'
+import Map from './map.vue'
 
 Vue.use(DeferredReady);
 
 /**
- * @class MapComponent
+ * @class MapComponent @mixins DeferredReadyMixin
  *
  * Extends components to include the following fields:
  *
- * @property $mapPromise A Promise returning the google map
  * @property $map        The Google map (valid only after the promise returns)
  *
  *
@@ -20,20 +19,40 @@ Vue.use(DeferredReady);
 export default Vue.extend({
 
   mixins: [DeferredReadyMixin],
-    
+
   created() {
+    /* Search for the Map component in the parent */
+    let search = this.$findAncestor(ans => ans instanceof Map);
+
+    if (!search) {
+      throw new Error(`${this.constructor.name} component must be used within a <Map>`)
+    }
+
+    console.log("MC created()")
+    this.$mapPromise = search.mapCreated.then((map) => {
+      console.log(map);
+      this.$map = map
+    })
+    this.$mapComponent = search;
     this.$map = null;
   },
 
   deferredReady () {
-    this.$dispatch('register-component', this);
+    return this.$mapPromise;
   },
 
-  events: {
-    'map-ready' (map) {
-      this.$map = map;
-    },
-  },
+  methods: {
+    $findAncestor(condition) {
+      let search = this.$parent;
+
+      while (search) {
+        if (condition(search)) {
+          return search;
+        }
+        search = search.$parent;
+      }
+      return null;
+    }
+  }
 
 });
-
