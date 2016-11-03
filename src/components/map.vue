@@ -1,14 +1,13 @@
 /* vim: set softtabstop=2 shiftwidth=2 expandtab : */
 
 <template>
-<div class="vue-map-container">
-  <div class="vue-map"></div>
-  <slot></slot>
-</div>
+  <div class="vue-map-container">
+    <div ref="vue-map" class="vue-map"></div>
+    <slot></slot>
+  </div>
 </template>
 
 <script>
-import Q from 'q';
 import _ from 'lodash';
 
 import {loaded} from '../manager.js';
@@ -33,19 +32,26 @@ const props = {
     type: Number
   },
   heading: {
+    type: Number,
     twoWay: true,
-    type: Number
   },
   mapTypeId: {
     twoWay: true,
     type: String
   },
   bounds: {
-    type: Object,
     twoWay: true,
+    type: Object,
+  },
+  projection: {
+    twoWay: true,
+    type: Object,
+  },
+  tilt: {
+    twoWay: true,
+    type: Number,
   },
   options: {
-    twoWay: false,
     type: Object,
     default () {return {}}
   }
@@ -54,17 +60,16 @@ const props = {
 const events = [
   'click',
   'dblclick',
-  'rightclick',
-  'mousemove',
-  'mouseout',
-  'mouseover',
   'drag',
   'dragend',
   'dragstart',
   'idle',
+  'mousemove',
+  'mouseout',
+  'mouseover',
   'resize',
+  'rightclick',
   'tilesloaded',
-  'bounds_changed'
 ];
 
 const callableMethods = [
@@ -74,41 +79,21 @@ const callableMethods = [
   'fitBounds'
 ];
 
-const methods = {};
+const methods = {
+  resize() {
+    if (this.mapObject) {
+      google.maps.event.trigger(this.mapObject, 'resize');
 
-/**
-  Implementation note: this signal should only be
-  called after the map has been initialized
-
-**/
-const registerChild = function (child, type) {
-  if (!this.mapObject)
-    throw new Error("Map not initialized");
-  child.$emit('map-ready', this.mapObject);
-  // Simpler: child.$map = mapObject but not so
-  // modular
-}
-
-const eventListeners = {
-  'register-component': registerChild,
-  'g-bounds_changed' () {
-    this.bounds=this.mapObject.getBounds();
-  },
-  'g-fitBounds' (bounds) {
-    if (this.mapObject && bounds) {
-      this.mapObject.fitBounds
+      // FIXME: In version 1, we preserved the center of the map
     }
-  },
-  'g-resize-map' () {
-    var center = this.mapObject.getCenter();
-    google.maps.event.trigger(this.mapObject, 'resize');
-    this.mapObject.setCenter(center);
   }
-}
+};
+
+const eventListeners = {}
 
 _.each(callableMethods, function (methodName) {
-   const applier= function() {
-    if(this.mapObject) {
+   const applier = function() {
+    if (this.mapObject) {
       this.mapObject[methodName].apply(this.mapObject, arguments);
     }
   }
@@ -116,22 +101,21 @@ _.each(callableMethods, function (methodName) {
   methods[methodName] = applier;
 });
 
-export default {
+export default Vue.extend({
   mixins: [getPropsMixin, DeferredReadyMixin],
   props: props,
-  replace:false, // necessary for css styles
-  created() {
-    this.mapCreatedDefered = new Q.defer();
-    this.mapCreated = this.mapCreatedDefered.promise;
-  },
+  replace: false, // necessary for css styles
 
-  ready() {
+  created() {
+    this.mapCreated = new Promise((resolve, reject) => {
+      this.mapCreatedDeferred = {resolve, reject}
+    });
   },
 
   deferredReady() {
     return loaded.then(() => {
       // getting the DOM element where to create the map
-      const element = this.$el.getElementsByClassName('vue-map')[0];
+      const element = this.$refs['vue-map'];
 
       // creating the map
       const copiedData = _.clone(this.getPropsValues());
@@ -149,21 +133,20 @@ export default {
       //binding events
       eventsBinder(this, this.mapObject, events);
 
-      // update the bounds
-      this.$emit('g-bounds_changed');
+      _.forEach(eventListeners, (fn, event) => {
+        this.$on(event, fn.bind(this));
+      })
 
-      // wait before google maps has loaded the map to avoid bug with info windows
-      this.$once('g-bounds_changed', () => {
-        // The map is now created
-        this.mapCreatedDefered.resolve(this.mapObject);
-      });
-    }, (error) => {
+      this.mapCreatedDeferred.resolve(this.mapObject);
+
+      return this.mapCreated;
+    })
+    .catch((error) => {
       throw error;
     });
   },
-  events: eventListeners,
   methods: methods
-}
+})
 </script>
 
 <style lang="less">

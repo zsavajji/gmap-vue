@@ -14,54 +14,23 @@ export default (vueElement, googleMapsElement, props, options) => {
     const getMethodName = 'get' + capitalizeFirstLetter(attribute);
     const eventName = attribute.toLowerCase() + '_changed';
 
-    if (!twoWay) {
-      vueElement.$watch(attribute, () => {
-        const attributeValue = vueElement[attribute];
-        googleMapsElement[setMethodName](attributeValue);
-        if (afterModelChanged) {
-          afterModelChanged(attribute, attributeValue);
-        }
-      }, {
-        deep: type === Object  
-      });
-    } else {
-      var stable = 0;
-
-      var modelWatcher = () => {
-        stable++;
-        if (stable > 0) {
-          const attributeValue = vueElement[attribute];
-          googleMapsElement[setMethodName](attributeValue);
-          if (afterModelChanged) {
-            afterModelChanged(attribute, attributeValue);
-          }
-        }
-      };
-
-      var gmapWatcher = () => {
-        stable--;
-        if (stable < 0) {
-          const value = googleMapsElement[getMethodName]();
-          if (value instanceof google.maps.LatLng) {
-            vueElement[attribute] = {
-              lat: value.lat(),
-              lng: value.lng()
-            };
-          } else { //TODO Handle more google types !!
-            vueElement[attribute] = value;
-          }
-        }
+    vueElement.$watch(attribute, () => {
+      const attributeValue = vueElement[attribute];
+      googleMapsElement[setMethodName](attributeValue);
+      if (afterModelChanged) {
+        afterModelChanged(attribute, attributeValue);
       }
+    }, {
+      deep: type === Object
+    });
 
-      vueElement.$watch(attribute, modelWatcher, {
-        deep: type===Object
-      });
-
-      googleMapsElement.addListener(eventName,
-        _.throttle(gmapWatcher, 100, {
-          leading: true,
-          trailing: true
-        }));
+    if (twoWay) {
+      googleMapsElement.addListener(eventName, _.throttle((ev) => {
+          vueElement.$emit('g-' + eventName, googleMapsElement[getMethodName]());
+        }, 100, {
+          leading: true, trailing: true
+        })
+      );
     }
   });
 }
