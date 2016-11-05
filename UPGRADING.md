@@ -1,6 +1,21 @@
+By and large, unless you are using two-way binding,
+you should be able to re-use the code you wrote for Vue 1.x.
+The main exceptions is markers' click events triggering info windows.
+
+In general,
+the move away from two-way bindings is a good thing, as Google Maps is usually
+unable to fully honour your positioning / centering / bounds requests. This means that
+usually, `mapInstance.center` (vue-google-maps property) and
+`mapInstance.mapObject.getCenter()`
+(Google Maps API method) were be returning different values, and some
+hackery was needed to avoid endless update loops.
+
 # Important changes
 
-1. Clicking on a marker will no longer trigger its associated InfoWindow.
+1. Clicking on a marker will no longer trigger its associated InfoWindow. This
+  is necessary since two-way binding is not allowed, the marker is
+  unable to modify the InfoWindow's opened property.
+
 2. Two-way binding is no longer supported in Vue 2.x. If you need to listen on
     changes, e.g. `zoom_changed`, use the `g-zoom_changed` event. Contrary
     to the Google Maps reference, for `\*_changed` events with obvious `get\*`/
