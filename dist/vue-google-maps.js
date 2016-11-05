@@ -1,29 +1,6787 @@
-!function(t,e){"object"==typeof exports&&"object"==typeof module?module.exports=e():"function"==typeof define&&define.amd?define([],e):"object"==typeof exports?exports.VueGoogleMap=e():t.VueGoogleMap=e()}(this,function(){return function(t){function e(r){if(n[r])return n[r].exports;var o=n[r]={exports:{},id:r,loaded:!1};return t[r].call(o.exports,o,o.exports,e),o.loaded=!0,o.exports}var n={};return e.m=t,e.c=n,e.p="",e(0)}([function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{"default":t}}Object.defineProperty(e,"__esModule",{value:!0}),e.MapComponent=e.PlaceInput=e.Rectangle=e.Circle=e.Polygon=e.Polyline=e.InfoWindow=e.Cluster=e.Marker=e.Map=e.loaded=e.load=void 0;var o=n(21);Object.defineProperty(e,"load",{enumerable:!0,get:function(){return o.load}}),Object.defineProperty(e,"loaded",{enumerable:!0,get:function(){return o.loaded}});var i=n(107),s=r(i),a=n(108),u=r(a),c=n(105),p=r(c),l=n(106),f=r(l),d=n(111),h=r(d),y=n(110),v=r(y),g=n(104),m=r(g),_=n(112),b=r(_),x=n(109),w=r(x),j=n(6),k=r(j);e.Map=s["default"],e.Marker=u["default"],e.Cluster=p["default"],e.InfoWindow=f["default"],e.Polyline=h["default"],e.Polygon=v["default"],e.Circle=m["default"],e.Rectangle=b["default"],e.PlaceInput=w["default"],e.MapComponent=k["default"]},function(t,e){"use strict";t.exports=window._},function(t,e){var n=Object;t.exports={create:n.create,getProto:n.getPrototypeOf,isEnum:{}.propertyIsEnumerable,getDesc:n.getOwnPropertyDescriptor,setDesc:n.defineProperty,setDescs:n.defineProperties,getKeys:n.keys,getNames:n.getOwnPropertyNames,getSymbols:n.getOwnPropertySymbols,each:[].forEach}},function(t,e,n){var r=n(36)("wks"),o=n(38),i=n(5).Symbol;t.exports=function(t){return r[t]||(r[t]=i&&i[t]||(i||o)("Symbol."+t))}},function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{"default":t}}function o(t){return t.charAt(0).toUpperCase()+t.slice(1)}Object.defineProperty(e,"__esModule",{value:!0});var i=n(1),s=r(i);e["default"]=function(t,e,n,r){r=r||{};var i=r,a=i.afterModelChanged;s["default"].forEach(n,function(n,r){var i=n.twoWay,u=n.type,c="set"+o(r),p="get"+o(r),l=r.toLowerCase()+"_changed";if(i){var f=0,d=function(){if(f++,f>0){var n=t[r];e[c](n),a&&a(r,n)}},h=function(){if(f--,0>f){var n=e[p]();n instanceof google.maps.LatLng?t[r]={lat:n.lat(),lng:n.lng()}:t[r]=n}};t.$watch(r,d,{deep:u===Object}),e.addListener(l,s["default"].throttle(h,100,{leading:!0,trailing:!0}))}else t.$watch(r,function(){var n=t[r];e[c](n),a&&a(r,n)},{deep:u===Object})})}},function(t,e){var n=t.exports="undefined"!=typeof window&&window.Math==Math?window:"undefined"!=typeof self&&self.Math==Math?self:Function("return this")();"number"==typeof __g&&(__g=n)},function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{"default":t}}Object.defineProperty(e,"__esModule",{value:!0});var o=n(32),i=r(o),s=n(11),a=(r(s),n(20)),u=n(20);i["default"].use(u.DeferredReady),e["default"]=i["default"].extend({mixins:[a.DeferredReadyMixin],created:function(){this.$map=null},deferredReady:function(){this.$dispatch("register-component",this)},events:{"map-ready":function(t){this.$map=t}}})},function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{"default":t}}Object.defineProperty(e,"__esModule",{value:!0});var o=n(1),i=r(o);e["default"]=function(t,e,n){i["default"].forEach(n,function(n){var r="g-"+n;e.addListener(n,function(e){t.$emit(r,e)})})}},function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{"default":t}}Object.defineProperty(e,"__esModule",{value:!0});var o=n(1),i=r(o);e["default"]={methods:{getPropsValues:function(){var t=this;return i["default"].mapValues(this.$options.props,function(e,n){return t[n]})}}}},function(t,e){var n=t.exports={version:"1.2.6"};"number"==typeof __e&&(__e=n)},function(t,e,n){var r=n(17);t.exports=function(t){if(!r(t))throw TypeError(t+" is not an object!");return t}},function(t,e,n){(function(e,n){/*!
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define([], factory);
+	else if(typeof exports === 'object')
+		exports["VueGoogleMap"] = factory();
+	else
+		root["VueGoogleMap"] = factory();
+})(this, function() {
+return /******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId])
+/******/ 			return installedModules[moduleId].exports;
+/******/
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			exports: {},
+/******/ 			id: moduleId,
+/******/ 			loaded: false
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.loaded = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(0);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__(1);
+
+
+/***/ },
+/* 1 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.MapElementMixin = exports.PlaceInput = exports.Rectangle = exports.Circle = exports.Polygon = exports.Polyline = exports.InfoWindow = exports.Cluster = exports.Marker = exports.Map = exports.loaded = exports.load = undefined;
+	
+	var _manager = __webpack_require__(2);
+	
+	Object.defineProperty(exports, 'load', {
+	  enumerable: true,
+	  get: function get() {
+	    return _manager.load;
+	  }
+	});
+	Object.defineProperty(exports, 'loaded', {
+	  enumerable: true,
+	  get: function get() {
+	    return _manager.loaded;
+	  }
+	});
+	
+	var _map = __webpack_require__(71);
+	
+	var _map2 = _interopRequireDefault(_map);
+	
+	var _marker = __webpack_require__(84);
+	
+	var _marker2 = _interopRequireDefault(_marker);
+	
+	var _cluster = __webpack_require__(87);
+	
+	var _cluster2 = _interopRequireDefault(_cluster);
+	
+	var _infoWindow = __webpack_require__(96);
+	
+	var _infoWindow2 = _interopRequireDefault(_infoWindow);
+	
+	var _polyline = __webpack_require__(99);
+	
+	var _polyline2 = _interopRequireDefault(_polyline);
+	
+	var _polygon = __webpack_require__(101);
+	
+	var _polygon2 = _interopRequireDefault(_polygon);
+	
+	var _circle = __webpack_require__(103);
+	
+	var _circle2 = _interopRequireDefault(_circle);
+	
+	var _rectangle = __webpack_require__(105);
+	
+	var _rectangle2 = _interopRequireDefault(_rectangle);
+	
+	var _placeInput = __webpack_require__(107);
+	
+	var _placeInput2 = _interopRequireDefault(_placeInput);
+	
+	var _mapElementMixin = __webpack_require__(86);
+	
+	var _mapElementMixin2 = _interopRequireDefault(_mapElementMixin);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.Map = _map2.default;
+	exports.Marker = _marker2.default;
+	exports.Cluster = _cluster2.default;
+	exports.InfoWindow = _infoWindow2.default;
+	exports.Polyline = _polyline2.default;
+	exports.Polygon = _polygon2.default;
+	exports.Circle = _circle2.default;
+	exports.Rectangle = _rectangle2.default;
+	exports.PlaceInput = _placeInput2.default;
+	exports.MapElementMixin = _mapElementMixin2.default;
+
+/***/ },
+/* 2 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.load = exports.loaded = undefined;
+	
+	var _keys = __webpack_require__(3);
+	
+	var _keys2 = _interopRequireDefault(_keys);
+	
+	var _typeof2 = __webpack_require__(15);
+	
+	var _typeof3 = _interopRequireDefault(_typeof2);
+	
+	var _promise = __webpack_require__(40);
+	
+	var _promise2 = _interopRequireDefault(_promise);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	/* vim: set softtabstop=2 shiftwidth=2 expandtab : */
+	
+	var setUp = false;
+	
+	var loaded = exports.loaded = new _promise2.default(function (resolve, reject) {
+	  window['vueGoogleMapsInit'] = resolve;
+	});
+	
+	/**
+	 * @param apiKey    API Key, or object with the URL parameters. For example
+	 *                  to use Google Maps Premium API, pass
+	 *                    `{ client: <YOUR-CLIENT-ID> }`.
+	 *                  You may pass the libraries and/or version (as `v`) parameter into
+	 *                  this parameter and skip the next two parameters
+	 * @param version   Google for Maps version
+	 * @param libraries Libraries to load (@see
+	 *                  https://developers.google.com/maps/documentation/javascript/libraries)
+	 * @param loadCn    Boolean. If set to true, the map will be loaded form goole maps China
+	 *                  (@see https://developers.google.com/maps/documentation/javascript/basics#GoogleMapsChina)
 	 *
-	 * Copyright 2009-2012 Kris Kowal under the terms of the MIT
-	 * license found at http://github.com/kriskowal/q/raw/master/LICENSE
+	 * Example:
+	 * ```
+	 *      import {load} from 'vue-google-maps'
 	 *
-	 * With parts by Tyler Close
-	 * Copyright 2007-2009 Tyler Close under the terms of the MIT X license found
-	 * at http://www.opensource.org/licenses/mit-license.html
-	 * Forked at ref_send.js version: 2009-05-11
+	 *      load(<YOUR-API-KEY>)
 	 *
-	 * With parts by Mark Miller
-	 * Copyright (C) 2011 Google Inc.
+	 *      load({
+	 *              key: <YOUR-API-KEY>,
+	 *      })
 	 *
+	 *      load({
+	 *              client: <YOUR-CLIENT-ID>,
+	 *              channel: <YOUR CHANNEL>
+	 *      })
+	 * ```
+	 */
+	var load = exports.load = function load(apiKey, version, libraries, loadCn) {
+	  if (!setUp) {
+	    var googleMapScript = document.createElement('SCRIPT');
+	
+	    // Allow apiKey to be an object.
+	    // This is to support more esoteric means of loading Google Maps,
+	    // such as Google for business
+	    // https://developers.google.com/maps/documentation/javascript/get-api-key#premium-auth
+	    var options = {};
+	    if (typeof apiKey == 'string') {
+	      options.key = apiKey;
+	    } else if ((typeof apiKey === 'undefined' ? 'undefined' : (0, _typeof3.default)(apiKey)) == 'object') {
+	      for (var k in apiKey) {
+	        // transfer values in apiKey to options
+	        options[k] = apiKey[k];
+	      }
+	    } else {
+	      throw new Error('apiKey should either be a string or an object');
+	    }
+	
+	    // libraries
+	    var librariesPath = "";
+	    if (libraries && libraries.length > 0) {
+	      librariesPath = libraries.join(',');
+	      options['libraries'] = librariesPath;
+	    } else if (Array.prototype.isPrototypeOf(options.libraries)) {
+	      options.libraries = options.libraries.join(',');
+	    }
+	    options['callback'] = 'vueGoogleMapsInit';
+	
+	    var baseUrl = 'https://maps.googleapis.com/';
+	
+	    if (typeof loadCn == 'boolean' && loadCn === true) {
+	      baseUrl = 'http://maps.google.cn/';
+	    }
+	
+	    var url = baseUrl + 'maps/api/js?' + (0, _keys2.default)(options).map(function (key) {
+	      return encodeURIComponent(key) + '=' + encodeURIComponent(options[key]);
+	    }).join('&');
+	
+	    if (version) {
+	      url = url + '&v=' + version;
+	    }
+	
+	    googleMapScript.setAttribute('src', url);
+	    googleMapScript.setAttribute('async', '');
+	    googleMapScript.setAttribute('defer', '');
+	    document.body.appendChild(googleMapScript);
+	  } else {
+	    throw new Error('You already started the loading of google maps');
+	  }
+	};
+
+/***/ },
+/* 3 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = { "default": __webpack_require__(4), __esModule: true };
+
+/***/ },
+/* 4 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(5);
+	module.exports = __webpack_require__(11).Object.keys;
+
+/***/ },
+/* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// 19.1.2.14 Object.keys(O)
+	var toObject = __webpack_require__(6);
+	
+	__webpack_require__(8)('keys', function($keys){
+	  return function keys(it){
+	    return $keys(toObject(it));
+	  };
+	});
+
+/***/ },
+/* 6 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// 7.1.13 ToObject(argument)
+	var defined = __webpack_require__(7);
+	module.exports = function(it){
+	  return Object(defined(it));
+	};
+
+/***/ },
+/* 7 */
+/***/ function(module, exports) {
+
+	// 7.2.1 RequireObjectCoercible(argument)
+	module.exports = function(it){
+	  if(it == undefined)throw TypeError("Can't call method on  " + it);
+	  return it;
+	};
+
+/***/ },
+/* 8 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// most Object methods by ES6 should accept primitives
+	var $export = __webpack_require__(9)
+	  , core    = __webpack_require__(11)
+	  , fails   = __webpack_require__(14);
+	module.exports = function(KEY, exec){
+	  var fn  = (core.Object || {})[KEY] || Object[KEY]
+	    , exp = {};
+	  exp[KEY] = exec(fn);
+	  $export($export.S + $export.F * fails(function(){ fn(1); }), 'Object', exp);
+	};
+
+/***/ },
+/* 9 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var global    = __webpack_require__(10)
+	  , core      = __webpack_require__(11)
+	  , ctx       = __webpack_require__(12)
+	  , PROTOTYPE = 'prototype';
+	
+	var $export = function(type, name, source){
+	  var IS_FORCED = type & $export.F
+	    , IS_GLOBAL = type & $export.G
+	    , IS_STATIC = type & $export.S
+	    , IS_PROTO  = type & $export.P
+	    , IS_BIND   = type & $export.B
+	    , IS_WRAP   = type & $export.W
+	    , exports   = IS_GLOBAL ? core : core[name] || (core[name] = {})
+	    , target    = IS_GLOBAL ? global : IS_STATIC ? global[name] : (global[name] || {})[PROTOTYPE]
+	    , key, own, out;
+	  if(IS_GLOBAL)source = name;
+	  for(key in source){
+	    // contains in native
+	    own = !IS_FORCED && target && key in target;
+	    if(own && key in exports)continue;
+	    // export native or passed
+	    out = own ? target[key] : source[key];
+	    // prevent global pollution for namespaces
+	    exports[key] = IS_GLOBAL && typeof target[key] != 'function' ? source[key]
+	    // bind timers to global for call from export context
+	    : IS_BIND && own ? ctx(out, global)
+	    // wrap global constructors for prevent change them in library
+	    : IS_WRAP && target[key] == out ? (function(C){
+	      var F = function(param){
+	        return this instanceof C ? new C(param) : C(param);
+	      };
+	      F[PROTOTYPE] = C[PROTOTYPE];
+	      return F;
+	    // make static versions for prototype methods
+	    })(out) : IS_PROTO && typeof out == 'function' ? ctx(Function.call, out) : out;
+	    if(IS_PROTO)(exports[PROTOTYPE] || (exports[PROTOTYPE] = {}))[key] = out;
+	  }
+	};
+	// type bitmap
+	$export.F = 1;  // forced
+	$export.G = 2;  // global
+	$export.S = 4;  // static
+	$export.P = 8;  // proto
+	$export.B = 16; // bind
+	$export.W = 32; // wrap
+	module.exports = $export;
+
+/***/ },
+/* 10 */
+/***/ function(module, exports) {
+
+	// https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
+	var global = module.exports = typeof window != 'undefined' && window.Math == Math
+	  ? window : typeof self != 'undefined' && self.Math == Math ? self : Function('return this')();
+	if(typeof __g == 'number')__g = global; // eslint-disable-line no-undef
+
+/***/ },
+/* 11 */
+/***/ function(module, exports) {
+
+	var core = module.exports = {version: '1.2.6'};
+	if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
+
+/***/ },
+/* 12 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// optional / simple context binding
+	var aFunction = __webpack_require__(13);
+	module.exports = function(fn, that, length){
+	  aFunction(fn);
+	  if(that === undefined)return fn;
+	  switch(length){
+	    case 1: return function(a){
+	      return fn.call(that, a);
+	    };
+	    case 2: return function(a, b){
+	      return fn.call(that, a, b);
+	    };
+	    case 3: return function(a, b, c){
+	      return fn.call(that, a, b, c);
+	    };
+	  }
+	  return function(/* ...args */){
+	    return fn.apply(that, arguments);
+	  };
+	};
+
+/***/ },
+/* 13 */
+/***/ function(module, exports) {
+
+	module.exports = function(it){
+	  if(typeof it != 'function')throw TypeError(it + ' is not a function!');
+	  return it;
+	};
+
+/***/ },
+/* 14 */
+/***/ function(module, exports) {
+
+	module.exports = function(exec){
+	  try {
+	    return !!exec();
+	  } catch(e){
+	    return true;
+	  }
+	};
+
+/***/ },
+/* 15 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var _Symbol = __webpack_require__(16)["default"];
+	
+	exports["default"] = function (obj) {
+	  return obj && obj.constructor === _Symbol ? "symbol" : typeof obj;
+	};
+	
+	exports.__esModule = true;
+
+/***/ },
+/* 16 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = { "default": __webpack_require__(17), __esModule: true };
+
+/***/ },
+/* 17 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(18);
+	__webpack_require__(39);
+	module.exports = __webpack_require__(11).Symbol;
+
+/***/ },
+/* 18 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	// ECMAScript 6 symbols shim
+	var $              = __webpack_require__(19)
+	  , global         = __webpack_require__(10)
+	  , has            = __webpack_require__(20)
+	  , DESCRIPTORS    = __webpack_require__(21)
+	  , $export        = __webpack_require__(9)
+	  , redefine       = __webpack_require__(22)
+	  , $fails         = __webpack_require__(14)
+	  , shared         = __webpack_require__(25)
+	  , setToStringTag = __webpack_require__(26)
+	  , uid            = __webpack_require__(28)
+	  , wks            = __webpack_require__(27)
+	  , keyOf          = __webpack_require__(29)
+	  , $names         = __webpack_require__(33)
+	  , enumKeys       = __webpack_require__(34)
+	  , isArray        = __webpack_require__(35)
+	  , anObject       = __webpack_require__(36)
+	  , toIObject      = __webpack_require__(30)
+	  , createDesc     = __webpack_require__(24)
+	  , getDesc        = $.getDesc
+	  , setDesc        = $.setDesc
+	  , _create        = $.create
+	  , getNames       = $names.get
+	  , $Symbol        = global.Symbol
+	  , $JSON          = global.JSON
+	  , _stringify     = $JSON && $JSON.stringify
+	  , setter         = false
+	  , HIDDEN         = wks('_hidden')
+	  , isEnum         = $.isEnum
+	  , SymbolRegistry = shared('symbol-registry')
+	  , AllSymbols     = shared('symbols')
+	  , useNative      = typeof $Symbol == 'function'
+	  , ObjectProto    = Object.prototype;
+	
+	// fallback for old Android, https://code.google.com/p/v8/issues/detail?id=687
+	var setSymbolDesc = DESCRIPTORS && $fails(function(){
+	  return _create(setDesc({}, 'a', {
+	    get: function(){ return setDesc(this, 'a', {value: 7}).a; }
+	  })).a != 7;
+	}) ? function(it, key, D){
+	  var protoDesc = getDesc(ObjectProto, key);
+	  if(protoDesc)delete ObjectProto[key];
+	  setDesc(it, key, D);
+	  if(protoDesc && it !== ObjectProto)setDesc(ObjectProto, key, protoDesc);
+	} : setDesc;
+	
+	var wrap = function(tag){
+	  var sym = AllSymbols[tag] = _create($Symbol.prototype);
+	  sym._k = tag;
+	  DESCRIPTORS && setter && setSymbolDesc(ObjectProto, tag, {
+	    configurable: true,
+	    set: function(value){
+	      if(has(this, HIDDEN) && has(this[HIDDEN], tag))this[HIDDEN][tag] = false;
+	      setSymbolDesc(this, tag, createDesc(1, value));
+	    }
+	  });
+	  return sym;
+	};
+	
+	var isSymbol = function(it){
+	  return typeof it == 'symbol';
+	};
+	
+	var $defineProperty = function defineProperty(it, key, D){
+	  if(D && has(AllSymbols, key)){
+	    if(!D.enumerable){
+	      if(!has(it, HIDDEN))setDesc(it, HIDDEN, createDesc(1, {}));
+	      it[HIDDEN][key] = true;
+	    } else {
+	      if(has(it, HIDDEN) && it[HIDDEN][key])it[HIDDEN][key] = false;
+	      D = _create(D, {enumerable: createDesc(0, false)});
+	    } return setSymbolDesc(it, key, D);
+	  } return setDesc(it, key, D);
+	};
+	var $defineProperties = function defineProperties(it, P){
+	  anObject(it);
+	  var keys = enumKeys(P = toIObject(P))
+	    , i    = 0
+	    , l = keys.length
+	    , key;
+	  while(l > i)$defineProperty(it, key = keys[i++], P[key]);
+	  return it;
+	};
+	var $create = function create(it, P){
+	  return P === undefined ? _create(it) : $defineProperties(_create(it), P);
+	};
+	var $propertyIsEnumerable = function propertyIsEnumerable(key){
+	  var E = isEnum.call(this, key);
+	  return E || !has(this, key) || !has(AllSymbols, key) || has(this, HIDDEN) && this[HIDDEN][key]
+	    ? E : true;
+	};
+	var $getOwnPropertyDescriptor = function getOwnPropertyDescriptor(it, key){
+	  var D = getDesc(it = toIObject(it), key);
+	  if(D && has(AllSymbols, key) && !(has(it, HIDDEN) && it[HIDDEN][key]))D.enumerable = true;
+	  return D;
+	};
+	var $getOwnPropertyNames = function getOwnPropertyNames(it){
+	  var names  = getNames(toIObject(it))
+	    , result = []
+	    , i      = 0
+	    , key;
+	  while(names.length > i)if(!has(AllSymbols, key = names[i++]) && key != HIDDEN)result.push(key);
+	  return result;
+	};
+	var $getOwnPropertySymbols = function getOwnPropertySymbols(it){
+	  var names  = getNames(toIObject(it))
+	    , result = []
+	    , i      = 0
+	    , key;
+	  while(names.length > i)if(has(AllSymbols, key = names[i++]))result.push(AllSymbols[key]);
+	  return result;
+	};
+	var $stringify = function stringify(it){
+	  if(it === undefined || isSymbol(it))return; // IE8 returns string on undefined
+	  var args = [it]
+	    , i    = 1
+	    , $$   = arguments
+	    , replacer, $replacer;
+	  while($$.length > i)args.push($$[i++]);
+	  replacer = args[1];
+	  if(typeof replacer == 'function')$replacer = replacer;
+	  if($replacer || !isArray(replacer))replacer = function(key, value){
+	    if($replacer)value = $replacer.call(this, key, value);
+	    if(!isSymbol(value))return value;
+	  };
+	  args[1] = replacer;
+	  return _stringify.apply($JSON, args);
+	};
+	var buggyJSON = $fails(function(){
+	  var S = $Symbol();
+	  // MS Edge converts symbol values to JSON as {}
+	  // WebKit converts symbol values to JSON as null
+	  // V8 throws on boxed symbols
+	  return _stringify([S]) != '[null]' || _stringify({a: S}) != '{}' || _stringify(Object(S)) != '{}';
+	});
+	
+	// 19.4.1.1 Symbol([description])
+	if(!useNative){
+	  $Symbol = function Symbol(){
+	    if(isSymbol(this))throw TypeError('Symbol is not a constructor');
+	    return wrap(uid(arguments.length > 0 ? arguments[0] : undefined));
+	  };
+	  redefine($Symbol.prototype, 'toString', function toString(){
+	    return this._k;
+	  });
+	
+	  isSymbol = function(it){
+	    return it instanceof $Symbol;
+	  };
+	
+	  $.create     = $create;
+	  $.isEnum     = $propertyIsEnumerable;
+	  $.getDesc    = $getOwnPropertyDescriptor;
+	  $.setDesc    = $defineProperty;
+	  $.setDescs   = $defineProperties;
+	  $.getNames   = $names.get = $getOwnPropertyNames;
+	  $.getSymbols = $getOwnPropertySymbols;
+	
+	  if(DESCRIPTORS && !__webpack_require__(38)){
+	    redefine(ObjectProto, 'propertyIsEnumerable', $propertyIsEnumerable, true);
+	  }
+	}
+	
+	var symbolStatics = {
+	  // 19.4.2.1 Symbol.for(key)
+	  'for': function(key){
+	    return has(SymbolRegistry, key += '')
+	      ? SymbolRegistry[key]
+	      : SymbolRegistry[key] = $Symbol(key);
+	  },
+	  // 19.4.2.5 Symbol.keyFor(sym)
+	  keyFor: function keyFor(key){
+	    return keyOf(SymbolRegistry, key);
+	  },
+	  useSetter: function(){ setter = true; },
+	  useSimple: function(){ setter = false; }
+	};
+	// 19.4.2.2 Symbol.hasInstance
+	// 19.4.2.3 Symbol.isConcatSpreadable
+	// 19.4.2.4 Symbol.iterator
+	// 19.4.2.6 Symbol.match
+	// 19.4.2.8 Symbol.replace
+	// 19.4.2.9 Symbol.search
+	// 19.4.2.10 Symbol.species
+	// 19.4.2.11 Symbol.split
+	// 19.4.2.12 Symbol.toPrimitive
+	// 19.4.2.13 Symbol.toStringTag
+	// 19.4.2.14 Symbol.unscopables
+	$.each.call((
+	  'hasInstance,isConcatSpreadable,iterator,match,replace,search,' +
+	  'species,split,toPrimitive,toStringTag,unscopables'
+	).split(','), function(it){
+	  var sym = wks(it);
+	  symbolStatics[it] = useNative ? sym : wrap(sym);
+	});
+	
+	setter = true;
+	
+	$export($export.G + $export.W, {Symbol: $Symbol});
+	
+	$export($export.S, 'Symbol', symbolStatics);
+	
+	$export($export.S + $export.F * !useNative, 'Object', {
+	  // 19.1.2.2 Object.create(O [, Properties])
+	  create: $create,
+	  // 19.1.2.4 Object.defineProperty(O, P, Attributes)
+	  defineProperty: $defineProperty,
+	  // 19.1.2.3 Object.defineProperties(O, Properties)
+	  defineProperties: $defineProperties,
+	  // 19.1.2.6 Object.getOwnPropertyDescriptor(O, P)
+	  getOwnPropertyDescriptor: $getOwnPropertyDescriptor,
+	  // 19.1.2.7 Object.getOwnPropertyNames(O)
+	  getOwnPropertyNames: $getOwnPropertyNames,
+	  // 19.1.2.8 Object.getOwnPropertySymbols(O)
+	  getOwnPropertySymbols: $getOwnPropertySymbols
+	});
+	
+	// 24.3.2 JSON.stringify(value [, replacer [, space]])
+	$JSON && $export($export.S + $export.F * (!useNative || buggyJSON), 'JSON', {stringify: $stringify});
+	
+	// 19.4.3.5 Symbol.prototype[@@toStringTag]
+	setToStringTag($Symbol, 'Symbol');
+	// 20.2.1.9 Math[@@toStringTag]
+	setToStringTag(Math, 'Math', true);
+	// 24.3.3 JSON[@@toStringTag]
+	setToStringTag(global.JSON, 'JSON', true);
+
+/***/ },
+/* 19 */
+/***/ function(module, exports) {
+
+	var $Object = Object;
+	module.exports = {
+	  create:     $Object.create,
+	  getProto:   $Object.getPrototypeOf,
+	  isEnum:     {}.propertyIsEnumerable,
+	  getDesc:    $Object.getOwnPropertyDescriptor,
+	  setDesc:    $Object.defineProperty,
+	  setDescs:   $Object.defineProperties,
+	  getKeys:    $Object.keys,
+	  getNames:   $Object.getOwnPropertyNames,
+	  getSymbols: $Object.getOwnPropertySymbols,
+	  each:       [].forEach
+	};
+
+/***/ },
+/* 20 */
+/***/ function(module, exports) {
+
+	var hasOwnProperty = {}.hasOwnProperty;
+	module.exports = function(it, key){
+	  return hasOwnProperty.call(it, key);
+	};
+
+/***/ },
+/* 21 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// Thank's IE8 for his funny defineProperty
+	module.exports = !__webpack_require__(14)(function(){
+	  return Object.defineProperty({}, 'a', {get: function(){ return 7; }}).a != 7;
+	});
+
+/***/ },
+/* 22 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__(23);
+
+/***/ },
+/* 23 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var $          = __webpack_require__(19)
+	  , createDesc = __webpack_require__(24);
+	module.exports = __webpack_require__(21) ? function(object, key, value){
+	  return $.setDesc(object, key, createDesc(1, value));
+	} : function(object, key, value){
+	  object[key] = value;
+	  return object;
+	};
+
+/***/ },
+/* 24 */
+/***/ function(module, exports) {
+
+	module.exports = function(bitmap, value){
+	  return {
+	    enumerable  : !(bitmap & 1),
+	    configurable: !(bitmap & 2),
+	    writable    : !(bitmap & 4),
+	    value       : value
+	  };
+	};
+
+/***/ },
+/* 25 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var global = __webpack_require__(10)
+	  , SHARED = '__core-js_shared__'
+	  , store  = global[SHARED] || (global[SHARED] = {});
+	module.exports = function(key){
+	  return store[key] || (store[key] = {});
+	};
+
+/***/ },
+/* 26 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var def = __webpack_require__(19).setDesc
+	  , has = __webpack_require__(20)
+	  , TAG = __webpack_require__(27)('toStringTag');
+	
+	module.exports = function(it, tag, stat){
+	  if(it && !has(it = stat ? it : it.prototype, TAG))def(it, TAG, {configurable: true, value: tag});
+	};
+
+/***/ },
+/* 27 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var store  = __webpack_require__(25)('wks')
+	  , uid    = __webpack_require__(28)
+	  , Symbol = __webpack_require__(10).Symbol;
+	module.exports = function(name){
+	  return store[name] || (store[name] =
+	    Symbol && Symbol[name] || (Symbol || uid)('Symbol.' + name));
+	};
+
+/***/ },
+/* 28 */
+/***/ function(module, exports) {
+
+	var id = 0
+	  , px = Math.random();
+	module.exports = function(key){
+	  return 'Symbol('.concat(key === undefined ? '' : key, ')_', (++id + px).toString(36));
+	};
+
+/***/ },
+/* 29 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var $         = __webpack_require__(19)
+	  , toIObject = __webpack_require__(30);
+	module.exports = function(object, el){
+	  var O      = toIObject(object)
+	    , keys   = $.getKeys(O)
+	    , length = keys.length
+	    , index  = 0
+	    , key;
+	  while(length > index)if(O[key = keys[index++]] === el)return key;
+	};
+
+/***/ },
+/* 30 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// to indexed object, toObject with fallback for non-array-like ES3 strings
+	var IObject = __webpack_require__(31)
+	  , defined = __webpack_require__(7);
+	module.exports = function(it){
+	  return IObject(defined(it));
+	};
+
+/***/ },
+/* 31 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// fallback for non-array-like ES3 and non-enumerable old V8 strings
+	var cof = __webpack_require__(32);
+	module.exports = Object('z').propertyIsEnumerable(0) ? Object : function(it){
+	  return cof(it) == 'String' ? it.split('') : Object(it);
+	};
+
+/***/ },
+/* 32 */
+/***/ function(module, exports) {
+
+	var toString = {}.toString;
+	
+	module.exports = function(it){
+	  return toString.call(it).slice(8, -1);
+	};
+
+/***/ },
+/* 33 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
+	var toIObject = __webpack_require__(30)
+	  , getNames  = __webpack_require__(19).getNames
+	  , toString  = {}.toString;
+	
+	var windowNames = typeof window == 'object' && Object.getOwnPropertyNames
+	  ? Object.getOwnPropertyNames(window) : [];
+	
+	var getWindowNames = function(it){
+	  try {
+	    return getNames(it);
+	  } catch(e){
+	    return windowNames.slice();
+	  }
+	};
+	
+	module.exports.get = function getOwnPropertyNames(it){
+	  if(windowNames && toString.call(it) == '[object Window]')return getWindowNames(it);
+	  return getNames(toIObject(it));
+	};
+
+/***/ },
+/* 34 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// all enumerable object keys, includes symbols
+	var $ = __webpack_require__(19);
+	module.exports = function(it){
+	  var keys       = $.getKeys(it)
+	    , getSymbols = $.getSymbols;
+	  if(getSymbols){
+	    var symbols = getSymbols(it)
+	      , isEnum  = $.isEnum
+	      , i       = 0
+	      , key;
+	    while(symbols.length > i)if(isEnum.call(it, key = symbols[i++]))keys.push(key);
+	  }
+	  return keys;
+	};
+
+/***/ },
+/* 35 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// 7.2.2 IsArray(argument)
+	var cof = __webpack_require__(32);
+	module.exports = Array.isArray || function(arg){
+	  return cof(arg) == 'Array';
+	};
+
+/***/ },
+/* 36 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var isObject = __webpack_require__(37);
+	module.exports = function(it){
+	  if(!isObject(it))throw TypeError(it + ' is not an object!');
+	  return it;
+	};
+
+/***/ },
+/* 37 */
+/***/ function(module, exports) {
+
+	module.exports = function(it){
+	  return typeof it === 'object' ? it !== null : typeof it === 'function';
+	};
+
+/***/ },
+/* 38 */
+/***/ function(module, exports) {
+
+	module.exports = true;
+
+/***/ },
+/* 39 */
+/***/ function(module, exports) {
+
+
+
+/***/ },
+/* 40 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = { "default": __webpack_require__(41), __esModule: true };
+
+/***/ },
+/* 41 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(39);
+	__webpack_require__(42);
+	__webpack_require__(48);
+	__webpack_require__(52);
+	module.exports = __webpack_require__(11).Promise;
+
+/***/ },
+/* 42 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var $at  = __webpack_require__(43)(true);
+	
+	// 21.1.3.27 String.prototype[@@iterator]()
+	__webpack_require__(45)(String, 'String', function(iterated){
+	  this._t = String(iterated); // target
+	  this._i = 0;                // next index
+	// 21.1.5.2.1 %StringIteratorPrototype%.next()
+	}, function(){
+	  var O     = this._t
+	    , index = this._i
+	    , point;
+	  if(index >= O.length)return {value: undefined, done: true};
+	  point = $at(O, index);
+	  this._i += point.length;
+	  return {value: point, done: false};
+	});
+
+/***/ },
+/* 43 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var toInteger = __webpack_require__(44)
+	  , defined   = __webpack_require__(7);
+	// true  -> String#at
+	// false -> String#codePointAt
+	module.exports = function(TO_STRING){
+	  return function(that, pos){
+	    var s = String(defined(that))
+	      , i = toInteger(pos)
+	      , l = s.length
+	      , a, b;
+	    if(i < 0 || i >= l)return TO_STRING ? '' : undefined;
+	    a = s.charCodeAt(i);
+	    return a < 0xd800 || a > 0xdbff || i + 1 === l || (b = s.charCodeAt(i + 1)) < 0xdc00 || b > 0xdfff
+	      ? TO_STRING ? s.charAt(i) : a
+	      : TO_STRING ? s.slice(i, i + 2) : (a - 0xd800 << 10) + (b - 0xdc00) + 0x10000;
+	  };
+	};
+
+/***/ },
+/* 44 */
+/***/ function(module, exports) {
+
+	// 7.1.4 ToInteger
+	var ceil  = Math.ceil
+	  , floor = Math.floor;
+	module.exports = function(it){
+	  return isNaN(it = +it) ? 0 : (it > 0 ? floor : ceil)(it);
+	};
+
+/***/ },
+/* 45 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var LIBRARY        = __webpack_require__(38)
+	  , $export        = __webpack_require__(9)
+	  , redefine       = __webpack_require__(22)
+	  , hide           = __webpack_require__(23)
+	  , has            = __webpack_require__(20)
+	  , Iterators      = __webpack_require__(46)
+	  , $iterCreate    = __webpack_require__(47)
+	  , setToStringTag = __webpack_require__(26)
+	  , getProto       = __webpack_require__(19).getProto
+	  , ITERATOR       = __webpack_require__(27)('iterator')
+	  , BUGGY          = !([].keys && 'next' in [].keys()) // Safari has buggy iterators w/o `next`
+	  , FF_ITERATOR    = '@@iterator'
+	  , KEYS           = 'keys'
+	  , VALUES         = 'values';
+	
+	var returnThis = function(){ return this; };
+	
+	module.exports = function(Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCED){
+	  $iterCreate(Constructor, NAME, next);
+	  var getMethod = function(kind){
+	    if(!BUGGY && kind in proto)return proto[kind];
+	    switch(kind){
+	      case KEYS: return function keys(){ return new Constructor(this, kind); };
+	      case VALUES: return function values(){ return new Constructor(this, kind); };
+	    } return function entries(){ return new Constructor(this, kind); };
+	  };
+	  var TAG        = NAME + ' Iterator'
+	    , DEF_VALUES = DEFAULT == VALUES
+	    , VALUES_BUG = false
+	    , proto      = Base.prototype
+	    , $native    = proto[ITERATOR] || proto[FF_ITERATOR] || DEFAULT && proto[DEFAULT]
+	    , $default   = $native || getMethod(DEFAULT)
+	    , methods, key;
+	  // Fix native
+	  if($native){
+	    var IteratorPrototype = getProto($default.call(new Base));
+	    // Set @@toStringTag to native iterators
+	    setToStringTag(IteratorPrototype, TAG, true);
+	    // FF fix
+	    if(!LIBRARY && has(proto, FF_ITERATOR))hide(IteratorPrototype, ITERATOR, returnThis);
+	    // fix Array#{values, @@iterator}.name in V8 / FF
+	    if(DEF_VALUES && $native.name !== VALUES){
+	      VALUES_BUG = true;
+	      $default = function values(){ return $native.call(this); };
+	    }
+	  }
+	  // Define iterator
+	  if((!LIBRARY || FORCED) && (BUGGY || VALUES_BUG || !proto[ITERATOR])){
+	    hide(proto, ITERATOR, $default);
+	  }
+	  // Plug for library
+	  Iterators[NAME] = $default;
+	  Iterators[TAG]  = returnThis;
+	  if(DEFAULT){
+	    methods = {
+	      values:  DEF_VALUES  ? $default : getMethod(VALUES),
+	      keys:    IS_SET      ? $default : getMethod(KEYS),
+	      entries: !DEF_VALUES ? $default : getMethod('entries')
+	    };
+	    if(FORCED)for(key in methods){
+	      if(!(key in proto))redefine(proto, key, methods[key]);
+	    } else $export($export.P + $export.F * (BUGGY || VALUES_BUG), NAME, methods);
+	  }
+	  return methods;
+	};
+
+/***/ },
+/* 46 */
+/***/ function(module, exports) {
+
+	module.exports = {};
+
+/***/ },
+/* 47 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var $              = __webpack_require__(19)
+	  , descriptor     = __webpack_require__(24)
+	  , setToStringTag = __webpack_require__(26)
+	  , IteratorPrototype = {};
+	
+	// 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
+	__webpack_require__(23)(IteratorPrototype, __webpack_require__(27)('iterator'), function(){ return this; });
+	
+	module.exports = function(Constructor, NAME, next){
+	  Constructor.prototype = $.create(IteratorPrototype, {next: descriptor(1, next)});
+	  setToStringTag(Constructor, NAME + ' Iterator');
+	};
+
+/***/ },
+/* 48 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(49);
+	var Iterators = __webpack_require__(46);
+	Iterators.NodeList = Iterators.HTMLCollection = Iterators.Array;
+
+/***/ },
+/* 49 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var addToUnscopables = __webpack_require__(50)
+	  , step             = __webpack_require__(51)
+	  , Iterators        = __webpack_require__(46)
+	  , toIObject        = __webpack_require__(30);
+	
+	// 22.1.3.4 Array.prototype.entries()
+	// 22.1.3.13 Array.prototype.keys()
+	// 22.1.3.29 Array.prototype.values()
+	// 22.1.3.30 Array.prototype[@@iterator]()
+	module.exports = __webpack_require__(45)(Array, 'Array', function(iterated, kind){
+	  this._t = toIObject(iterated); // target
+	  this._i = 0;                   // next index
+	  this._k = kind;                // kind
+	// 22.1.5.2.1 %ArrayIteratorPrototype%.next()
+	}, function(){
+	  var O     = this._t
+	    , kind  = this._k
+	    , index = this._i++;
+	  if(!O || index >= O.length){
+	    this._t = undefined;
+	    return step(1);
+	  }
+	  if(kind == 'keys'  )return step(0, index);
+	  if(kind == 'values')return step(0, O[index]);
+	  return step(0, [index, O[index]]);
+	}, 'values');
+	
+	// argumentsList[@@iterator] is %ArrayProto_values% (9.4.4.6, 9.4.4.7)
+	Iterators.Arguments = Iterators.Array;
+	
+	addToUnscopables('keys');
+	addToUnscopables('values');
+	addToUnscopables('entries');
+
+/***/ },
+/* 50 */
+/***/ function(module, exports) {
+
+	module.exports = function(){ /* empty */ };
+
+/***/ },
+/* 51 */
+/***/ function(module, exports) {
+
+	module.exports = function(done, value){
+	  return {value: value, done: !!done};
+	};
+
+/***/ },
+/* 52 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var $          = __webpack_require__(19)
+	  , LIBRARY    = __webpack_require__(38)
+	  , global     = __webpack_require__(10)
+	  , ctx        = __webpack_require__(12)
+	  , classof    = __webpack_require__(53)
+	  , $export    = __webpack_require__(9)
+	  , isObject   = __webpack_require__(37)
+	  , anObject   = __webpack_require__(36)
+	  , aFunction  = __webpack_require__(13)
+	  , strictNew  = __webpack_require__(54)
+	  , forOf      = __webpack_require__(55)
+	  , setProto   = __webpack_require__(60).set
+	  , same       = __webpack_require__(61)
+	  , SPECIES    = __webpack_require__(27)('species')
+	  , speciesConstructor = __webpack_require__(62)
+	  , asap       = __webpack_require__(63)
+	  , PROMISE    = 'Promise'
+	  , process    = global.process
+	  , isNode     = classof(process) == 'process'
+	  , P          = global[PROMISE]
+	  , empty      = function(){ /* empty */ }
+	  , Wrapper;
+	
+	var testResolve = function(sub){
+	  var test = new P(empty), promise;
+	  if(sub)test.constructor = function(exec){
+	    exec(empty, empty);
+	  };
+	  (promise = P.resolve(test))['catch'](empty);
+	  return promise === test;
+	};
+	
+	var USE_NATIVE = function(){
+	  var works = false;
+	  function P2(x){
+	    var self = new P(x);
+	    setProto(self, P2.prototype);
+	    return self;
+	  }
+	  try {
+	    works = P && P.resolve && testResolve();
+	    setProto(P2, P);
+	    P2.prototype = $.create(P.prototype, {constructor: {value: P2}});
+	    // actual Firefox has broken subclass support, test that
+	    if(!(P2.resolve(5).then(function(){}) instanceof P2)){
+	      works = false;
+	    }
+	    // actual V8 bug, https://code.google.com/p/v8/issues/detail?id=4162
+	    if(works && __webpack_require__(21)){
+	      var thenableThenGotten = false;
+	      P.resolve($.setDesc({}, 'then', {
+	        get: function(){ thenableThenGotten = true; }
+	      }));
+	      works = thenableThenGotten;
+	    }
+	  } catch(e){ works = false; }
+	  return works;
+	}();
+	
+	// helpers
+	var sameConstructor = function(a, b){
+	  // library wrapper special case
+	  if(LIBRARY && a === P && b === Wrapper)return true;
+	  return same(a, b);
+	};
+	var getConstructor = function(C){
+	  var S = anObject(C)[SPECIES];
+	  return S != undefined ? S : C;
+	};
+	var isThenable = function(it){
+	  var then;
+	  return isObject(it) && typeof (then = it.then) == 'function' ? then : false;
+	};
+	var PromiseCapability = function(C){
+	  var resolve, reject;
+	  this.promise = new C(function($$resolve, $$reject){
+	    if(resolve !== undefined || reject !== undefined)throw TypeError('Bad Promise constructor');
+	    resolve = $$resolve;
+	    reject  = $$reject;
+	  });
+	  this.resolve = aFunction(resolve),
+	  this.reject  = aFunction(reject)
+	};
+	var perform = function(exec){
+	  try {
+	    exec();
+	  } catch(e){
+	    return {error: e};
+	  }
+	};
+	var notify = function(record, isReject){
+	  if(record.n)return;
+	  record.n = true;
+	  var chain = record.c;
+	  asap(function(){
+	    var value = record.v
+	      , ok    = record.s == 1
+	      , i     = 0;
+	    var run = function(reaction){
+	      var handler = ok ? reaction.ok : reaction.fail
+	        , resolve = reaction.resolve
+	        , reject  = reaction.reject
+	        , result, then;
+	      try {
+	        if(handler){
+	          if(!ok)record.h = true;
+	          result = handler === true ? value : handler(value);
+	          if(result === reaction.promise){
+	            reject(TypeError('Promise-chain cycle'));
+	          } else if(then = isThenable(result)){
+	            then.call(result, resolve, reject);
+	          } else resolve(result);
+	        } else reject(value);
+	      } catch(e){
+	        reject(e);
+	      }
+	    };
+	    while(chain.length > i)run(chain[i++]); // variable length - can't use forEach
+	    chain.length = 0;
+	    record.n = false;
+	    if(isReject)setTimeout(function(){
+	      var promise = record.p
+	        , handler, console;
+	      if(isUnhandled(promise)){
+	        if(isNode){
+	          process.emit('unhandledRejection', value, promise);
+	        } else if(handler = global.onunhandledrejection){
+	          handler({promise: promise, reason: value});
+	        } else if((console = global.console) && console.error){
+	          console.error('Unhandled promise rejection', value);
+	        }
+	      } record.a = undefined;
+	    }, 1);
+	  });
+	};
+	var isUnhandled = function(promise){
+	  var record = promise._d
+	    , chain  = record.a || record.c
+	    , i      = 0
+	    , reaction;
+	  if(record.h)return false;
+	  while(chain.length > i){
+	    reaction = chain[i++];
+	    if(reaction.fail || !isUnhandled(reaction.promise))return false;
+	  } return true;
+	};
+	var $reject = function(value){
+	  var record = this;
+	  if(record.d)return;
+	  record.d = true;
+	  record = record.r || record; // unwrap
+	  record.v = value;
+	  record.s = 2;
+	  record.a = record.c.slice();
+	  notify(record, true);
+	};
+	var $resolve = function(value){
+	  var record = this
+	    , then;
+	  if(record.d)return;
+	  record.d = true;
+	  record = record.r || record; // unwrap
+	  try {
+	    if(record.p === value)throw TypeError("Promise can't be resolved itself");
+	    if(then = isThenable(value)){
+	      asap(function(){
+	        var wrapper = {r: record, d: false}; // wrap
+	        try {
+	          then.call(value, ctx($resolve, wrapper, 1), ctx($reject, wrapper, 1));
+	        } catch(e){
+	          $reject.call(wrapper, e);
+	        }
+	      });
+	    } else {
+	      record.v = value;
+	      record.s = 1;
+	      notify(record, false);
+	    }
+	  } catch(e){
+	    $reject.call({r: record, d: false}, e); // wrap
+	  }
+	};
+	
+	// constructor polyfill
+	if(!USE_NATIVE){
+	  // 25.4.3.1 Promise(executor)
+	  P = function Promise(executor){
+	    aFunction(executor);
+	    var record = this._d = {
+	      p: strictNew(this, P, PROMISE),         // <- promise
+	      c: [],                                  // <- awaiting reactions
+	      a: undefined,                           // <- checked in isUnhandled reactions
+	      s: 0,                                   // <- state
+	      d: false,                               // <- done
+	      v: undefined,                           // <- value
+	      h: false,                               // <- handled rejection
+	      n: false                                // <- notify
+	    };
+	    try {
+	      executor(ctx($resolve, record, 1), ctx($reject, record, 1));
+	    } catch(err){
+	      $reject.call(record, err);
+	    }
+	  };
+	  __webpack_require__(68)(P.prototype, {
+	    // 25.4.5.3 Promise.prototype.then(onFulfilled, onRejected)
+	    then: function then(onFulfilled, onRejected){
+	      var reaction = new PromiseCapability(speciesConstructor(this, P))
+	        , promise  = reaction.promise
+	        , record   = this._d;
+	      reaction.ok   = typeof onFulfilled == 'function' ? onFulfilled : true;
+	      reaction.fail = typeof onRejected == 'function' && onRejected;
+	      record.c.push(reaction);
+	      if(record.a)record.a.push(reaction);
+	      if(record.s)notify(record, false);
+	      return promise;
+	    },
+	    // 25.4.5.1 Promise.prototype.catch(onRejected)
+	    'catch': function(onRejected){
+	      return this.then(undefined, onRejected);
+	    }
+	  });
+	}
+	
+	$export($export.G + $export.W + $export.F * !USE_NATIVE, {Promise: P});
+	__webpack_require__(26)(P, PROMISE);
+	__webpack_require__(69)(PROMISE);
+	Wrapper = __webpack_require__(11)[PROMISE];
+	
+	// statics
+	$export($export.S + $export.F * !USE_NATIVE, PROMISE, {
+	  // 25.4.4.5 Promise.reject(r)
+	  reject: function reject(r){
+	    var capability = new PromiseCapability(this)
+	      , $$reject   = capability.reject;
+	    $$reject(r);
+	    return capability.promise;
+	  }
+	});
+	$export($export.S + $export.F * (!USE_NATIVE || testResolve(true)), PROMISE, {
+	  // 25.4.4.6 Promise.resolve(x)
+	  resolve: function resolve(x){
+	    // instanceof instead of internal slot check because we should fix it without replacement native Promise core
+	    if(x instanceof P && sameConstructor(x.constructor, this))return x;
+	    var capability = new PromiseCapability(this)
+	      , $$resolve  = capability.resolve;
+	    $$resolve(x);
+	    return capability.promise;
+	  }
+	});
+	$export($export.S + $export.F * !(USE_NATIVE && __webpack_require__(70)(function(iter){
+	  P.all(iter)['catch'](function(){});
+	})), PROMISE, {
+	  // 25.4.4.1 Promise.all(iterable)
+	  all: function all(iterable){
+	    var C          = getConstructor(this)
+	      , capability = new PromiseCapability(C)
+	      , resolve    = capability.resolve
+	      , reject     = capability.reject
+	      , values     = [];
+	    var abrupt = perform(function(){
+	      forOf(iterable, false, values.push, values);
+	      var remaining = values.length
+	        , results   = Array(remaining);
+	      if(remaining)$.each.call(values, function(promise, index){
+	        var alreadyCalled = false;
+	        C.resolve(promise).then(function(value){
+	          if(alreadyCalled)return;
+	          alreadyCalled = true;
+	          results[index] = value;
+	          --remaining || resolve(results);
+	        }, reject);
+	      });
+	      else resolve(results);
+	    });
+	    if(abrupt)reject(abrupt.error);
+	    return capability.promise;
+	  },
+	  // 25.4.4.4 Promise.race(iterable)
+	  race: function race(iterable){
+	    var C          = getConstructor(this)
+	      , capability = new PromiseCapability(C)
+	      , reject     = capability.reject;
+	    var abrupt = perform(function(){
+	      forOf(iterable, false, function(promise){
+	        C.resolve(promise).then(capability.resolve, reject);
+	      });
+	    });
+	    if(abrupt)reject(abrupt.error);
+	    return capability.promise;
+	  }
+	});
+
+/***/ },
+/* 53 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// getting tag from 19.1.3.6 Object.prototype.toString()
+	var cof = __webpack_require__(32)
+	  , TAG = __webpack_require__(27)('toStringTag')
+	  // ES3 wrong here
+	  , ARG = cof(function(){ return arguments; }()) == 'Arguments';
+	
+	module.exports = function(it){
+	  var O, T, B;
+	  return it === undefined ? 'Undefined' : it === null ? 'Null'
+	    // @@toStringTag case
+	    : typeof (T = (O = Object(it))[TAG]) == 'string' ? T
+	    // builtinTag case
+	    : ARG ? cof(O)
+	    // ES3 arguments fallback
+	    : (B = cof(O)) == 'Object' && typeof O.callee == 'function' ? 'Arguments' : B;
+	};
+
+/***/ },
+/* 54 */
+/***/ function(module, exports) {
+
+	module.exports = function(it, Constructor, name){
+	  if(!(it instanceof Constructor))throw TypeError(name + ": use the 'new' operator!");
+	  return it;
+	};
+
+/***/ },
+/* 55 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var ctx         = __webpack_require__(12)
+	  , call        = __webpack_require__(56)
+	  , isArrayIter = __webpack_require__(57)
+	  , anObject    = __webpack_require__(36)
+	  , toLength    = __webpack_require__(58)
+	  , getIterFn   = __webpack_require__(59);
+	module.exports = function(iterable, entries, fn, that){
+	  var iterFn = getIterFn(iterable)
+	    , f      = ctx(fn, that, entries ? 2 : 1)
+	    , index  = 0
+	    , length, step, iterator;
+	  if(typeof iterFn != 'function')throw TypeError(iterable + ' is not iterable!');
+	  // fast case for arrays with default iterator
+	  if(isArrayIter(iterFn))for(length = toLength(iterable.length); length > index; index++){
+	    entries ? f(anObject(step = iterable[index])[0], step[1]) : f(iterable[index]);
+	  } else for(iterator = iterFn.call(iterable); !(step = iterator.next()).done; ){
+	    call(iterator, f, step.value, entries);
+	  }
+	};
+
+/***/ },
+/* 56 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// call something on iterator step with safe closing on error
+	var anObject = __webpack_require__(36);
+	module.exports = function(iterator, fn, value, entries){
+	  try {
+	    return entries ? fn(anObject(value)[0], value[1]) : fn(value);
+	  // 7.4.6 IteratorClose(iterator, completion)
+	  } catch(e){
+	    var ret = iterator['return'];
+	    if(ret !== undefined)anObject(ret.call(iterator));
+	    throw e;
+	  }
+	};
+
+/***/ },
+/* 57 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// check on default Array iterator
+	var Iterators  = __webpack_require__(46)
+	  , ITERATOR   = __webpack_require__(27)('iterator')
+	  , ArrayProto = Array.prototype;
+	
+	module.exports = function(it){
+	  return it !== undefined && (Iterators.Array === it || ArrayProto[ITERATOR] === it);
+	};
+
+/***/ },
+/* 58 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// 7.1.15 ToLength
+	var toInteger = __webpack_require__(44)
+	  , min       = Math.min;
+	module.exports = function(it){
+	  return it > 0 ? min(toInteger(it), 0x1fffffffffffff) : 0; // pow(2, 53) - 1 == 9007199254740991
+	};
+
+/***/ },
+/* 59 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var classof   = __webpack_require__(53)
+	  , ITERATOR  = __webpack_require__(27)('iterator')
+	  , Iterators = __webpack_require__(46);
+	module.exports = __webpack_require__(11).getIteratorMethod = function(it){
+	  if(it != undefined)return it[ITERATOR]
+	    || it['@@iterator']
+	    || Iterators[classof(it)];
+	};
+
+/***/ },
+/* 60 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// Works with __proto__ only. Old v8 can't work with null proto objects.
+	/* eslint-disable no-proto */
+	var getDesc  = __webpack_require__(19).getDesc
+	  , isObject = __webpack_require__(37)
+	  , anObject = __webpack_require__(36);
+	var check = function(O, proto){
+	  anObject(O);
+	  if(!isObject(proto) && proto !== null)throw TypeError(proto + ": can't set as prototype!");
+	};
+	module.exports = {
+	  set: Object.setPrototypeOf || ('__proto__' in {} ? // eslint-disable-line
+	    function(test, buggy, set){
+	      try {
+	        set = __webpack_require__(12)(Function.call, getDesc(Object.prototype, '__proto__').set, 2);
+	        set(test, []);
+	        buggy = !(test instanceof Array);
+	      } catch(e){ buggy = true; }
+	      return function setPrototypeOf(O, proto){
+	        check(O, proto);
+	        if(buggy)O.__proto__ = proto;
+	        else set(O, proto);
+	        return O;
+	      };
+	    }({}, false) : undefined),
+	  check: check
+	};
+
+/***/ },
+/* 61 */
+/***/ function(module, exports) {
+
+	// 7.2.9 SameValue(x, y)
+	module.exports = Object.is || function is(x, y){
+	  return x === y ? x !== 0 || 1 / x === 1 / y : x != x && y != y;
+	};
+
+/***/ },
+/* 62 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// 7.3.20 SpeciesConstructor(O, defaultConstructor)
+	var anObject  = __webpack_require__(36)
+	  , aFunction = __webpack_require__(13)
+	  , SPECIES   = __webpack_require__(27)('species');
+	module.exports = function(O, D){
+	  var C = anObject(O).constructor, S;
+	  return C === undefined || (S = anObject(C)[SPECIES]) == undefined ? D : aFunction(S);
+	};
+
+/***/ },
+/* 63 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var global    = __webpack_require__(10)
+	  , macrotask = __webpack_require__(64).set
+	  , Observer  = global.MutationObserver || global.WebKitMutationObserver
+	  , process   = global.process
+	  , Promise   = global.Promise
+	  , isNode    = __webpack_require__(32)(process) == 'process'
+	  , head, last, notify;
+	
+	var flush = function(){
+	  var parent, domain, fn;
+	  if(isNode && (parent = process.domain)){
+	    process.domain = null;
+	    parent.exit();
+	  }
+	  while(head){
+	    domain = head.domain;
+	    fn     = head.fn;
+	    if(domain)domain.enter();
+	    fn(); // <- currently we use it only for Promise - try / catch not required
+	    if(domain)domain.exit();
+	    head = head.next;
+	  } last = undefined;
+	  if(parent)parent.enter();
+	};
+	
+	// Node.js
+	if(isNode){
+	  notify = function(){
+	    process.nextTick(flush);
+	  };
+	// browsers with MutationObserver
+	} else if(Observer){
+	  var toggle = 1
+	    , node   = document.createTextNode('');
+	  new Observer(flush).observe(node, {characterData: true}); // eslint-disable-line no-new
+	  notify = function(){
+	    node.data = toggle = -toggle;
+	  };
+	// environments with maybe non-completely correct, but existent Promise
+	} else if(Promise && Promise.resolve){
+	  notify = function(){
+	    Promise.resolve().then(flush);
+	  };
+	// for other environments - macrotask based on:
+	// - setImmediate
+	// - MessageChannel
+	// - window.postMessag
+	// - onreadystatechange
+	// - setTimeout
+	} else {
+	  notify = function(){
+	    // strange IE + webpack dev server bug - use .call(global)
+	    macrotask.call(global, flush);
+	  };
+	}
+	
+	module.exports = function asap(fn){
+	  var task = {fn: fn, next: undefined, domain: isNode && process.domain};
+	  if(last)last.next = task;
+	  if(!head){
+	    head = task;
+	    notify();
+	  } last = task;
+	};
+
+/***/ },
+/* 64 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var ctx                = __webpack_require__(12)
+	  , invoke             = __webpack_require__(65)
+	  , html               = __webpack_require__(66)
+	  , cel                = __webpack_require__(67)
+	  , global             = __webpack_require__(10)
+	  , process            = global.process
+	  , setTask            = global.setImmediate
+	  , clearTask          = global.clearImmediate
+	  , MessageChannel     = global.MessageChannel
+	  , counter            = 0
+	  , queue              = {}
+	  , ONREADYSTATECHANGE = 'onreadystatechange'
+	  , defer, channel, port;
+	var run = function(){
+	  var id = +this;
+	  if(queue.hasOwnProperty(id)){
+	    var fn = queue[id];
+	    delete queue[id];
+	    fn();
+	  }
+	};
+	var listner = function(event){
+	  run.call(event.data);
+	};
+	// Node.js 0.9+ & IE10+ has setImmediate, otherwise:
+	if(!setTask || !clearTask){
+	  setTask = function setImmediate(fn){
+	    var args = [], i = 1;
+	    while(arguments.length > i)args.push(arguments[i++]);
+	    queue[++counter] = function(){
+	      invoke(typeof fn == 'function' ? fn : Function(fn), args);
+	    };
+	    defer(counter);
+	    return counter;
+	  };
+	  clearTask = function clearImmediate(id){
+	    delete queue[id];
+	  };
+	  // Node.js 0.8-
+	  if(__webpack_require__(32)(process) == 'process'){
+	    defer = function(id){
+	      process.nextTick(ctx(run, id, 1));
+	    };
+	  // Browsers with MessageChannel, includes WebWorkers
+	  } else if(MessageChannel){
+	    channel = new MessageChannel;
+	    port    = channel.port2;
+	    channel.port1.onmessage = listner;
+	    defer = ctx(port.postMessage, port, 1);
+	  // Browsers with postMessage, skip WebWorkers
+	  // IE8 has postMessage, but it's sync & typeof its postMessage is 'object'
+	  } else if(global.addEventListener && typeof postMessage == 'function' && !global.importScripts){
+	    defer = function(id){
+	      global.postMessage(id + '', '*');
+	    };
+	    global.addEventListener('message', listner, false);
+	  // IE8-
+	  } else if(ONREADYSTATECHANGE in cel('script')){
+	    defer = function(id){
+	      html.appendChild(cel('script'))[ONREADYSTATECHANGE] = function(){
+	        html.removeChild(this);
+	        run.call(id);
+	      };
+	    };
+	  // Rest old browsers
+	  } else {
+	    defer = function(id){
+	      setTimeout(ctx(run, id, 1), 0);
+	    };
+	  }
+	}
+	module.exports = {
+	  set:   setTask,
+	  clear: clearTask
+	};
+
+/***/ },
+/* 65 */
+/***/ function(module, exports) {
+
+	// fast apply, http://jsperf.lnkit.com/fast-apply/5
+	module.exports = function(fn, args, that){
+	  var un = that === undefined;
+	  switch(args.length){
+	    case 0: return un ? fn()
+	                      : fn.call(that);
+	    case 1: return un ? fn(args[0])
+	                      : fn.call(that, args[0]);
+	    case 2: return un ? fn(args[0], args[1])
+	                      : fn.call(that, args[0], args[1]);
+	    case 3: return un ? fn(args[0], args[1], args[2])
+	                      : fn.call(that, args[0], args[1], args[2]);
+	    case 4: return un ? fn(args[0], args[1], args[2], args[3])
+	                      : fn.call(that, args[0], args[1], args[2], args[3]);
+	  } return              fn.apply(that, args);
+	};
+
+/***/ },
+/* 66 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__(10).document && document.documentElement;
+
+/***/ },
+/* 67 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var isObject = __webpack_require__(37)
+	  , document = __webpack_require__(10).document
+	  // in old IE typeof document.createElement is 'object'
+	  , is = isObject(document) && isObject(document.createElement);
+	module.exports = function(it){
+	  return is ? document.createElement(it) : {};
+	};
+
+/***/ },
+/* 68 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var redefine = __webpack_require__(22);
+	module.exports = function(target, src){
+	  for(var key in src)redefine(target, key, src[key]);
+	  return target;
+	};
+
+/***/ },
+/* 69 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var core        = __webpack_require__(11)
+	  , $           = __webpack_require__(19)
+	  , DESCRIPTORS = __webpack_require__(21)
+	  , SPECIES     = __webpack_require__(27)('species');
+	
+	module.exports = function(KEY){
+	  var C = core[KEY];
+	  if(DESCRIPTORS && C && !C[SPECIES])$.setDesc(C, SPECIES, {
+	    configurable: true,
+	    get: function(){ return this; }
+	  });
+	};
+
+/***/ },
+/* 70 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var ITERATOR     = __webpack_require__(27)('iterator')
+	  , SAFE_CLOSING = false;
+	
+	try {
+	  var riter = [7][ITERATOR]();
+	  riter['return'] = function(){ SAFE_CLOSING = true; };
+	  Array.from(riter, function(){ throw 2; });
+	} catch(e){ /* empty */ }
+	
+	module.exports = function(exec, skipClosing){
+	  if(!skipClosing && !SAFE_CLOSING)return false;
+	  var safe = false;
+	  try {
+	    var arr  = [7]
+	      , iter = arr[ITERATOR]();
+	    iter.next = function(){ return {done: safe = true}; };
+	    arr[ITERATOR] = function(){ return iter; };
+	    exec(arr);
+	  } catch(e){ /* empty */ }
+	  return safe;
+	};
+
+/***/ },
+/* 71 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __vue_script__, __vue_template__
+	__webpack_require__(72)
+	__vue_script__ = __webpack_require__(76)
+	__vue_template__ = __webpack_require__(83)
+	module.exports = __vue_script__ || {}
+	if (module.exports.__esModule) module.exports = module.exports.default
+	if (__vue_template__) { (typeof module.exports === "function" ? module.exports.options : module.exports).template = __vue_template__ }
+	if (false) {(function () {  module.hot.accept()
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), true)
+	  if (!hotAPI.compatible) return
+	  var id = "C:\\Users\\Daniel\\Desktop\\vue-google-maps\\src\\components\\map.vue"
+	  if (!module.hot.data) {
+	    hotAPI.createRecord(id, module.exports)
+	  } else {
+	    hotAPI.update(id, module.exports, __vue_template__)
+	  }
+	})()}
+
+/***/ },
+/* 72 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(73);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(75)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/css-loader/index.js?sourceMap!./../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-c48ce990&file=map.vue!./../../node_modules/less-loader/index.js!./../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./map.vue", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js?sourceMap!./../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-c48ce990&file=map.vue!./../../node_modules/less-loader/index.js!./../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./map.vue");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 73 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(74)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, ".vue-map-container {\n  width: 100%;\n  height: 100%;\n}\n.vue-map-container .vue-map {\n  width: 100%;\n  height: 100%;\n}\n", "", {"version":3,"sources":["/./src/components/map.vue.style"],"names":[],"mappings":"AAAA;EACE,YAAY;EACZ,aAAa;CACd;AACD;EACE,YAAY;EACZ,aAAa;CACd","file":"map.vue","sourcesContent":[".vue-map-container {\n  width: 100%;\n  height: 100%;\n}\n.vue-map-container .vue-map {\n  width: 100%;\n  height: 100%;\n}\n"],"sourceRoot":"webpack://"}]);
+	
+	// exports
+
+
+/***/ },
+/* 74 */
+/***/ function(module, exports) {
+
+	/*
+		MIT License http://www.opensource.org/licenses/mit-license.php
+		Author Tobias Koppers @sokra
+	*/
+	// css base code, injected by the css-loader
+	module.exports = function() {
+		var list = [];
+	
+		// return the list of modules as css string
+		list.toString = function toString() {
+			var result = [];
+			for(var i = 0; i < this.length; i++) {
+				var item = this[i];
+				if(item[2]) {
+					result.push("@media " + item[2] + "{" + item[1] + "}");
+				} else {
+					result.push(item[1]);
+				}
+			}
+			return result.join("");
+		};
+	
+		// import a list of modules into the list
+		list.i = function(modules, mediaQuery) {
+			if(typeof modules === "string")
+				modules = [[null, modules, ""]];
+			var alreadyImportedModules = {};
+			for(var i = 0; i < this.length; i++) {
+				var id = this[i][0];
+				if(typeof id === "number")
+					alreadyImportedModules[id] = true;
+			}
+			for(i = 0; i < modules.length; i++) {
+				var item = modules[i];
+				// skip already imported module
+				// this implementation is not 100% perfect for weird media query combinations
+				//  when a module is imported multiple times with different media queries.
+				//  I hope this will never occur (Hey this way we have smaller bundles)
+				if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+					if(mediaQuery && !item[2]) {
+						item[2] = mediaQuery;
+					} else if(mediaQuery) {
+						item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+					}
+					list.push(item);
+				}
+			}
+		};
+		return list;
+	};
+
+
+/***/ },
+/* 75 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*
+		MIT License http://www.opensource.org/licenses/mit-license.php
+		Author Tobias Koppers @sokra
+	*/
+	var stylesInDom = {},
+		memoize = function(fn) {
+			var memo;
+			return function () {
+				if (typeof memo === "undefined") memo = fn.apply(this, arguments);
+				return memo;
+			};
+		},
+		isOldIE = memoize(function() {
+			return /msie [6-9]\b/.test(window.navigator.userAgent.toLowerCase());
+		}),
+		getHeadElement = memoize(function () {
+			return document.head || document.getElementsByTagName("head")[0];
+		}),
+		singletonElement = null,
+		singletonCounter = 0,
+		styleElementsInsertedAtTop = [];
+	
+	module.exports = function(list, options) {
+		if(false) {
+			if(typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
+		}
+	
+		options = options || {};
+		// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+		// tags it will allow on a page
+		if (typeof options.singleton === "undefined") options.singleton = isOldIE();
+	
+		// By default, add <style> tags to the bottom of <head>.
+		if (typeof options.insertAt === "undefined") options.insertAt = "bottom";
+	
+		var styles = listToStyles(list);
+		addStylesToDom(styles, options);
+	
+		return function update(newList) {
+			var mayRemove = [];
+			for(var i = 0; i < styles.length; i++) {
+				var item = styles[i];
+				var domStyle = stylesInDom[item.id];
+				domStyle.refs--;
+				mayRemove.push(domStyle);
+			}
+			if(newList) {
+				var newStyles = listToStyles(newList);
+				addStylesToDom(newStyles, options);
+			}
+			for(var i = 0; i < mayRemove.length; i++) {
+				var domStyle = mayRemove[i];
+				if(domStyle.refs === 0) {
+					for(var j = 0; j < domStyle.parts.length; j++)
+						domStyle.parts[j]();
+					delete stylesInDom[domStyle.id];
+				}
+			}
+		};
+	}
+	
+	function addStylesToDom(styles, options) {
+		for(var i = 0; i < styles.length; i++) {
+			var item = styles[i];
+			var domStyle = stylesInDom[item.id];
+			if(domStyle) {
+				domStyle.refs++;
+				for(var j = 0; j < domStyle.parts.length; j++) {
+					domStyle.parts[j](item.parts[j]);
+				}
+				for(; j < item.parts.length; j++) {
+					domStyle.parts.push(addStyle(item.parts[j], options));
+				}
+			} else {
+				var parts = [];
+				for(var j = 0; j < item.parts.length; j++) {
+					parts.push(addStyle(item.parts[j], options));
+				}
+				stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};
+			}
+		}
+	}
+	
+	function listToStyles(list) {
+		var styles = [];
+		var newStyles = {};
+		for(var i = 0; i < list.length; i++) {
+			var item = list[i];
+			var id = item[0];
+			var css = item[1];
+			var media = item[2];
+			var sourceMap = item[3];
+			var part = {css: css, media: media, sourceMap: sourceMap};
+			if(!newStyles[id])
+				styles.push(newStyles[id] = {id: id, parts: [part]});
+			else
+				newStyles[id].parts.push(part);
+		}
+		return styles;
+	}
+	
+	function insertStyleElement(options, styleElement) {
+		var head = getHeadElement();
+		var lastStyleElementInsertedAtTop = styleElementsInsertedAtTop[styleElementsInsertedAtTop.length - 1];
+		if (options.insertAt === "top") {
+			if(!lastStyleElementInsertedAtTop) {
+				head.insertBefore(styleElement, head.firstChild);
+			} else if(lastStyleElementInsertedAtTop.nextSibling) {
+				head.insertBefore(styleElement, lastStyleElementInsertedAtTop.nextSibling);
+			} else {
+				head.appendChild(styleElement);
+			}
+			styleElementsInsertedAtTop.push(styleElement);
+		} else if (options.insertAt === "bottom") {
+			head.appendChild(styleElement);
+		} else {
+			throw new Error("Invalid value for parameter 'insertAt'. Must be 'top' or 'bottom'.");
+		}
+	}
+	
+	function removeStyleElement(styleElement) {
+		styleElement.parentNode.removeChild(styleElement);
+		var idx = styleElementsInsertedAtTop.indexOf(styleElement);
+		if(idx >= 0) {
+			styleElementsInsertedAtTop.splice(idx, 1);
+		}
+	}
+	
+	function createStyleElement(options) {
+		var styleElement = document.createElement("style");
+		styleElement.type = "text/css";
+		insertStyleElement(options, styleElement);
+		return styleElement;
+	}
+	
+	function createLinkElement(options) {
+		var linkElement = document.createElement("link");
+		linkElement.rel = "stylesheet";
+		insertStyleElement(options, linkElement);
+		return linkElement;
+	}
+	
+	function addStyle(obj, options) {
+		var styleElement, update, remove;
+	
+		if (options.singleton) {
+			var styleIndex = singletonCounter++;
+			styleElement = singletonElement || (singletonElement = createStyleElement(options));
+			update = applyToSingletonTag.bind(null, styleElement, styleIndex, false);
+			remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true);
+		} else if(obj.sourceMap &&
+			typeof URL === "function" &&
+			typeof URL.createObjectURL === "function" &&
+			typeof URL.revokeObjectURL === "function" &&
+			typeof Blob === "function" &&
+			typeof btoa === "function") {
+			styleElement = createLinkElement(options);
+			update = updateLink.bind(null, styleElement);
+			remove = function() {
+				removeStyleElement(styleElement);
+				if(styleElement.href)
+					URL.revokeObjectURL(styleElement.href);
+			};
+		} else {
+			styleElement = createStyleElement(options);
+			update = applyToTag.bind(null, styleElement);
+			remove = function() {
+				removeStyleElement(styleElement);
+			};
+		}
+	
+		update(obj);
+	
+		return function updateStyle(newObj) {
+			if(newObj) {
+				if(newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap)
+					return;
+				update(obj = newObj);
+			} else {
+				remove();
+			}
+		};
+	}
+	
+	var replaceText = (function () {
+		var textStore = [];
+	
+		return function (index, replacement) {
+			textStore[index] = replacement;
+			return textStore.filter(Boolean).join('\n');
+		};
+	})();
+	
+	function applyToSingletonTag(styleElement, index, remove, obj) {
+		var css = remove ? "" : obj.css;
+	
+		if (styleElement.styleSheet) {
+			styleElement.styleSheet.cssText = replaceText(index, css);
+		} else {
+			var cssNode = document.createTextNode(css);
+			var childNodes = styleElement.childNodes;
+			if (childNodes[index]) styleElement.removeChild(childNodes[index]);
+			if (childNodes.length) {
+				styleElement.insertBefore(cssNode, childNodes[index]);
+			} else {
+				styleElement.appendChild(cssNode);
+			}
+		}
+	}
+	
+	function applyToTag(styleElement, obj) {
+		var css = obj.css;
+		var media = obj.media;
+	
+		if(media) {
+			styleElement.setAttribute("media", media)
+		}
+	
+		if(styleElement.styleSheet) {
+			styleElement.styleSheet.cssText = css;
+		} else {
+			while(styleElement.firstChild) {
+				styleElement.removeChild(styleElement.firstChild);
+			}
+			styleElement.appendChild(document.createTextNode(css));
+		}
+	}
+	
+	function updateLink(linkElement, obj) {
+		var css = obj.css;
+		var sourceMap = obj.sourceMap;
+	
+		if(sourceMap) {
+			// http://stackoverflow.com/a/26603875
+			css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
+		}
+	
+		var blob = new Blob([css], { type: "text/css" });
+	
+		var oldSrc = linkElement.href;
+	
+		linkElement.href = URL.createObjectURL(blob);
+	
+		if(oldSrc)
+			URL.revokeObjectURL(oldSrc);
+	}
+
+
+/***/ },
+/* 76 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _promise = __webpack_require__(40);
+	
+	var _promise2 = _interopRequireDefault(_promise);
+	
+	var _lodash = __webpack_require__(77);
+	
+	var _lodash2 = _interopRequireDefault(_lodash);
+	
+	var _manager = __webpack_require__(2);
+	
+	var _deferredReady = __webpack_require__(78);
+	
+	var _eventsBinder = __webpack_require__(79);
+	
+	var _eventsBinder2 = _interopRequireDefault(_eventsBinder);
+	
+	var _propsBinder = __webpack_require__(80);
+	
+	var _propsBinder2 = _interopRequireDefault(_propsBinder);
+	
+	var _vue = __webpack_require__(81);
+	
+	var _vue2 = _interopRequireDefault(_vue);
+	
+	var _getPropsValuesMixin = __webpack_require__(82);
+	
+	var _getPropsValuesMixin2 = _interopRequireDefault(_getPropsValuesMixin);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	// /* vim: set softtabstop=2 shiftwidth=2 expandtab : */
+	//
+	// <template>
+	//   <div class="vue-map-container">
+	//     <div ref="vue-map" class="vue-map"></div>
+	//     <slot></slot>
+	//   </div>
+	// </template>
+	//
+	// <script>
+	_vue2.default.use(_deferredReady.DeferredReady);
+	
+	var props = {
+	  center: {
+	    required: true,
+	    twoWay: true,
+	    type: Object
+	  },
+	  zoom: {
+	    required: false,
+	    twoWay: true,
+	    type: Number
+	  },
+	  heading: {
+	    type: Number,
+	    twoWay: true
+	  },
+	  mapTypeId: {
+	    twoWay: true,
+	    type: String
+	  },
+	  bounds: {
+	    twoWay: true,
+	    type: Object
+	  },
+	  projection: {
+	    twoWay: true,
+	    type: Object
+	  },
+	  tilt: {
+	    twoWay: true,
+	    type: Number
+	  },
+	  options: {
+	    type: Object,
+	    default: function _default() {
+	      return {};
+	    }
+	  }
+	};
+	
+	var events = ['click', 'dblclick', 'drag', 'dragend', 'dragstart', 'idle', 'mousemove', 'mouseout', 'mouseover', 'resize', 'rightclick', 'tilesloaded'];
+	
+	var callableMethods = ['panBy', 'panTo', 'panToBounds', 'fitBounds'];
+	
+	var methods = {
+	  resize: function resize() {
+	    if (this.mapObject) {
+	      google.maps.event.trigger(this.mapObject, 'resize');
+	
+	      // FIXME: In version 1, we preserved the center of the map
+	    }
+	  }
+	};
+	
+	var eventListeners = {};
+	
+	_lodash2.default.each(callableMethods, function (methodName) {
+	  var applier = function applier() {
+	    if (this.mapObject) {
+	      this.mapObject[methodName].apply(this.mapObject, arguments);
+	    }
+	  };
+	  eventListeners['g-' + methodName] = applier;
+	  methods[methodName] = applier;
+	});
+	
+	exports.default = _vue2.default.extend({
+	  mixins: [_getPropsValuesMixin2.default, _deferredReady.DeferredReadyMixin],
+	  props: props,
+	  replace: false, // necessary for css styles
+	
+	  created: function created() {
+	    var _this = this;
+	
+	    this.mapCreated = new _promise2.default(function (resolve, reject) {
+	      _this.mapCreatedDeferred = { resolve: resolve, reject: reject };
+	    });
+	  },
+	  deferredReady: function deferredReady() {
+	    var _this2 = this;
+	
+	    return _manager.loaded.then(function () {
+	      // getting the DOM element where to create the map
+	      var element = _this2.$refs['vue-map'];
+	
+	      // creating the map
+	      var copiedData = _lodash2.default.clone(_this2.getPropsValues());
+	      delete copiedData.options;
+	      var options = _lodash2.default.clone(_this2.options);
+	      _lodash2.default.assign(options, copiedData);
+	      _this2.mapObject = new google.maps.Map(element, options);
+	
+	      // binding properties (two and one way)
+	      (0, _propsBinder2.default)(_this2, _this2.mapObject, props);
+	
+	      //binding events
+	      (0, _eventsBinder2.default)(_this2, _this2.mapObject, events);
+	
+	      _lodash2.default.forEach(eventListeners, function (fn, event) {
+	        _this2.$on(event, fn.bind(_this2));
+	      });
+	
+	      _this2.mapCreatedDeferred.resolve(_this2.mapObject);
+	
+	      return _this2.mapCreated;
+	    }).catch(function (error) {
+	      throw error;
+	    });
+	  },
+	
+	  methods: methods
+	});
+	// </script>
+	//
+	// <style lang="less">
+	//
+	// .full() {
+	//   width: 100%;
+	//   height:100%;
+	// }
+	//
+	// .vue-map-container {
+	//   .full();
+	//   .vue-map {
+	//     .full();
+	//   }
+	// }
+	//
+	// </style>
+	//
+	/* generated by vue-loader */
+
+/***/ },
+/* 77 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	module.exports = window._;
+
+/***/ },
+/* 78 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.DeferredReadyMixin = exports.DeferredReady = undefined;
+	
+	var _promise = __webpack_require__(40);
+	
+	var _promise2 = _interopRequireDefault(_promise);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	/**
+	 * 1. Create a DeferredReady plugin.
+	 *
+	 * a. Updates options.configMergeStrategies to handle our new hook correctly (using Promise.all!)
+	 *
+	 * 2. VueGoogleMaps uses a DeferredReady mixin.
+	 *
+	 *     a. Each component checks for ancestors that are also DeferredReady (via dispatch/emit)
+	 *     b. If no, then run DeferredReady after ready.
+	 *     c. If yes, then run DeferredReady after parent's deferredReady.
+	 *
+	 *
+	 * Say we have the following inheritance:
+	 *
+	 * --> == 'child of'
+	 *
+	 * A --> B --> C
+	 *
+	 * ready is called in the following order:
+	 *
+	 * A.ready, B.ready, C.ready
+	 *
+	 * C.ready -- no further ancestors supporting mixin, so in ready() we run+
+	 *
+	   **/
+	
+	var DeferredReady = exports.DeferredReady = {
+	  install: function install(Vue, options) {
+	    // Use the same merge strategy as regular hooks
+	    Vue.config.optionMergeStrategies.deferredReady = Vue.config.optionMergeStrategies.created;
+	    Vue.config.optionMergeStrategies.beforeDeferredReady = Vue.config.optionMergeStrategies.beforeDeferredReady;
+	  }
+	};
+	
+	function runHooks(vm) {
+	  var hooks = vm.$options.deferredReady || [];
+	
+	  // Run the beforeDeferredReady methods first
+	  var beforePromise = vm.beforeDeferredReady ? typeof vm.beforeDeferredReady.then === 'function' ? vm.beforeDeferredReady : _promise2.default.all(vm.beforeDeferredReady) : _promise2.default.resolve(null);
+	
+	  beforePromise.then(function () {
+	    if (typeof hooks === 'function') {
+	      hooks = [hooks];
+	    }
+	    return _promise2.default.all(hooks.map(function (x) {
+	      try {
+	        return x.apply(vm);
+	      } catch (err) {
+	        console.error(err.stack);
+	      }
+	    }));
+	    // execute all handlers, expecting them to return promises
+	    // wait for the promises to complete, before allowing child to execute
+	  }).then(function () {
+	    vm.$deferredReadyPromiseResolve();
+	  });
+	}
+	
+	var DeferredReadyMixin = exports.DeferredReadyMixin = {
+	  /* Resolved after the deferredReady has been called
+	    and the (optional) promise it returns has been
+	    resolved */
+	  $deferredReadyPromise: false,
+	  $deferredReadyPromiseResolve: false,
+	  $deferredReadyAncestor: false,
+	
+	  created: function created() {
+	    var _this = this;
+	
+	    this.$deferredReadyPromise = new _promise2.default(function (resolve, reject) {
+	      _this.$deferredReadyPromiseResolve = resolve;
+	    });
+	
+	    var search = this.$parent;
+	    while (search) {
+	      if (search.$deferredReadyPromise) {
+	        this.$deferredReadyAncestor = search;
+	        search.$deferredReadyPromise.then(function () {
+	          runHooks(_this);
+	        });
+	        break;
+	      }
+	      search = search.$parent;
+	    }
+	  },
+	  mounted: function mounted() {
+	    // Execute the hooks only if this is the first
+	    // ancestor that is a DeferredReady
+	    if (!this.$deferredReadyAncestor) {
+	      runHooks(this);
+	    }
+	  }
+	};
+
+/***/ },
+/* 79 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _lodash = __webpack_require__(77);
+	
+	var _lodash2 = _interopRequireDefault(_lodash);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = function (vueElement, googleMapObject, events) {
+	  _lodash2.default.forEach(events, function (eventName) {
+	    var exposedName = 'g-' + eventName;
+	    googleMapObject.addListener(eventName, function (ev) {
+	      vueElement.$emit(exposedName, ev);
+	    });
+	  });
+	}; /* vim: set softtabstop=2 shiftwidth=2 expandtab : */
+
+/***/ },
+/* 80 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _lodash = __webpack_require__(77);
+	
+	var _lodash2 = _interopRequireDefault(_lodash);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function capitalizeFirstLetter(string) {
+	  return string.charAt(0).toUpperCase() + string.slice(1);
+	} /* vim: set softtabstop=2 shiftwidth=2 expandtab : */
+	
+	exports.default = function (vueElement, googleMapsElement, props, options) {
+	  options = options || {};
+	  var _options = options,
+	      afterModelChanged = _options.afterModelChanged;
+	
+	  _lodash2.default.forEach(props, function (_ref, attribute) {
+	    var twoWay = _ref.twoWay,
+	        type = _ref.type;
+	
+	    var setMethodName = 'set' + capitalizeFirstLetter(attribute);
+	    var getMethodName = 'get' + capitalizeFirstLetter(attribute);
+	    var eventName = attribute.toLowerCase() + '_changed';
+	
+	    // We need to avoid an endless
+	    // propChanged -> event emitted -> propChanged -> event emitted loop
+	    // although this may really be the user's responsibility
+	    var timesSet = 0;
+	
+	    vueElement.$watch(attribute, function () {
+	      var attributeValue = vueElement[attribute];
+	
+	      timesSet++;
+	      googleMapsElement[setMethodName](attributeValue);
+	      if (afterModelChanged) {
+	        afterModelChanged(attribute, attributeValue);
+	      }
+	    }, {
+	      deep: type === Object
+	    });
+	
+	    if (twoWay) {
+	      googleMapsElement.addListener(eventName, function (ev) {
+	        if (timesSet > 0) {
+	          timesSet--;
+	          return;
+	        } else {
+	          vueElement.$emit('g-' + eventName, googleMapsElement[getMethodName]());
+	        }
+	      });
+	    }
+	  });
+	};
+
+/***/ },
+/* 81 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	module.exports = window.Vue;
+
+/***/ },
+/* 82 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _lodash = __webpack_require__(77);
+	
+	var _lodash2 = _interopRequireDefault(_lodash);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = {
+	  methods: {
+	    getPropsValues: function getPropsValues() {
+	      var _this = this;
+	
+	      return _lodash2.default.mapValues(this.$options.props, function (v, k) {
+	        return _this[k];
+	      });
+	    }
+	  }
+	};
+
+/***/ },
+/* 83 */
+/***/ function(module, exports) {
+
+	module.exports = "\n  <div class=\"vue-map-container\">\n    <div ref=\"vue-map\" class=\"vue-map\"></div>\n    <slot></slot>\n  </div>\n";
+
+/***/ },
+/* 84 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __vue_script__, __vue_template__
+	__vue_script__ = __webpack_require__(85)
+	module.exports = __vue_script__ || {}
+	if (module.exports.__esModule) module.exports = module.exports.default
+	if (__vue_template__) { (typeof module.exports === "function" ? module.exports.options : module.exports).template = __vue_template__ }
+	if (false) {(function () {  module.hot.accept()
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), true)
+	  if (!hotAPI.compatible) return
+	  var id = "C:\\Users\\Daniel\\Desktop\\vue-google-maps\\src\\components\\marker.vue"
+	  if (!module.hot.data) {
+	    hotAPI.createRecord(id, module.exports)
+	  } else {
+	    hotAPI.update(id, module.exports, __vue_template__)
+	  }
+	})()}
+
+/***/ },
+/* 85 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _promise = __webpack_require__(40);
+	
+	var _promise2 = _interopRequireDefault(_promise);
+	
+	var _lodash = __webpack_require__(77);
+	
+	var _lodash2 = _interopRequireDefault(_lodash);
+	
+	var _eventsBinder = __webpack_require__(79);
+	
+	var _eventsBinder2 = _interopRequireDefault(_eventsBinder);
+	
+	var _propsBinder = __webpack_require__(80);
+	
+	var _propsBinder2 = _interopRequireDefault(_propsBinder);
+	
+	var _getPropsValuesMixin = __webpack_require__(82);
+	
+	var _getPropsValuesMixin2 = _interopRequireDefault(_getPropsValuesMixin);
+	
+	var _mapElementMixin = __webpack_require__(86);
+	
+	var _mapElementMixin2 = _interopRequireDefault(_mapElementMixin);
+	
+	var _cluster = __webpack_require__(87);
+	
+	var _cluster2 = _interopRequireDefault(_cluster);
+	
+	var _vue = __webpack_require__(81);
+	
+	var _vue2 = _interopRequireDefault(_vue);
+	
+	var _assert = __webpack_require__(91);
+	
+	var _assert2 = _interopRequireDefault(_assert);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	// /* vim: set softtabstop=2 shiftwidth=2 expandtab : */
+	//
+	// <script>
+	
+	var props = {
+	  animation: {
+	    twoWay: true,
+	    type: Number
+	  },
+	  attribution: {
+	    type: Object
+	  },
+	  clickable: {
+	    type: Boolean,
+	    twoWay: true,
+	    default: true
+	  },
+	  cursor: {
+	    type: String,
+	    twoWay: true
+	  },
+	  draggable: {
+	    type: Boolean,
+	    twoWay: true,
+	    default: false
+	  },
+	  icon: {
+	    type: Object,
+	    twoWay: true
+	  },
+	  label: {},
+	  opacity: {
+	    type: Number,
+	    default: 1
+	  },
+	  place: {
+	    type: Object
+	  },
+	  position: {
+	    type: Object,
+	    twoWay: true
+	  },
+	  shape: {
+	    type: Object,
+	    twoWay: true
+	  },
+	  title: {
+	    type: String,
+	    twoWay: true
+	  },
+	  zIndex: {
+	    type: Number,
+	    twoWay: true
+	  },
+	  visible: {
+	    twoWay: true,
+	    default: true
+	  }
+	};
+	
+	var events = ['click', 'rightclick', 'dblclick', 'drag', 'dragstart', 'dragend', 'mouseup', 'mousedown', 'mouseover', 'mouseout'];
+	
+	var container;
+	
+	/**
+	 * @class Marker
+	 *
+	 * Marker class with extra support for
+	 *
+	 * - Embedded info windows
+	 * - Clustered markers
+	 *
+	 * Support for clustered markers is for backward-compatability
+	 * reasons. Otherwise we should use a cluster-marker mixin or
+	 * subclass.
+	 */
+	exports.default = _vue2.default.extend({
+	  mixins: [_mapElementMixin2.default, _getPropsValuesMixin2.default],
+	  props: props,
+	
+	  render: function render() {
+	    return '';
+	  },
+	  created: function created() {
+	    var _this = this;
+	
+	    var search = this.$parent;
+	    var clusterObjectPromise = null;
+	
+	    while (search) {
+	      if (search instanceof _cluster2.default) {
+	        this.$clusterAncestor = search;
+	        clusterObjectPromise = search.$deferredReadyPromise.then(function () {
+	          _this.$clusterObject = search.$clusterObject;
+	        });
+	        break;
+	      }
+	      search = search.$parent;
+	    }
+	
+	    this.$clusterObjectPromise = clusterObjectPromise || _promise2.default.resolve(null);
+	  },
+	  destroyed: function destroyed() {
+	    if (!this.$markerObject) return;
+	
+	    if (this.$clusterObject) {
+	      this.$clusterObject.removeMarker(this.$markerObject);
+	    } else {
+	      this.$markerObject.setMap(null);
+	    }
+	  },
+	  deferredReady: function deferredReady() {
+	    var _this2 = this;
+	
+	    var options = _lodash2.default.mapValues(props, function (value, prop) {
+	      return _this2[prop];
+	    });
+	    options.map = this.$map;
+	
+	    this.$clusterObjectPromise.then(function () {
+	      return _this2.createMarker(options, _this2.$map);
+	    });
+	  },
+	
+	
+	  methods: {
+	    createMarker: function createMarker(options, map) {
+	      this.$markerObject = new google.maps.Marker(options);
+	      (0, _propsBinder2.default)(this, this.$markerObject, props);
+	      (0, _eventsBinder2.default)(this, this.$markerObject, events);
+	
+	      if (this.$clusterObject) {
+	        this.$clusterObject.addMarker(this.$markerObject);
+	      }
+	    }
+	  }
+	});
+	
+	// </script>
+	//
+	/* generated by vue-loader */
+
+/***/ },
+/* 86 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _vue = __webpack_require__(81);
+	
+	var _vue2 = _interopRequireDefault(_vue);
+	
+	var _deferredReady = __webpack_require__(78);
+	
+	var _deferredReady2 = __webpack_require__(78);
+	
+	var _map = __webpack_require__(71);
+	
+	var _map2 = _interopRequireDefault(_map);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	/* vim: set softtabstop=2 shiftwidth=2 expandtab : */
+	
+	_vue2.default.use(_deferredReady2.DeferredReady);
+	
+	/**
+	 * @class MapElementMixin @mixins DeferredReadyMixin
+	 *
+	 * Extends components to include the following fields:
+	 *
+	 * @property $map        The Google map (valid only after the promise returns)
+	 *
+	 *
+	 * */
+	exports.default = {
+	
+	  mixins: [_deferredReady.DeferredReadyMixin],
+	
+	  created: function created() {
+	    var _this = this;
+	
+	    /* Search for the Map component in the parent */
+	    var search = this.$findAncestor(function (ans) {
+	      return ans instanceof _map2.default;
+	    });
+	
+	    if (!search) {
+	      throw new Error(this.constructor.name + ' component must be used within a <Map>');
+	    }
+	
+	    this.$mapPromise = search.mapCreated.then(function (map) {
+	      _this.$map = map;
+	    });
+	    // This is a hack. FIXME
+	    if (search.mapObject) {
+	      this.$map = search.mapObject;
+	    }
+	    this.$MapElementMixin = search;
+	    this.$map = null;
+	  },
+	  beforeDeferredReady: function beforeDeferredReady() {
+	    return this.$mapPromise;
+	  },
+	
+	
+	  methods: {
+	    $findAncestor: function $findAncestor(condition) {
+	      var search = this.$parent;
+	
+	      while (search) {
+	        if (condition(search)) {
+	          return search;
+	        }
+	        search = search.$parent;
+	      }
+	      return null;
+	    }
+	  }
+	
+	};
+
+/***/ },
+/* 87 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __vue_script__, __vue_template__
+	__vue_script__ = __webpack_require__(88)
+	__vue_template__ = __webpack_require__(90)
+	module.exports = __vue_script__ || {}
+	if (module.exports.__esModule) module.exports = module.exports.default
+	if (__vue_template__) { (typeof module.exports === "function" ? module.exports.options : module.exports).template = __vue_template__ }
+	if (false) {(function () {  module.hot.accept()
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), true)
+	  if (!hotAPI.compatible) return
+	  var id = "C:\\Users\\Daniel\\Desktop\\vue-google-maps\\src\\components\\cluster.vue"
+	  if (!module.hot.data) {
+	    hotAPI.createRecord(id, module.exports)
+	  } else {
+	    hotAPI.update(id, module.exports, __vue_template__)
+	  }
+	})()}
+
+/***/ },
+/* 88 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _lodash = __webpack_require__(77);
+	
+	var _lodash2 = _interopRequireDefault(_lodash);
+	
+	var _vue = __webpack_require__(81);
+	
+	var _vue2 = _interopRequireDefault(_vue);
+	
+	var _propsBinder = __webpack_require__(80);
+	
+	var _propsBinder2 = _interopRequireDefault(_propsBinder);
+	
+	var _mapElementMixin = __webpack_require__(86);
+	
+	var _mapElementMixin2 = _interopRequireDefault(_mapElementMixin);
+	
+	var _getPropsValuesMixin = __webpack_require__(82);
+	
+	var _getPropsValuesMixin2 = _interopRequireDefault(_getPropsValuesMixin);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	__webpack_require__(89); // /* vim: set softtabstop=2 shiftwidth=2 expandtab : */
+	//
+	// /**
+	//   * @class Cluster
+	//   * @prop $clusterObject -- Exposes the marker clusterer to
+	//         descendent Marker classes. Override this if you area
+	//         extending the class
+	// **/
+	//
+	// <template>
+	//   <div> <!-- needed because Vue 2 disallows root slot element -->
+	//     <slot></slot>
+	//   </div>
+	// </template>
+	//
+	// <script>
+	
+	var props = {
+	  maxZoom: {
+	    type: Number,
+	    twoWay: false
+	  },
+	  calculor: {
+	    type: Function,
+	    twoWay: false
+	  },
+	  gridSize: {
+	    type: Number,
+	    twoWay: false
+	  },
+	  styles: {
+	    type: Array,
+	    twoWay: false
+	  }
+	};
+	
+	exports.default = _vue2.default.extend({
+	  mixins: [_mapElementMixin2.default, _getPropsValuesMixin2.default],
+	  props: props,
+	
+	  deferredReady: function deferredReady() {
+	    var _this = this;
+	
+	    var options = _lodash2.default.clone(this.getPropsValues());
+	    this.$clusterObject = new MarkerClusterer(this.$map, [], options);
+	
+	    (0, _propsBinder2.default)(this, this.$clusterObject, props, {
+	      afterModelChanged: function afterModelChanged(a, v) {
+	        var oldMarkers = _this.$clusterObject.getMarkers();
+	        _this.$clusterObject.clearMarkers();
+	        _this.$clusterObject.addMarkers(oldMarkers);
+	      }
+	    });
+	  },
+	  detached: function detached() {
+	    this.$clusterObject.clearMarkers();
+	  }
+	});
+	
+	// </script>
+	//
+	/* generated by vue-loader */
+
+/***/ },
+/* 89 */
+/***/ function(module, exports) {
+
+	// ==ClosureCompiler==
+	// @compilation_level ADVANCED_OPTIMIZATIONS
+	// @externs_url http://closure-compiler.googlecode.com/svn/trunk/contrib/externs/maps/google_maps_api_v3_3.js
+	// ==/ClosureCompiler==
+	
+	/**
+	 * @name MarkerClusterer for Google Maps v3
+	 * @version version 1.0
+	 * @author Luke Mahe
+	 * @fileoverview
+	 * The library creates and manages per-zoom-level clusters for large amounts of
+	 * markers.
+	 * <br/>
+	 * This is a v3 implementation of the
+	 * <a href="http://gmaps-utility-library-dev.googlecode.com/svn/tags/markerclusterer/"
+	 * >v2 MarkerClusterer</a>.
+	 */
+	
+	/**
 	 * Licensed under the Apache License, Version 2.0 (the "License");
 	 * you may not use this file except in compliance with the License.
 	 * You may obtain a copy of the License at
 	 *
-	 * http://www.apache.org/licenses/LICENSE-2.0
+	 *     http://www.apache.org/licenses/LICENSE-2.0
 	 *
 	 * Unless required by applicable law or agreed to in writing, software
 	 * distributed under the License is distributed on an "AS IS" BASIS,
 	 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 	 * See the License for the specific language governing permissions and
 	 * limitations under the License.
+	 */
+	
+	
+	/**
+	 * A Marker Clusterer that clusters markers.
+	 *
+	 * @param {google.maps.Map} map The Google map to attach to.
+	 * @param {Array.<google.maps.Marker>=} opt_markers Optional markers to add to
+	 *   the cluster.
+	 * @param {Object=} opt_options support the following options:
+	 *     'gridSize': (number) The grid size of a cluster in pixels.
+	 *     'maxZoom': (number) The maximum zoom level that a marker can be part of a
+	 *                cluster.
+	 *     'zoomOnClick': (boolean) Whether the default behaviour of clicking on a
+	 *                    cluster is to zoom into it.
+	 *     'averageCenter': (boolean) Wether the center of each cluster should be
+	 *                      the average of all markers in the cluster.
+	 *     'minimumClusterSize': (number) The minimum number of markers to be in a
+	 *                           cluster before the markers are hidden and a count
+	 *                           is shown.
+	 *     'styles': (object) An object that has style properties:
+	 *       'url': (string) The image url.
+	 *       'height': (number) The image height.
+	 *       'width': (number) The image width.
+	 *       'anchor': (Array) The anchor position of the label text.
+	 *       'textColor': (string) The text color.
+	 *       'textSize': (number) The text size.
+	 *       'backgroundPosition': (string) The position of the backgound x, y.
+	 *       'iconAnchor': (Array) The anchor position of the icon x, y.
+	 * @constructor
+	 * @extends google.maps.OverlayView
+	 */
+	function MarkerClusterer(map, opt_markers, opt_options) {
+	  // MarkerClusterer implements google.maps.OverlayView interface. We use the
+	  // extend function to extend MarkerClusterer with google.maps.OverlayView
+	  // because it might not always be available when the code is defined so we
+	  // look for it at the last possible moment. If it doesn't exist now then
+	  // there is no point going ahead :)
+	  this.extend(MarkerClusterer, google.maps.OverlayView);
+	  this.map_ = map;
+	
+	  /**
+	   * @type {Array.<google.maps.Marker>}
+	   * @private
+	   */
+	  this.markers_ = [];
+	
+	  /**
+	   *  @type {Array.<Cluster>}
+	   */
+	  this.clusters_ = [];
+	
+	  this.sizes = [53, 56, 66, 78, 90];
+	
+	  /**
+	   * @private
+	   */
+	  this.styles_ = [];
+	
+	  /**
+	   * @type {boolean}
+	   * @private
+	   */
+	  this.ready_ = false;
+	
+	  var options = opt_options || {};
+	
+	  /**
+	   * @type {number}
+	   * @private
+	   */
+	  this.gridSize_ = options['gridSize'] || 60;
+	
+	  /**
+	   * @private
+	   */
+	  this.minClusterSize_ = options['minimumClusterSize'] || 2;
+	
+	
+	  /**
+	   * @type {?number}
+	   * @private
+	   */
+	  this.maxZoom_ = options['maxZoom'] || null;
+	
+	  this.styles_ = options['styles'] || [];
+	
+	  /**
+	   * @type {string}
+	   * @private
+	   */
+	  this.imagePath_ = options['imagePath'] ||
+	      this.MARKER_CLUSTER_IMAGE_PATH_;
+	
+	  /**
+	   * @type {string}
+	   * @private
+	   */
+	  this.imageExtension_ = options['imageExtension'] ||
+	      this.MARKER_CLUSTER_IMAGE_EXTENSION_;
+	
+	  /**
+	   * @type {boolean}
+	   * @private
+	   */
+	  this.zoomOnClick_ = true;
+	
+	  if (options['zoomOnClick'] != undefined) {
+	    this.zoomOnClick_ = options['zoomOnClick'];
+	  }
+	
+	  /**
+	   * @type {boolean}
+	   * @private
+	   */
+	  this.averageCenter_ = false;
+	
+	  if (options['averageCenter'] != undefined) {
+	    this.averageCenter_ = options['averageCenter'];
+	  }
+	
+	  this.setupStyles_();
+	
+	  this.setMap(map);
+	
+	  /**
+	   * @type {number}
+	   * @private
+	   */
+	  this.prevZoom_ = this.map_.getZoom();
+	
+	  // Add the map event listeners
+	  var that = this;
+	  google.maps.event.addListener(this.map_, 'zoom_changed', function() {
+	    var zoom = that.map_.getZoom();
+	
+	    if (that.prevZoom_ != zoom) {
+	      that.prevZoom_ = zoom;
+	      that.resetViewport();
+	    }
+	  });
+	
+	  google.maps.event.addListener(this.map_, 'idle', function() {
+	    that.redraw();
+	  });
+	
+	  // Finally, add the markers
+	  if (opt_markers && opt_markers.length) {
+	    this.addMarkers(opt_markers, false);
+	  }
+	}
+	
+	
+	/**
+	 * The marker cluster image path.
+	 *
+	 * @type {string}
+	 * @private
+	 */
+	MarkerClusterer.prototype.MARKER_CLUSTER_IMAGE_PATH_ =
+	    'http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/' +
+	    'images/m';
+	
+	
+	/**
+	 * The marker cluster image path.
+	 *
+	 * @type {string}
+	 * @private
+	 */
+	MarkerClusterer.prototype.MARKER_CLUSTER_IMAGE_EXTENSION_ = 'png';
+	
+	
+	/**
+	 * Extends a objects prototype by anothers.
+	 *
+	 * @param {Object} obj1 The object to be extended.
+	 * @param {Object} obj2 The object to extend with.
+	 * @return {Object} The new extended object.
+	 * @ignore
+	 */
+	MarkerClusterer.prototype.extend = function(obj1, obj2) {
+	  return (function(object) {
+	    for (var property in object.prototype) {
+	      this.prototype[property] = object.prototype[property];
+	    }
+	    return this;
+	  }).apply(obj1, [obj2]);
+	};
+	
+	
+	/**
+	 * Implementaion of the interface method.
+	 * @ignore
+	 */
+	MarkerClusterer.prototype.onAdd = function() {
+	  this.setReady_(true);
+	};
+	
+	/**
+	 * Implementaion of the interface method.
+	 * @ignore
+	 */
+	MarkerClusterer.prototype.draw = function() {};
+	
+	/**
+	 * Sets up the styles object.
+	 *
+	 * @private
+	 */
+	MarkerClusterer.prototype.setupStyles_ = function() {
+	  if (this.styles_.length) {
+	    return;
+	  }
+	
+	  for (var i = 0, size; size = this.sizes[i]; i++) {
+	    this.styles_.push({
+	      url: this.imagePath_ + (i + 1) + '.' + this.imageExtension_,
+	      height: size,
+	      width: size
+	    });
+	  }
+	};
+	
+	/**
+	 *  Fit the map to the bounds of the markers in the clusterer.
+	 */
+	MarkerClusterer.prototype.fitMapToMarkers = function() {
+	  var markers = this.getMarkers();
+	  var bounds = new google.maps.LatLngBounds();
+	  for (var i = 0, marker; marker = markers[i]; i++) {
+	    bounds.extend(marker.getPosition());
+	  }
+	
+	  this.map_.fitBounds(bounds);
+	};
+	
+	
+	/**
+	 *  Sets the styles.
+	 *
+	 *  @param {Object} styles The style to set.
+	 */
+	MarkerClusterer.prototype.setStyles = function(styles) {
+	  this.styles_ = styles;
+	};
+	
+	
+	/**
+	 *  Gets the styles.
+	 *
+	 *  @return {Object} The styles object.
+	 */
+	MarkerClusterer.prototype.getStyles = function() {
+	  return this.styles_;
+	};
+	
+	
+	/**
+	 * Whether zoom on click is set.
+	 *
+	 * @return {boolean} True if zoomOnClick_ is set.
+	 */
+	MarkerClusterer.prototype.isZoomOnClick = function() {
+	  return this.zoomOnClick_;
+	};
+	
+	/**
+	 * Whether average center is set.
+	 *
+	 * @return {boolean} True if averageCenter_ is set.
+	 */
+	MarkerClusterer.prototype.isAverageCenter = function() {
+	  return this.averageCenter_;
+	};
+	
+	
+	/**
+	 *  Returns the array of markers in the clusterer.
+	 *
+	 *  @return {Array.<google.maps.Marker>} The markers.
+	 */
+	MarkerClusterer.prototype.getMarkers = function() {
+	  return this.markers_;
+	};
+	
+	
+	/**
+	 *  Returns the number of markers in the clusterer
+	 *
+	 *  @return {Number} The number of markers.
+	 */
+	MarkerClusterer.prototype.getTotalMarkers = function() {
+	  return this.markers_.length;
+	};
+	
+	
+	/**
+	 *  Sets the max zoom for the clusterer.
+	 *
+	 *  @param {number} maxZoom The max zoom level.
+	 */
+	MarkerClusterer.prototype.setMaxZoom = function(maxZoom) {
+	  this.maxZoom_ = maxZoom;
+	};
+	
+	
+	/**
+	 *  Gets the max zoom for the clusterer.
+	 *
+	 *  @return {number} The max zoom level.
+	 */
+	MarkerClusterer.prototype.getMaxZoom = function() {
+	  return this.maxZoom_;
+	};
+	
+	
+	/**
+	 *  The function for calculating the cluster icon image.
+	 *
+	 *  @param {Array.<google.maps.Marker>} markers The markers in the clusterer.
+	 *  @param {number} numStyles The number of styles available.
+	 *  @return {Object} A object properties: 'text' (string) and 'index' (number).
+	 *  @private
+	 */
+	MarkerClusterer.prototype.calculator_ = function(markers, numStyles) {
+	  var index = 0;
+	  var count = markers.length;
+	  var dv = count;
+	  while (dv !== 0) {
+	    dv = parseInt(dv / 10, 10);
+	    index++;
+	  }
+	
+	  index = Math.min(index, numStyles);
+	  return {
+	    text: count,
+	    index: index
+	  };
+	};
+	
+	
+	/**
+	 * Set the calculator function.
+	 *
+	 * @param {function(Array, number)} calculator The function to set as the
+	 *     calculator. The function should return a object properties:
+	 *     'text' (string) and 'index' (number).
 	 *
 	 */
-!function(e){"use strict";if("function"==typeof bootstrap)bootstrap("promise",e);else{t.exports=e()}}(function(){"use strict";function t(t){return function(){return K.apply(t,arguments)}}function r(t){return t===Object(t)}function o(t){return"[object StopIteration]"===ot(t)||t instanceof q}function i(t,e){if(U&&e.stack&&"object"==typeof t&&null!==t&&t.stack&&-1===t.stack.indexOf(it)){for(var n=[],r=e;r;r=r.source)r.stack&&n.unshift(r.stack);n.unshift(t.stack);var o=n.join("\n"+it+"\n");t.stack=s(o)}}function s(t){for(var e=t.split("\n"),n=[],r=0;r<e.length;++r){var o=e[r];c(o)||a(o)||!o||n.push(o)}return n.join("\n")}function a(t){return-1!==t.indexOf("(module.js:")||-1!==t.indexOf("(node.js:")}function u(t){var e=/at .+ \((.+):(\d+):(?:\d+)\)$/.exec(t);if(e)return[e[1],Number(e[2])];var n=/at ([^ ]+):(\d+):(?:\d+)$/.exec(t);if(n)return[n[1],Number(n[2])];var r=/.*@(.+):(\d+)$/.exec(t);return r?[r[1],Number(r[2])]:void 0}function c(t){var e=u(t);if(!e)return!1;var n=e[0],r=e[1];return n===G&&r>=Z&&pt>=r}function p(){if(U)try{throw new Error}catch(t){var e=t.stack.split("\n"),n=e[0].indexOf("@")>0?e[1]:e[2],r=u(n);if(!r)return;return G=r[0],r[1]}}function l(t,e,n){return function(){return"undefined"!=typeof console&&"function"==typeof console.warn&&console.warn(e+" is deprecated, use "+n+" instead.",new Error("").stack),t.apply(t,arguments)}}function f(t){return t instanceof v?t:b(t)?$(t):C(t)}function d(){function t(t){e=t,i.source=t,X(n,function(e,n){f.nextTick(function(){t.promiseDispatch.apply(t,n)})},void 0),n=void 0,r=void 0}var e,n=[],r=[],o=et(d.prototype),i=et(v.prototype);if(i.promiseDispatch=function(t,o,i){var s=Q(arguments);n?(n.push(s),"when"===o&&i[1]&&r.push(i[1])):f.nextTick(function(){e.promiseDispatch.apply(e,s)})},i.valueOf=function(){if(n)return i;var t=m(e);return _(t)&&(e=t),t},i.inspect=function(){return e?e.inspect():{state:"pending"}},f.longStackSupport&&U)try{throw new Error}catch(s){i.stack=s.stack.substring(s.stack.indexOf("\n")+1)}return o.promise=i,o.resolve=function(n){e||t(f(n))},o.fulfill=function(n){e||t(C(n))},o.reject=function(n){e||t(S(n))},o.notify=function(t){e||X(r,function(e,n){f.nextTick(function(){n(t)})},void 0)},o}function h(t){if("function"!=typeof t)throw new TypeError("resolver must be a function.");var e=d();try{t(e.resolve,e.reject,e.notify)}catch(n){e.reject(n)}return e.promise}function y(t){return h(function(e,n){for(var r=0,o=t.length;o>r;r++)f(t[r]).then(e,n)})}function v(t,e,n){void 0===e&&(e=function(t){return S(new Error("Promise does not support operation: "+t))}),void 0===n&&(n=function(){return{state:"unknown"}});var r=et(v.prototype);if(r.promiseDispatch=function(n,o,i){var s;try{s=t[o]?t[o].apply(r,i):e.call(r,o,i)}catch(a){s=S(a)}n&&n(s)},r.inspect=n,n){var o=n();"rejected"===o.state&&(r.exception=o.reason),r.valueOf=function(){var t=n();return"pending"===t.state||"rejected"===t.state?r:t.value}}return r}function g(t,e,n,r){return f(t).then(e,n,r)}function m(t){if(_(t)){var e=t.inspect();if("fulfilled"===e.state)return e.value}return t}function _(t){return t instanceof v}function b(t){return r(t)&&"function"==typeof t.then}function x(t){return _(t)&&"pending"===t.inspect().state}function w(t){return!_(t)||"fulfilled"===t.inspect().state}function j(t){return _(t)&&"rejected"===t.inspect().state}function k(){st.length=0,at.length=0,ct||(ct=!0)}function M(t,n){ct&&("object"==typeof e&&"function"==typeof e.emit&&f.nextTick.runAfter(function(){-1!==Y(at,t)&&(e.emit("unhandledRejection",n,t),ut.push(t))}),at.push(t),n&&"undefined"!=typeof n.stack?st.push(n.stack):st.push("(no stack) "+n))}function O(t){if(ct){var n=Y(at,t);-1!==n&&("object"==typeof e&&"function"==typeof e.emit&&f.nextTick.runAfter(function(){var r=Y(ut,t);-1!==r&&(e.emit("rejectionHandled",st[n],t),ut.splice(r,1))}),at.splice(n,1),st.splice(n,1))}}function S(t){var e=v({when:function(e){return e&&O(this),e?e(t):this}},function(){return this},function(){return{state:"rejected",reason:t}});return M(e,t),e}function C(t){return v({when:function(){return t},get:function(e){return t[e]},set:function(e,n){t[e]=n},"delete":function(e){delete t[e]},post:function(e,n){return null===e||void 0===e?t.apply(void 0,n):t[e].apply(t,n)},apply:function(e,n){return t.apply(e,n)},keys:function(){return rt(t)}},void 0,function(){return{state:"fulfilled",value:t}})}function $(t){var e=d();return f.nextTick(function(){try{t.then(e.resolve,e.reject,e.notify)}catch(n){e.reject(n)}}),e.promise}function E(t){return v({isDef:function(){}},function(e,n){return I(t,e,n)},function(){return f(t).inspect()})}function P(t,e,n){return f(t).spread(e,n)}function T(t){return function(){function e(t,e){var s;if("undefined"==typeof StopIteration){try{s=n[t](e)}catch(a){return S(a)}return s.done?f(s.value):g(s.value,r,i)}try{s=n[t](e)}catch(a){return o(a)?f(a.value):S(a)}return g(s,r,i)}var n=t.apply(this,arguments),r=e.bind(e,"next"),i=e.bind(e,"throw");return r()}}function A(t){f.done(f.async(t)())}function R(t){throw new q(t)}function L(t){return function(){return P([this,z(arguments)],function(e,n){return t.apply(e,n)})}}function I(t,e,n){return f(t).dispatch(e,n)}function z(t){return g(t,function(t){var e=0,n=d();return X(t,function(r,o,i){var s;_(o)&&"fulfilled"===(s=o.inspect()).state?t[i]=s.value:(++e,g(o,function(r){t[i]=r,0===--e&&n.resolve(t)},n.reject,function(t){n.notify({index:i,value:t})}))},void 0),0===e&&n.resolve(t),n.promise})}function N(t){if(0===t.length)return f.resolve();var e=f.defer(),n=0;return X(t,function(r,o,i){function s(t){e.resolve(t)}function a(){n--,0===n&&e.reject(new Error("Can't get fulfillment value from any promise, all promises were rejected."))}function u(t){e.notify({index:i,value:t})}var c=t[i];n++,g(c,s,a,u)},void 0),e.promise}function W(t){return g(t,function(t){return t=tt(t,f),g(z(tt(t,function(t){return g(t,H,H)})),function(){return t})})}function D(t){return f(t).allSettled()}function B(t,e){return f(t).then(void 0,void 0,e)}function F(t,e){return f(t).nodeify(e)}var U=!1;try{throw new Error}catch(V){U=!!V.stack}var G,q,Z=p(),H=function(){},J=function(){function t(){for(var t,e;o.next;)o=o.next,t=o.task,o.task=void 0,e=o.domain,e&&(o.domain=void 0,e.enter()),r(t,e);for(;c.length;)t=c.pop(),r(t);s=!1}function r(e,n){try{e()}catch(r){if(u)throw n&&n.exit(),setTimeout(t,0),n&&n.enter(),r;setTimeout(function(){throw r},0)}n&&n.exit()}var o={task:void 0,next:null},i=o,s=!1,a=void 0,u=!1,c=[];if(J=function(t){i=i.next={task:t,domain:u&&e.domain,next:null},s||(s=!0,a())},"object"==typeof e&&"[object process]"===e.toString()&&e.nextTick)u=!0,a=function(){e.nextTick(t)};else if("function"==typeof n)a="undefined"!=typeof window?n.bind(window,t):function(){n(t)};else if("undefined"!=typeof MessageChannel){var p=new MessageChannel;p.port1.onmessage=function(){a=l,p.port1.onmessage=t,t()};var l=function(){p.port2.postMessage(0)};a=function(){setTimeout(t,0),l()}}else a=function(){setTimeout(t,0)};return J.runAfter=function(t){c.push(t),s||(s=!0,a())},J}(),K=Function.call,Q=t(Array.prototype.slice),X=t(Array.prototype.reduce||function(t,e){var n=0,r=this.length;if(1===arguments.length)for(;;){if(n in this){e=this[n++];break}if(++n>=r)throw new TypeError}for(;r>n;n++)n in this&&(e=t(e,this[n],n));return e}),Y=t(Array.prototype.indexOf||function(t){for(var e=0;e<this.length;e++)if(this[e]===t)return e;return-1}),tt=t(Array.prototype.map||function(t,e){var n=this,r=[];return X(n,function(o,i,s){r.push(t.call(e,i,s,n))},void 0),r}),et=Object.create||function(t){function e(){}return e.prototype=t,new e},nt=t(Object.prototype.hasOwnProperty),rt=Object.keys||function(t){var e=[];for(var n in t)nt(t,n)&&e.push(n);return e},ot=t(Object.prototype.toString);q="undefined"!=typeof ReturnValue?ReturnValue:function(t){this.value=t};var it="From previous event:";f.resolve=f,f.nextTick=J,f.longStackSupport=!1,"object"==typeof e&&e&&{NODE_ENV:"production"}.Q_DEBUG&&(f.longStackSupport=!0),f.defer=d,d.prototype.makeNodeResolver=function(){var t=this;return function(e,n){e?t.reject(e):arguments.length>2?t.resolve(Q(arguments,1)):t.resolve(n)}},f.Promise=h,f.promise=h,h.race=y,h.all=z,h.reject=S,h.resolve=f,f.passByCopy=function(t){return t},v.prototype.passByCopy=function(){return this},f.join=function(t,e){return f(t).join(e)},v.prototype.join=function(t){return f([this,t]).spread(function(t,e){if(t===e)return t;throw new Error("Can't join: not the same: "+t+" "+e)})},f.race=y,v.prototype.race=function(){return this.then(f.race)},f.makePromise=v,v.prototype.toString=function(){return"[object Promise]"},v.prototype.then=function(t,e,n){function r(e){try{return"function"==typeof t?t(e):e}catch(n){return S(n)}}function o(t){if("function"==typeof e){i(t,a);try{return e(t)}catch(n){return S(n)}}return S(t)}function s(t){return"function"==typeof n?n(t):t}var a=this,u=d(),c=!1;return f.nextTick(function(){a.promiseDispatch(function(t){c||(c=!0,u.resolve(r(t)))},"when",[function(t){c||(c=!0,u.resolve(o(t)))}])}),a.promiseDispatch(void 0,"when",[void 0,function(t){var e,n=!1;try{e=s(t)}catch(r){if(n=!0,!f.onerror)throw r;f.onerror(r)}n||u.notify(e)}]),u.promise},f.tap=function(t,e){return f(t).tap(e)},v.prototype.tap=function(t){return t=f(t),this.then(function(e){return t.fcall(e).thenResolve(e)})},f.when=g,v.prototype.thenResolve=function(t){return this.then(function(){return t})},f.thenResolve=function(t,e){return f(t).thenResolve(e)},v.prototype.thenReject=function(t){return this.then(function(){throw t})},f.thenReject=function(t,e){return f(t).thenReject(e)},f.nearer=m,f.isPromise=_,f.isPromiseAlike=b,f.isPending=x,v.prototype.isPending=function(){return"pending"===this.inspect().state},f.isFulfilled=w,v.prototype.isFulfilled=function(){return"fulfilled"===this.inspect().state},f.isRejected=j,v.prototype.isRejected=function(){return"rejected"===this.inspect().state};var st=[],at=[],ut=[],ct=!0;f.resetUnhandledRejections=k,f.getUnhandledReasons=function(){return st.slice()},f.stopUnhandledRejectionTracking=function(){k(),ct=!1},k(),f.reject=S,f.fulfill=C,f.master=E,f.spread=P,v.prototype.spread=function(t,e){return this.all().then(function(e){return t.apply(void 0,e)},e)},f.async=T,f.spawn=A,f["return"]=R,f.promised=L,f.dispatch=I,v.prototype.dispatch=function(t,e){var n=this,r=d();return f.nextTick(function(){n.promiseDispatch(r.resolve,t,e)}),r.promise},f.get=function(t,e){return f(t).dispatch("get",[e])},v.prototype.get=function(t){return this.dispatch("get",[t])},f.set=function(t,e,n){return f(t).dispatch("set",[e,n])},v.prototype.set=function(t,e){return this.dispatch("set",[t,e])},f.del=f["delete"]=function(t,e){return f(t).dispatch("delete",[e])},v.prototype.del=v.prototype["delete"]=function(t){return this.dispatch("delete",[t])},f.mapply=f.post=function(t,e,n){return f(t).dispatch("post",[e,n])},v.prototype.mapply=v.prototype.post=function(t,e){return this.dispatch("post",[t,e])},f.send=f.mcall=f.invoke=function(t,e){return f(t).dispatch("post",[e,Q(arguments,2)])},v.prototype.send=v.prototype.mcall=v.prototype.invoke=function(t){return this.dispatch("post",[t,Q(arguments,1)])},f.fapply=function(t,e){return f(t).dispatch("apply",[void 0,e])},v.prototype.fapply=function(t){return this.dispatch("apply",[void 0,t])},f["try"]=f.fcall=function(t){return f(t).dispatch("apply",[void 0,Q(arguments,1)])},v.prototype.fcall=function(){return this.dispatch("apply",[void 0,Q(arguments)])},f.fbind=function(t){var e=f(t),n=Q(arguments,1);return function(){return e.dispatch("apply",[this,n.concat(Q(arguments))])}},v.prototype.fbind=function(){var t=this,e=Q(arguments);return function(){return t.dispatch("apply",[this,e.concat(Q(arguments))])}},f.keys=function(t){return f(t).dispatch("keys",[])},v.prototype.keys=function(){return this.dispatch("keys",[])},f.all=z,v.prototype.all=function(){return z(this)},f.any=N,v.prototype.any=function(){return N(this)},f.allResolved=l(W,"allResolved","allSettled"),v.prototype.allResolved=function(){return W(this)},f.allSettled=D,v.prototype.allSettled=function(){return this.then(function(t){return z(tt(t,function(t){function e(){return t.inspect()}return t=f(t),t.then(e,e)}))})},f.fail=f["catch"]=function(t,e){return f(t).then(void 0,e)},v.prototype.fail=v.prototype["catch"]=function(t){return this.then(void 0,t)},f.progress=B,v.prototype.progress=function(t){return this.then(void 0,void 0,t)},f.fin=f["finally"]=function(t,e){return f(t)["finally"](e)},v.prototype.fin=v.prototype["finally"]=function(t){return t=f(t),this.then(function(e){return t.fcall().then(function(){return e})},function(e){return t.fcall().then(function(){throw e})})},f.done=function(t,e,n,r){return f(t).done(e,n,r)},v.prototype.done=function(t,n,r){var o=function(t){f.nextTick(function(){if(i(t,s),!f.onerror)throw t;f.onerror(t)})},s=t||n||r?this.then(t,n,r):this;"object"==typeof e&&e&&e.domain&&(o=e.domain.bind(o)),s.then(void 0,o)},f.timeout=function(t,e,n){return f(t).timeout(e,n)},v.prototype.timeout=function(t,e){var n=d(),r=setTimeout(function(){e&&"string"!=typeof e||(e=new Error(e||"Timed out after "+t+" ms"),e.code="ETIMEDOUT"),n.reject(e)},t);return this.then(function(t){clearTimeout(r),n.resolve(t)},function(t){clearTimeout(r),n.reject(t)},n.notify),n.promise},f.delay=function(t,e){return void 0===e&&(e=t,t=void 0),f(t).delay(e)},v.prototype.delay=function(t){return this.then(function(e){var n=d();return setTimeout(function(){n.resolve(e)},t),n.promise})},f.nfapply=function(t,e){return f(t).nfapply(e)},v.prototype.nfapply=function(t){var e=d(),n=Q(t);return n.push(e.makeNodeResolver()),this.fapply(n).fail(e.reject),e.promise},f.nfcall=function(t){var e=Q(arguments,1);return f(t).nfapply(e)},v.prototype.nfcall=function(){var t=Q(arguments),e=d();return t.push(e.makeNodeResolver()),this.fapply(t).fail(e.reject),e.promise},f.nfbind=f.denodeify=function(t){var e=Q(arguments,1);return function(){var n=e.concat(Q(arguments)),r=d();return n.push(r.makeNodeResolver()),f(t).fapply(n).fail(r.reject),r.promise}},v.prototype.nfbind=v.prototype.denodeify=function(){var t=Q(arguments);return t.unshift(this),f.denodeify.apply(void 0,t)},f.nbind=function(t,e){var n=Q(arguments,2);return function(){function r(){return t.apply(e,arguments)}var o=n.concat(Q(arguments)),i=d();return o.push(i.makeNodeResolver()),f(r).fapply(o).fail(i.reject),i.promise}},v.prototype.nbind=function(){var t=Q(arguments,0);return t.unshift(this),f.nbind.apply(void 0,t)},f.nmapply=f.npost=function(t,e,n){return f(t).npost(e,n)},v.prototype.nmapply=v.prototype.npost=function(t,e){var n=Q(e||[]),r=d();return n.push(r.makeNodeResolver()),this.dispatch("post",[t,n]).fail(r.reject),r.promise},f.nsend=f.nmcall=f.ninvoke=function(t,e){var n=Q(arguments,2),r=d();return n.push(r.makeNodeResolver()),f(t).dispatch("post",[e,n]).fail(r.reject),r.promise},v.prototype.nsend=v.prototype.nmcall=v.prototype.ninvoke=function(t){var e=Q(arguments,1),n=d();return e.push(n.makeNodeResolver()),this.dispatch("post",[t,e]).fail(n.reject),n.promise},f.nodeify=F,v.prototype.nodeify=function(t){return t?void this.then(function(e){f.nextTick(function(){t(null,e)})},function(e){f.nextTick(function(){t(e)})}):this},f.noConflict=function(){throw new Error("Q.noConflict only works when Q is used as a global")};var pt=p();return f})}).call(e,n(30),n(31).setImmediate)},function(t,e){var n={}.toString;t.exports=function(t){return n.call(t).slice(8,-1)}},function(t,e,n){var r=n(22);t.exports=function(t,e,n){if(r(t),void 0===e)return t;switch(n){case 1:return function(n){return t.call(e,n)};case 2:return function(n,r){return t.call(e,n,r)};case 3:return function(n,r,o){return t.call(e,n,r,o)}}return function(){return t.apply(e,arguments)}}},function(t,e){t.exports={}},function(t,e,n){t.exports=!n(24)(function(){return 7!=Object.defineProperty({},"a",{get:function(){return 7}}).a})},function(t,e,n){var r=n(5),o=n(9),i=n(13),s="prototype",a=function(t,e,n){var u,c,p,l=t&a.F,f=t&a.G,d=t&a.S,h=t&a.P,y=t&a.B,v=t&a.W,g=f?o:o[e]||(o[e]={}),m=f?r:d?r[e]:(r[e]||{})[s];f&&(n=e);for(u in n)c=!l&&m&&u in m,c&&u in g||(p=c?m[u]:n[u],g[u]=f&&"function"!=typeof m[u]?n[u]:y&&c?i(p,r):v&&m[u]==p?function(t){var e=function(e){return this instanceof t?new t(e):t(e)};return e[s]=t[s],e}(p):h&&"function"==typeof p?i(Function.call,p):p,h&&((g[s]||(g[s]={}))[u]=p))};a.F=1,a.G=2,a.S=4,a.P=8,a.B=16,a.W=32,t.exports=a},function(t,e){t.exports=function(t){return"object"==typeof t?null!==t:"function"==typeof t}},function(t,e,n){var r=n(2).setDesc,o=n(25),i=n(3)("toStringTag");t.exports=function(t,e,n){t&&!o(t=n?t:t.prototype,i)&&r(t,i,{configurable:!0,value:e})}},function(t,e,n){var r=n(65),o=n(23);t.exports=function(t){return r(o(t))}},function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{"default":t}}function o(t){var e=t.$options.deferredReady||[];"function"==typeof e&&(e=[e]),s["default"].all(e.map(function(e){var n;try{n=e.apply(t)}catch(r){console.error(r.stack)}return n})).then(function(){t.$deferredReadyDeferred.resolve()})}var i=n(53),s=r(i);Object.defineProperty(e,"__esModule",{value:!0}),e.DeferredReadyMixin=e.DeferredReady=void 0;var a=n(11),u=r(a);e.DeferredReady={install:function(t,e){t.config.optionMergeStrategies.deferredReady=t.config.optionMergeStrategies.created}},e.DeferredReadyMixin={created:function(){this.$hasDeferredReadyAncestors=!1,this.$deferredReadyDeferred=u["default"].defer()},ready:function(){var t=this;this.$dispatch("register-deferredReadyChild",this),this.$hasDeferredReadyAncestors||this.$nextTick(function(){return o(t)})},events:{"register-deferredReadyChild":function(t){return this==t?!0:(t.$hasDeferredReadyAncestors=!0,void this.$deferredReadyDeferred.promise.then(function(){return o(t)}))}}}},function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{"default":t}}var o=n(52),i=r(o),s=n(33),a=r(s);Object.defineProperty(e,"__esModule",{value:!0}),e.load=e.loaded=void 0;var u=n(11),c=!1,p=u.defer();e.loaded=p.promise;window.vueGoogleMapsInit=function(){p.resolve()};e.load=function(t,e,n,r){if(c)throw new Error("You already started the loading of google maps");var o=document.createElement("SCRIPT"),s={};if("string"==typeof t)s.key=t;else{if("object"!=("undefined"==typeof t?"undefined":(0,a["default"])(t)))throw new Error("apiKey should either be a string or an object");for(var u in t)s[u]=t[u]}var p="";n&&n.length>0?(p=n.join(","),s.libraries=p):Array.prototype.isPrototypeOf(s.libraries)&&(s.libraries=s.libraries.join(",")),s.callback="vueGoogleMapsInit";var l="https://maps.googleapis.com/";"boolean"==typeof r&&r===!0&&(l="http://maps.google.cn/");var f=l+"maps/api/js?"+(0,i["default"])(s).map(function(t){return encodeURIComponent(t)+"="+encodeURIComponent(s[t])}).join("&");e&&(f=f+"&v="+e),o.setAttribute("src",f),o.setAttribute("async",""),o.setAttribute("defer",""),document.body.appendChild(o)}},function(t,e){t.exports=function(t){if("function"!=typeof t)throw TypeError(t+" is not a function!");return t}},function(t,e){t.exports=function(t){if(void 0==t)throw TypeError("Can't call method on  "+t);return t}},function(t,e){t.exports=function(t){try{return!!t()}catch(e){return!0}}},function(t,e){var n={}.hasOwnProperty;t.exports=function(t,e){return n.call(t,e)}},function(t,e,n){var r=n(2),o=n(28);t.exports=n(15)?function(t,e,n){return r.setDesc(t,e,o(1,n))}:function(t,e,n){return t[e]=n,t}},function(t,e){t.exports=!0},function(t,e){t.exports=function(t,e){return{enumerable:!(1&t),configurable:!(2&t),writable:!(4&t),value:e}}},function(t,e,n){t.exports=n(26)},function(t,e){function n(){c=!1,s.length?u=s.concat(u):p=-1,u.length&&r()}function r(){if(!c){var t=setTimeout(n);c=!0;for(var e=u.length;e;){for(s=u,u=[];++p<e;)s&&s[p].run();p=-1,e=u.length}s=null,c=!1,clearTimeout(t)}}function o(t,e){this.fun=t,this.array=e}function i(){}var s,a=t.exports={},u=[],c=!1,p=-1;a.nextTick=function(t){var e=new Array(arguments.length-1);if(arguments.length>1)for(var n=1;n<arguments.length;n++)e[n-1]=arguments[n];u.push(new o(t,e)),1!==u.length||c||setTimeout(r,0)},o.prototype.run=function(){this.fun.apply(null,this.array)},a.title="browser",a.browser=!0,a.env={},a.argv=[],a.version="",a.versions={},a.on=i,a.addListener=i,a.once=i,a.off=i,a.removeListener=i,a.removeAllListeners=i,a.emit=i,a.binding=function(t){throw new Error("process.binding is not supported")},a.cwd=function(){return"/"},a.chdir=function(t){throw new Error("process.chdir is not supported")},a.umask=function(){return 0}},function(t,e,n){(function(t,r){function o(t,e){this._id=t,this._clearFn=e}var i=n(30).nextTick,s=Function.prototype.apply,a=Array.prototype.slice,u={},c=0;e.setTimeout=function(){return new o(s.call(setTimeout,window,arguments),clearTimeout)},e.setInterval=function(){return new o(s.call(setInterval,window,arguments),clearInterval)},e.clearTimeout=e.clearInterval=function(t){t.close()},o.prototype.unref=o.prototype.ref=function(){},o.prototype.close=function(){this._clearFn.call(window,this._id)},e.enroll=function(t,e){clearTimeout(t._idleTimeoutId),t._idleTimeout=e},e.unenroll=function(t){clearTimeout(t._idleTimeoutId),t._idleTimeout=-1},e._unrefActive=e.active=function(t){clearTimeout(t._idleTimeoutId);var e=t._idleTimeout;e>=0&&(t._idleTimeoutId=setTimeout(function(){t._onTimeout&&t._onTimeout()},e))},e.setImmediate="function"==typeof t?t:function(t){var n=c++,r=arguments.length<2?!1:a.call(arguments,1);return u[n]=!0,i(function(){u[n]&&(r?t.apply(null,r):t.call(null),e.clearImmediate(n))}),n},e.clearImmediate="function"==typeof r?r:function(t){delete u[t]}}).call(e,n(31).setImmediate,n(31).clearImmediate)},function(t,e){"use strict";t.exports=window.Vue},function(t,e,n){"use strict";var r=n(54)["default"];e["default"]=function(t){return t&&t.constructor===r?"symbol":typeof t},e.__esModule=!0},function(t,e,n){var r=n(12),o=n(3)("toStringTag"),i="Arguments"==r(function(){return arguments}());t.exports=function(t){var e,n,s;return void 0===t?"Undefined":null===t?"Null":"string"==typeof(n=(e=Object(t))[o])?n:i?r(e):"Object"==(s=r(e))&&"function"==typeof e.callee?"Arguments":s}},function(t,e,n){"use strict";var r=n(27),o=n(16),i=n(29),s=n(26),a=n(25),u=n(14),c=n(69),p=n(18),l=n(2).getProto,f=n(3)("iterator"),d=!([].keys&&"next"in[].keys()),h="@@iterator",y="keys",v="values",g=function(){return this};t.exports=function(t,e,n,m,_,b,x){c(n,e,m);var w,j,k=function(t){if(!d&&t in C)return C[t];switch(t){case y:return function(){return new n(this,t)};case v:return function(){return new n(this,t)}}return function(){return new n(this,t)}},M=e+" Iterator",O=_==v,S=!1,C=t.prototype,$=C[f]||C[h]||_&&C[_],E=$||k(_);if($){var P=l(E.call(new t));p(P,M,!0),!r&&a(C,h)&&s(P,f,g),O&&$.name!==v&&(S=!0,E=function(){return $.call(this)})}if(r&&!x||!d&&!S&&C[f]||s(C,f,E),u[e]=E,u[M]=g,_)if(w={values:O?E:k(v),keys:b?E:k(y),entries:O?k("entries"):E},x)for(j in w)j in C||i(C,j,w[j]);else o(o.P+o.F*(d||S),e,w);return w}},function(t,e,n){var r=n(5),o="__core-js_shared__",i=r[o]||(r[o]={});t.exports=function(t){return i[t]||(i[t]={})}},function(t,e){var n=Math.ceil,r=Math.floor;t.exports=function(t){return isNaN(t=+t)?0:(t>0?r:n)(t)}},function(t,e){var n=0,r=Math.random();t.exports=function(t){return"Symbol(".concat(void 0===t?"":t,")_",(++n+r).toString(36))}},function(t,e){},function(t,e,n){function r(t,e){return d.isUndefined(e)?""+e:d.isNumber(e)&&!isFinite(e)?e.toString():d.isFunction(e)||d.isRegExp(e)?e.toString():e}function o(t,e){return d.isString(t)?t.length<e?t:t.slice(0,e):t}function i(t){return o(JSON.stringify(t.actual,r),128)+" "+t.operator+" "+o(JSON.stringify(t.expected,r),128)}function s(t,e,n,r,o){throw new v.AssertionError({message:n,actual:t,expected:e,operator:r,stackStartFunction:o})}function a(t,e){t||s(t,!0,e,"==",v.ok)}function u(t,e){if(t===e)return!0;if(d.isBuffer(t)&&d.isBuffer(e)){if(t.length!=e.length)return!1;for(var n=0;n<t.length;n++)if(t[n]!==e[n])return!1;return!0}return d.isDate(t)&&d.isDate(e)?t.getTime()===e.getTime():d.isRegExp(t)&&d.isRegExp(e)?t.source===e.source&&t.global===e.global&&t.multiline===e.multiline&&t.lastIndex===e.lastIndex&&t.ignoreCase===e.ignoreCase:d.isObject(t)||d.isObject(e)?p(t,e):t==e}function c(t){return"[object Arguments]"==Object.prototype.toString.call(t)}function p(t,e){if(d.isNullOrUndefined(t)||d.isNullOrUndefined(e))return!1;if(t.prototype!==e.prototype)return!1;if(d.isPrimitive(t)||d.isPrimitive(e))return t===e;var n=c(t),r=c(e);if(n&&!r||!n&&r)return!1;if(n)return t=h.call(t),e=h.call(e),u(t,e);var o,i,s=g(t),a=g(e);if(s.length!=a.length)return!1;for(s.sort(),a.sort(),i=s.length-1;i>=0;i--)if(s[i]!=a[i])return!1;for(i=s.length-1;i>=0;i--)if(o=s[i],!u(t[o],e[o]))return!1;return!0}function l(t,e){return t&&e?"[object RegExp]"==Object.prototype.toString.call(e)?e.test(t):t instanceof e?!0:e.call({},t)===!0?!0:!1:!1}function f(t,e,n,r){var o;d.isString(n)&&(r=n,n=null);try{e()}catch(i){o=i}if(r=(n&&n.name?" ("+n.name+").":".")+(r?" "+r:"."),t&&!o&&s(o,n,"Missing expected exception"+r),!t&&l(o,n)&&s(o,n,"Got unwanted exception"+r),t&&o&&n&&!l(o,n)||!t&&o)throw o}var d=n(99),h=Array.prototype.slice,y=Object.prototype.hasOwnProperty,v=t.exports=a;v.AssertionError=function(t){this.name="AssertionError",this.actual=t.actual,this.expected=t.expected,this.operator=t.operator,t.message?(this.message=t.message,this.generatedMessage=!1):(this.message=i(this),this.generatedMessage=!0);var e=t.stackStartFunction||s;if(Error.captureStackTrace)Error.captureStackTrace(this,e);else{var n=new Error;if(n.stack){var r=n.stack,o=e.name,a=r.indexOf("\n"+o);if(a>=0){var u=r.indexOf("\n",a+1);r=r.substring(u+1)}this.stack=r}}},d.inherits(v.AssertionError,Error),v.fail=s,v.ok=a,v.equal=function(t,e,n){t!=e&&s(t,e,n,"==",v.equal)},v.notEqual=function(t,e,n){t==e&&s(t,e,n,"!=",v.notEqual)},v.deepEqual=function(t,e,n){u(t,e)||s(t,e,n,"deepEqual",v.deepEqual)},v.notDeepEqual=function(t,e,n){u(t,e)&&s(t,e,n,"notDeepEqual",v.notDeepEqual)},v.strictEqual=function(t,e,n){t!==e&&s(t,e,n,"===",v.strictEqual)},v.notStrictEqual=function(t,e,n){t===e&&s(t,e,n,"!==",v.notStrictEqual)},v["throws"]=function(t,e,n){f.apply(this,[!0].concat(h.call(arguments)))},v.doesNotThrow=function(t,e){f.apply(this,[!1].concat(h.call(arguments)))},v.ifError=function(t){if(t)throw t};var g=Object.keys||function(t){var e=[];for(var n in t)y.call(t,n)&&e.push(n);return e}},function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{"default":t}}Object.defineProperty(e,"__esModule",{value:!0});var o=n(1),i=r(o),s=n(7),a=r(s),u=n(4),c=r(u),p=n(6),l=r(p),f=n(8),d=r(f),h={center:{type:Object,twoWay:!0,required:!0},radius:{type:Number,"default":1e3,twoWay:!0},bounds:{type:Object,twoWay:!0},draggable:{type:Boolean,"default":!1},editable:{type:Boolean,"default":!1},options:{type:Object,twoWay:!1}},y=["click","dblclick","drag","dragend","dragstart","mousedown","mousemove","mouseout","mouseover","mouseup","radius_changed","rightclick"];e["default"]=l["default"].extend({mixins:[d["default"]],props:h,version:2,ready:function(){this.destroyed=!1},deferredReady:function(){var t=i["default"].clone(this.getPropsValues());t.map=this.$map,delete t.bounds,this.createCircle(t,this.$map)},methods:{createCircle:function(t,e){var n=this;if(!this.destroyed){this.$circleObject=new google.maps.Circle(t);var r=i["default"].clone(h);delete r.bounds,(0,c["default"])(this,this.$circleObject,r),(0,a["default"])(this,this.$circleObject,y);var o=function(){n.bounds=n.$circleObject.getBounds()};this.$watch("radius",o),this.$watch("center",o,{deep:!0}),o()}}},destroyed:function(){this.destroyed=!0,this.$circleObject&&this.$circleObject.setMap(null)}})},function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{"default":t}}Object.defineProperty(e,"__esModule",{value:!0});var o=n(11),i=(r(o),n(1)),s=r(i),a=n(4),u=r(a),c=n(6),p=r(c),l=n(8),f=r(l);n(95);var d={maxZoom:{type:Number,twoWay:!1},calculor:{type:Function,twoWay:!1},gridSize:{type:Number,twoWay:!1},styles:{type:Array,twoWay:!1}};e["default"]=p["default"].extend({mixins:[f["default"]],props:d,deferredReady:function(){var t=this,e=s["default"].clone(this.getPropsValues());this.$clusterObject=new MarkerClusterer(this.$map,[],e),(0,u["default"])(this,this.$clusterObject,d,{afterModelChanged:function(e,n){var r=t.$clusterObject.getMarkers();t.$clusterObject.clearMarkers(),t.$clusterObject.addMarkers(r)}})},detached:function(){this.$clusterObject.clearMarkers()},events:{"register-marker":function(t){t.$emit("cluster-ready",this.$clusterObject,this.$map)}}})},function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{"default":t}}Object.defineProperty(e,"__esModule",{value:!0});var o=n(1),i=r(o),s=n(4),a=r(s),u=n(7),c=r(u),p=n(50),l=r(p),f=n(6),d=r(f),h={options:{type:Object,twoWay:!1,required:!1,"default":function(){return{}}},content:{twoWay:!1,"default":null},opened:{type:Boolean,"default":!0,twoWay:!0},position:{type:Object,twoWay:!1},zIndex:{type:Number,twoWay:!0}},y=["domready","closeclick"];e["default"]=d["default"].extend({replace:!1,props:h,created:function(){this.$markerObject=null},ready:function(){var t=this;if(this.destroyed=!1,this.$el.style.display="none",0===this.$el.getElementsByClassName("you-will-never-find-this").length){var e=function(){t.content=t.$el.innerHTML};e(),this.disconnect=(0,l["default"])(this.$el,e)}},deferredReady:function(){this.$dispatch("register-infoWindow",this),this.createInfoWindow(this.$map)},destroyed:function(){this.disconnect&&this.disconnect(),this.$infoWindow&&this.$infoWindow.setMap(null),this.destroyed=!0},methods:{openInfoWindow:function(){this.opened?null!==this.$markerObject?this.$infoWindow.open(this.$map,this.$markerObject):this.$infoWindow.open(this.$map):this.$infoWindow.close()},createInfoWindow:function(t){var e=this;if(!this.destroyed){var n=document.createElement("div");n.innerHTML=this.content,google.maps.event.addDomListener(n,"click",function(t){e.$emit("g-click",t)});var r=i["default"].clone(this.options);r.content=n,null===this.$markerObject&&(r.position=this.position),this.$infoWindow=new google.maps.InfoWindow(r);var o=i["default"].clone(h);delete o.opened,(0,a["default"])(this,this.$infoWindow,o),(0,c["default"])(this,this.$infoWindow,y),this.$infoWindow.addListener("closeclick",function(){e.opened=!1}),this.$watch("opened",function(){e.openInfoWindow()}),this.openInfoWindow()}}},events:{"marker-ready":function(t,e){var n=this;this.$markerObject=t.$markerObject,t.$on("g-click",function(){n.opened=!n.opened})}}})},function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{"default":t}}Object.defineProperty(e,"__esModule",{value:!0});var o=n(11),i=r(o),s=n(1),a=r(s),u=n(21),c=n(20),p=n(7),l=r(p),f=n(4),d=r(f),h=n(32),y=r(h),v=n(8),g=r(v);y["default"].use(c.DeferredReady);var m={center:{required:!0,twoWay:!0,type:Object},zoom:{required:!1,twoWay:!0,type:Number},heading:{twoWay:!0,type:Number},mapTypeId:{twoWay:!0,type:String},bounds:{type:Object,twoWay:!0},options:{twoWay:!1,type:Object,"default":function(){return{}}}},_=["click","dblclick","rightclick","mousemove","mouseout","mouseover","drag","dragend","dragstart","idle","resize","tilesloaded","bounds_changed"],b=["panBy","panTo","panToBounds","fitBounds"],x={},w=function(t,e){if(!this.mapObject)throw new Error("Map not initialized");t.$emit("map-ready",this.mapObject)},j={"register-component":w,"g-bounds_changed":function(){this.bounds=this.mapObject.getBounds()},"g-fitBounds":function(t){this.mapObject&&t&&this.mapObject.fitBounds},"g-resize-map":function(){var t=this.mapObject.getCenter();google.maps.event.trigger(this.mapObject,"resize"),this.mapObject.setCenter(t)}};a["default"].each(b,function(t){var e=function(){this.mapObject&&this.mapObject[t].apply(this.mapObject,arguments)};j["g-"+t]=e,x[t]=e}),e["default"]={mixins:[g["default"],c.DeferredReadyMixin],props:m,replace:!1,created:function(){this.mapCreatedDefered=new i["default"].defer,this.mapCreated=this.mapCreatedDefered.promise},ready:function(){},deferredReady:function(){var t=this;return u.loaded.then(function(){var e=t.$el.getElementsByClassName("vue-map")[0],n=a["default"].clone(t.getPropsValues());
-delete n.options;var r=a["default"].clone(t.options);a["default"].assign(r,n),t.mapObject=new google.maps.Map(e,r);var o=a["default"].clone(m);delete o.bounds,(0,d["default"])(t,t.mapObject,o),(0,l["default"])(t,t.mapObject,_),t.$emit("g-bounds_changed"),t.$once("g-bounds_changed",function(){t.mapCreatedDefered.resolve(t.mapObject)})},function(t){throw t})},events:j,methods:x}},function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{"default":t}}Object.defineProperty(e,"__esModule",{value:!0});var o=n(1),i=r(o),s=n(7),a=r(s),u=n(4),c=r(u),p=n(8),l=r(p),f=n(11),d=(r(f),n(6)),h=r(d),y=n(40),v=(r(y),{animation:{twoWay:!0,type:Number},attribution:{type:Object},clickable:{type:Boolean,twoWay:!0,"default":!0},cursor:{type:String,twoWay:!0},draggable:{type:Boolean,twoWay:!0,"default":!1},icon:{type:Object,twoWay:!0},label:{},opacity:{type:Number,"default":1},place:{type:Object},position:{type:Object,twoWay:!0},shape:{type:Object,twoWay:!0},title:{type:String,twoWay:!0},zIndex:{type:Number,twoWay:!0},visible:{twoWay:!0,"default":"auto"}}),g=["click","rightclick","dblclick","drag","dragstart","dragend","mouseup","mousedown","mouseover","mouseout"];e["default"]=h["default"].extend({mixins:[l["default"]],props:v,created:function(){this.destroyed=!1},attached:function(){"auto"===this.visible&&(this.visible=!0)},detached:function(){"auto"===this.visible&&(this.visible=!1)},destroyed:function(){this.destroyed=!0,this.$markerObject&&(this.$clusterObject?this.$clusterObject.removeMarker(this.$markerObject):this.$markerObject.setMap(null))},deferredReady:function(){var t=this;this.$dispatch("register-marker",this);var e=i["default"].mapValues(v,function(e,n){return t[n]});e.map=this.$map,this.createMarker(e,this.$map)},methods:{createMarker:function(t,e){this.destroyed||(this.$markerObject=new google.maps.Marker(t),(0,c["default"])(this,this.$markerObject,v),(0,a["default"])(this,this.$markerObject,g),this.$clusterObject&&this.$clusterObject.addMarker(this.$markerObject))}},events:{"register-infoWindow":function(t){t.$emit("marker-ready",this,this.$map)},"cluster-ready":function(t,e){this.$clusterObject=t}}})},function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{"default":t}}Object.defineProperty(e,"__esModule",{value:!0});var o=n(1),i=r(o),s=n(7),a=r(s),u=n(4),c=r(u),p=n(51),l=r(p),f=n(8),d=r(f),h=n(21),y={bounds:{type:Object,twoWay:!0},place:{type:Object,twoWay:!0,"default":function(){return{name:""}}},componentRestrictions:{type:Object,twoWay:!1,"default":null},types:{type:Array,twoWay:!1,"default":function(){return[]}},placeholder:{required:!1,type:String},"class":{required:!1,type:String},label:{required:!1,type:String,"default":null},selectFirstOnEnter:{require:!1,type:Boolean,"default":!1}},v=["place_changed"];e["default"]={mixins:[d["default"]],ready:function(){var t=this,e=this.$els.input;e.value=this.place.name,h.loaded.then(function(){window.i=e;var n=i["default"].clone(t.getPropsValues());t.selectFirstOnEnter&&(0,l["default"])(t.$els.input),t.autoCompleter=new google.maps.places.Autocomplete(t.$els.input,n),(0,a["default"])(t,t.autoCompleter,v);var r=i["default"].clone(y);delete r.placeholder,delete r.place,delete r.selectFirstOnEnter,(0,c["default"])(t,t.autoCompleter,r)})["catch"](function(){setTimeout(function(){throw new Error("Impossible to load the Autocomplete Class from the google places api, did you loaded it ?")},0)})},props:y,events:{"g-place_changed":function(){this.place=this.autoCompleter.getPlace()}}}},function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{"default":t}}Object.defineProperty(e,"__esModule",{value:!0});var o=n(1),i=r(o),s=n(7),a=r(s),u=n(4),c=r(u),p=n(6),l=r(p),f=n(8),d=r(f),h={draggable:{type:Boolean},editable:{type:Boolean},options:{twoWay:!1,type:Object},path:{type:Array,twoWay:!0},paths:{type:Array,twoWay:!0}},y=["click","dblclick","drag","dragend","dragstart","mousedown","mousemove","mouseout","mouseover","mouseup","rightclick"];e["default"]=l["default"].extend({mixins:[d["default"]],props:h,ready:function(){this.destroyed=!1},attached:function(){this.$map&&null===this.$polygonObject.getMap()&&this.$polygonObject.setMap(this.$map)},destroyed:function(){this.destroyed=!0,this.$polygonObject&&this.$polygonObject.setMap(null)},deferredReady:function(){var t=this;if(!this.destroyed){var e=i["default"].clone(this.getPropsValues());delete e.options,i["default"].assign(e,this.options),e.path||delete e.path,e.paths||delete e.paths,this.$polygonObject=new google.maps.Polygon(e);var n=i["default"].clone(h);delete n.path,delete n.paths,(0,c["default"])(this,this.$polygonObject,n),(0,a["default"])(this,this.$polygonObject,y);var r=[],o=function(t){return i["default"].map(t,function(t){return{lat:t.lat(),lng:t.lng()}})},s=0,u=function(){s-=2,0>s&&(t.path=o(t.$polygonObject.getPath().getArray()),t.paths=i["default"].map(t.$polygonObject.getPaths().getArray(),function(t){return o(t.getArray())}))},p=function(){var e=t.$polygonObject.getPaths();r.push(e.addListener("insert_at",u)),r.push(e.addListener("remove_at",u)),r.push(e.addListener("set_at",u)),i["default"].each(e.getArray(),function(t){r.push(t.addListener("insert_at",u)),r.push(t.addListener("remove_at",u)),r.push(t.addListener("set_at",u))})},l=function(e){i["default"].each(r,function(t){google.maps.event.removeListener(t)}),r.length=0,t.$polygonObject.setPaths(e),p()};this.$watch("paths",function(){s++,s>-1&&l(t.paths)},{deep:!0}),this.$watch("path",function(){s++,s>-1&&l([t.path])},{deep:!0}),p(),this.$polygonObject.setMap(this.$map)}}})},function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{"default":t}}Object.defineProperty(e,"__esModule",{value:!0});var o=n(1),i=r(o),s=n(7),a=r(s),u=n(4),c=r(u),p=n(6),l=r(p),f=n(8),d=r(f),h={draggable:{type:Boolean},editable:{type:Boolean},options:{twoWay:!1,type:Object},path:{type:Array,twoWay:!0}},y=["click","dblclick","drag","dragend","dragstart","mousedown","mousemove","mouseout","mouseover","mouseup","rightclick"];e["default"]=l["default"].extend({mixins:[d["default"]],props:h,ready:function(){this.destroyed=!1},attached:function(){this.$map&&null===this.$polyLineObject.getMap()&&this.$polyLineObject.setMap(this.$map)},destroyed:function(){this.destroyed=!0,this.$polyLineObject&&this.$polyLineObject.setMap(null)},deferredReady:function(){var t=this;if(!this.destroyed){var e=i["default"].clone(this.getPropsValues());delete e.options,i["default"].assign(e,this.options),this.$polyLineObject=new google.maps.Polyline(e),this.$polyLineObject.setMap(this.$map);var n=i["default"].clone(h);delete n.path,(0,c["default"])(this,this.$polyLineObject,n),(0,a["default"])(this,this.$polyLineObject,y);var r=[],o=function(){t.path=i["default"].map(t.$polyLineObject.getPath().getArray(),function(t){return{lat:t.lat(),lng:t.lng()}})},s=function(){var e=t.$polyLineObject.getPath();r.push(e.addListener("insert_at",o)),r.push(e.addListener("remove_at",o)),r.push(e.addListener("set_at",o))};this.$watch("path",function(){i["default"].each(r,function(t){google.maps.event.removeListener(t)}),r.length=0,t.$polyLineObject.setPath(t.path),s()},{deep:!0}),s(),this.$polyLineObject.setMap(this.$map)}}})},function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{"default":t}}Object.defineProperty(e,"__esModule",{value:!0});var o=n(1),i=r(o),s=n(7),a=r(s),u=n(4),c=r(u),p=n(6),l=r(p),f=n(8),d=r(f),h={bounds:{type:Object,twoWay:!0},draggable:{type:Boolean,"default":!1},editable:{type:Boolean,"default":!1},options:{type:Object,twoWay:!1}},y=["click","dblclick","drag","dragend","dragstart","mousedown","mousemove","mouseout","mouseover","mouseup","rightclick"];e["default"]=l["default"].extend({mixins:[d["default"]],props:h,ready:function(){this.destroyed=!1},deferredReady:function(){var t=i["default"].clone(this.getPropsValues());t.map=this.$map,this.createRectangle(t,this.$map)},methods:{createRectangle:function(t,e){var n=this;if(!this.destroyed){this.$rectangleObject=new google.maps.Rectangle(t),(0,c["default"])(this,this.$rectangleObject,h),(0,a["default"])(this,this.$rectangleObject,y);var r=function(){n.bounds=n.$rectangleObject.getBounds()};this.$watch("bounds_changed",r,{deep:!0})}}},destroyed:function(){this.$rectangleObject&&this.$rectangleObject.setMap(null),this.destroyed=!0}})},function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{"default":t}}var o=n(33),i=r(o);Object.defineProperty(e,"__esModule",{value:!0});var s={attributes:!0,childList:!0,characterData:!0,subtree:!0},a=window.MutationObserver||window.WebKitMutationObserver||window.MozMutationObserver;e["default"]=function(t,e){if(!a){var n="";return setInterval(function(){n!=t.innerHTML&&(n=t.innerHTML,e())},500),function(){}}var r=function(){var n=new a(e);return n.observe(t,s),{v:function(){n.disconnect()}}}();return"object"===("undefined"==typeof r?"undefined":(0,i["default"])(r))?r.v:void 0}},function(t,e){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e["default"]=function(t){function e(e,r){if("keydown"==e){var o=r;r=function(e){var n=document.getElementsByClassName("pac-item-selected").length>0;if(13==e.which&&!n){var r=document.createEvent("Event");r.keyCode=40,r.which=40,o.apply(t,[r])}o.apply(t,[e])}}n.apply(t,[e,r])}var n=t.addEventListener?t.addEventListener:t.attachEvent;t.addEventListener=e,t.attachEvent=e}},function(t,e,n){t.exports={"default":n(55),__esModule:!0}},function(t,e,n){t.exports={"default":n(56),__esModule:!0}},function(t,e,n){t.exports={"default":n(57),__esModule:!0}},function(t,e,n){n(87),t.exports=n(9).Object.keys},function(t,e,n){n(39),n(89),n(91),n(88),t.exports=n(9).Promise},function(t,e,n){n(90),n(39),t.exports=n(9).Symbol},function(t,e){t.exports=function(){}},function(t,e,n){var r=n(17),o=n(5).document,i=r(o)&&r(o.createElement);t.exports=function(t){return i?o.createElement(t):{}}},function(t,e,n){var r=n(2);t.exports=function(t){var e=r.getKeys(t),n=r.getSymbols;if(n)for(var o,i=n(t),s=r.isEnum,a=0;i.length>a;)s.call(t,o=i[a++])&&e.push(o);return e}},function(t,e,n){var r=n(13),o=n(68),i=n(66),s=n(10),a=n(83),u=n(85);t.exports=function(t,e,n,c){var p,l,f,d=u(t),h=r(n,c,e?2:1),y=0;if("function"!=typeof d)throw TypeError(t+" is not iterable!");if(i(d))for(p=a(t.length);p>y;y++)e?h(s(l=t[y])[0],l[1]):h(t[y]);else for(f=d.call(t);!(l=f.next()).done;)o(f,h,l.value,e)}},function(t,e,n){var r=n(19),o=n(2).getNames,i={}.toString,s="object"==typeof window&&Object.getOwnPropertyNames?Object.getOwnPropertyNames(window):[],a=function(t){try{return o(t)}catch(e){return s.slice()}};t.exports.get=function(t){return s&&"[object Window]"==i.call(t)?a(t):o(r(t))}},function(t,e,n){t.exports=n(5).document&&document.documentElement},function(t,e){t.exports=function(t,e,n){var r=void 0===n;switch(e.length){case 0:return r?t():t.call(n);case 1:return r?t(e[0]):t.call(n,e[0]);case 2:return r?t(e[0],e[1]):t.call(n,e[0],e[1]);case 3:return r?t(e[0],e[1],e[2]):t.call(n,e[0],e[1],e[2]);case 4:return r?t(e[0],e[1],e[2],e[3]):t.call(n,e[0],e[1],e[2],e[3])}return t.apply(n,e)}},function(t,e,n){var r=n(12);t.exports=Object("z").propertyIsEnumerable(0)?Object:function(t){return"String"==r(t)?t.split(""):Object(t)}},function(t,e,n){var r=n(14),o=n(3)("iterator"),i=Array.prototype;t.exports=function(t){return void 0!==t&&(r.Array===t||i[o]===t)}},function(t,e,n){var r=n(12);t.exports=Array.isArray||function(t){return"Array"==r(t)}},function(t,e,n){var r=n(10);t.exports=function(t,e,n,o){try{return o?e(r(n)[0],n[1]):e(n)}catch(i){var s=t["return"];throw void 0!==s&&r(s.call(t)),i}}},function(t,e,n){"use strict";var r=n(2),o=n(28),i=n(18),s={};n(26)(s,n(3)("iterator"),function(){return this}),t.exports=function(t,e,n){t.prototype=r.create(s,{next:o(1,n)}),i(t,e+" Iterator")}},function(t,e,n){var r=n(3)("iterator"),o=!1;try{var i=[7][r]();i["return"]=function(){o=!0},Array.from(i,function(){throw 2})}catch(s){}t.exports=function(t,e){if(!e&&!o)return!1;var n=!1;try{var i=[7],s=i[r]();s.next=function(){n=!0},i[r]=function(){return s},t(i)}catch(a){}return n}},function(t,e){t.exports=function(t,e){return{value:e,done:!!t}}},function(t,e,n){var r=n(2),o=n(19);t.exports=function(t,e){for(var n,i=o(t),s=r.getKeys(i),a=s.length,u=0;a>u;)if(i[n=s[u++]]===e)return n}},function(t,e,n){var r,o,i,s=n(5),a=n(82).set,u=s.MutationObserver||s.WebKitMutationObserver,c=s.process,p=s.Promise,l="process"==n(12)(c),f=function(){var t,e,n;for(l&&(t=c.domain)&&(c.domain=null,t.exit());r;)e=r.domain,n=r.fn,e&&e.enter(),n(),e&&e.exit(),r=r.next;o=void 0,t&&t.enter()};if(l)i=function(){c.nextTick(f)};else if(u){var d=1,h=document.createTextNode("");new u(f).observe(h,{characterData:!0}),i=function(){h.data=d=-d}}else i=p&&p.resolve?function(){p.resolve().then(f)}:function(){a.call(s,f)};t.exports=function(t){var e={fn:t,next:void 0,domain:l&&c.domain};o&&(o.next=e),r||(r=e,i()),o=e}},function(t,e,n){var r=n(16),o=n(9),i=n(24);t.exports=function(t,e){var n=(o.Object||{})[t]||Object[t],s={};s[t]=e(n),r(r.S+r.F*i(function(){n(1)}),"Object",s)}},function(t,e,n){var r=n(29);t.exports=function(t,e){for(var n in e)r(t,n,e[n]);return t}},function(t,e){t.exports=Object.is||function(t,e){return t===e?0!==t||1/t===1/e:t!=t&&e!=e}},function(t,e,n){var r=n(2).getDesc,o=n(17),i=n(10),s=function(t,e){if(i(t),!o(e)&&null!==e)throw TypeError(e+": can't set as prototype!")};t.exports={set:Object.setPrototypeOf||("__proto__"in{}?function(t,e,o){try{o=n(13)(Function.call,r(Object.prototype,"__proto__").set,2),o(t,[]),e=!(t instanceof Array)}catch(i){e=!0}return function(t,n){return s(t,n),e?t.__proto__=n:o(t,n),t}}({},!1):void 0),check:s}},function(t,e,n){"use strict";var r=n(9),o=n(2),i=n(15),s=n(3)("species");t.exports=function(t){var e=r[t];i&&e&&!e[s]&&o.setDesc(e,s,{configurable:!0,get:function(){return this}})}},function(t,e,n){var r=n(10),o=n(22),i=n(3)("species");t.exports=function(t,e){var n,s=r(t).constructor;return void 0===s||void 0==(n=r(s)[i])?e:o(n)}},function(t,e){t.exports=function(t,e,n){if(!(t instanceof e))throw TypeError(n+": use the 'new' operator!");return t}},function(t,e,n){var r=n(37),o=n(23);t.exports=function(t){return function(e,n){var i,s,a=String(o(e)),u=r(n),c=a.length;return 0>u||u>=c?t?"":void 0:(i=a.charCodeAt(u),55296>i||i>56319||u+1===c||(s=a.charCodeAt(u+1))<56320||s>57343?t?a.charAt(u):i:t?a.slice(u,u+2):(i-55296<<10)+(s-56320)+65536)}}},function(t,e,n){var r,o,i,s=n(13),a=n(64),u=n(63),c=n(59),p=n(5),l=p.process,f=p.setImmediate,d=p.clearImmediate,h=p.MessageChannel,y=0,v={},g="onreadystatechange",m=function(){var t=+this;if(v.hasOwnProperty(t)){var e=v[t];delete v[t],e()}},_=function(t){m.call(t.data)};f&&d||(f=function(t){for(var e=[],n=1;arguments.length>n;)e.push(arguments[n++]);return v[++y]=function(){a("function"==typeof t?t:Function(t),e)},r(y),y},d=function(t){delete v[t]},"process"==n(12)(l)?r=function(t){l.nextTick(s(m,t,1))}:h?(o=new h,i=o.port2,o.port1.onmessage=_,r=s(i.postMessage,i,1)):p.addEventListener&&"function"==typeof postMessage&&!p.importScripts?(r=function(t){p.postMessage(t+"","*")},p.addEventListener("message",_,!1)):r=g in c("script")?function(t){u.appendChild(c("script"))[g]=function(){u.removeChild(this),m.call(t)}}:function(t){setTimeout(s(m,t,1),0)}),t.exports={set:f,clear:d}},function(t,e,n){var r=n(37),o=Math.min;t.exports=function(t){return t>0?o(r(t),9007199254740991):0}},function(t,e,n){var r=n(23);t.exports=function(t){return Object(r(t))}},function(t,e,n){var r=n(34),o=n(3)("iterator"),i=n(14);t.exports=n(9).getIteratorMethod=function(t){return void 0!=t?t[o]||t["@@iterator"]||i[r(t)]:void 0}},function(t,e,n){"use strict";var r=n(58),o=n(71),i=n(14),s=n(19);t.exports=n(35)(Array,"Array",function(t,e){this._t=s(t),this._i=0,this._k=e},function(){var t=this._t,e=this._k,n=this._i++;return!t||n>=t.length?(this._t=void 0,o(1)):"keys"==e?o(0,n):"values"==e?o(0,t[n]):o(0,[n,t[n]])},"values"),i.Arguments=i.Array,r("keys"),r("values"),r("entries")},function(t,e,n){var r=n(84);n(74)("keys",function(t){return function(e){return t(r(e))}})},function(t,e,n){"use strict";var r,o=n(2),i=n(27),s=n(5),a=n(13),u=n(34),c=n(16),p=n(17),l=n(10),f=n(22),d=n(80),h=n(61),y=n(77).set,v=n(76),g=n(3)("species"),m=n(79),_=n(73),b="Promise",x=s.process,w="process"==u(x),j=s[b],k=function(t){var e=new j(function(){});return t&&(e.constructor=Object),j.resolve(e)===e},M=function(){function t(e){var n=new j(e);return y(n,t.prototype),n}var e=!1;try{if(e=j&&j.resolve&&k(),y(t,j),t.prototype=o.create(j.prototype,{constructor:{value:t}}),t.resolve(5).then(function(){})instanceof t||(e=!1),e&&n(15)){var r=!1;j.resolve(o.setDesc({},"then",{get:function(){r=!0}})),e=r}}catch(i){e=!1}return e}(),O=function(t,e){return i&&t===j&&e===r?!0:v(t,e)},S=function(t){var e=l(t)[g];return void 0!=e?e:t},C=function(t){var e;return p(t)&&"function"==typeof(e=t.then)?e:!1},$=function(t){var e,n;this.promise=new t(function(t,r){if(void 0!==e||void 0!==n)throw TypeError("Bad Promise constructor");e=t,n=r}),this.resolve=f(e),this.reject=f(n)},E=function(t){try{t()}catch(e){return{error:e}}},P=function(t,e){if(!t.n){t.n=!0;var n=t.c;_(function(){for(var r=t.v,o=1==t.s,i=0,a=function(e){var n,i,s=o?e.ok:e.fail,a=e.resolve,u=e.reject;try{s?(o||(t.h=!0),n=s===!0?r:s(r),n===e.promise?u(TypeError("Promise-chain cycle")):(i=C(n))?i.call(n,a,u):a(n)):u(r)}catch(c){u(c)}};n.length>i;)a(n[i++]);n.length=0,t.n=!1,e&&setTimeout(function(){var e,n,o=t.p;T(o)&&(w?x.emit("unhandledRejection",r,o):(e=s.onunhandledrejection)?e({promise:o,reason:r}):(n=s.console)&&n.error&&n.error("Unhandled promise rejection",r)),t.a=void 0},1)})}},T=function(t){var e,n=t._d,r=n.a||n.c,o=0;if(n.h)return!1;for(;r.length>o;)if(e=r[o++],e.fail||!T(e.promise))return!1;return!0},A=function(t){var e=this;e.d||(e.d=!0,e=e.r||e,e.v=t,e.s=2,e.a=e.c.slice(),P(e,!0))},R=function(t){var e,n=this;if(!n.d){n.d=!0,n=n.r||n;try{if(n.p===t)throw TypeError("Promise can't be resolved itself");(e=C(t))?_(function(){var r={r:n,d:!1};try{e.call(t,a(R,r,1),a(A,r,1))}catch(o){A.call(r,o)}}):(n.v=t,n.s=1,P(n,!1))}catch(r){A.call({r:n,d:!1},r)}}};M||(j=function(t){f(t);var e=this._d={p:d(this,j,b),c:[],a:void 0,s:0,d:!1,v:void 0,h:!1,n:!1};try{t(a(R,e,1),a(A,e,1))}catch(n){A.call(e,n)}},n(75)(j.prototype,{then:function(t,e){var n=new $(m(this,j)),r=n.promise,o=this._d;return n.ok="function"==typeof t?t:!0,n.fail="function"==typeof e&&e,o.c.push(n),o.a&&o.a.push(n),o.s&&P(o,!1),r},"catch":function(t){return this.then(void 0,t)}})),c(c.G+c.W+c.F*!M,{Promise:j}),n(18)(j,b),n(78)(b),r=n(9)[b],c(c.S+c.F*!M,b,{reject:function(t){var e=new $(this),n=e.reject;return n(t),e.promise}}),c(c.S+c.F*(!M||k(!0)),b,{resolve:function(t){if(t instanceof j&&O(t.constructor,this))return t;var e=new $(this),n=e.resolve;return n(t),e.promise}}),c(c.S+c.F*!(M&&n(70)(function(t){j.all(t)["catch"](function(){})})),b,{all:function(t){var e=S(this),n=new $(e),r=n.resolve,i=n.reject,s=[],a=E(function(){h(t,!1,s.push,s);var n=s.length,a=Array(n);n?o.each.call(s,function(t,o){var s=!1;e.resolve(t).then(function(t){s||(s=!0,a[o]=t,--n||r(a))},i)}):r(a)});return a&&i(a.error),n.promise},race:function(t){var e=S(this),n=new $(e),r=n.reject,o=E(function(){h(t,!1,function(t){e.resolve(t).then(n.resolve,r)})});return o&&r(o.error),n.promise}})},function(t,e,n){"use strict";var r=n(81)(!0);n(35)(String,"String",function(t){this._t=String(t),this._i=0},function(){var t,e=this._t,n=this._i;return n>=e.length?{value:void 0,done:!0}:(t=r(e,n),this._i+=t.length,{value:t,done:!1})})},function(t,e,n){"use strict";var r=n(2),o=n(5),i=n(25),s=n(15),a=n(16),u=n(29),c=n(24),p=n(36),l=n(18),f=n(38),d=n(3),h=n(72),y=n(62),v=n(60),g=n(67),m=n(10),_=n(19),b=n(28),x=r.getDesc,w=r.setDesc,j=r.create,k=y.get,M=o.Symbol,O=o.JSON,S=O&&O.stringify,C=!1,$=d("_hidden"),E=r.isEnum,P=p("symbol-registry"),T=p("symbols"),A="function"==typeof M,R=Object.prototype,L=s&&c(function(){return 7!=j(w({},"a",{get:function(){return w(this,"a",{value:7}).a}})).a})?function(t,e,n){var r=x(R,e);r&&delete R[e],w(t,e,n),r&&t!==R&&w(R,e,r)}:w,I=function(t){var e=T[t]=j(M.prototype);return e._k=t,s&&C&&L(R,t,{configurable:!0,set:function(e){i(this,$)&&i(this[$],t)&&(this[$][t]=!1),L(this,t,b(1,e))}}),e},z=function(t){return"symbol"==typeof t},N=function(t,e,n){return n&&i(T,e)?(n.enumerable?(i(t,$)&&t[$][e]&&(t[$][e]=!1),n=j(n,{enumerable:b(0,!1)})):(i(t,$)||w(t,$,b(1,{})),t[$][e]=!0),L(t,e,n)):w(t,e,n)},W=function(t,e){m(t);for(var n,r=v(e=_(e)),o=0,i=r.length;i>o;)N(t,n=r[o++],e[n]);return t},D=function(t,e){return void 0===e?j(t):W(j(t),e)},B=function(t){var e=E.call(this,t);return e||!i(this,t)||!i(T,t)||i(this,$)&&this[$][t]?e:!0},F=function(t,e){var n=x(t=_(t),e);return!n||!i(T,e)||i(t,$)&&t[$][e]||(n.enumerable=!0),n},U=function(t){for(var e,n=k(_(t)),r=[],o=0;n.length>o;)i(T,e=n[o++])||e==$||r.push(e);return r},V=function(t){for(var e,n=k(_(t)),r=[],o=0;n.length>o;)i(T,e=n[o++])&&r.push(T[e]);return r},G=function(t){if(void 0!==t&&!z(t)){for(var e,n,r=[t],o=1,i=arguments;i.length>o;)r.push(i[o++]);return e=r[1],"function"==typeof e&&(n=e),(n||!g(e))&&(e=function(t,e){return n&&(e=n.call(this,t,e)),z(e)?void 0:e}),r[1]=e,S.apply(O,r)}},q=c(function(){var t=M();return"[null]"!=S([t])||"{}"!=S({a:t})||"{}"!=S(Object(t))});A||(M=function(){if(z(this))throw TypeError("Symbol is not a constructor");return I(f(arguments.length>0?arguments[0]:void 0))},u(M.prototype,"toString",function(){return this._k}),z=function(t){return t instanceof M},r.create=D,r.isEnum=B,r.getDesc=F,r.setDesc=N,r.setDescs=W,r.getNames=y.get=U,r.getSymbols=V,s&&!n(27)&&u(R,"propertyIsEnumerable",B,!0));var Z={"for":function(t){return i(P,t+="")?P[t]:P[t]=M(t)},keyFor:function(t){return h(P,t)},useSetter:function(){C=!0},useSimple:function(){C=!1}};r.each.call("hasInstance,isConcatSpreadable,iterator,match,replace,search,species,split,toPrimitive,toStringTag,unscopables".split(","),function(t){var e=d(t);Z[t]=A?e:I(e)}),C=!0,a(a.G+a.W,{Symbol:M}),a(a.S,"Symbol",Z),a(a.S+a.F*!A,"Object",{create:D,defineProperty:N,defineProperties:W,getOwnPropertyDescriptor:F,getOwnPropertyNames:U,getOwnPropertySymbols:V}),O&&a(a.S+a.F*(!A||q),"JSON",{stringify:G}),l(M,"Symbol"),l(Math,"Math",!0),l(o.JSON,"JSON",!0)},function(t,e,n){n(86);var r=n(14);r.NodeList=r.HTMLCollection=r.Array},function(t,e,n){e=t.exports=n(93)(),e.push([t.id,".vue-map-container,.vue-map-container .vue-map{width:100%;height:100%}","",{version:3,sources:["/./src/components/map.vue.style"],names:[],mappings:"AAA0C,+CAA4B,WAAW,WAAW,CAAC",file:"map.vue",sourcesContent:[".vue-map-container{width:100%;height:100%}.vue-map-container .vue-map{width:100%;height:100%}"],sourceRoot:"webpack://"}])},function(t,e){t.exports=function(){var t=[];return t.toString=function(){for(var t=[],e=0;e<this.length;e++){var n=this[e];n[2]?t.push("@media "+n[2]+"{"+n[1]+"}"):t.push(n[1])}return t.join("")},t.i=function(e,n){"string"==typeof e&&(e=[[null,e,""]]);for(var r={},o=0;o<this.length;o++){var i=this[o][0];"number"==typeof i&&(r[i]=!0)}for(o=0;o<e.length;o++){var s=e[o];"number"==typeof s[0]&&r[s[0]]||(n&&!s[2]?s[2]=n:n&&(s[2]="("+s[2]+") and ("+n+")"),t.push(s))}},t}},function(t,e){"function"==typeof Object.create?t.exports=function(t,e){t.super_=e,t.prototype=Object.create(e.prototype,{constructor:{value:t,enumerable:!1,writable:!0,configurable:!0}})}:t.exports=function(t,e){t.super_=e;var n=function(){};n.prototype=e.prototype,t.prototype=new n,t.prototype.constructor=t}},function(t,e){function n(t,e,r){this.extend(n,google.maps.OverlayView),this.map_=t,this.markers_=[],this.clusters_=[],this.sizes=[53,56,66,78,90],this.styles_=[],this.ready_=!1;var o=r||{};this.gridSize_=o.gridSize||60,this.minClusterSize_=o.minimumClusterSize||2,this.maxZoom_=o.maxZoom||null,this.styles_=o.styles||[],this.imagePath_=o.imagePath||this.MARKER_CLUSTER_IMAGE_PATH_,this.imageExtension_=o.imageExtension||this.MARKER_CLUSTER_IMAGE_EXTENSION_,this.zoomOnClick_=!0,void 0!=o.zoomOnClick&&(this.zoomOnClick_=o.zoomOnClick),this.averageCenter_=!1,void 0!=o.averageCenter&&(this.averageCenter_=o.averageCenter),this.setupStyles_(),this.setMap(t),this.prevZoom_=this.map_.getZoom();var i=this;google.maps.event.addListener(this.map_,"zoom_changed",function(){var t=i.map_.getZoom();i.prevZoom_!=t&&(i.prevZoom_=t,i.resetViewport())}),google.maps.event.addListener(this.map_,"idle",function(){i.redraw()}),e&&e.length&&this.addMarkers(e,!1)}function r(t){this.markerClusterer_=t,this.map_=t.getMap(),this.gridSize_=t.getGridSize(),this.minClusterSize_=t.getMinClusterSize(),this.averageCenter_=t.isAverageCenter(),this.center_=null,this.markers_=[],this.bounds_=null,this.clusterIcon_=new o(this,t.getStyles(),t.getGridSize())}function o(t,e,n){t.getMarkerClusterer().extend(o,google.maps.OverlayView),this.styles_=e,this.padding_=n||0,this.cluster_=t,this.center_=null,this.map_=t.getMap(),this.div_=null,this.sums_=null,this.visible_=!1,this.setMap(this.map_)}n.prototype.MARKER_CLUSTER_IMAGE_PATH_="https://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/images/m",n.prototype.MARKER_CLUSTER_IMAGE_EXTENSION_="png",n.prototype.extend=function(t,e){return function(t){for(var e in t.prototype)this.prototype[e]=t.prototype[e];return this}.apply(t,[e])},n.prototype.onAdd=function(){this.setReady_(!0)},n.prototype.draw=function(){},n.prototype.setupStyles_=function(){if(!this.styles_.length)for(var t,e=0;t=this.sizes[e];e++)this.styles_.push({url:this.imagePath_+(e+1)+"."+this.imageExtension_,height:t,width:t})},n.prototype.fitMapToMarkers=function(){for(var t,e=this.getMarkers(),n=new google.maps.LatLngBounds,r=0;t=e[r];r++)n.extend(t.getPosition());this.map_.fitBounds(n)},n.prototype.setStyles=function(t){this.styles_=t},n.prototype.getStyles=function(){return this.styles_},n.prototype.isZoomOnClick=function(){return this.zoomOnClick_},n.prototype.isAverageCenter=function(){return this.averageCenter_},n.prototype.getMarkers=function(){return this.markers_},n.prototype.getTotalMarkers=function(){return this.markers_.length},n.prototype.setMaxZoom=function(t){this.maxZoom_=t},n.prototype.getMaxZoom=function(){return this.maxZoom_},n.prototype.calculator_=function(t,e){for(var n=0,r=t.length,o=r;0!==o;)o=parseInt(o/10,10),n++;return n=Math.min(n,e),{text:r,index:n}},n.prototype.setCalculator=function(t){this.calculator_=t},n.prototype.getCalculator=function(){return this.calculator_},n.prototype.addMarkers=function(t,e){for(var n,r=0;n=t[r];r++)this.pushMarkerTo_(n);e||this.redraw()},n.prototype.pushMarkerTo_=function(t){if(t.isAdded=!1,t.draggable){var e=this;google.maps.event.addListener(t,"dragend",function(){t.isAdded=!1,e.repaint()})}this.markers_.push(t)},n.prototype.addMarker=function(t,e){this.pushMarkerTo_(t),e||this.redraw()},n.prototype.removeMarker_=function(t){var e=-1;if(this.markers_.indexOf)e=this.markers_.indexOf(t);else for(var n,r=0;n=this.markers_[r];r++)if(n==t){e=r;break}return-1==e?!1:(t.setMap(null),this.markers_.splice(e,1),!0)},n.prototype.removeMarker=function(t,e){var n=this.removeMarker_(t);return!e&&n?(this.resetViewport(),this.redraw(),!0):!1},n.prototype.removeMarkers=function(t,e){for(var n,r=!1,o=0;n=t[o];o++){var i=this.removeMarker_(n);r=r||i}return!e&&r?(this.resetViewport(),this.redraw(),!0):void 0},n.prototype.setReady_=function(t){this.ready_||(this.ready_=t,this.createClusters_())},n.prototype.getTotalClusters=function(){return this.clusters_.length},n.prototype.getMap=function(){return this.map_},n.prototype.setMap=function(t){this.map_=t},n.prototype.getGridSize=function(){return this.gridSize_},n.prototype.setGridSize=function(t){this.gridSize_=t},n.prototype.getMinClusterSize=function(){return this.minClusterSize_},n.prototype.setMinClusterSize=function(t){this.minClusterSize_=t},n.prototype.getExtendedBounds=function(t){var e=this.getProjection(),n=new google.maps.LatLng(t.getNorthEast().lat(),t.getNorthEast().lng()),r=new google.maps.LatLng(t.getSouthWest().lat(),t.getSouthWest().lng()),o=e.fromLatLngToDivPixel(n);o.x+=this.gridSize_,o.y-=this.gridSize_;var i=e.fromLatLngToDivPixel(r);i.x-=this.gridSize_,i.y+=this.gridSize_;var s=e.fromDivPixelToLatLng(o),a=e.fromDivPixelToLatLng(i);return t.extend(s),t.extend(a),t},n.prototype.isMarkerInBounds_=function(t,e){return e.contains(t.getPosition())},n.prototype.clearMarkers=function(){this.resetViewport(!0),this.markers_=[]},n.prototype.resetViewport=function(t){for(var e,n=0;e=this.clusters_[n];n++)e.remove();for(var r,n=0;r=this.markers_[n];n++)r.isAdded=!1,t&&r.setMap(null);this.clusters_=[]},n.prototype.repaint=function(){var t=this.clusters_.slice();this.clusters_.length=0,this.resetViewport(),this.redraw(),window.setTimeout(function(){for(var e,n=0;e=t[n];n++)e.remove()},0)},n.prototype.redraw=function(){this.createClusters_()},n.prototype.distanceBetweenPoints_=function(t,e){if(!t||!e)return 0;var n=6371,r=(e.lat()-t.lat())*Math.PI/180,o=(e.lng()-t.lng())*Math.PI/180,i=Math.sin(r/2)*Math.sin(r/2)+Math.cos(t.lat()*Math.PI/180)*Math.cos(e.lat()*Math.PI/180)*Math.sin(o/2)*Math.sin(o/2),s=2*Math.atan2(Math.sqrt(i),Math.sqrt(1-i)),a=n*s;return a},n.prototype.addToClosestCluster_=function(t){for(var e,n=4e4,o=null,i=(t.getPosition(),0);e=this.clusters_[i];i++){var s=e.getCenter();if(s){var a=this.distanceBetweenPoints_(s,t.getPosition());n>a&&(n=a,o=e)}}if(o&&o.isMarkerInClusterBounds(t))o.addMarker(t);else{var e=new r(this);e.addMarker(t),this.clusters_.push(e)}},n.prototype.createClusters_=function(){if(this.ready_)for(var t,e=new google.maps.LatLngBounds(this.map_.getBounds().getSouthWest(),this.map_.getBounds().getNorthEast()),n=this.getExtendedBounds(e),r=0;t=this.markers_[r];r++)!t.isAdded&&this.isMarkerInBounds_(t,n)&&this.addToClosestCluster_(t)},r.prototype.isMarkerAlreadyAdded=function(t){if(this.markers_.indexOf)return-1!=this.markers_.indexOf(t);for(var e,n=0;e=this.markers_[n];n++)if(e==t)return!0;return!1},r.prototype.addMarker=function(t){if(this.isMarkerAlreadyAdded(t))return!1;if(this.center_){if(this.averageCenter_){var e=this.markers_.length+1,n=(this.center_.lat()*(e-1)+t.getPosition().lat())/e,r=(this.center_.lng()*(e-1)+t.getPosition().lng())/e;this.center_=new google.maps.LatLng(n,r),this.calculateBounds_()}}else this.center_=t.getPosition(),this.calculateBounds_();t.isAdded=!0,this.markers_.push(t);var o=this.markers_.length;if(o<this.minClusterSize_&&t.getMap()!=this.map_&&t.setMap(this.map_),o==this.minClusterSize_)for(var i=0;o>i;i++)this.markers_[i].setMap(null);return o>=this.minClusterSize_&&t.setMap(null),this.updateIcon(),!0},r.prototype.getMarkerClusterer=function(){return this.markerClusterer_},r.prototype.getBounds=function(){for(var t,e=new google.maps.LatLngBounds(this.center_,this.center_),n=this.getMarkers(),r=0;t=n[r];r++)e.extend(t.getPosition());return e},r.prototype.remove=function(){this.clusterIcon_.remove(),this.markers_.length=0,delete this.markers_},r.prototype.getSize=function(){return this.markers_.length},r.prototype.getMarkers=function(){return this.markers_},r.prototype.getCenter=function(){return this.center_},r.prototype.calculateBounds_=function(){var t=new google.maps.LatLngBounds(this.center_,this.center_);this.bounds_=this.markerClusterer_.getExtendedBounds(t)},r.prototype.isMarkerInClusterBounds=function(t){return this.bounds_.contains(t.getPosition())},r.prototype.getMap=function(){return this.map_},r.prototype.updateIcon=function(){var t=this.map_.getZoom(),e=this.markerClusterer_.getMaxZoom();if(e&&t>e)for(var n,r=0;n=this.markers_[r];r++)n.setMap(this.map_);else{if(this.markers_.length<this.minClusterSize_)return void this.clusterIcon_.hide();var o=this.markerClusterer_.getStyles().length,i=this.markerClusterer_.getCalculator()(this.markers_,o);this.clusterIcon_.setCenter(this.center_),this.clusterIcon_.setSums(i),this.clusterIcon_.show()}},o.prototype.triggerClusterClick=function(t){var e=this.cluster_.getMarkerClusterer();google.maps.event.trigger(e,"clusterclick",this.cluster_,t),e.isZoomOnClick()&&this.map_.fitBounds(this.cluster_.getBounds())},o.prototype.onAdd=function(){
-if(this.div_=document.createElement("DIV"),this.visible_){var t=this.getPosFromLatLng_(this.center_);this.div_.style.cssText=this.createCss(t),this.div_.innerHTML=this.sums_.text}var e=this.getPanes();e.overlayMouseTarget.appendChild(this.div_);var n=this;google.maps.event.addDomListener(this.div_,"click",function(t){n.triggerClusterClick(t)})},o.prototype.getPosFromLatLng_=function(t){var e=this.getProjection().fromLatLngToDivPixel(t);return"object"==typeof this.iconAnchor_&&2===this.iconAnchor_.length?(e.x-=this.iconAnchor_[0],e.y-=this.iconAnchor_[1]):(e.x-=parseInt(this.width_/2,10),e.y-=parseInt(this.height_/2,10)),e},o.prototype.draw=function(){if(this.visible_){var t=this.getPosFromLatLng_(this.center_);this.div_.style.top=t.y+"px",this.div_.style.left=t.x+"px"}},o.prototype.hide=function(){this.div_&&(this.div_.style.display="none"),this.visible_=!1},o.prototype.show=function(){if(this.div_){var t=this.getPosFromLatLng_(this.center_);this.div_.style.cssText=this.createCss(t),this.div_.style.display=""}this.visible_=!0},o.prototype.remove=function(){this.setMap(null)},o.prototype.onRemove=function(){this.div_&&this.div_.parentNode&&(this.hide(),this.div_.parentNode.removeChild(this.div_),this.div_=null)},o.prototype.setSums=function(t){this.sums_=t,this.text_=t.text,this.index_=t.index,this.div_&&(this.div_.innerHTML=t.text),this.useStyle()},o.prototype.useStyle=function(){var t=Math.max(0,this.sums_.index-1);t=Math.min(this.styles_.length-1,t);var e=this.styles_[t];this.url_=e.url,this.height_=e.height,this.width_=e.width,this.textColor_=e.textColor,this.anchor_=e.anchor,this.textSize_=e.textSize,this.backgroundPosition_=e.backgroundPosition,this.iconAnchor_=e.iconAnchor},o.prototype.setCenter=function(t){this.center_=t},o.prototype.createCss=function(t){var e=[];e.push("background-image:url("+this.url_+");");var n=this.backgroundPosition_?this.backgroundPosition_:"0 0";e.push("background-position:"+n+";"),"object"==typeof this.anchor_?("number"==typeof this.anchor_[0]&&this.anchor_[0]>0&&this.anchor_[0]<this.height_?e.push("height:"+(this.height_-this.anchor_[0])+"px; padding-top:"+this.anchor_[0]+"px;"):"number"==typeof this.anchor_[0]&&this.anchor_[0]<0&&-this.anchor_[0]<this.height_?e.push("height:"+this.height_+"px; line-height:"+(this.height_+this.anchor_[0])+"px;"):e.push("height:"+this.height_+"px; line-height:"+this.height_+"px;"),"number"==typeof this.anchor_[1]&&this.anchor_[1]>0&&this.anchor_[1]<this.width_?e.push("width:"+(this.width_-this.anchor_[1])+"px; padding-left:"+this.anchor_[1]+"px;"):e.push("width:"+this.width_+"px; text-align:center;")):e.push("height:"+this.height_+"px; line-height:"+this.height_+"px; width:"+this.width_+"px; text-align:center;");var r=this.textColor_?this.textColor_:"black",o=this.textSize_?this.textSize_:11;return e.push("cursor:pointer; top:"+t.y+"px; left:"+t.x+"px; color:"+r+"; position:absolute; font-size:"+o+"px; font-family:Arial,sans-serif; font-weight:bold"),e.join("")},window.MarkerClusterer=n,n.prototype.addMarker=n.prototype.addMarker,n.prototype.addMarkers=n.prototype.addMarkers,n.prototype.clearMarkers=n.prototype.clearMarkers,n.prototype.fitMapToMarkers=n.prototype.fitMapToMarkers,n.prototype.getCalculator=n.prototype.getCalculator,n.prototype.getGridSize=n.prototype.getGridSize,n.prototype.getExtendedBounds=n.prototype.getExtendedBounds,n.prototype.getMap=n.prototype.getMap,n.prototype.getMarkers=n.prototype.getMarkers,n.prototype.getMaxZoom=n.prototype.getMaxZoom,n.prototype.getStyles=n.prototype.getStyles,n.prototype.getTotalClusters=n.prototype.getTotalClusters,n.prototype.getTotalMarkers=n.prototype.getTotalMarkers,n.prototype.redraw=n.prototype.redraw,n.prototype.removeMarker=n.prototype.removeMarker,n.prototype.removeMarkers=n.prototype.removeMarkers,n.prototype.resetViewport=n.prototype.resetViewport,n.prototype.repaint=n.prototype.repaint,n.prototype.setCalculator=n.prototype.setCalculator,n.prototype.setGridSize=n.prototype.setGridSize,n.prototype.setMaxZoom=n.prototype.setMaxZoom,n.prototype.onAdd=n.prototype.onAdd,n.prototype.draw=n.prototype.draw,r.prototype.getCenter=r.prototype.getCenter,r.prototype.getSize=r.prototype.getSize,r.prototype.getMarkers=r.prototype.getMarkers,o.prototype.onAdd=o.prototype.onAdd,o.prototype.draw=o.prototype.draw,o.prototype.onRemove=o.prototype.onRemove},function(t,e,n){function r(t,e){for(var n=0;n<t.length;n++){var r=t[n],o=d[r.id];if(o){o.refs++;for(var i=0;i<o.parts.length;i++)o.parts[i](r.parts[i]);for(;i<r.parts.length;i++)o.parts.push(c(r.parts[i],e))}else{for(var s=[],i=0;i<r.parts.length;i++)s.push(c(r.parts[i],e));d[r.id]={id:r.id,refs:1,parts:s}}}}function o(t){for(var e=[],n={},r=0;r<t.length;r++){var o=t[r],i=o[0],s=o[1],a=o[2],u=o[3],c={css:s,media:a,sourceMap:u};n[i]?n[i].parts.push(c):e.push(n[i]={id:i,parts:[c]})}return e}function i(t,e){var n=v(),r=_[_.length-1];if("top"===t.insertAt)r?r.nextSibling?n.insertBefore(e,r.nextSibling):n.appendChild(e):n.insertBefore(e,n.firstChild),_.push(e);else{if("bottom"!==t.insertAt)throw new Error("Invalid value for parameter 'insertAt'. Must be 'top' or 'bottom'.");n.appendChild(e)}}function s(t){t.parentNode.removeChild(t);var e=_.indexOf(t);e>=0&&_.splice(e,1)}function a(t){var e=document.createElement("style");return e.type="text/css",i(t,e),e}function u(t){var e=document.createElement("link");return e.rel="stylesheet",i(t,e),e}function c(t,e){var n,r,o;if(e.singleton){var i=m++;n=g||(g=a(e)),r=p.bind(null,n,i,!1),o=p.bind(null,n,i,!0)}else t.sourceMap&&"function"==typeof URL&&"function"==typeof URL.createObjectURL&&"function"==typeof URL.revokeObjectURL&&"function"==typeof Blob&&"function"==typeof btoa?(n=u(e),r=f.bind(null,n),o=function(){s(n),n.href&&URL.revokeObjectURL(n.href)}):(n=a(e),r=l.bind(null,n),o=function(){s(n)});return r(t),function(e){if(e){if(e.css===t.css&&e.media===t.media&&e.sourceMap===t.sourceMap)return;r(t=e)}else o()}}function p(t,e,n,r){var o=n?"":r.css;if(t.styleSheet)t.styleSheet.cssText=b(e,o);else{var i=document.createTextNode(o),s=t.childNodes;s[e]&&t.removeChild(s[e]),s.length?t.insertBefore(i,s[e]):t.appendChild(i)}}function l(t,e){var n=e.css,r=e.media;e.sourceMap;if(r&&t.setAttribute("media",r),t.styleSheet)t.styleSheet.cssText=n;else{for(;t.firstChild;)t.removeChild(t.firstChild);t.appendChild(document.createTextNode(n))}}function f(t,e){var n=e.css,r=(e.media,e.sourceMap);r&&(n+="\n/*# sourceMappingURL=data:application/json;base64,"+btoa(unescape(encodeURIComponent(JSON.stringify(r))))+" */");var o=new Blob([n],{type:"text/css"}),i=t.href;t.href=URL.createObjectURL(o),i&&URL.revokeObjectURL(i)}var d={},h=function(t){var e;return function(){return"undefined"==typeof e&&(e=t.apply(this,arguments)),e}},y=h(function(){return/msie [6-9]\b/.test(window.navigator.userAgent.toLowerCase())}),v=h(function(){return document.head||document.getElementsByTagName("head")[0]}),g=null,m=0,_=[];t.exports=function(t,e){e=e||{},"undefined"==typeof e.singleton&&(e.singleton=y()),"undefined"==typeof e.insertAt&&(e.insertAt="bottom");var n=o(t);return r(n,e),function(t){for(var i=[],s=0;s<n.length;s++){var a=n[s],u=d[a.id];u.refs--,i.push(u)}if(t){var c=o(t);r(c,e)}for(var s=0;s<i.length;s++){var u=i[s];if(0===u.refs){for(var p=0;p<u.parts.length;p++)u.parts[p]();delete d[u.id]}}}};var b=function(){var t=[];return function(e,n){return t[e]=n,t.filter(Boolean).join("\n")}}()},function(t,e,n){var r=n(92);"string"==typeof r&&(r=[[t.id,r,""]]);n(96)(r,{});r.locals&&(t.exports=r.locals)},function(t,e){t.exports=function(t){return t&&"object"==typeof t&&"function"==typeof t.copy&&"function"==typeof t.fill&&"function"==typeof t.readUInt8}},function(t,e,n){(function(t,r){function o(t,n){var r={seen:[],stylize:s};return arguments.length>=3&&(r.depth=arguments[2]),arguments.length>=4&&(r.colors=arguments[3]),y(n)?r.showHidden=n:n&&e._extend(r,n),x(r.showHidden)&&(r.showHidden=!1),x(r.depth)&&(r.depth=2),x(r.colors)&&(r.colors=!1),x(r.customInspect)&&(r.customInspect=!0),r.colors&&(r.stylize=i),u(r,t,r.depth)}function i(t,e){var n=o.styles[e];return n?"["+o.colors[n][0]+"m"+t+"["+o.colors[n][1]+"m":t}function s(t,e){return t}function a(t){var e={};return t.forEach(function(t,n){e[t]=!0}),e}function u(t,n,r){if(t.customInspect&&n&&O(n.inspect)&&n.inspect!==e.inspect&&(!n.constructor||n.constructor.prototype!==n)){var o=n.inspect(r,t);return _(o)||(o=u(t,o,r)),o}var i=c(t,n);if(i)return i;var s=Object.keys(n),y=a(s);if(t.showHidden&&(s=Object.getOwnPropertyNames(n)),M(n)&&(s.indexOf("message")>=0||s.indexOf("description")>=0))return p(n);if(0===s.length){if(O(n)){var v=n.name?": "+n.name:"";return t.stylize("[Function"+v+"]","special")}if(w(n))return t.stylize(RegExp.prototype.toString.call(n),"regexp");if(k(n))return t.stylize(Date.prototype.toString.call(n),"date");if(M(n))return p(n)}var g="",m=!1,b=["{","}"];if(h(n)&&(m=!0,b=["[","]"]),O(n)){var x=n.name?": "+n.name:"";g=" [Function"+x+"]"}if(w(n)&&(g=" "+RegExp.prototype.toString.call(n)),k(n)&&(g=" "+Date.prototype.toUTCString.call(n)),M(n)&&(g=" "+p(n)),0===s.length&&(!m||0==n.length))return b[0]+g+b[1];if(0>r)return w(n)?t.stylize(RegExp.prototype.toString.call(n),"regexp"):t.stylize("[Object]","special");t.seen.push(n);var j;return j=m?l(t,n,r,y,s):s.map(function(e){return f(t,n,r,y,e,m)}),t.seen.pop(),d(j,g,b)}function c(t,e){if(x(e))return t.stylize("undefined","undefined");if(_(e)){var n="'"+JSON.stringify(e).replace(/^"|"$/g,"").replace(/'/g,"\\'").replace(/\\"/g,'"')+"'";return t.stylize(n,"string")}return m(e)?t.stylize(""+e,"number"):y(e)?t.stylize(""+e,"boolean"):v(e)?t.stylize("null","null"):void 0}function p(t){return"["+Error.prototype.toString.call(t)+"]"}function l(t,e,n,r,o){for(var i=[],s=0,a=e.length;a>s;++s)P(e,String(s))?i.push(f(t,e,n,r,String(s),!0)):i.push("");return o.forEach(function(o){o.match(/^\d+$/)||i.push(f(t,e,n,r,o,!0))}),i}function f(t,e,n,r,o,i){var s,a,c;if(c=Object.getOwnPropertyDescriptor(e,o)||{value:e[o]},c.get?a=c.set?t.stylize("[Getter/Setter]","special"):t.stylize("[Getter]","special"):c.set&&(a=t.stylize("[Setter]","special")),P(r,o)||(s="["+o+"]"),a||(t.seen.indexOf(c.value)<0?(a=v(n)?u(t,c.value,null):u(t,c.value,n-1),a.indexOf("\n")>-1&&(a=i?a.split("\n").map(function(t){return"  "+t}).join("\n").substr(2):"\n"+a.split("\n").map(function(t){return"   "+t}).join("\n"))):a=t.stylize("[Circular]","special")),x(s)){if(i&&o.match(/^\d+$/))return a;s=JSON.stringify(""+o),s.match(/^"([a-zA-Z_][a-zA-Z_0-9]*)"$/)?(s=s.substr(1,s.length-2),s=t.stylize(s,"name")):(s=s.replace(/'/g,"\\'").replace(/\\"/g,'"').replace(/(^"|"$)/g,"'"),s=t.stylize(s,"string"))}return s+": "+a}function d(t,e,n){var r=0,o=t.reduce(function(t,e){return r++,e.indexOf("\n")>=0&&r++,t+e.replace(/\u001b\[\d\d?m/g,"").length+1},0);return o>60?n[0]+(""===e?"":e+"\n ")+" "+t.join(",\n  ")+" "+n[1]:n[0]+e+" "+t.join(", ")+" "+n[1]}function h(t){return Array.isArray(t)}function y(t){return"boolean"==typeof t}function v(t){return null===t}function g(t){return null==t}function m(t){return"number"==typeof t}function _(t){return"string"==typeof t}function b(t){return"symbol"==typeof t}function x(t){return void 0===t}function w(t){return j(t)&&"[object RegExp]"===C(t)}function j(t){return"object"==typeof t&&null!==t}function k(t){return j(t)&&"[object Date]"===C(t)}function M(t){return j(t)&&("[object Error]"===C(t)||t instanceof Error)}function O(t){return"function"==typeof t}function S(t){return null===t||"boolean"==typeof t||"number"==typeof t||"string"==typeof t||"symbol"==typeof t||"undefined"==typeof t}function C(t){return Object.prototype.toString.call(t)}function $(t){return 10>t?"0"+t.toString(10):t.toString(10)}function E(){var t=new Date,e=[$(t.getHours()),$(t.getMinutes()),$(t.getSeconds())].join(":");return[t.getDate(),L[t.getMonth()],e].join(" ")}function P(t,e){return Object.prototype.hasOwnProperty.call(t,e)}var T=/%[sdj%]/g;e.format=function(t){if(!_(t)){for(var e=[],n=0;n<arguments.length;n++)e.push(o(arguments[n]));return e.join(" ")}for(var n=1,r=arguments,i=r.length,s=String(t).replace(T,function(t){if("%%"===t)return"%";if(n>=i)return t;switch(t){case"%s":return String(r[n++]);case"%d":return Number(r[n++]);case"%j":try{return JSON.stringify(r[n++])}catch(e){return"[Circular]"}default:return t}}),a=r[n];i>n;a=r[++n])s+=v(a)||!j(a)?" "+a:" "+o(a);return s},e.deprecate=function(n,o){function i(){if(!s){if(r.throwDeprecation)throw new Error(o);r.traceDeprecation?console.trace(o):console.error(o),s=!0}return n.apply(this,arguments)}if(x(t.process))return function(){return e.deprecate(n,o).apply(this,arguments)};if(r.noDeprecation===!0)return n;var s=!1;return i};var A,R={};e.debuglog=function(t){if(x(A)&&(A={NODE_ENV:"production"}.NODE_DEBUG||""),t=t.toUpperCase(),!R[t])if(new RegExp("\\b"+t+"\\b","i").test(A)){var n=r.pid;R[t]=function(){var r=e.format.apply(e,arguments);console.error("%s %d: %s",t,n,r)}}else R[t]=function(){};return R[t]},e.inspect=o,o.colors={bold:[1,22],italic:[3,23],underline:[4,24],inverse:[7,27],white:[37,39],grey:[90,39],black:[30,39],blue:[34,39],cyan:[36,39],green:[32,39],magenta:[35,39],red:[31,39],yellow:[33,39]},o.styles={special:"cyan",number:"yellow","boolean":"yellow",undefined:"grey","null":"bold",string:"green",date:"magenta",regexp:"red"},e.isArray=h,e.isBoolean=y,e.isNull=v,e.isNullOrUndefined=g,e.isNumber=m,e.isString=_,e.isSymbol=b,e.isUndefined=x,e.isRegExp=w,e.isObject=j,e.isDate=k,e.isError=M,e.isFunction=O,e.isPrimitive=S,e.isBuffer=n(98);var L=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];e.log=function(){console.log("%s - %s",E(),e.format.apply(e,arguments))},e.inherits=n(94),e._extend=function(t,e){if(!e||!j(e))return t;for(var n=Object.keys(e),r=n.length;r--;)t[n[r]]=e[n[r]];return t}}).call(e,function(){return this}(),n(30))},function(t,e){t.exports="<slot></slot>"},function(t,e){t.exports="<div><slot><div class=you-will-never-find-this></div></slot></div>"},function(t,e){t.exports="<div class=vue-map-container><div class=vue-map></div><slot></slot></div>"},function(t,e){t.exports='<label><span v-text=label></span> <input type=text v-el:input :placeholder=placeholder :class="class"></label>'},function(t,e,n){var r,o;r=n(41),t.exports=r||{},t.exports.__esModule&&(t.exports=t.exports["default"]),o&&(("function"==typeof t.exports?t.exports.options:t.exports).template=o)},function(t,e,n){var r,o;r=n(42),o=n(100),t.exports=r||{},t.exports.__esModule&&(t.exports=t.exports["default"]),o&&(("function"==typeof t.exports?t.exports.options:t.exports).template=o)},function(t,e,n){var r,o;r=n(43),o=n(101),t.exports=r||{},t.exports.__esModule&&(t.exports=t.exports["default"]),o&&(("function"==typeof t.exports?t.exports.options:t.exports).template=o)},function(t,e,n){var r,o;n(97),r=n(44),o=n(102),t.exports=r||{},t.exports.__esModule&&(t.exports=t.exports["default"]),o&&(("function"==typeof t.exports?t.exports.options:t.exports).template=o)},function(t,e,n){var r,o;r=n(45),t.exports=r||{},t.exports.__esModule&&(t.exports=t.exports["default"]),o&&(("function"==typeof t.exports?t.exports.options:t.exports).template=o)},function(t,e,n){var r,o;r=n(46),o=n(103),t.exports=r||{},t.exports.__esModule&&(t.exports=t.exports["default"]),o&&(("function"==typeof t.exports?t.exports.options:t.exports).template=o)},function(t,e,n){var r,o;r=n(47),t.exports=r||{},t.exports.__esModule&&(t.exports=t.exports["default"]),o&&(("function"==typeof t.exports?t.exports.options:t.exports).template=o)},function(t,e,n){var r,o;r=n(48),t.exports=r||{},t.exports.__esModule&&(t.exports=t.exports["default"]),o&&(("function"==typeof t.exports?t.exports.options:t.exports).template=o)},function(t,e,n){var r,o;r=n(49),t.exports=r||{},t.exports.__esModule&&(t.exports=t.exports["default"]),o&&(("function"==typeof t.exports?t.exports.options:t.exports).template=o)}])});
+	MarkerClusterer.prototype.setCalculator = function(calculator) {
+	  this.calculator_ = calculator;
+	};
+	
+	
+	/**
+	 * Get the calculator function.
+	 *
+	 * @return {function(Array, number)} the calculator function.
+	 */
+	MarkerClusterer.prototype.getCalculator = function() {
+	  return this.calculator_;
+	};
+	
+	
+	/**
+	 * Add an array of markers to the clusterer.
+	 *
+	 * @param {Array.<google.maps.Marker>} markers The markers to add.
+	 * @param {boolean=} opt_nodraw Whether to redraw the clusters.
+	 */
+	MarkerClusterer.prototype.addMarkers = function(markers, opt_nodraw) {
+	  for (var i = 0, marker; marker = markers[i]; i++) {
+	    this.pushMarkerTo_(marker);
+	  }
+	  if (!opt_nodraw) {
+	    this.redraw();
+	  }
+	};
+	
+	
+	/**
+	 * Pushes a marker to the clusterer.
+	 *
+	 * @param {google.maps.Marker} marker The marker to add.
+	 * @private
+	 */
+	MarkerClusterer.prototype.pushMarkerTo_ = function(marker) {
+	  marker.isAdded = false;
+	  if (marker['draggable']) {
+	    // If the marker is draggable add a listener so we update the clusters on
+	    // the drag end.
+	    var that = this;
+	    google.maps.event.addListener(marker, 'dragend', function() {
+	      marker.isAdded = false;
+	      that.repaint();
+	    });
+	  }
+	  this.markers_.push(marker);
+	};
+	
+	
+	/**
+	 * Adds a marker to the clusterer and redraws if needed.
+	 *
+	 * @param {google.maps.Marker} marker The marker to add.
+	 * @param {boolean=} opt_nodraw Whether to redraw the clusters.
+	 */
+	MarkerClusterer.prototype.addMarker = function(marker, opt_nodraw) {
+	  this.pushMarkerTo_(marker);
+	  if (!opt_nodraw) {
+	    this.redraw();
+	  }
+	};
+	
+	
+	/**
+	 * Removes a marker and returns true if removed, false if not
+	 *
+	 * @param {google.maps.Marker} marker The marker to remove
+	 * @return {boolean} Whether the marker was removed or not
+	 * @private
+	 */
+	MarkerClusterer.prototype.removeMarker_ = function(marker) {
+	  var index = -1;
+	  if (this.markers_.indexOf) {
+	    index = this.markers_.indexOf(marker);
+	  } else {
+	    for (var i = 0, m; m = this.markers_[i]; i++) {
+	      if (m == marker) {
+	        index = i;
+	        break;
+	      }
+	    }
+	  }
+	
+	  if (index == -1) {
+	    // Marker is not in our list of markers.
+	    return false;
+	  }
+	
+	  marker.setMap(null);
+	
+	  this.markers_.splice(index, 1);
+	
+	  return true;
+	};
+	
+	
+	/**
+	 * Remove a marker from the cluster.
+	 *
+	 * @param {google.maps.Marker} marker The marker to remove.
+	 * @param {boolean=} opt_nodraw Optional boolean to force no redraw.
+	 * @return {boolean} True if the marker was removed.
+	 */
+	MarkerClusterer.prototype.removeMarker = function(marker, opt_nodraw) {
+	  var removed = this.removeMarker_(marker);
+	
+	  if (!opt_nodraw && removed) {
+	    this.resetViewport();
+	    this.redraw();
+	    return true;
+	  } else {
+	   return false;
+	  }
+	};
+	
+	
+	/**
+	 * Removes an array of markers from the cluster.
+	 *
+	 * @param {Array.<google.maps.Marker>} markers The markers to remove.
+	 * @param {boolean=} opt_nodraw Optional boolean to force no redraw.
+	 */
+	MarkerClusterer.prototype.removeMarkers = function(markers, opt_nodraw) {
+	  var removed = false;
+	
+	  for (var i = 0, marker; marker = markers[i]; i++) {
+	    var r = this.removeMarker_(marker);
+	    removed = removed || r;
+	  }
+	
+	  if (!opt_nodraw && removed) {
+	    this.resetViewport();
+	    this.redraw();
+	    return true;
+	  }
+	};
+	
+	
+	/**
+	 * Sets the clusterer's ready state.
+	 *
+	 * @param {boolean} ready The state.
+	 * @private
+	 */
+	MarkerClusterer.prototype.setReady_ = function(ready) {
+	  if (!this.ready_) {
+	    this.ready_ = ready;
+	    this.createClusters_();
+	  }
+	};
+	
+	
+	/**
+	 * Returns the number of clusters in the clusterer.
+	 *
+	 * @return {number} The number of clusters.
+	 */
+	MarkerClusterer.prototype.getTotalClusters = function() {
+	  return this.clusters_.length;
+	};
+	
+	
+	/**
+	 * Returns the google map that the clusterer is associated with.
+	 *
+	 * @return {google.maps.Map} The map.
+	 */
+	MarkerClusterer.prototype.getMap = function() {
+	  return this.map_;
+	};
+	
+	
+	/**
+	 * Sets the google map that the clusterer is associated with.
+	 *
+	 * @param {google.maps.Map} map The map.
+	 */
+	MarkerClusterer.prototype.setMap = function(map) {
+	  this.map_ = map;
+	};
+	
+	
+	/**
+	 * Returns the size of the grid.
+	 *
+	 * @return {number} The grid size.
+	 */
+	MarkerClusterer.prototype.getGridSize = function() {
+	  return this.gridSize_;
+	};
+	
+	
+	/**
+	 * Sets the size of the grid.
+	 *
+	 * @param {number} size The grid size.
+	 */
+	MarkerClusterer.prototype.setGridSize = function(size) {
+	  this.gridSize_ = size;
+	};
+	
+	
+	/**
+	 * Returns the min cluster size.
+	 *
+	 * @return {number} The grid size.
+	 */
+	MarkerClusterer.prototype.getMinClusterSize = function() {
+	  return this.minClusterSize_;
+	};
+	
+	/**
+	 * Sets the min cluster size.
+	 *
+	 * @param {number} size The grid size.
+	 */
+	MarkerClusterer.prototype.setMinClusterSize = function(size) {
+	  this.minClusterSize_ = size;
+	};
+	
+	
+	/**
+	 * Extends a bounds object by the grid size.
+	 *
+	 * @param {google.maps.LatLngBounds} bounds The bounds to extend.
+	 * @return {google.maps.LatLngBounds} The extended bounds.
+	 */
+	MarkerClusterer.prototype.getExtendedBounds = function(bounds) {
+	  var projection = this.getProjection();
+	
+	  // Turn the bounds into latlng.
+	  var tr = new google.maps.LatLng(bounds.getNorthEast().lat(),
+	      bounds.getNorthEast().lng());
+	  var bl = new google.maps.LatLng(bounds.getSouthWest().lat(),
+	      bounds.getSouthWest().lng());
+	
+	  // Convert the points to pixels and the extend out by the grid size.
+	  var trPix = projection.fromLatLngToDivPixel(tr);
+	  trPix.x += this.gridSize_;
+	  trPix.y -= this.gridSize_;
+	
+	  var blPix = projection.fromLatLngToDivPixel(bl);
+	  blPix.x -= this.gridSize_;
+	  blPix.y += this.gridSize_;
+	
+	  // Convert the pixel points back to LatLng
+	  var ne = projection.fromDivPixelToLatLng(trPix);
+	  var sw = projection.fromDivPixelToLatLng(blPix);
+	
+	  // Extend the bounds to contain the new bounds.
+	  bounds.extend(ne);
+	  bounds.extend(sw);
+	
+	  return bounds;
+	};
+	
+	
+	/**
+	 * Determins if a marker is contained in a bounds.
+	 *
+	 * @param {google.maps.Marker} marker The marker to check.
+	 * @param {google.maps.LatLngBounds} bounds The bounds to check against.
+	 * @return {boolean} True if the marker is in the bounds.
+	 * @private
+	 */
+	MarkerClusterer.prototype.isMarkerInBounds_ = function(marker, bounds) {
+	  return bounds.contains(marker.getPosition());
+	};
+	
+	
+	/**
+	 * Clears all clusters and markers from the clusterer.
+	 */
+	MarkerClusterer.prototype.clearMarkers = function() {
+	  this.resetViewport(true);
+	
+	  // Set the markers a empty array.
+	  this.markers_ = [];
+	};
+	
+	
+	/**
+	 * Clears all existing clusters and recreates them.
+	 * @param {boolean} opt_hide To also hide the marker.
+	 */
+	MarkerClusterer.prototype.resetViewport = function(opt_hide) {
+	  // Remove all the clusters
+	  for (var i = 0, cluster; cluster = this.clusters_[i]; i++) {
+	    cluster.remove();
+	  }
+	
+	  // Reset the markers to not be added and to be invisible.
+	  for (var i = 0, marker; marker = this.markers_[i]; i++) {
+	    marker.isAdded = false;
+	    if (opt_hide) {
+	      marker.setMap(null);
+	    }
+	  }
+	
+	  this.clusters_ = [];
+	};
+	
+	/**
+	 *
+	 */
+	MarkerClusterer.prototype.repaint = function() {
+	  var oldClusters = this.clusters_.slice();
+	  this.clusters_.length = 0;
+	  this.resetViewport();
+	  this.redraw();
+	
+	  // Remove the old clusters.
+	  // Do it in a timeout so the other clusters have been drawn first.
+	  window.setTimeout(function() {
+	    for (var i = 0, cluster; cluster = oldClusters[i]; i++) {
+	      cluster.remove();
+	    }
+	  }, 0);
+	};
+	
+	
+	/**
+	 * Redraws the clusters.
+	 */
+	MarkerClusterer.prototype.redraw = function() {
+	  this.createClusters_();
+	};
+	
+	
+	/**
+	 * Calculates the distance between two latlng locations in km.
+	 * @see http://www.movable-type.co.uk/scripts/latlong.html
+	 *
+	 * @param {google.maps.LatLng} p1 The first lat lng point.
+	 * @param {google.maps.LatLng} p2 The second lat lng point.
+	 * @return {number} The distance between the two points in km.
+	 * @private
+	*/
+	MarkerClusterer.prototype.distanceBetweenPoints_ = function(p1, p2) {
+	  if (!p1 || !p2) {
+	    return 0;
+	  }
+	
+	  var R = 6371; // Radius of the Earth in km
+	  var dLat = (p2.lat() - p1.lat()) * Math.PI / 180;
+	  var dLon = (p2.lng() - p1.lng()) * Math.PI / 180;
+	  var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+	    Math.cos(p1.lat() * Math.PI / 180) * Math.cos(p2.lat() * Math.PI / 180) *
+	    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+	  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+	  var d = R * c;
+	  return d;
+	};
+	
+	
+	/**
+	 * Add a marker to a cluster, or creates a new cluster.
+	 *
+	 * @param {google.maps.Marker} marker The marker to add.
+	 * @private
+	 */
+	MarkerClusterer.prototype.addToClosestCluster_ = function(marker) {
+	  var distance = 40000; // Some large number
+	  var clusterToAddTo = null;
+	  var pos = marker.getPosition();
+	  for (var i = 0, cluster; cluster = this.clusters_[i]; i++) {
+	    var center = cluster.getCenter();
+	    if (center) {
+	      var d = this.distanceBetweenPoints_(center, marker.getPosition());
+	      if (d < distance) {
+	        distance = d;
+	        clusterToAddTo = cluster;
+	      }
+	    }
+	  }
+	
+	  if (clusterToAddTo && clusterToAddTo.isMarkerInClusterBounds(marker)) {
+	    clusterToAddTo.addMarker(marker);
+	  } else {
+	    var cluster = new Cluster(this);
+	    cluster.addMarker(marker);
+	    this.clusters_.push(cluster);
+	  }
+	};
+	
+	
+	/**
+	 * Creates the clusters.
+	 *
+	 * @private
+	 */
+	MarkerClusterer.prototype.createClusters_ = function() {
+	  if (!this.ready_) {
+	    return;
+	  }
+	
+	  // Get our current map view bounds.
+	  // Create a new bounds object so we don't affect the map.
+	  var mapBounds = new google.maps.LatLngBounds(this.map_.getBounds().getSouthWest(),
+	      this.map_.getBounds().getNorthEast());
+	  var bounds = this.getExtendedBounds(mapBounds);
+	
+	  for (var i = 0, marker; marker = this.markers_[i]; i++) {
+	    if (!marker.isAdded && this.isMarkerInBounds_(marker, bounds)) {
+	      this.addToClosestCluster_(marker);
+	    }
+	  }
+	};
+	
+	
+	/**
+	 * A cluster that contains markers.
+	 *
+	 * @param {MarkerClusterer} markerClusterer The markerclusterer that this
+	 *     cluster is associated with.
+	 * @constructor
+	 * @ignore
+	 */
+	function Cluster(markerClusterer) {
+	  this.markerClusterer_ = markerClusterer;
+	  this.map_ = markerClusterer.getMap();
+	  this.gridSize_ = markerClusterer.getGridSize();
+	  this.minClusterSize_ = markerClusterer.getMinClusterSize();
+	  this.averageCenter_ = markerClusterer.isAverageCenter();
+	  this.center_ = null;
+	  this.markers_ = [];
+	  this.bounds_ = null;
+	  this.clusterIcon_ = new ClusterIcon(this, markerClusterer.getStyles(),
+	      markerClusterer.getGridSize());
+	}
+	
+	/**
+	 * Determins if a marker is already added to the cluster.
+	 *
+	 * @param {google.maps.Marker} marker The marker to check.
+	 * @return {boolean} True if the marker is already added.
+	 */
+	Cluster.prototype.isMarkerAlreadyAdded = function(marker) {
+	  if (this.markers_.indexOf) {
+	    return this.markers_.indexOf(marker) != -1;
+	  } else {
+	    for (var i = 0, m; m = this.markers_[i]; i++) {
+	      if (m == marker) {
+	        return true;
+	      }
+	    }
+	  }
+	  return false;
+	};
+	
+	
+	/**
+	 * Add a marker the cluster.
+	 *
+	 * @param {google.maps.Marker} marker The marker to add.
+	 * @return {boolean} True if the marker was added.
+	 */
+	Cluster.prototype.addMarker = function(marker) {
+	  if (this.isMarkerAlreadyAdded(marker)) {
+	    return false;
+	  }
+	
+	  if (!this.center_) {
+	    this.center_ = marker.getPosition();
+	    this.calculateBounds_();
+	  } else {
+	    if (this.averageCenter_) {
+	      var l = this.markers_.length + 1;
+	      var lat = (this.center_.lat() * (l-1) + marker.getPosition().lat()) / l;
+	      var lng = (this.center_.lng() * (l-1) + marker.getPosition().lng()) / l;
+	      this.center_ = new google.maps.LatLng(lat, lng);
+	      this.calculateBounds_();
+	    }
+	  }
+	
+	  marker.isAdded = true;
+	  this.markers_.push(marker);
+	
+	  var len = this.markers_.length;
+	  if (len < this.minClusterSize_ && marker.getMap() != this.map_) {
+	    // Min cluster size not reached so show the marker.
+	    marker.setMap(this.map_);
+	  }
+	
+	  if (len == this.minClusterSize_) {
+	    // Hide the markers that were showing.
+	    for (var i = 0; i < len; i++) {
+	      this.markers_[i].setMap(null);
+	    }
+	  }
+	
+	  if (len >= this.minClusterSize_) {
+	    marker.setMap(null);
+	  }
+	
+	  this.updateIcon();
+	  return true;
+	};
+	
+	
+	/**
+	 * Returns the marker clusterer that the cluster is associated with.
+	 *
+	 * @return {MarkerClusterer} The associated marker clusterer.
+	 */
+	Cluster.prototype.getMarkerClusterer = function() {
+	  return this.markerClusterer_;
+	};
+	
+	
+	/**
+	 * Returns the bounds of the cluster.
+	 *
+	 * @return {google.maps.LatLngBounds} the cluster bounds.
+	 */
+	Cluster.prototype.getBounds = function() {
+	  var bounds = new google.maps.LatLngBounds(this.center_, this.center_);
+	  var markers = this.getMarkers();
+	  for (var i = 0, marker; marker = markers[i]; i++) {
+	    bounds.extend(marker.getPosition());
+	  }
+	  return bounds;
+	};
+	
+	
+	/**
+	 * Removes the cluster
+	 */
+	Cluster.prototype.remove = function() {
+	  this.clusterIcon_.remove();
+	  this.markers_.length = 0;
+	  delete this.markers_;
+	};
+	
+	
+	/**
+	 * Returns the center of the cluster.
+	 *
+	 * @return {number} The cluster center.
+	 */
+	Cluster.prototype.getSize = function() {
+	  return this.markers_.length;
+	};
+	
+	
+	/**
+	 * Returns the center of the cluster.
+	 *
+	 * @return {Array.<google.maps.Marker>} The cluster center.
+	 */
+	Cluster.prototype.getMarkers = function() {
+	  return this.markers_;
+	};
+	
+	
+	/**
+	 * Returns the center of the cluster.
+	 *
+	 * @return {google.maps.LatLng} The cluster center.
+	 */
+	Cluster.prototype.getCenter = function() {
+	  return this.center_;
+	};
+	
+	
+	/**
+	 * Calculated the extended bounds of the cluster with the grid.
+	 *
+	 * @private
+	 */
+	Cluster.prototype.calculateBounds_ = function() {
+	  var bounds = new google.maps.LatLngBounds(this.center_, this.center_);
+	  this.bounds_ = this.markerClusterer_.getExtendedBounds(bounds);
+	};
+	
+	
+	/**
+	 * Determines if a marker lies in the clusters bounds.
+	 *
+	 * @param {google.maps.Marker} marker The marker to check.
+	 * @return {boolean} True if the marker lies in the bounds.
+	 */
+	Cluster.prototype.isMarkerInClusterBounds = function(marker) {
+	  return this.bounds_.contains(marker.getPosition());
+	};
+	
+	
+	/**
+	 * Returns the map that the cluster is associated with.
+	 *
+	 * @return {google.maps.Map} The map.
+	 */
+	Cluster.prototype.getMap = function() {
+	  return this.map_;
+	};
+	
+	
+	/**
+	 * Updates the cluster icon
+	 */
+	Cluster.prototype.updateIcon = function() {
+	  var zoom = this.map_.getZoom();
+	  var mz = this.markerClusterer_.getMaxZoom();
+	
+	  if (mz && zoom > mz) {
+	    // The zoom is greater than our max zoom so show all the markers in cluster.
+	    for (var i = 0, marker; marker = this.markers_[i]; i++) {
+	      marker.setMap(this.map_);
+	    }
+	    return;
+	  }
+	
+	  if (this.markers_.length < this.minClusterSize_) {
+	    // Min cluster size not yet reached.
+	    this.clusterIcon_.hide();
+	    return;
+	  }
+	
+	  var numStyles = this.markerClusterer_.getStyles().length;
+	  var sums = this.markerClusterer_.getCalculator()(this.markers_, numStyles);
+	  this.clusterIcon_.setCenter(this.center_);
+	  this.clusterIcon_.setSums(sums);
+	  this.clusterIcon_.show();
+	};
+	
+	
+	/**
+	 * A cluster icon
+	 *
+	 * @param {Cluster} cluster The cluster to be associated with.
+	 * @param {Object} styles An object that has style properties:
+	 *     'url': (string) The image url.
+	 *     'height': (number) The image height.
+	 *     'width': (number) The image width.
+	 *     'anchor': (Array) The anchor position of the label text.
+	 *     'textColor': (string) The text color.
+	 *     'textSize': (number) The text size.
+	 *     'backgroundPosition: (string) The background postition x, y.
+	 * @param {number=} opt_padding Optional padding to apply to the cluster icon.
+	 * @constructor
+	 * @extends google.maps.OverlayView
+	 * @ignore
+	 */
+	function ClusterIcon(cluster, styles, opt_padding) {
+	  cluster.getMarkerClusterer().extend(ClusterIcon, google.maps.OverlayView);
+	
+	  this.styles_ = styles;
+	  this.padding_ = opt_padding || 0;
+	  this.cluster_ = cluster;
+	  this.center_ = null;
+	  this.map_ = cluster.getMap();
+	  this.div_ = null;
+	  this.sums_ = null;
+	  this.visible_ = false;
+	
+	  this.setMap(this.map_);
+	}
+	
+	
+	/**
+	 * Triggers the clusterclick event and zoom's if the option is set.
+	 */
+	ClusterIcon.prototype.triggerClusterClick = function() {
+	  var markerClusterer = this.cluster_.getMarkerClusterer();
+	
+	  // Trigger the clusterclick event.
+	  google.maps.event.trigger(markerClusterer, 'clusterclick', this.cluster_);
+	
+	  if (markerClusterer.isZoomOnClick()) {
+	    // Zoom into the cluster.
+	    this.map_.fitBounds(this.cluster_.getBounds());
+	  }
+	};
+	
+	
+	/**
+	 * Adding the cluster icon to the dom.
+	 * @ignore
+	 */
+	ClusterIcon.prototype.onAdd = function() {
+	  this.div_ = document.createElement('DIV');
+	  if (this.visible_) {
+	    var pos = this.getPosFromLatLng_(this.center_);
+	    this.div_.style.cssText = this.createCss(pos);
+	    this.div_.innerHTML = this.sums_.text;
+	  }
+	
+	  var panes = this.getPanes();
+	  panes.overlayMouseTarget.appendChild(this.div_);
+	
+	  var that = this;
+	  google.maps.event.addDomListener(this.div_, 'click', function() {
+	    that.triggerClusterClick();
+	  });
+	};
+	
+	
+	/**
+	 * Returns the position to place the div dending on the latlng.
+	 *
+	 * @param {google.maps.LatLng} latlng The position in latlng.
+	 * @return {google.maps.Point} The position in pixels.
+	 * @private
+	 */
+	ClusterIcon.prototype.getPosFromLatLng_ = function(latlng) {
+	  var pos = this.getProjection().fromLatLngToDivPixel(latlng);
+	
+	  if (typeof this.iconAnchor_ === 'object' && this.iconAnchor_.length === 2) {
+	    pos.x -= this.iconAnchor_[0];
+	    pos.y -= this.iconAnchor_[1];
+	  } else {
+	    pos.x -= parseInt(this.width_ / 2, 10);
+	    pos.y -= parseInt(this.height_ / 2, 10);
+	  }
+	  return pos;
+	};
+	
+	
+	/**
+	 * Draw the icon.
+	 * @ignore
+	 */
+	ClusterIcon.prototype.draw = function() {
+	  if (this.visible_) {
+	    var pos = this.getPosFromLatLng_(this.center_);
+	    this.div_.style.top = pos.y + 'px';
+	    this.div_.style.left = pos.x + 'px';
+	  }
+	};
+	
+	
+	/**
+	 * Hide the icon.
+	 */
+	ClusterIcon.prototype.hide = function() {
+	  if (this.div_) {
+	    this.div_.style.display = 'none';
+	  }
+	  this.visible_ = false;
+	};
+	
+	
+	/**
+	 * Position and show the icon.
+	 */
+	ClusterIcon.prototype.show = function() {
+	  if (this.div_) {
+	    var pos = this.getPosFromLatLng_(this.center_);
+	    this.div_.style.cssText = this.createCss(pos);
+	    this.div_.style.display = '';
+	  }
+	  this.visible_ = true;
+	};
+	
+	
+	/**
+	 * Remove the icon from the map
+	 */
+	ClusterIcon.prototype.remove = function() {
+	  this.setMap(null);
+	};
+	
+	
+	/**
+	 * Implementation of the onRemove interface.
+	 * @ignore
+	 */
+	ClusterIcon.prototype.onRemove = function() {
+	  if (this.div_ && this.div_.parentNode) {
+	    this.hide();
+	    this.div_.parentNode.removeChild(this.div_);
+	    this.div_ = null;
+	  }
+	};
+	
+	
+	/**
+	 * Set the sums of the icon.
+	 *
+	 * @param {Object} sums The sums containing:
+	 *   'text': (string) The text to display in the icon.
+	 *   'index': (number) The style index of the icon.
+	 */
+	ClusterIcon.prototype.setSums = function(sums) {
+	  this.sums_ = sums;
+	  this.text_ = sums.text;
+	  this.index_ = sums.index;
+	  if (this.div_) {
+	    this.div_.innerHTML = sums.text;
+	  }
+	
+	  this.useStyle();
+	};
+	
+	
+	/**
+	 * Sets the icon to the the styles.
+	 */
+	ClusterIcon.prototype.useStyle = function() {
+	  var index = Math.max(0, this.sums_.index - 1);
+	  index = Math.min(this.styles_.length - 1, index);
+	  var style = this.styles_[index];
+	  this.url_ = style['url'];
+	  this.height_ = style['height'];
+	  this.width_ = style['width'];
+	  this.textColor_ = style['textColor'];
+	  this.anchor_ = style['anchor'];
+	  this.textSize_ = style['textSize'];
+	  this.backgroundPosition_ = style['backgroundPosition'];
+	  this.iconAnchor_ = style['iconAnchor'];
+	};
+	
+	
+	/**
+	 * Sets the center of the icon.
+	 *
+	 * @param {google.maps.LatLng} center The latlng to set as the center.
+	 */
+	ClusterIcon.prototype.setCenter = function(center) {
+	  this.center_ = center;
+	};
+	
+	
+	/**
+	 * Create the css text based on the position of the icon.
+	 *
+	 * @param {google.maps.Point} pos The position.
+	 * @return {string} The css style text.
+	 */
+	ClusterIcon.prototype.createCss = function(pos) {
+	  var style = [];
+	  style.push('background-image:url(' + this.url_ + ');');
+	  var backgroundPosition = this.backgroundPosition_ ? this.backgroundPosition_ : '0 0';
+	  style.push('background-position:' + backgroundPosition + ';');
+	
+	  if (typeof this.anchor_ === 'object') {
+	    if (typeof this.anchor_[0] === 'number' && this.anchor_[0] > 0 &&
+	        this.anchor_[0] < this.height_) {
+	      style.push('height:' + (this.height_ - this.anchor_[0]) +
+	          'px; padding-top:' + this.anchor_[0] + 'px;');
+	    } else if (typeof this.anchor_[0] === 'number' && this.anchor_[0] < 0 &&
+	        -this.anchor_[0] < this.height_) {
+	      style.push('height:' + this.height_ + 'px; line-height:' + (this.height_ + this.anchor_[0]) +
+	          'px;');
+	    } else {
+	      style.push('height:' + this.height_ + 'px; line-height:' + this.height_ +
+	          'px;');
+	    }
+	    if (typeof this.anchor_[1] === 'number' && this.anchor_[1] > 0 &&
+	        this.anchor_[1] < this.width_) {
+	      style.push('width:' + (this.width_ - this.anchor_[1]) +
+	          'px; padding-left:' + this.anchor_[1] + 'px;');
+	    } else {
+	      style.push('width:' + this.width_ + 'px; text-align:center;');
+	    }
+	  } else {
+	    style.push('height:' + this.height_ + 'px; line-height:' +
+	        this.height_ + 'px; width:' + this.width_ + 'px; text-align:center;');
+	  }
+	
+	  var txtColor = this.textColor_ ? this.textColor_ : 'black';
+	  var txtSize = this.textSize_ ? this.textSize_ : 11;
+	
+	  style.push('cursor:pointer; top:' + pos.y + 'px; left:' +
+	      pos.x + 'px; color:' + txtColor + '; position:absolute; font-size:' +
+	      txtSize + 'px; font-family:Arial,sans-serif; font-weight:bold');
+	  return style.join('');
+	};
+	
+	
+	// Export Symbols for Closure
+	// If you are not going to compile with closure then you can remove the
+	// code below.
+	window['MarkerClusterer'] = MarkerClusterer;
+	MarkerClusterer.prototype['addMarker'] = MarkerClusterer.prototype.addMarker;
+	MarkerClusterer.prototype['addMarkers'] = MarkerClusterer.prototype.addMarkers;
+	MarkerClusterer.prototype['clearMarkers'] =
+	    MarkerClusterer.prototype.clearMarkers;
+	MarkerClusterer.prototype['fitMapToMarkers'] =
+	    MarkerClusterer.prototype.fitMapToMarkers;
+	MarkerClusterer.prototype['getCalculator'] =
+	    MarkerClusterer.prototype.getCalculator;
+	MarkerClusterer.prototype['getGridSize'] =
+	    MarkerClusterer.prototype.getGridSize;
+	MarkerClusterer.prototype['getExtendedBounds'] =
+	    MarkerClusterer.prototype.getExtendedBounds;
+	MarkerClusterer.prototype['getMap'] = MarkerClusterer.prototype.getMap;
+	MarkerClusterer.prototype['getMarkers'] = MarkerClusterer.prototype.getMarkers;
+	MarkerClusterer.prototype['getMaxZoom'] = MarkerClusterer.prototype.getMaxZoom;
+	MarkerClusterer.prototype['getStyles'] = MarkerClusterer.prototype.getStyles;
+	MarkerClusterer.prototype['getTotalClusters'] =
+	    MarkerClusterer.prototype.getTotalClusters;
+	MarkerClusterer.prototype['getTotalMarkers'] =
+	    MarkerClusterer.prototype.getTotalMarkers;
+	MarkerClusterer.prototype['redraw'] = MarkerClusterer.prototype.redraw;
+	MarkerClusterer.prototype['removeMarker'] =
+	    MarkerClusterer.prototype.removeMarker;
+	MarkerClusterer.prototype['removeMarkers'] =
+	    MarkerClusterer.prototype.removeMarkers;
+	MarkerClusterer.prototype['resetViewport'] =
+	    MarkerClusterer.prototype.resetViewport;
+	MarkerClusterer.prototype['repaint'] =
+	    MarkerClusterer.prototype.repaint;
+	MarkerClusterer.prototype['setCalculator'] =
+	    MarkerClusterer.prototype.setCalculator;
+	MarkerClusterer.prototype['setGridSize'] =
+	    MarkerClusterer.prototype.setGridSize;
+	MarkerClusterer.prototype['setMaxZoom'] =
+	    MarkerClusterer.prototype.setMaxZoom;
+	MarkerClusterer.prototype['onAdd'] = MarkerClusterer.prototype.onAdd;
+	MarkerClusterer.prototype['draw'] = MarkerClusterer.prototype.draw;
+	
+	Cluster.prototype['getCenter'] = Cluster.prototype.getCenter;
+	Cluster.prototype['getSize'] = Cluster.prototype.getSize;
+	Cluster.prototype['getMarkers'] = Cluster.prototype.getMarkers;
+	
+	ClusterIcon.prototype['onAdd'] = ClusterIcon.prototype.onAdd;
+	ClusterIcon.prototype['draw'] = ClusterIcon.prototype.draw;
+	ClusterIcon.prototype['onRemove'] = ClusterIcon.prototype.onRemove;
+
+
+/***/ },
+/* 90 */
+/***/ function(module, exports) {
+
+	module.exports = "\n  <div> <!-- needed because Vue 2 disallows root slot element -->\n    <slot></slot>\n  </div>\n";
+
+/***/ },
+/* 91 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
+	
+	// compare and isBuffer taken from https://github.com/feross/buffer/blob/680e9e5e488f22aac27599a57dc844a6315928dd/index.js
+	// original notice:
+	
+	/*!
+	 * The buffer module from node.js, for the browser.
+	 *
+	 * @author   Feross Aboukhadijeh <feross@feross.org> <http://feross.org>
+	 * @license  MIT
+	 */
+	function compare(a, b) {
+	  if (a === b) {
+	    return 0;
+	  }
+	
+	  var x = a.length;
+	  var y = b.length;
+	
+	  for (var i = 0, len = Math.min(x, y); i < len; ++i) {
+	    if (a[i] !== b[i]) {
+	      x = a[i];
+	      y = b[i];
+	      break;
+	    }
+	  }
+	
+	  if (x < y) {
+	    return -1;
+	  }
+	  if (y < x) {
+	    return 1;
+	  }
+	  return 0;
+	}
+	function isBuffer(b) {
+	  if (global.Buffer && typeof global.Buffer.isBuffer === 'function') {
+	    return global.Buffer.isBuffer(b);
+	  }
+	  return !!(b != null && b._isBuffer);
+	}
+	
+	// based on node assert, original notice:
+	
+	// http://wiki.commonjs.org/wiki/Unit_Testing/1.0
+	//
+	// THIS IS NOT TESTED NOR LIKELY TO WORK OUTSIDE V8!
+	//
+	// Originally from narwhal.js (http://narwhaljs.org)
+	// Copyright (c) 2009 Thomas Robinson <280north.com>
+	//
+	// Permission is hereby granted, free of charge, to any person obtaining a copy
+	// of this software and associated documentation files (the 'Software'), to
+	// deal in the Software without restriction, including without limitation the
+	// rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+	// sell copies of the Software, and to permit persons to whom the Software is
+	// furnished to do so, subject to the following conditions:
+	//
+	// The above copyright notice and this permission notice shall be included in
+	// all copies or substantial portions of the Software.
+	//
+	// THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	// AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+	// ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+	// WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+	
+	var util = __webpack_require__(92);
+	var hasOwn = Object.prototype.hasOwnProperty;
+	var pSlice = Array.prototype.slice;
+	var functionsHaveNames = (function () {
+	  return function foo() {}.name === 'foo';
+	}());
+	function pToString (obj) {
+	  return Object.prototype.toString.call(obj);
+	}
+	function isView(arrbuf) {
+	  if (isBuffer(arrbuf)) {
+	    return false;
+	  }
+	  if (typeof global.ArrayBuffer !== 'function') {
+	    return false;
+	  }
+	  if (typeof ArrayBuffer.isView === 'function') {
+	    return ArrayBuffer.isView(arrbuf);
+	  }
+	  if (!arrbuf) {
+	    return false;
+	  }
+	  if (arrbuf instanceof DataView) {
+	    return true;
+	  }
+	  if (arrbuf.buffer && arrbuf.buffer instanceof ArrayBuffer) {
+	    return true;
+	  }
+	  return false;
+	}
+	// 1. The assert module provides functions that throw
+	// AssertionError's when particular conditions are not met. The
+	// assert module must conform to the following interface.
+	
+	var assert = module.exports = ok;
+	
+	// 2. The AssertionError is defined in assert.
+	// new assert.AssertionError({ message: message,
+	//                             actual: actual,
+	//                             expected: expected })
+	
+	var regex = /\s*function\s+([^\(\s]*)\s*/;
+	// based on https://github.com/ljharb/function.prototype.name/blob/adeeeec8bfcc6068b187d7d9fb3d5bb1d3a30899/implementation.js
+	function getName(func) {
+	  if (!util.isFunction(func)) {
+	    return;
+	  }
+	  if (functionsHaveNames) {
+	    return func.name;
+	  }
+	  var str = func.toString();
+	  var match = str.match(regex);
+	  return match && match[1];
+	}
+	assert.AssertionError = function AssertionError(options) {
+	  this.name = 'AssertionError';
+	  this.actual = options.actual;
+	  this.expected = options.expected;
+	  this.operator = options.operator;
+	  if (options.message) {
+	    this.message = options.message;
+	    this.generatedMessage = false;
+	  } else {
+	    this.message = getMessage(this);
+	    this.generatedMessage = true;
+	  }
+	  var stackStartFunction = options.stackStartFunction || fail;
+	  if (Error.captureStackTrace) {
+	    Error.captureStackTrace(this, stackStartFunction);
+	  } else {
+	    // non v8 browsers so we can have a stacktrace
+	    var err = new Error();
+	    if (err.stack) {
+	      var out = err.stack;
+	
+	      // try to strip useless frames
+	      var fn_name = getName(stackStartFunction);
+	      var idx = out.indexOf('\n' + fn_name);
+	      if (idx >= 0) {
+	        // once we have located the function frame
+	        // we need to strip out everything before it (and its line)
+	        var next_line = out.indexOf('\n', idx + 1);
+	        out = out.substring(next_line + 1);
+	      }
+	
+	      this.stack = out;
+	    }
+	  }
+	};
+	
+	// assert.AssertionError instanceof Error
+	util.inherits(assert.AssertionError, Error);
+	
+	function truncate(s, n) {
+	  if (typeof s === 'string') {
+	    return s.length < n ? s : s.slice(0, n);
+	  } else {
+	    return s;
+	  }
+	}
+	function inspect(something) {
+	  if (functionsHaveNames || !util.isFunction(something)) {
+	    return util.inspect(something);
+	  }
+	  var rawname = getName(something);
+	  var name = rawname ? ': ' + rawname : '';
+	  return '[Function' +  name + ']';
+	}
+	function getMessage(self) {
+	  return truncate(inspect(self.actual), 128) + ' ' +
+	         self.operator + ' ' +
+	         truncate(inspect(self.expected), 128);
+	}
+	
+	// At present only the three keys mentioned above are used and
+	// understood by the spec. Implementations or sub modules can pass
+	// other keys to the AssertionError's constructor - they will be
+	// ignored.
+	
+	// 3. All of the following functions must throw an AssertionError
+	// when a corresponding condition is not met, with a message that
+	// may be undefined if not provided.  All assertion methods provide
+	// both the actual and expected values to the assertion error for
+	// display purposes.
+	
+	function fail(actual, expected, message, operator, stackStartFunction) {
+	  throw new assert.AssertionError({
+	    message: message,
+	    actual: actual,
+	    expected: expected,
+	    operator: operator,
+	    stackStartFunction: stackStartFunction
+	  });
+	}
+	
+	// EXTENSION! allows for well behaved errors defined elsewhere.
+	assert.fail = fail;
+	
+	// 4. Pure assertion tests whether a value is truthy, as determined
+	// by !!guard.
+	// assert.ok(guard, message_opt);
+	// This statement is equivalent to assert.equal(true, !!guard,
+	// message_opt);. To test strictly for the value true, use
+	// assert.strictEqual(true, guard, message_opt);.
+	
+	function ok(value, message) {
+	  if (!value) fail(value, true, message, '==', assert.ok);
+	}
+	assert.ok = ok;
+	
+	// 5. The equality assertion tests shallow, coercive equality with
+	// ==.
+	// assert.equal(actual, expected, message_opt);
+	
+	assert.equal = function equal(actual, expected, message) {
+	  if (actual != expected) fail(actual, expected, message, '==', assert.equal);
+	};
+	
+	// 6. The non-equality assertion tests for whether two objects are not equal
+	// with != assert.notEqual(actual, expected, message_opt);
+	
+	assert.notEqual = function notEqual(actual, expected, message) {
+	  if (actual == expected) {
+	    fail(actual, expected, message, '!=', assert.notEqual);
+	  }
+	};
+	
+	// 7. The equivalence assertion tests a deep equality relation.
+	// assert.deepEqual(actual, expected, message_opt);
+	
+	assert.deepEqual = function deepEqual(actual, expected, message) {
+	  if (!_deepEqual(actual, expected, false)) {
+	    fail(actual, expected, message, 'deepEqual', assert.deepEqual);
+	  }
+	};
+	
+	assert.deepStrictEqual = function deepStrictEqual(actual, expected, message) {
+	  if (!_deepEqual(actual, expected, true)) {
+	    fail(actual, expected, message, 'deepStrictEqual', assert.deepStrictEqual);
+	  }
+	};
+	
+	function _deepEqual(actual, expected, strict, memos) {
+	  // 7.1. All identical values are equivalent, as determined by ===.
+	  if (actual === expected) {
+	    return true;
+	  } else if (isBuffer(actual) && isBuffer(expected)) {
+	    return compare(actual, expected) === 0;
+	
+	  // 7.2. If the expected value is a Date object, the actual value is
+	  // equivalent if it is also a Date object that refers to the same time.
+	  } else if (util.isDate(actual) && util.isDate(expected)) {
+	    return actual.getTime() === expected.getTime();
+	
+	  // 7.3 If the expected value is a RegExp object, the actual value is
+	  // equivalent if it is also a RegExp object with the same source and
+	  // properties (`global`, `multiline`, `lastIndex`, `ignoreCase`).
+	  } else if (util.isRegExp(actual) && util.isRegExp(expected)) {
+	    return actual.source === expected.source &&
+	           actual.global === expected.global &&
+	           actual.multiline === expected.multiline &&
+	           actual.lastIndex === expected.lastIndex &&
+	           actual.ignoreCase === expected.ignoreCase;
+	
+	  // 7.4. Other pairs that do not both pass typeof value == 'object',
+	  // equivalence is determined by ==.
+	  } else if ((actual === null || typeof actual !== 'object') &&
+	             (expected === null || typeof expected !== 'object')) {
+	    return strict ? actual === expected : actual == expected;
+	
+	  // If both values are instances of typed arrays, wrap their underlying
+	  // ArrayBuffers in a Buffer each to increase performance
+	  // This optimization requires the arrays to have the same type as checked by
+	  // Object.prototype.toString (aka pToString). Never perform binary
+	  // comparisons for Float*Arrays, though, since e.g. +0 === -0 but their
+	  // bit patterns are not identical.
+	  } else if (isView(actual) && isView(expected) &&
+	             pToString(actual) === pToString(expected) &&
+	             !(actual instanceof Float32Array ||
+	               actual instanceof Float64Array)) {
+	    return compare(new Uint8Array(actual.buffer),
+	                   new Uint8Array(expected.buffer)) === 0;
+	
+	  // 7.5 For all other Object pairs, including Array objects, equivalence is
+	  // determined by having the same number of owned properties (as verified
+	  // with Object.prototype.hasOwnProperty.call), the same set of keys
+	  // (although not necessarily the same order), equivalent values for every
+	  // corresponding key, and an identical 'prototype' property. Note: this
+	  // accounts for both named and indexed properties on Arrays.
+	  } else if (isBuffer(actual) !== isBuffer(expected)) {
+	    return false;
+	  } else {
+	    memos = memos || {actual: [], expected: []};
+	
+	    var actualIndex = memos.actual.indexOf(actual);
+	    if (actualIndex !== -1) {
+	      if (actualIndex === memos.expected.indexOf(expected)) {
+	        return true;
+	      }
+	    }
+	
+	    memos.actual.push(actual);
+	    memos.expected.push(expected);
+	
+	    return objEquiv(actual, expected, strict, memos);
+	  }
+	}
+	
+	function isArguments(object) {
+	  return Object.prototype.toString.call(object) == '[object Arguments]';
+	}
+	
+	function objEquiv(a, b, strict, actualVisitedObjects) {
+	  if (a === null || a === undefined || b === null || b === undefined)
+	    return false;
+	  // if one is a primitive, the other must be same
+	  if (util.isPrimitive(a) || util.isPrimitive(b))
+	    return a === b;
+	  if (strict && Object.getPrototypeOf(a) !== Object.getPrototypeOf(b))
+	    return false;
+	  var aIsArgs = isArguments(a);
+	  var bIsArgs = isArguments(b);
+	  if ((aIsArgs && !bIsArgs) || (!aIsArgs && bIsArgs))
+	    return false;
+	  if (aIsArgs) {
+	    a = pSlice.call(a);
+	    b = pSlice.call(b);
+	    return _deepEqual(a, b, strict);
+	  }
+	  var ka = objectKeys(a);
+	  var kb = objectKeys(b);
+	  var key, i;
+	  // having the same number of owned properties (keys incorporates
+	  // hasOwnProperty)
+	  if (ka.length !== kb.length)
+	    return false;
+	  //the same set of keys (although not necessarily the same order),
+	  ka.sort();
+	  kb.sort();
+	  //~~~cheap key test
+	  for (i = ka.length - 1; i >= 0; i--) {
+	    if (ka[i] !== kb[i])
+	      return false;
+	  }
+	  //equivalent values for every corresponding key, and
+	  //~~~possibly expensive deep test
+	  for (i = ka.length - 1; i >= 0; i--) {
+	    key = ka[i];
+	    if (!_deepEqual(a[key], b[key], strict, actualVisitedObjects))
+	      return false;
+	  }
+	  return true;
+	}
+	
+	// 8. The non-equivalence assertion tests for any deep inequality.
+	// assert.notDeepEqual(actual, expected, message_opt);
+	
+	assert.notDeepEqual = function notDeepEqual(actual, expected, message) {
+	  if (_deepEqual(actual, expected, false)) {
+	    fail(actual, expected, message, 'notDeepEqual', assert.notDeepEqual);
+	  }
+	};
+	
+	assert.notDeepStrictEqual = notDeepStrictEqual;
+	function notDeepStrictEqual(actual, expected, message) {
+	  if (_deepEqual(actual, expected, true)) {
+	    fail(actual, expected, message, 'notDeepStrictEqual', notDeepStrictEqual);
+	  }
+	}
+	
+	
+	// 9. The strict equality assertion tests strict equality, as determined by ===.
+	// assert.strictEqual(actual, expected, message_opt);
+	
+	assert.strictEqual = function strictEqual(actual, expected, message) {
+	  if (actual !== expected) {
+	    fail(actual, expected, message, '===', assert.strictEqual);
+	  }
+	};
+	
+	// 10. The strict non-equality assertion tests for strict inequality, as
+	// determined by !==.  assert.notStrictEqual(actual, expected, message_opt);
+	
+	assert.notStrictEqual = function notStrictEqual(actual, expected, message) {
+	  if (actual === expected) {
+	    fail(actual, expected, message, '!==', assert.notStrictEqual);
+	  }
+	};
+	
+	function expectedException(actual, expected) {
+	  if (!actual || !expected) {
+	    return false;
+	  }
+	
+	  if (Object.prototype.toString.call(expected) == '[object RegExp]') {
+	    return expected.test(actual);
+	  }
+	
+	  try {
+	    if (actual instanceof expected) {
+	      return true;
+	    }
+	  } catch (e) {
+	    // Ignore.  The instanceof check doesn't work for arrow functions.
+	  }
+	
+	  if (Error.isPrototypeOf(expected)) {
+	    return false;
+	  }
+	
+	  return expected.call({}, actual) === true;
+	}
+	
+	function _tryBlock(block) {
+	  var error;
+	  try {
+	    block();
+	  } catch (e) {
+	    error = e;
+	  }
+	  return error;
+	}
+	
+	function _throws(shouldThrow, block, expected, message) {
+	  var actual;
+	
+	  if (typeof block !== 'function') {
+	    throw new TypeError('"block" argument must be a function');
+	  }
+	
+	  if (typeof expected === 'string') {
+	    message = expected;
+	    expected = null;
+	  }
+	
+	  actual = _tryBlock(block);
+	
+	  message = (expected && expected.name ? ' (' + expected.name + ').' : '.') +
+	            (message ? ' ' + message : '.');
+	
+	  if (shouldThrow && !actual) {
+	    fail(actual, expected, 'Missing expected exception' + message);
+	  }
+	
+	  var userProvidedMessage = typeof message === 'string';
+	  var isUnwantedException = !shouldThrow && util.isError(actual);
+	  var isUnexpectedException = !shouldThrow && actual && !expected;
+	
+	  if ((isUnwantedException &&
+	      userProvidedMessage &&
+	      expectedException(actual, expected)) ||
+	      isUnexpectedException) {
+	    fail(actual, expected, 'Got unwanted exception' + message);
+	  }
+	
+	  if ((shouldThrow && actual && expected &&
+	      !expectedException(actual, expected)) || (!shouldThrow && actual)) {
+	    throw actual;
+	  }
+	}
+	
+	// 11. Expected to throw an error:
+	// assert.throws(block, Error_opt, message_opt);
+	
+	assert.throws = function(block, /*optional*/error, /*optional*/message) {
+	  _throws(true, block, error, message);
+	};
+	
+	// EXTENSION! This is annoying to write outside this module.
+	assert.doesNotThrow = function(block, /*optional*/error, /*optional*/message) {
+	  _throws(false, block, error, message);
+	};
+	
+	assert.ifError = function(err) { if (err) throw err; };
+	
+	var objectKeys = Object.keys || function (obj) {
+	  var keys = [];
+	  for (var key in obj) {
+	    if (hasOwn.call(obj, key)) keys.push(key);
+	  }
+	  return keys;
+	};
+	
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+
+/***/ },
+/* 92 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(global, process) {// Copyright Joyent, Inc. and other Node contributors.
+	//
+	// Permission is hereby granted, free of charge, to any person obtaining a
+	// copy of this software and associated documentation files (the
+	// "Software"), to deal in the Software without restriction, including
+	// without limitation the rights to use, copy, modify, merge, publish,
+	// distribute, sublicense, and/or sell copies of the Software, and to permit
+	// persons to whom the Software is furnished to do so, subject to the
+	// following conditions:
+	//
+	// The above copyright notice and this permission notice shall be included
+	// in all copies or substantial portions of the Software.
+	//
+	// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+	// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+	// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+	// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+	// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+	// USE OR OTHER DEALINGS IN THE SOFTWARE.
+	
+	var formatRegExp = /%[sdj%]/g;
+	exports.format = function(f) {
+	  if (!isString(f)) {
+	    var objects = [];
+	    for (var i = 0; i < arguments.length; i++) {
+	      objects.push(inspect(arguments[i]));
+	    }
+	    return objects.join(' ');
+	  }
+	
+	  var i = 1;
+	  var args = arguments;
+	  var len = args.length;
+	  var str = String(f).replace(formatRegExp, function(x) {
+	    if (x === '%%') return '%';
+	    if (i >= len) return x;
+	    switch (x) {
+	      case '%s': return String(args[i++]);
+	      case '%d': return Number(args[i++]);
+	      case '%j':
+	        try {
+	          return JSON.stringify(args[i++]);
+	        } catch (_) {
+	          return '[Circular]';
+	        }
+	      default:
+	        return x;
+	    }
+	  });
+	  for (var x = args[i]; i < len; x = args[++i]) {
+	    if (isNull(x) || !isObject(x)) {
+	      str += ' ' + x;
+	    } else {
+	      str += ' ' + inspect(x);
+	    }
+	  }
+	  return str;
+	};
+	
+	
+	// Mark that a method should not be used.
+	// Returns a modified function which warns once by default.
+	// If --no-deprecation is set, then it is a no-op.
+	exports.deprecate = function(fn, msg) {
+	  // Allow for deprecating things in the process of starting up.
+	  if (isUndefined(global.process)) {
+	    return function() {
+	      return exports.deprecate(fn, msg).apply(this, arguments);
+	    };
+	  }
+	
+	  if (process.noDeprecation === true) {
+	    return fn;
+	  }
+	
+	  var warned = false;
+	  function deprecated() {
+	    if (!warned) {
+	      if (process.throwDeprecation) {
+	        throw new Error(msg);
+	      } else if (process.traceDeprecation) {
+	        console.trace(msg);
+	      } else {
+	        console.error(msg);
+	      }
+	      warned = true;
+	    }
+	    return fn.apply(this, arguments);
+	  }
+	
+	  return deprecated;
+	};
+	
+	
+	var debugs = {};
+	var debugEnviron;
+	exports.debuglog = function(set) {
+	  if (isUndefined(debugEnviron))
+	    debugEnviron = process.env.NODE_DEBUG || '';
+	  set = set.toUpperCase();
+	  if (!debugs[set]) {
+	    if (new RegExp('\\b' + set + '\\b', 'i').test(debugEnviron)) {
+	      var pid = process.pid;
+	      debugs[set] = function() {
+	        var msg = exports.format.apply(exports, arguments);
+	        console.error('%s %d: %s', set, pid, msg);
+	      };
+	    } else {
+	      debugs[set] = function() {};
+	    }
+	  }
+	  return debugs[set];
+	};
+	
+	
+	/**
+	 * Echos the value of a value. Trys to print the value out
+	 * in the best way possible given the different types.
+	 *
+	 * @param {Object} obj The object to print out.
+	 * @param {Object} opts Optional options object that alters the output.
+	 */
+	/* legacy: obj, showHidden, depth, colors*/
+	function inspect(obj, opts) {
+	  // default options
+	  var ctx = {
+	    seen: [],
+	    stylize: stylizeNoColor
+	  };
+	  // legacy...
+	  if (arguments.length >= 3) ctx.depth = arguments[2];
+	  if (arguments.length >= 4) ctx.colors = arguments[3];
+	  if (isBoolean(opts)) {
+	    // legacy...
+	    ctx.showHidden = opts;
+	  } else if (opts) {
+	    // got an "options" object
+	    exports._extend(ctx, opts);
+	  }
+	  // set default options
+	  if (isUndefined(ctx.showHidden)) ctx.showHidden = false;
+	  if (isUndefined(ctx.depth)) ctx.depth = 2;
+	  if (isUndefined(ctx.colors)) ctx.colors = false;
+	  if (isUndefined(ctx.customInspect)) ctx.customInspect = true;
+	  if (ctx.colors) ctx.stylize = stylizeWithColor;
+	  return formatValue(ctx, obj, ctx.depth);
+	}
+	exports.inspect = inspect;
+	
+	
+	// http://en.wikipedia.org/wiki/ANSI_escape_code#graphics
+	inspect.colors = {
+	  'bold' : [1, 22],
+	  'italic' : [3, 23],
+	  'underline' : [4, 24],
+	  'inverse' : [7, 27],
+	  'white' : [37, 39],
+	  'grey' : [90, 39],
+	  'black' : [30, 39],
+	  'blue' : [34, 39],
+	  'cyan' : [36, 39],
+	  'green' : [32, 39],
+	  'magenta' : [35, 39],
+	  'red' : [31, 39],
+	  'yellow' : [33, 39]
+	};
+	
+	// Don't use 'blue' not visible on cmd.exe
+	inspect.styles = {
+	  'special': 'cyan',
+	  'number': 'yellow',
+	  'boolean': 'yellow',
+	  'undefined': 'grey',
+	  'null': 'bold',
+	  'string': 'green',
+	  'date': 'magenta',
+	  // "name": intentionally not styling
+	  'regexp': 'red'
+	};
+	
+	
+	function stylizeWithColor(str, styleType) {
+	  var style = inspect.styles[styleType];
+	
+	  if (style) {
+	    return '\u001b[' + inspect.colors[style][0] + 'm' + str +
+	           '\u001b[' + inspect.colors[style][1] + 'm';
+	  } else {
+	    return str;
+	  }
+	}
+	
+	
+	function stylizeNoColor(str, styleType) {
+	  return str;
+	}
+	
+	
+	function arrayToHash(array) {
+	  var hash = {};
+	
+	  array.forEach(function(val, idx) {
+	    hash[val] = true;
+	  });
+	
+	  return hash;
+	}
+	
+	
+	function formatValue(ctx, value, recurseTimes) {
+	  // Provide a hook for user-specified inspect functions.
+	  // Check that value is an object with an inspect function on it
+	  if (ctx.customInspect &&
+	      value &&
+	      isFunction(value.inspect) &&
+	      // Filter out the util module, it's inspect function is special
+	      value.inspect !== exports.inspect &&
+	      // Also filter out any prototype objects using the circular check.
+	      !(value.constructor && value.constructor.prototype === value)) {
+	    var ret = value.inspect(recurseTimes, ctx);
+	    if (!isString(ret)) {
+	      ret = formatValue(ctx, ret, recurseTimes);
+	    }
+	    return ret;
+	  }
+	
+	  // Primitive types cannot have properties
+	  var primitive = formatPrimitive(ctx, value);
+	  if (primitive) {
+	    return primitive;
+	  }
+	
+	  // Look up the keys of the object.
+	  var keys = Object.keys(value);
+	  var visibleKeys = arrayToHash(keys);
+	
+	  if (ctx.showHidden) {
+	    keys = Object.getOwnPropertyNames(value);
+	  }
+	
+	  // IE doesn't make error fields non-enumerable
+	  // http://msdn.microsoft.com/en-us/library/ie/dww52sbt(v=vs.94).aspx
+	  if (isError(value)
+	      && (keys.indexOf('message') >= 0 || keys.indexOf('description') >= 0)) {
+	    return formatError(value);
+	  }
+	
+	  // Some type of object without properties can be shortcutted.
+	  if (keys.length === 0) {
+	    if (isFunction(value)) {
+	      var name = value.name ? ': ' + value.name : '';
+	      return ctx.stylize('[Function' + name + ']', 'special');
+	    }
+	    if (isRegExp(value)) {
+	      return ctx.stylize(RegExp.prototype.toString.call(value), 'regexp');
+	    }
+	    if (isDate(value)) {
+	      return ctx.stylize(Date.prototype.toString.call(value), 'date');
+	    }
+	    if (isError(value)) {
+	      return formatError(value);
+	    }
+	  }
+	
+	  var base = '', array = false, braces = ['{', '}'];
+	
+	  // Make Array say that they are Array
+	  if (isArray(value)) {
+	    array = true;
+	    braces = ['[', ']'];
+	  }
+	
+	  // Make functions say that they are functions
+	  if (isFunction(value)) {
+	    var n = value.name ? ': ' + value.name : '';
+	    base = ' [Function' + n + ']';
+	  }
+	
+	  // Make RegExps say that they are RegExps
+	  if (isRegExp(value)) {
+	    base = ' ' + RegExp.prototype.toString.call(value);
+	  }
+	
+	  // Make dates with properties first say the date
+	  if (isDate(value)) {
+	    base = ' ' + Date.prototype.toUTCString.call(value);
+	  }
+	
+	  // Make error with message first say the error
+	  if (isError(value)) {
+	    base = ' ' + formatError(value);
+	  }
+	
+	  if (keys.length === 0 && (!array || value.length == 0)) {
+	    return braces[0] + base + braces[1];
+	  }
+	
+	  if (recurseTimes < 0) {
+	    if (isRegExp(value)) {
+	      return ctx.stylize(RegExp.prototype.toString.call(value), 'regexp');
+	    } else {
+	      return ctx.stylize('[Object]', 'special');
+	    }
+	  }
+	
+	  ctx.seen.push(value);
+	
+	  var output;
+	  if (array) {
+	    output = formatArray(ctx, value, recurseTimes, visibleKeys, keys);
+	  } else {
+	    output = keys.map(function(key) {
+	      return formatProperty(ctx, value, recurseTimes, visibleKeys, key, array);
+	    });
+	  }
+	
+	  ctx.seen.pop();
+	
+	  return reduceToSingleString(output, base, braces);
+	}
+	
+	
+	function formatPrimitive(ctx, value) {
+	  if (isUndefined(value))
+	    return ctx.stylize('undefined', 'undefined');
+	  if (isString(value)) {
+	    var simple = '\'' + JSON.stringify(value).replace(/^"|"$/g, '')
+	                                             .replace(/'/g, "\\'")
+	                                             .replace(/\\"/g, '"') + '\'';
+	    return ctx.stylize(simple, 'string');
+	  }
+	  if (isNumber(value))
+	    return ctx.stylize('' + value, 'number');
+	  if (isBoolean(value))
+	    return ctx.stylize('' + value, 'boolean');
+	  // For some reason typeof null is "object", so special case here.
+	  if (isNull(value))
+	    return ctx.stylize('null', 'null');
+	}
+	
+	
+	function formatError(value) {
+	  return '[' + Error.prototype.toString.call(value) + ']';
+	}
+	
+	
+	function formatArray(ctx, value, recurseTimes, visibleKeys, keys) {
+	  var output = [];
+	  for (var i = 0, l = value.length; i < l; ++i) {
+	    if (hasOwnProperty(value, String(i))) {
+	      output.push(formatProperty(ctx, value, recurseTimes, visibleKeys,
+	          String(i), true));
+	    } else {
+	      output.push('');
+	    }
+	  }
+	  keys.forEach(function(key) {
+	    if (!key.match(/^\d+$/)) {
+	      output.push(formatProperty(ctx, value, recurseTimes, visibleKeys,
+	          key, true));
+	    }
+	  });
+	  return output;
+	}
+	
+	
+	function formatProperty(ctx, value, recurseTimes, visibleKeys, key, array) {
+	  var name, str, desc;
+	  desc = Object.getOwnPropertyDescriptor(value, key) || { value: value[key] };
+	  if (desc.get) {
+	    if (desc.set) {
+	      str = ctx.stylize('[Getter/Setter]', 'special');
+	    } else {
+	      str = ctx.stylize('[Getter]', 'special');
+	    }
+	  } else {
+	    if (desc.set) {
+	      str = ctx.stylize('[Setter]', 'special');
+	    }
+	  }
+	  if (!hasOwnProperty(visibleKeys, key)) {
+	    name = '[' + key + ']';
+	  }
+	  if (!str) {
+	    if (ctx.seen.indexOf(desc.value) < 0) {
+	      if (isNull(recurseTimes)) {
+	        str = formatValue(ctx, desc.value, null);
+	      } else {
+	        str = formatValue(ctx, desc.value, recurseTimes - 1);
+	      }
+	      if (str.indexOf('\n') > -1) {
+	        if (array) {
+	          str = str.split('\n').map(function(line) {
+	            return '  ' + line;
+	          }).join('\n').substr(2);
+	        } else {
+	          str = '\n' + str.split('\n').map(function(line) {
+	            return '   ' + line;
+	          }).join('\n');
+	        }
+	      }
+	    } else {
+	      str = ctx.stylize('[Circular]', 'special');
+	    }
+	  }
+	  if (isUndefined(name)) {
+	    if (array && key.match(/^\d+$/)) {
+	      return str;
+	    }
+	    name = JSON.stringify('' + key);
+	    if (name.match(/^"([a-zA-Z_][a-zA-Z_0-9]*)"$/)) {
+	      name = name.substr(1, name.length - 2);
+	      name = ctx.stylize(name, 'name');
+	    } else {
+	      name = name.replace(/'/g, "\\'")
+	                 .replace(/\\"/g, '"')
+	                 .replace(/(^"|"$)/g, "'");
+	      name = ctx.stylize(name, 'string');
+	    }
+	  }
+	
+	  return name + ': ' + str;
+	}
+	
+	
+	function reduceToSingleString(output, base, braces) {
+	  var numLinesEst = 0;
+	  var length = output.reduce(function(prev, cur) {
+	    numLinesEst++;
+	    if (cur.indexOf('\n') >= 0) numLinesEst++;
+	    return prev + cur.replace(/\u001b\[\d\d?m/g, '').length + 1;
+	  }, 0);
+	
+	  if (length > 60) {
+	    return braces[0] +
+	           (base === '' ? '' : base + '\n ') +
+	           ' ' +
+	           output.join(',\n  ') +
+	           ' ' +
+	           braces[1];
+	  }
+	
+	  return braces[0] + base + ' ' + output.join(', ') + ' ' + braces[1];
+	}
+	
+	
+	// NOTE: These type checking functions intentionally don't use `instanceof`
+	// because it is fragile and can be easily faked with `Object.create()`.
+	function isArray(ar) {
+	  return Array.isArray(ar);
+	}
+	exports.isArray = isArray;
+	
+	function isBoolean(arg) {
+	  return typeof arg === 'boolean';
+	}
+	exports.isBoolean = isBoolean;
+	
+	function isNull(arg) {
+	  return arg === null;
+	}
+	exports.isNull = isNull;
+	
+	function isNullOrUndefined(arg) {
+	  return arg == null;
+	}
+	exports.isNullOrUndefined = isNullOrUndefined;
+	
+	function isNumber(arg) {
+	  return typeof arg === 'number';
+	}
+	exports.isNumber = isNumber;
+	
+	function isString(arg) {
+	  return typeof arg === 'string';
+	}
+	exports.isString = isString;
+	
+	function isSymbol(arg) {
+	  return typeof arg === 'symbol';
+	}
+	exports.isSymbol = isSymbol;
+	
+	function isUndefined(arg) {
+	  return arg === void 0;
+	}
+	exports.isUndefined = isUndefined;
+	
+	function isRegExp(re) {
+	  return isObject(re) && objectToString(re) === '[object RegExp]';
+	}
+	exports.isRegExp = isRegExp;
+	
+	function isObject(arg) {
+	  return typeof arg === 'object' && arg !== null;
+	}
+	exports.isObject = isObject;
+	
+	function isDate(d) {
+	  return isObject(d) && objectToString(d) === '[object Date]';
+	}
+	exports.isDate = isDate;
+	
+	function isError(e) {
+	  return isObject(e) &&
+	      (objectToString(e) === '[object Error]' || e instanceof Error);
+	}
+	exports.isError = isError;
+	
+	function isFunction(arg) {
+	  return typeof arg === 'function';
+	}
+	exports.isFunction = isFunction;
+	
+	function isPrimitive(arg) {
+	  return arg === null ||
+	         typeof arg === 'boolean' ||
+	         typeof arg === 'number' ||
+	         typeof arg === 'string' ||
+	         typeof arg === 'symbol' ||  // ES6 symbol
+	         typeof arg === 'undefined';
+	}
+	exports.isPrimitive = isPrimitive;
+	
+	exports.isBuffer = __webpack_require__(94);
+	
+	function objectToString(o) {
+	  return Object.prototype.toString.call(o);
+	}
+	
+	
+	function pad(n) {
+	  return n < 10 ? '0' + n.toString(10) : n.toString(10);
+	}
+	
+	
+	var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep',
+	              'Oct', 'Nov', 'Dec'];
+	
+	// 26 Feb 16:19:34
+	function timestamp() {
+	  var d = new Date();
+	  var time = [pad(d.getHours()),
+	              pad(d.getMinutes()),
+	              pad(d.getSeconds())].join(':');
+	  return [d.getDate(), months[d.getMonth()], time].join(' ');
+	}
+	
+	
+	// log is just a thin wrapper to console.log that prepends a timestamp
+	exports.log = function() {
+	  console.log('%s - %s', timestamp(), exports.format.apply(exports, arguments));
+	};
+	
+	
+	/**
+	 * Inherit the prototype methods from one constructor into another.
+	 *
+	 * The Function.prototype.inherits from lang.js rewritten as a standalone
+	 * function (not on Function.prototype). NOTE: If this file is to be loaded
+	 * during bootstrapping this function needs to be rewritten using some native
+	 * functions as prototype setup using normal JavaScript does not work as
+	 * expected during bootstrapping (see mirror.js in r114903).
+	 *
+	 * @param {function} ctor Constructor function which needs to inherit the
+	 *     prototype.
+	 * @param {function} superCtor Constructor function to inherit prototype from.
+	 */
+	exports.inherits = __webpack_require__(95);
+	
+	exports._extend = function(origin, add) {
+	  // Don't do anything if add isn't an object
+	  if (!add || !isObject(add)) return origin;
+	
+	  var keys = Object.keys(add);
+	  var i = keys.length;
+	  while (i--) {
+	    origin[keys[i]] = add[keys[i]];
+	  }
+	  return origin;
+	};
+	
+	function hasOwnProperty(obj, prop) {
+	  return Object.prototype.hasOwnProperty.call(obj, prop);
+	}
+	
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(93)))
+
+/***/ },
+/* 93 */
+/***/ function(module, exports) {
+
+	// shim for using process in browser
+	var process = module.exports = {};
+	
+	// cached from whatever global is present so that test runners that stub it
+	// don't break things.  But we need to wrap it in a try catch in case it is
+	// wrapped in strict mode code which doesn't define any globals.  It's inside a
+	// function because try/catches deoptimize in certain engines.
+	
+	var cachedSetTimeout;
+	var cachedClearTimeout;
+	
+	function defaultSetTimout() {
+	    throw new Error('setTimeout has not been defined');
+	}
+	function defaultClearTimeout () {
+	    throw new Error('clearTimeout has not been defined');
+	}
+	(function () {
+	    try {
+	        if (typeof setTimeout === 'function') {
+	            cachedSetTimeout = setTimeout;
+	        } else {
+	            cachedSetTimeout = defaultSetTimout;
+	        }
+	    } catch (e) {
+	        cachedSetTimeout = defaultSetTimout;
+	    }
+	    try {
+	        if (typeof clearTimeout === 'function') {
+	            cachedClearTimeout = clearTimeout;
+	        } else {
+	            cachedClearTimeout = defaultClearTimeout;
+	        }
+	    } catch (e) {
+	        cachedClearTimeout = defaultClearTimeout;
+	    }
+	} ())
+	function runTimeout(fun) {
+	    if (cachedSetTimeout === setTimeout) {
+	        //normal enviroments in sane situations
+	        return setTimeout(fun, 0);
+	    }
+	    // if setTimeout wasn't available but was latter defined
+	    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+	        cachedSetTimeout = setTimeout;
+	        return setTimeout(fun, 0);
+	    }
+	    try {
+	        // when when somebody has screwed with setTimeout but no I.E. maddness
+	        return cachedSetTimeout(fun, 0);
+	    } catch(e){
+	        try {
+	            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+	            return cachedSetTimeout.call(null, fun, 0);
+	        } catch(e){
+	            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+	            return cachedSetTimeout.call(this, fun, 0);
+	        }
+	    }
+	
+	
+	}
+	function runClearTimeout(marker) {
+	    if (cachedClearTimeout === clearTimeout) {
+	        //normal enviroments in sane situations
+	        return clearTimeout(marker);
+	    }
+	    // if clearTimeout wasn't available but was latter defined
+	    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+	        cachedClearTimeout = clearTimeout;
+	        return clearTimeout(marker);
+	    }
+	    try {
+	        // when when somebody has screwed with setTimeout but no I.E. maddness
+	        return cachedClearTimeout(marker);
+	    } catch (e){
+	        try {
+	            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+	            return cachedClearTimeout.call(null, marker);
+	        } catch (e){
+	            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+	            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+	            return cachedClearTimeout.call(this, marker);
+	        }
+	    }
+	
+	
+	
+	}
+	var queue = [];
+	var draining = false;
+	var currentQueue;
+	var queueIndex = -1;
+	
+	function cleanUpNextTick() {
+	    if (!draining || !currentQueue) {
+	        return;
+	    }
+	    draining = false;
+	    if (currentQueue.length) {
+	        queue = currentQueue.concat(queue);
+	    } else {
+	        queueIndex = -1;
+	    }
+	    if (queue.length) {
+	        drainQueue();
+	    }
+	}
+	
+	function drainQueue() {
+	    if (draining) {
+	        return;
+	    }
+	    var timeout = runTimeout(cleanUpNextTick);
+	    draining = true;
+	
+	    var len = queue.length;
+	    while(len) {
+	        currentQueue = queue;
+	        queue = [];
+	        while (++queueIndex < len) {
+	            if (currentQueue) {
+	                currentQueue[queueIndex].run();
+	            }
+	        }
+	        queueIndex = -1;
+	        len = queue.length;
+	    }
+	    currentQueue = null;
+	    draining = false;
+	    runClearTimeout(timeout);
+	}
+	
+	process.nextTick = function (fun) {
+	    var args = new Array(arguments.length - 1);
+	    if (arguments.length > 1) {
+	        for (var i = 1; i < arguments.length; i++) {
+	            args[i - 1] = arguments[i];
+	        }
+	    }
+	    queue.push(new Item(fun, args));
+	    if (queue.length === 1 && !draining) {
+	        runTimeout(drainQueue);
+	    }
+	};
+	
+	// v8 likes predictible objects
+	function Item(fun, array) {
+	    this.fun = fun;
+	    this.array = array;
+	}
+	Item.prototype.run = function () {
+	    this.fun.apply(null, this.array);
+	};
+	process.title = 'browser';
+	process.browser = true;
+	process.env = {};
+	process.argv = [];
+	process.version = ''; // empty string to avoid regexp issues
+	process.versions = {};
+	
+	function noop() {}
+	
+	process.on = noop;
+	process.addListener = noop;
+	process.once = noop;
+	process.off = noop;
+	process.removeListener = noop;
+	process.removeAllListeners = noop;
+	process.emit = noop;
+	
+	process.binding = function (name) {
+	    throw new Error('process.binding is not supported');
+	};
+	
+	process.cwd = function () { return '/' };
+	process.chdir = function (dir) {
+	    throw new Error('process.chdir is not supported');
+	};
+	process.umask = function() { return 0; };
+
+
+/***/ },
+/* 94 */
+/***/ function(module, exports) {
+
+	module.exports = function isBuffer(arg) {
+	  return arg && typeof arg === 'object'
+	    && typeof arg.copy === 'function'
+	    && typeof arg.fill === 'function'
+	    && typeof arg.readUInt8 === 'function';
+	}
+
+/***/ },
+/* 95 */
+/***/ function(module, exports) {
+
+	if (typeof Object.create === 'function') {
+	  // implementation from standard node.js 'util' module
+	  module.exports = function inherits(ctor, superCtor) {
+	    ctor.super_ = superCtor
+	    ctor.prototype = Object.create(superCtor.prototype, {
+	      constructor: {
+	        value: ctor,
+	        enumerable: false,
+	        writable: true,
+	        configurable: true
+	      }
+	    });
+	  };
+	} else {
+	  // old school shim for old browsers
+	  module.exports = function inherits(ctor, superCtor) {
+	    ctor.super_ = superCtor
+	    var TempCtor = function () {}
+	    TempCtor.prototype = superCtor.prototype
+	    ctor.prototype = new TempCtor()
+	    ctor.prototype.constructor = ctor
+	  }
+	}
+
+
+/***/ },
+/* 96 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __vue_script__, __vue_template__
+	__vue_script__ = __webpack_require__(97)
+	__vue_template__ = __webpack_require__(98)
+	module.exports = __vue_script__ || {}
+	if (module.exports.__esModule) module.exports = module.exports.default
+	if (__vue_template__) { (typeof module.exports === "function" ? module.exports.options : module.exports).template = __vue_template__ }
+	if (false) {(function () {  module.hot.accept()
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), true)
+	  if (!hotAPI.compatible) return
+	  var id = "C:\\Users\\Daniel\\Desktop\\vue-google-maps\\src\\components\\infoWindow.vue"
+	  if (!module.hot.data) {
+	    hotAPI.createRecord(id, module.exports)
+	  } else {
+	    hotAPI.update(id, module.exports, __vue_template__)
+	  }
+	})()}
+
+/***/ },
+/* 97 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _lodash = __webpack_require__(77);
+	
+	var _lodash2 = _interopRequireDefault(_lodash);
+	
+	var _propsBinder = __webpack_require__(80);
+	
+	var _propsBinder2 = _interopRequireDefault(_propsBinder);
+	
+	var _eventsBinder = __webpack_require__(79);
+	
+	var _eventsBinder2 = _interopRequireDefault(_eventsBinder);
+	
+	var _mapElementMixin = __webpack_require__(86);
+	
+	var _mapElementMixin2 = _interopRequireDefault(_mapElementMixin);
+	
+	var _marker = __webpack_require__(84);
+	
+	var _marker2 = _interopRequireDefault(_marker);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var props = {
+	  options: {
+	    type: Object,
+	    required: false,
+	    default: function _default() {
+	      return {};
+	    }
+	  },
+	  content: {
+	    default: null
+	  },
+	  opened: {
+	    type: Boolean,
+	    default: true
+	  },
+	  position: {
+	    type: Object,
+	    twoWay: true
+	  },
+	  zIndex: {
+	    type: Number,
+	    twoWay: true
+	  }
+	}; // /* vim: set softtabstop=2 shiftwidth=2 expandtab : */
+	//
+	// <template>
+	//   <div>
+	//     <div ref="flyaway"> <!-- so named because it will fly away to another component -->
+	//       <slot>
+	//         <div v-html="content"></div>
+	//       </slot>
+	//     </div>
+	//   </div>
+	// </template>
+	//
+	// <script>
+	
+	var events = ['domready', 'closeclick', 'content_changed'];
+	
+	exports.default = {
+	  mixins: [_mapElementMixin2.default],
+	  replace: false,
+	  props: props,
+	
+	  created: function created() {
+	    this.$markerObject = null;
+	    this.$markerComponent = this.$findAncestor(function (ans) {
+	      return ans instanceof _marker2.default;
+	    });
+	  },
+	  mounted: function mounted() {
+	    var el = this.$refs.flyaway;
+	    el.parentNode.removeChild(el);
+	  },
+	  deferredReady: function deferredReady() {
+	    if (this.$markerComponent) {
+	      this.$markerObject = this.$markerComponent.$markerObject;
+	    }
+	    this.createInfoWindow(this.$map);
+	  },
+	  destroyed: function destroyed() {
+	    if (this.disconnect) {
+	      this.disconnect();
+	    }
+	    if (this.$infoWindow) {
+	      this.$infoWindow.setMap(null);
+	    }
+	  },
+	
+	
+	  methods: {
+	    openInfoWindow: function openInfoWindow() {
+	      if (this.opened) {
+	        if (this.$markerObject !== null) {
+	          this.$infoWindow.open(this.$map, this.$markerObject);
+	        } else {
+	          this.$infoWindow.open(this.$map);
+	        }
+	      } else {
+	        this.$infoWindow.close();
+	      }
+	    },
+	    createInfoWindow: function createInfoWindow(map) {
+	      var _this = this;
+	
+	      // setting options
+	      var options = _lodash2.default.clone(this.options);
+	      options.content = this.$refs.flyaway;
+	
+	      // only set the position if the info window is not bound to a marker
+	      if (this.$markerComponent === null) {
+	        options.position = this.position;
+	      }
+	
+	      this.$infoWindow = new google.maps.InfoWindow(options);
+	
+	      // Binding
+	      (0, _propsBinder2.default)(this, this.$infoWindow, _lodash2.default.omit(props, ['opened']));
+	      (0, _eventsBinder2.default)(this, this.$infoWindow, events);
+	
+	      this.openInfoWindow();
+	      this.$watch('opened', function () {
+	        _this.openInfoWindow();
+	      });
+	    }
+	  }
+	};
+	
+	// </script>
+	//
+	/* generated by vue-loader */
+
+/***/ },
+/* 98 */
+/***/ function(module, exports) {
+
+	module.exports = "\n  <div>\n    <div ref=\"flyaway\"> <!-- so named because it will fly away to another component -->\n      <slot>\n        <div v-html=\"content\"></div>\n      </slot>\n    </div>\n  </div>\n";
+
+/***/ },
+/* 99 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __vue_script__, __vue_template__
+	__vue_script__ = __webpack_require__(100)
+	module.exports = __vue_script__ || {}
+	if (module.exports.__esModule) module.exports = module.exports.default
+	if (__vue_template__) { (typeof module.exports === "function" ? module.exports.options : module.exports).template = __vue_template__ }
+	if (false) {(function () {  module.hot.accept()
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), true)
+	  if (!hotAPI.compatible) return
+	  var id = "C:\\Users\\Daniel\\Desktop\\vue-google-maps\\src\\components\\polyline.vue"
+	  if (!module.hot.data) {
+	    hotAPI.createRecord(id, module.exports)
+	  } else {
+	    hotAPI.update(id, module.exports, __vue_template__)
+	  }
+	})()}
+
+/***/ },
+/* 100 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _slicedToArray2 = __webpack_require__(115);
+	
+	var _slicedToArray3 = _interopRequireDefault(_slicedToArray2);
+	
+	var _lodash = __webpack_require__(77);
+	
+	var _lodash2 = _interopRequireDefault(_lodash);
+	
+	var _eventsBinder = __webpack_require__(79);
+	
+	var _eventsBinder2 = _interopRequireDefault(_eventsBinder);
+	
+	var _propsBinder = __webpack_require__(80);
+	
+	var _propsBinder2 = _interopRequireDefault(_propsBinder);
+	
+	var _mapElementMixin = __webpack_require__(86);
+	
+	var _mapElementMixin2 = _interopRequireDefault(_mapElementMixin);
+	
+	var _getPropsValuesMixin = __webpack_require__(82);
+	
+	var _getPropsValuesMixin2 = _interopRequireDefault(_getPropsValuesMixin);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var props = {
+	  draggable: {
+	    type: Boolean
+	  },
+	  editable: {
+	    type: Boolean
+	  },
+	  options: {
+	    twoWay: false,
+	    type: Object
+	  },
+	  path: {
+	    type: Array,
+	    twoWay: true
+	  },
+	  deepWatch: {
+	    type: Boolean,
+	    default: false
+	  }
+	}; // /* vim: set softtabstop=2 shiftwidth=2 expandtab : */
+	//
+	// <script>
+	
+	var events = ['click', 'dblclick', 'drag', 'dragend', 'dragstart', 'mousedown', 'mousemove', 'mouseout', 'mouseover', 'mouseup', 'rightclick'];
+	
+	exports.default = {
+	  mixins: [_mapElementMixin2.default, _getPropsValuesMixin2.default],
+	  props: props,
+	
+	  render: function render() {
+	    return '';
+	  },
+	  destroyed: function destroyed() {
+	    if (this.$polyLineObject) {
+	      this.$polyLineObject.setMap(null);
+	    }
+	  },
+	  deferredReady: function deferredReady() {
+	    var _this = this;
+	
+	    var options = _lodash2.default.clone(this.getPropsValues());
+	    delete options.options;
+	    _lodash2.default.assign(options, this.options);
+	    this.$polyLineObject = new google.maps.Polyline(options);
+	    this.$polyLineObject.setMap(this.$map);
+	
+	    (0, _propsBinder2.default)(this, this.$polyLineObject, _lodash2.default.omit(props, ['deepWatch', 'path']));
+	    (0, _eventsBinder2.default)(this, this.$polyLineObject, events);
+	
+	    this.$watch('path', function (path) {
+	      if (path) {
+	        (function () {
+	          clearEvents();
+	
+	          _this.$polyLineObject.setPaths(path);
+	
+	          var mvcPath = _this.$polyLineObject.getPath();
+	          var eventListeners = [];
+	
+	          var updatePaths = function updatePaths() {
+	            _this.$emit('g-path_changed', _this.$polyLineObject.getPath());
+	          };
+	
+	          eventListeners.push([mvcPath, mvcPath.addListener('insert_at', updatePaths)]);
+	          eventListeners.push([mvcPath, mvcPath.addListener('remove_at', updatePaths)]);
+	          eventListeners.push([mvcPath, mvcPath.addListener('set_at', updatePaths)]);
+	
+	          clearEvents = function clearEvents() {
+	            eventListeners.map(function (_ref) {
+	              var _ref2 = (0, _slicedToArray3.default)(_ref, 2),
+	                  obj = _ref2[0],
+	                  listenerHandle = _ref2[1];
+	
+	              return obj.removeListener(listenerHandle);
+	            });
+	          };
+	        })();
+	      }
+	    }, {
+	      deep: this.deepWatch
+	    });
+	
+	    // Display the map
+	    this.$polyLineObject.setMap(this.$map);
+	  }
+	};
+	
+	// </script>
+	//
+	/* generated by vue-loader */
+
+/***/ },
+/* 101 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __vue_script__, __vue_template__
+	__vue_script__ = __webpack_require__(102)
+	module.exports = __vue_script__ || {}
+	if (module.exports.__esModule) module.exports = module.exports.default
+	if (__vue_template__) { (typeof module.exports === "function" ? module.exports.options : module.exports).template = __vue_template__ }
+	if (false) {(function () {  module.hot.accept()
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), true)
+	  if (!hotAPI.compatible) return
+	  var id = "C:\\Users\\Daniel\\Desktop\\vue-google-maps\\src\\components\\polygon.vue"
+	  if (!module.hot.data) {
+	    hotAPI.createRecord(id, module.exports)
+	  } else {
+	    hotAPI.update(id, module.exports, __vue_template__)
+	  }
+	})()}
+
+/***/ },
+/* 102 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _getIterator2 = __webpack_require__(112);
+	
+	var _getIterator3 = _interopRequireDefault(_getIterator2);
+	
+	var _slicedToArray2 = __webpack_require__(115);
+	
+	var _slicedToArray3 = _interopRequireDefault(_slicedToArray2);
+	
+	var _lodash = __webpack_require__(77);
+	
+	var _lodash2 = _interopRequireDefault(_lodash);
+	
+	var _eventsBinder = __webpack_require__(79);
+	
+	var _eventsBinder2 = _interopRequireDefault(_eventsBinder);
+	
+	var _propsBinder = __webpack_require__(80);
+	
+	var _propsBinder2 = _interopRequireDefault(_propsBinder);
+	
+	var _mapElementMixin = __webpack_require__(86);
+	
+	var _mapElementMixin2 = _interopRequireDefault(_mapElementMixin);
+	
+	var _getPropsValuesMixin = __webpack_require__(82);
+	
+	var _getPropsValuesMixin2 = _interopRequireDefault(_getPropsValuesMixin);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var props = {
+	  draggable: {
+	    type: Boolean
+	  },
+	  editable: {
+	    type: Boolean
+	  },
+	  options: {
+	    type: Object
+	  },
+	  path: {
+	    type: Array,
+	    twoWay: true
+	  },
+	  paths: {
+	    type: Array,
+	    twoWay: true
+	  },
+	  deepWatch: {
+	    type: Boolean,
+	    default: false
+	  }
+	}; // /* vim: set softtabstop=2 shiftwidth=2 expandtab : */
+	//
+	// <script>
+	
+	var events = ['click', 'dblclick', 'drag', 'dragend', 'dragstart', 'mousedown', 'mousemove', 'mouseout', 'mouseover', 'mouseup', 'rightclick'];
+	
+	exports.default = {
+	  mixins: [_mapElementMixin2.default, _getPropsValuesMixin2.default],
+	  props: props,
+	
+	  render: function render() {
+	    return '';
+	  },
+	  destroyed: function destroyed() {
+	    if (this.$polygonObject) {
+	      this.$polygonObject.setMap(null);
+	    }
+	  },
+	  deferredReady: function deferredReady() {
+	    var _this = this;
+	
+	    var options = _lodash2.default.clone(this.getPropsValues());
+	    delete options.options;
+	    _lodash2.default.assign(options, this.options);
+	    if (!options.path) {
+	      delete options.path;
+	    }
+	    if (!options.paths) {
+	      delete options.paths;
+	    }
+	    this.$polygonObject = new google.maps.Polygon(options);
+	
+	    (0, _propsBinder2.default)(this, this.$polygonObject, _lodash2.default.omit(props, ['path', 'paths']));
+	    (0, _eventsBinder2.default)(this, this.$polygonObject, events);
+	
+	    var clearEvents = function clearEvents() {};
+	
+	    // Watch paths, on our own, because we do not want to set either when it is
+	    // empty
+	    this.$watch('paths', function (paths) {
+	      if (paths) {
+	        (function () {
+	          clearEvents();
+	
+	          _this.$polygonObject.setPaths(paths);
+	
+	          var updatePaths = function updatePaths() {
+	            _this.$emit('g-paths_changed', _this.$polygonObject.getPaths());
+	          };
+	          var eventListeners = [];
+	
+	          var mvcArray = _this.$polygonObject.getPaths();
+	          var _iteratorNormalCompletion = true;
+	          var _didIteratorError = false;
+	          var _iteratorError = undefined;
+	
+	          try {
+	            for (var _iterator = (0, _getIterator3.default)(mvcArray), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	              var mvcPath = _step.value;
+	
+	              eventListeners.push([mvcPath, mvcPath.addListener('insert_at', updatePaths)]);
+	              eventListeners.push([mvcPath, mvcPath.addListener('remove_at', updatePaths)]);
+	              eventListeners.push([mvcPath, mvcPath.addListener('set_at', updatePaths)]);
+	            }
+	          } catch (err) {
+	            _didIteratorError = true;
+	            _iteratorError = err;
+	          } finally {
+	            try {
+	              if (!_iteratorNormalCompletion && _iterator.return) {
+	                _iterator.return();
+	              }
+	            } finally {
+	              if (_didIteratorError) {
+	                throw _iteratorError;
+	              }
+	            }
+	          }
+	
+	          eventListeners.push([mvcArray, mvcArray.addListener('insert_at', updatePaths)]);
+	          eventListeners.push([mvcArray, mvcArray.addListener('remove_at', updatePaths)]);
+	          eventListeners.push([mvcArray, mvcArray.addListener('set_at', updatePaths)]);
+	
+	          clearEvents = function clearEvents() {
+	            eventListeners.map(function (_ref) {
+	              var _ref2 = (0, _slicedToArray3.default)(_ref, 2),
+	                  obj = _ref2[0],
+	                  listenerHandle = _ref2[1];
+	
+	              return obj.removeListener(listenerHandle);
+	            });
+	          };
+	        })();
+	      }
+	    }, {
+	      deep: this.deepWatch
+	    });
+	
+	    this.$watch('path', function (path) {
+	      if (path) {
+	        (function () {
+	          clearEvents();
+	
+	          _this.$polygonObject.setPaths(path);
+	
+	          var mvcPath = _this.$polygonObject.getPath();
+	          var eventListeners = [];
+	
+	          var updatePaths = function updatePaths() {
+	            _this.$emit('g-path_changed', _this.$polygonObject.getPath());
+	          };
+	
+	          eventListeners.push([mvcPath, mvcPath.addListener('insert_at', updatePaths)]);
+	          eventListeners.push([mvcPath, mvcPath.addListener('remove_at', updatePaths)]);
+	          eventListeners.push([mvcPath, mvcPath.addListener('set_at', updatePaths)]);
+	
+	          clearEvents = function clearEvents() {
+	            eventListeners.map(function (_ref3) {
+	              var _ref4 = (0, _slicedToArray3.default)(_ref3, 2),
+	                  obj = _ref4[0],
+	                  listenerHandle = _ref4[1];
+	
+	              return obj.removeListener(listenerHandle);
+	            });
+	          };
+	        })();
+	      }
+	    }, {
+	      deep: this.deepWatch
+	    });
+	
+	    // Display the map
+	    this.$polygonObject.setMap(this.$map);
+	  }
+	};
+	
+	// </script>
+	//
+	/* generated by vue-loader */
+
+/***/ },
+/* 103 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __vue_script__, __vue_template__
+	__vue_script__ = __webpack_require__(104)
+	module.exports = __vue_script__ || {}
+	if (module.exports.__esModule) module.exports = module.exports.default
+	if (__vue_template__) { (typeof module.exports === "function" ? module.exports.options : module.exports).template = __vue_template__ }
+	if (false) {(function () {  module.hot.accept()
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), true)
+	  if (!hotAPI.compatible) return
+	  var id = "C:\\Users\\Daniel\\Desktop\\vue-google-maps\\src\\components\\circle.vue"
+	  if (!module.hot.data) {
+	    hotAPI.createRecord(id, module.exports)
+	  } else {
+	    hotAPI.update(id, module.exports, __vue_template__)
+	  }
+	})()}
+
+/***/ },
+/* 104 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _lodash = __webpack_require__(77);
+	
+	var _lodash2 = _interopRequireDefault(_lodash);
+	
+	var _eventsBinder = __webpack_require__(79);
+	
+	var _eventsBinder2 = _interopRequireDefault(_eventsBinder);
+	
+	var _propsBinder = __webpack_require__(80);
+	
+	var _propsBinder2 = _interopRequireDefault(_propsBinder);
+	
+	var _mapElementMixin = __webpack_require__(86);
+	
+	var _mapElementMixin2 = _interopRequireDefault(_mapElementMixin);
+	
+	var _getPropsValuesMixin = __webpack_require__(82);
+	
+	var _getPropsValuesMixin2 = _interopRequireDefault(_getPropsValuesMixin);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var props = {
+	    center: {
+	        type: Object,
+	        twoWay: true,
+	        required: true
+	    },
+	    radius: {
+	        type: Number,
+	        default: 1000,
+	        twoWay: true
+	    },
+	    bounds: {
+	        type: Object,
+	        twoWay: true
+	    },
+	    draggable: {
+	        type: Boolean,
+	        default: false
+	    },
+	    editable: {
+	        type: Boolean,
+	        default: false
+	    },
+	    options: {
+	        type: Object,
+	        twoWay: false
+	    }
+	}; // /* vim: set softtabstop=2 shiftwidth=2 expandtab : */
+	//
+	// <script>
+	
+	var events = ['click', 'dblclick', 'drag', 'dragend', 'dragstart', 'mousedown', 'mousemove', 'mouseout', 'mouseover', 'mouseup', 'radius_changed', 'rightclick'];
+	
+	exports.default = {
+	    mixins: [_mapElementMixin2.default, _getPropsValuesMixin2.default],
+	    props: props,
+	    version: 2,
+	
+	    render: function render() {
+	        return '';
+	    },
+	    deferredReady: function deferredReady() {
+	        var options = _lodash2.default.clone(this.getPropsValues());
+	        options.map = this.$map;
+	        delete options.bounds;
+	        this.createCircle(options, this.$map);
+	    },
+	
+	
+	    methods: {
+	        createCircle: function createCircle(options, map) {
+	            var _this = this;
+	
+	            this.$circleObject = new google.maps.Circle(options);
+	            // we cant bind bounds because there is no `setBounds` method
+	            // on the Circle object
+	            var boundProps = _lodash2.default.clone(props);
+	            delete boundProps.bounds;
+	            (0, _propsBinder2.default)(this, this.$circleObject, boundProps);
+	            (0, _eventsBinder2.default)(this, this.$circleObject, events);
+	
+	            var updateBounds = function updateBounds() {
+	                _this.$emit('g-bounds_changed', _this.$circleObject.getBounds());
+	            };
+	
+	            this.$watch('radius', updateBounds);
+	            // because center is an object and we need to be warned even if only the lat or lng change. not the whole reference
+	            this.$watch('center', updateBounds, { deep: true });
+	        }
+	    },
+	
+	    destroyed: function destroyed() {
+	        if (this.$circleObject) {
+	            this.$circleObject.setMap(null);
+	        }
+	    }
+	};
+	
+	// </script>
+	//
+	/* generated by vue-loader */
+
+/***/ },
+/* 105 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __vue_script__, __vue_template__
+	__vue_script__ = __webpack_require__(106)
+	module.exports = __vue_script__ || {}
+	if (module.exports.__esModule) module.exports = module.exports.default
+	if (__vue_template__) { (typeof module.exports === "function" ? module.exports.options : module.exports).template = __vue_template__ }
+	if (false) {(function () {  module.hot.accept()
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), true)
+	  if (!hotAPI.compatible) return
+	  var id = "C:\\Users\\Daniel\\Desktop\\vue-google-maps\\src\\components\\rectangle.vue"
+	  if (!module.hot.data) {
+	    hotAPI.createRecord(id, module.exports)
+	  } else {
+	    hotAPI.update(id, module.exports, __vue_template__)
+	  }
+	})()}
+
+/***/ },
+/* 106 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _lodash = __webpack_require__(77);
+	
+	var _lodash2 = _interopRequireDefault(_lodash);
+	
+	var _eventsBinder = __webpack_require__(79);
+	
+	var _eventsBinder2 = _interopRequireDefault(_eventsBinder);
+	
+	var _propsBinder = __webpack_require__(80);
+	
+	var _propsBinder2 = _interopRequireDefault(_propsBinder);
+	
+	var _mapElementMixin = __webpack_require__(86);
+	
+	var _mapElementMixin2 = _interopRequireDefault(_mapElementMixin);
+	
+	var _getPropsValuesMixin = __webpack_require__(82);
+	
+	var _getPropsValuesMixin2 = _interopRequireDefault(_getPropsValuesMixin);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var props = {
+	    bounds: {
+	        type: Object,
+	        twoWay: true
+	    },
+	    draggable: {
+	        type: Boolean,
+	        default: false
+	    },
+	    editable: {
+	        type: Boolean,
+	        default: false
+	    },
+	    options: {
+	        type: Object,
+	        twoWay: false
+	    }
+	}; // /* vim: set softtabstop=2 shiftwidth=2 expandtab : */
+	//
+	// <script>
+	
+	var events = ['click', 'dblclick', 'drag', 'dragend', 'dragstart', 'mousedown', 'mousemove', 'mouseout', 'mouseover', 'mouseup', 'rightclick'];
+	
+	exports.default = {
+	    mixins: [_mapElementMixin2.default, _getPropsValuesMixin2.default],
+	    props: props,
+	
+	    render: function render() {
+	        return '';
+	    },
+	    deferredReady: function deferredReady() {
+	        var options = _lodash2.default.clone(this.getPropsValues());
+	        options.map = this.$map;
+	        this.createRectangle(options, this.$map);
+	    },
+	
+	
+	    methods: {
+	        createRectangle: function createRectangle(options, map) {
+	            this.$rectangleObject = new google.maps.Rectangle(options);
+	            (0, _propsBinder2.default)(this, this.$rectangleObject, props);
+	            (0, _eventsBinder2.default)(this, this.$rectangleObject, events);
+	        }
+	    },
+	
+	    destroyed: function destroyed() {
+	        if (this.$rectangleObject) {
+	            this.$rectangleObject.setMap(null);
+	        }
+	    }
+	};
+	
+	// </script>
+	//
+	/* generated by vue-loader */
+
+/***/ },
+/* 107 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __vue_script__, __vue_template__
+	__vue_script__ = __webpack_require__(108)
+	__vue_template__ = __webpack_require__(110)
+	module.exports = __vue_script__ || {}
+	if (module.exports.__esModule) module.exports = module.exports.default
+	if (__vue_template__) { (typeof module.exports === "function" ? module.exports.options : module.exports).template = __vue_template__ }
+	if (false) {(function () {  module.hot.accept()
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), true)
+	  if (!hotAPI.compatible) return
+	  var id = "C:\\Users\\Daniel\\Desktop\\vue-google-maps\\src\\components\\placeInput.vue"
+	  if (!module.hot.data) {
+	    hotAPI.createRecord(id, module.exports)
+	  } else {
+	    hotAPI.update(id, module.exports, __vue_template__)
+	  }
+	})()}
+
+/***/ },
+/* 108 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _lodash = __webpack_require__(77);
+	
+	var _lodash2 = _interopRequireDefault(_lodash);
+	
+	var _eventsBinder = __webpack_require__(79);
+	
+	var _eventsBinder2 = _interopRequireDefault(_eventsBinder);
+	
+	var _propsBinder = __webpack_require__(80);
+	
+	var _propsBinder2 = _interopRequireDefault(_propsBinder);
+	
+	var _simulateArrowDown = __webpack_require__(109);
+	
+	var _simulateArrowDown2 = _interopRequireDefault(_simulateArrowDown);
+	
+	var _getPropsValuesMixin = __webpack_require__(82);
+	
+	var _getPropsValuesMixin2 = _interopRequireDefault(_getPropsValuesMixin);
+	
+	var _manager = __webpack_require__(2);
+	
+	var _assert = __webpack_require__(91);
+	
+	var _assert2 = _interopRequireDefault(_assert);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var props = {
+	  bounds: {
+	    type: Object
+	  },
+	  defaultPlace: {
+	    type: String,
+	    default: ''
+	  },
+	  componentRestrictions: {
+	    type: Object,
+	    default: null
+	  },
+	  types: {
+	    type: Array,
+	    default: function _default() {
+	      return [];
+	    }
+	  },
+	  placeholder: {
+	    required: false,
+	    type: String
+	  },
+	  className: {
+	    required: false,
+	    type: String
+	  },
+	  label: {
+	    required: false,
+	    type: String,
+	    default: null
+	  },
+	  selectFirstOnEnter: {
+	    require: false,
+	    type: Boolean,
+	    default: false
+	  }
+	}; // <template>
+	//     <label>
+	//         <span v-text="label"></span>
+	//         <input type="text" :placeholder="placeholder" :class="className"
+	//           ref="input"/>
+	//     </label>
+	// </template>
+	//
+	// <script>
+	exports.default = {
+	  mixins: [_getPropsValuesMixin2.default],
+	
+	  mounted: function mounted() {
+	    var _this = this;
+	
+	    var input = this.$refs.input;
+	    input.value = this.defaultPlace;
+	    _manager.loaded.then(function () {
+	      window.i = input;
+	      var options = _lodash2.default.clone(_this.getPropsValues());
+	      if (_this.selectFirstOnEnter) {
+	        (0, _simulateArrowDown2.default)(_this.$refs.input);
+	      }
+	
+	      (0, _assert2.default)(typeof google.maps.places.Autocomplete === 'function', "google.maps.places.Autocomplete is undefined. Did you add 'places' to libraries when loading Google Maps?");
+	
+	      _this.autoCompleter = new google.maps.places.Autocomplete(_this.$refs.input, options);
+	      (0, _propsBinder2.default)(_this, _this.autoCompleter, _lodash2.default.omit(props, ['placeholder', 'place', 'selectFirstOnEnter']));
+	
+	      _this.autoCompleter.addListener('place_changed', function () {
+	        _this.$emit('g-place_changed', _this.autoCompleter.getPlace());
+	      });
+	    });
+	  },
+	
+	  props: props
+	};
+	// </script>
+	//
+	/* generated by vue-loader */
+
+/***/ },
+/* 109 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	//This piece of code was orignally written by amirnissim and can be seen here
+	//http://stackoverflow.com/a/11703018/2694653
+	//This has been ported to Vanilla.js by GuillaumeLeclerc
+	exports.default = function (input) {
+	  var _addEventListener = input.addEventListener ? input.addEventListener : input.attachEvent;
+	
+	  function addEventListenerWrapper(type, listener) {
+	    // Simulate a 'down arrow' keypress on hitting 'return' when no pac suggestion is selected,
+	    // and then trigger the original listener.
+	    if (type == "keydown") {
+	      var orig_listener = listener;
+	      listener = function listener(event) {
+	        var suggestion_selected = document.getElementsByClassName('pac-item-selected').length > 0;
+	        if (event.which == 13 && !suggestion_selected) {
+	          var simulatedEvent = document.createEvent('Event');
+	          simulatedEvent.keyCode = 40;
+	          simulatedEvent.which = 40;
+	          orig_listener.apply(input, [simulatedEvent]);
+	        }
+	        orig_listener.apply(input, [event]);
+	      };
+	    }
+	    _addEventListener.apply(input, [type, listener]);
+	  }
+	
+	  input.addEventListener = addEventListenerWrapper;
+	  input.attachEvent = addEventListenerWrapper;
+	};
+
+/***/ },
+/* 110 */
+/***/ function(module, exports) {
+
+	module.exports = "\n    <label>\n        <span v-text=\"label\"></span>\n        <input type=\"text\" :placeholder=\"placeholder\" :class=\"className\"\n          ref=\"input\"/>\n    </label>\n";
+
+/***/ },
+/* 111 */,
+/* 112 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = { "default": __webpack_require__(113), __esModule: true };
+
+/***/ },
+/* 113 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(48);
+	__webpack_require__(42);
+	module.exports = __webpack_require__(114);
+
+/***/ },
+/* 114 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var anObject = __webpack_require__(36)
+	  , get      = __webpack_require__(59);
+	module.exports = __webpack_require__(11).getIterator = function(it){
+	  var iterFn = get(it);
+	  if(typeof iterFn != 'function')throw TypeError(it + ' is not iterable!');
+	  return anObject(iterFn.call(it));
+	};
+
+/***/ },
+/* 115 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	exports.__esModule = true;
+	
+	var _isIterable2 = __webpack_require__(116);
+	
+	var _isIterable3 = _interopRequireDefault(_isIterable2);
+	
+	var _getIterator2 = __webpack_require__(112);
+	
+	var _getIterator3 = _interopRequireDefault(_getIterator2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = function () {
+	  function sliceIterator(arr, i) {
+	    var _arr = [];
+	    var _n = true;
+	    var _d = false;
+	    var _e = undefined;
+	
+	    try {
+	      for (var _i = (0, _getIterator3.default)(arr), _s; !(_n = (_s = _i.next()).done); _n = true) {
+	        _arr.push(_s.value);
+	
+	        if (i && _arr.length === i) break;
+	      }
+	    } catch (err) {
+	      _d = true;
+	      _e = err;
+	    } finally {
+	      try {
+	        if (!_n && _i["return"]) _i["return"]();
+	      } finally {
+	        if (_d) throw _e;
+	      }
+	    }
+	
+	    return _arr;
+	  }
+	
+	  return function (arr, i) {
+	    if (Array.isArray(arr)) {
+	      return arr;
+	    } else if ((0, _isIterable3.default)(Object(arr))) {
+	      return sliceIterator(arr, i);
+	    } else {
+	      throw new TypeError("Invalid attempt to destructure non-iterable instance");
+	    }
+	  };
+	}();
+
+/***/ },
+/* 116 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = { "default": __webpack_require__(117), __esModule: true };
+
+/***/ },
+/* 117 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(48);
+	__webpack_require__(42);
+	module.exports = __webpack_require__(118);
+
+/***/ },
+/* 118 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var classof   = __webpack_require__(53)
+	  , ITERATOR  = __webpack_require__(27)('iterator')
+	  , Iterators = __webpack_require__(46);
+	module.exports = __webpack_require__(11).isIterable = function(it){
+	  var O = Object(it);
+	  return O[ITERATOR] !== undefined
+	    || '@@iterator' in O
+	    || Iterators.hasOwnProperty(classof(O));
+	};
+
+/***/ }
+/******/ ])
+});
+;
+//# sourceMappingURL=vue-google-maps.js.map
