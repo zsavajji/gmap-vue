@@ -1,5 +1,14 @@
 # vue-google-maps
 
+## Vue-2 port of vue-google-maps
+
+This is the Vue 2.x port of vue-google-maps!
+
+If you have used vue-google-maps with Vue 1.x before, refer to [Upgrading](UPGRADING.md).
+
+API documentation is still pending, but by and large, unless you are using two-way bindings,
+you should be able to re-use the code you wrote for Vue 1.x.
+
 ## Demo:
 
 [Demo in production](http://en.papayapods.com/?utm_source=GtHub&utm_medium=LnK&utm_campaign=V.JS%20Map%20Cmpnt.#!/search/map?city=Lausanne)
@@ -11,28 +20,28 @@
 If you want to write google map this way :
 
 ```html
-<map
+<gmap-map
   :center="{lat:10, lng:10}"
   :map-type-id="terrain"
   :zoom="7"
-></map>
+></gmap-map>
 ```
 
 Or use the power of Vue.js within a google map like this:
 ```html
 <template>
-  <map
+  <gmap-map
     :center="center"
     :zoom="7"
   >
-    <marker
+    <gmap-marker
       v-for="m in markers"
       :position.sync="m.position"
       :clickable="true"
       :draggable="true"
       @g-click="center=m.position"
-    ></marker>
-  </map>
+    ></gmap-marker>
+  </gmap-map>
 </template>
 
 <script>
@@ -41,6 +50,10 @@ Or use the power of Vue.js within a google map like this:
   load('YOUR_API_TOKEN','OPTIONAL VERSION NUMBER')
 
   export default {
+    components: {
+      gmapMap: Map,
+      gmapMarker: Marker
+    }
     data () {
       return {
         center: {lat: 10.0, lng: 10.0},
@@ -54,13 +67,6 @@ Or use the power of Vue.js within a google map like this:
   }
 </script>
 ```
-
-## Vue-2 port of vue-google-maps
-
-If you have used vue-google-maps with Vue 1.x before, refer to [Upgrading](UPGRADING.md).
-API documentation is still pending. By and large, unless you are using two-way binding,
-you should be able to re-use the code you wrote for Vue 1.x.
-
 
 ## Testing
 
