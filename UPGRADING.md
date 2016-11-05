@@ -18,8 +18,8 @@ hackery was needed to avoid endless update loops.
 
 2. Two-way binding is no longer supported in Vue 2.x. If you need to listen on
     changes, e.g. `zoom_changed`, use the `g-zoom_changed` event. Contrary
-    to the Google Maps reference, for `\*_changed` events with obvious `get\*`/
-    `set\*` counterparts, the event handler will automatically fetch the new
+    to the Google Maps reference, for `*_changed` events with obvious `get*`/
+    `set*` counterparts, the event handler will automatically fetch the new
     data for you.
 
 For example, using the Maps API:
@@ -34,7 +34,7 @@ However, in `vue-google-maps` we provide the zoom value in the argument for
 convenience:
 ```js
 gmap.$on('g-zoom_changed', (zoom) => {
-  console.log(value === gmap.mapObject.getZoom()); // true
+  console.log(zoom === gmap.mapObject.getZoom()); // true
 })
 ```
 
