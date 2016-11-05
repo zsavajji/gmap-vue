@@ -8,7 +8,7 @@ import Map from './map.vue'
 Vue.use(DeferredReady);
 
 /**
- * @class MapComponent @mixins DeferredReadyMixin
+ * @class MapElementMixin @mixins DeferredReadyMixin
  *
  * Extends components to include the following fields:
  *
@@ -16,7 +16,7 @@ Vue.use(DeferredReady);
  *
  *
  * */
-export default Vue.extend({
+export default {
 
   mixins: [DeferredReadyMixin],
 
@@ -28,16 +28,18 @@ export default Vue.extend({
       throw new Error(`${this.constructor.name} component must be used within a <Map>`)
     }
 
-    console.log("MC created()")
     this.$mapPromise = search.mapCreated.then((map) => {
-      console.log(map);
       this.$map = map
     })
-    this.$mapComponent = search;
+    // This is a hack. FIXME
+    if (search.mapObject) {
+      this.$map = search.mapObject;
+    }
+    this.$MapElementMixin = search;
     this.$map = null;
   },
 
-  deferredReady () {
+  beforeDeferredReady () {
     return this.$mapPromise;
   },
 
@@ -55,4 +57,4 @@ export default Vue.extend({
     }
   }
 
-});
+};

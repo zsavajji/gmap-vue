@@ -14,8 +14,15 @@ export default (vueElement, googleMapsElement, props, options) => {
     const getMethodName = 'get' + capitalizeFirstLetter(attribute);
     const eventName = attribute.toLowerCase() + '_changed';
 
+    // We need to avoid an endless
+    // propChanged -> event emitted -> propChanged -> event emitted loop
+    // although this may really be the user's responsibility
+    var timesSet = 0;
+
     vueElement.$watch(attribute, () => {
       const attributeValue = vueElement[attribute];
+
+      timesSet++;
       googleMapsElement[setMethodName](attributeValue);
       if (afterModelChanged) {
         afterModelChanged(attribute, attributeValue);
@@ -25,11 +32,15 @@ export default (vueElement, googleMapsElement, props, options) => {
     });
 
     if (twoWay) {
-      googleMapsElement.addListener(eventName, _.throttle((ev) => {
-          vueElement.$emit('g-' + eventName, googleMapsElement[getMethodName]());
-        }, 100, {
-          leading: true, trailing: true
-        })
+      googleMapsElement.addListener(eventName, (ev) => {
+          if (timesSet > 0) {
+            timesSet --;
+            return;
+          }
+          else {
+            vueElement.$emit('g-' + eventName, googleMapsElement[getMethodName]());
+          }
+        }
       );
     }
   });

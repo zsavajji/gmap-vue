@@ -6,7 +6,7 @@ import _ from 'lodash';
 
 import eventBinder from '../utils/eventsBinder.js'
 import propsBinder from '../utils/propsBinder.js'
-import MapComponent from './mapComponent';
+import MapElementMixin from './mapElementMixin';
 import getPropsValuesMixin from '../utils/getPropsValuesMixin.js'
 
 const props = {
@@ -42,13 +42,12 @@ const events = [
     'rightclick'
 ]
 
-export default MapComponent.extend({
-    mixins: [getPropsValuesMixin],
+export default {
+    mixins: [MapElementMixin, getPropsValuesMixin],
     props: props,
 
-    ready () {
-        this.destroyed = false;
-    },
+    render() { return '' },
+
     deferredReady() {
         const options = _.clone(this.getPropsValues());
         options.map = this.$map;
@@ -57,26 +56,18 @@ export default MapComponent.extend({
 
     methods: {
         createRectangle (options, map) {
-            if (this.destroyed) return;
             this.$rectangleObject = new google.maps.Rectangle(options);
             propsBinder(this, this.$rectangleObject, props);
             eventBinder(this, this.$rectangleObject, events);
-
-            const updateBounds = () => {
-                this.bounds = this.$rectangleObject.getBounds();
-            }
-
-            this.$watch('bounds_changed', updateBounds, {deep: true});
         },
 
     },
-             
+
     destroyed () {
         if (this.$rectangleObject) {
           this.$rectangleObject.setMap(null);
         }
-        this.destroyed = true;
     },
-})
+}
 
 </script>

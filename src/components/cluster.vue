@@ -1,15 +1,24 @@
 /* vim: set softtabstop=2 shiftwidth=2 expandtab : */
 
+/**
+  * @class Cluster
+  * @prop $clusterObject -- Exposes the marker clusterer to
+        descendent Marker classes. Override this if you area
+        extending the class
+**/
+
 <template>
-<slot></slot>
+  <div> <!-- needed because Vue 2 disallows root slot element -->
+    <slot></slot>
+  </div>
 </template>
 
 <script>
 
-import Q from 'q';
 import _ from 'lodash';
+import Vue from 'vue';
 import propsBinder from '../utils/propsBinder.js'
-import MapComponent from './mapComponent';
+import MapElementMixin from './mapElementMixin';
 import getPropsValuesMixin from '../utils/getPropsValuesMixin.js'
 require('js-marker-clusterer');
 
@@ -32,8 +41,8 @@ const props = {
   }
 };
 
-export default MapComponent.extend({
-  mixins: [getPropsValuesMixin],
+export default Vue.extend({
+  mixins: [MapElementMixin, getPropsValuesMixin],
   props: props,
 
   deferredReady () {
@@ -52,11 +61,6 @@ export default MapComponent.extend({
   detached() {
     this.$clusterObject.clearMarkers();
   },
-
-  events: {
-    'register-marker' (element) {
-      element.$emit('cluster-ready', this.$clusterObject, this.$map);
-    }
-  }
 })
+
 </script>

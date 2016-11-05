@@ -1,24 +1,19 @@
 /* vim: set softtabstop=2 shiftwidth=2 expandtab : */
 
-const Q = require("q");
-
 var setUp = false;
-const loadingDefered = Q.defer();
 
-export const loaded = loadingDefered.promise;
-
-window['vueGoogleMapsInit'] = () => {
-  loadingDefered.resolve();
-}
+export const loaded = new Promise((resolve, reject) => {
+  window['vueGoogleMapsInit'] = resolve;
+})
 
 /**
  * @param apiKey    API Key, or object with the URL parameters. For example
- *                  to use Google Maps Premium API, pass 
+ *                  to use Google Maps Premium API, pass
  *                    `{ client: <YOUR-CLIENT-ID> }`.
  *                  You may pass the libraries and/or version (as `v`) parameter into
  *                  this parameter and skip the next two parameters
  * @param version   Google for Maps version
- * @param libraries Libraries to load (@see 
+ * @param libraries Libraries to load (@see
  *                  https://developers.google.com/maps/documentation/javascript/libraries)
  * @param loadCn    Boolean. If set to true, the map will be loaded form goole maps China
  *                  (@see https://developers.google.com/maps/documentation/javascript/basics#GoogleMapsChina)
@@ -70,18 +65,18 @@ export const load = (apiKey, version, libraries, loadCn) => {
       options.libraries = options.libraries.join(',');
     }
     options['callback'] = 'vueGoogleMapsInit';
-    
+
     let baseUrl = 'https://maps.googleapis.com/';
 
     if (typeof loadCn == 'boolean' && loadCn === true) {
       baseUrl = 'http://maps.google.cn/';
-    } 
+    }
 
-    let url = baseUrl + 'maps/api/js?' + 
+    let url = baseUrl + 'maps/api/js?' +
       Object.keys(options)
         .map((key) => encodeURIComponent(key) + '=' + encodeURIComponent(options[key]))
         .join('&');
-        
+
     if (version) {
       url = url + '&v=' + version;
     }
@@ -94,4 +89,3 @@ export const load = (apiKey, version, libraries, loadCn) => {
     throw new Error('You already started the loading of google maps');
   }
 }
-

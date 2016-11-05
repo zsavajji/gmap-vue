@@ -6,8 +6,9 @@ import _ from 'lodash';
 import eventsBinder from '../utils/eventsBinder.js';
 import propsBinder from '../utils/propsBinder.js';
 import getPropsValuesMixin from '../utils/getPropsValuesMixin.js'
-import Q from 'q';
-import MapComponent from './mapComponent';
+import MapElementMixin from './mapElementMixin';
+import Clusterer from './cluster.vue';
+import Vue from 'vue';
 import assert from 'assert';
 
 const props = {
@@ -21,7 +22,7 @@ const props = {
   clickable: {
     type: Boolean,
     twoWay: true,
-  default: true
+    default: true
   },
   cursor: {
     type: String,
@@ -40,7 +41,7 @@ const props = {
   },
   opacity: {
     type: Number,
-  default: 1
+    default: 1
   },
   place: {
     type: Object
@@ -63,7 +64,7 @@ const props = {
   },
   visible: {
     twoWay: true,
-    default: 'auto'
+    default: true,
   }
 }
 
@@ -84,7 +85,7 @@ var container;
 
 /**
  * @class Marker
- * 
+ *
  * Marker class with extra support for
  *
  * - Embedded info windows
@@ -94,28 +95,32 @@ var container;
  * reasons. Otherwise we should use a cluster-marker mixin or
  * subclass.
  */
-export default MapComponent.extend({
-  mixins: [getPropsValuesMixin],
+export default Vue.extend({
+  mixins: [MapElementMixin, getPropsValuesMixin],
   props: props,
 
+  render() { return '' },
+
   created() {
-    this.destroyed = false;
-  },
+    let search = this.$parent;
+    let clusterObjectPromise = null;
 
-  attached() {
-    if (this.visible === 'auto') {
-      this.visible = true;
+    while (search) {
+      if (search instanceof Clusterer) {
+        this.$clusterAncestor = search;
+        clusterObjectPromise = search.$deferredReadyPromise
+          .then(() => {
+            this.$clusterObject = search.$clusterObject;
+          })
+        break;
+      }
+      search = search.$parent;
     }
-  },
 
-  detached() {
-    if (this.visible === 'auto') {
-      this.visible = false;
-    }
+    this.$clusterObjectPromise = clusterObjectPromise || Promise.resolve(null);
   },
 
   destroyed() {
-    this.destroyed = true;
     if (!this.$markerObject)
         return;
 
@@ -128,38 +133,24 @@ export default MapComponent.extend({
   },
 
   deferredReady() {
-    /* Send an event to any <cluster> parent */
-    this.$dispatch('register-marker', this);
-
     const options = _.mapValues(props, (value, prop) => this[prop]);
     options.map = this.$map;
-    this.createMarker(options, this.$map);
+
+    this.$clusterObjectPromise.then(() =>
+      this.createMarker(options, this.$map));
   },
 
   methods: {
     createMarker (options, map) {
-      // FIXME: @Guillaumne do we need this?
-      if (!this.destroyed) {
-        this.$markerObject = new google.maps.Marker(options);
-        propsBinder(this, this.$markerObject, props);
-        eventsBinder(this, this.$markerObject, events);
+      this.$markerObject = new google.maps.Marker(options);
+      propsBinder(this, this.$markerObject, props);
+      eventsBinder(this, this.$markerObject, events);
 
-        if (this.$clusterObject) {
-          this.$clusterObject.addMarker(this.$markerObject);
-        }
+      if (this.$clusterObject) {
+        this.$clusterObject.addMarker(this.$markerObject);
       }
     }
   },
-
-  events: {
-    'register-infoWindow' (infoWindow) {
-      infoWindow.$emit('marker-ready', this, this.$map);
-    },
-
-    'cluster-ready' (cluster, map) {
-      this.$clusterObject = cluster;
-    },
-  }
 })
 
 </script>

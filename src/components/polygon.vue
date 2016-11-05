@@ -6,7 +6,7 @@ import _ from 'lodash';
 
 import eventBinder from '../utils/eventsBinder.js'
 import propsBinder from '../utils/propsBinder.js'
-import MapComponent from './mapComponent'
+import MapElementMixin from './mapElementMixin'
 import getPropsValuesMixin from '../utils/getPropsValuesMixin.js'
 
 const props = {
@@ -17,7 +17,6 @@ const props = {
     type: Boolean,
   },
   options: {
-    twoWay: false,
     type: Object
   },
   path: {
@@ -28,6 +27,10 @@ const props = {
     type: Array,
     twoWay: true
   },
+  deepWatch: {
+    type: Boolean,
+    default: false
+  }
 }
 
 const events = [
@@ -44,29 +47,19 @@ const events = [
   'rightclick'
 ]
 
-export default MapComponent.extend({
-  mixins: [getPropsValuesMixin],
+export default {
+  mixins: [MapElementMixin, getPropsValuesMixin],
   props: props,
 
-  ready () {
-    this.destroyed = false;
-  },
-
-  attached () {
-    if (this.$map && this.$polygonObject.getMap() === null) {
-      this.$polygonObject.setMap(this.$map);
-    }
-  },
+  render() { return '' },
 
   destroyed () {
-    this.destroyed = true;
     if (this.$polygonObject) {
       this.$polygonObject.setMap(null);
     }
   },
 
   deferredReady() {
-    if (this.destroyed) return;
     const options = _.clone(this.getPropsValues());
     delete options.options;
     _.assign(options, this.options);
@@ -78,86 +71,72 @@ export default MapComponent.extend({
     }
     this.$polygonObject = new google.maps.Polygon(options);
 
-    const localProps = _.clone(props);
-    //we don't want the propBinder to handle this one because it is specific
-    delete localProps.path;
-    delete localProps.paths;
-
-    propsBinder(this, this.$polygonObject, localProps);
+    propsBinder(this, this.$polygonObject, _.omit(props, ['path', 'paths']));
     eventBinder(this, this.$polygonObject, events);
 
-    const eventCancelers = [];
+    var clearEvents = () => {};
 
-    const convertToLatLng = (arr) => {
-      return _.map((arr), (v) => {
-        return {
-          lat: v.lat(),
-          lng: v.lng()
+    // Watch paths, on our own, because we do not want to set either when it is
+    // empty
+    this.$watch('paths', (paths) => {
+      if (paths) {
+        clearEvents();
+
+        this.$polygonObject.setPaths(paths);
+
+        const updatePaths = () => {
+          this.$emit('g-paths_changed', this.$polygonObject.getPaths())
         }
-      });
-    }
+        const eventListeners = [];
 
-    let stable = 0;
+        const mvcArray = this.$polygonObject.getPaths();
+        for (let mvcPath of mvcArray) {
+          eventListeners.push([mvcPath, mvcPath.addListener('insert_at', updatePaths)])
+          eventListeners.push([mvcPath, mvcPath.addListener('remove_at', updatePaths)])
+          eventListeners.push([mvcPath, mvcPath.addListener('set_at', updatePaths)])
+        }
+        eventListeners.push([mvcArray, mvcArray.addListener('insert_at', updatePaths)])
+        eventListeners.push([mvcArray, mvcArray.addListener('remove_at', updatePaths)])
+        eventListeners.push([mvcArray, mvcArray.addListener('set_at', updatePaths)])
 
-    const editHandler = () => {
-      stable -= 2;
-      if (stable < 0) {
-        this.path = convertToLatLng(this.$polygonObject.getPath().getArray());
-        this.paths = _.map(this.$polygonObject.getPaths().getArray(), (pArray) => {
-          return convertToLatLng(pArray.getArray());
-        });
-      }
-    }
-
-
-    const setupBind = () => {
-      const mvcoPaths = this.$polygonObject.getPaths();
-      eventCancelers.push(mvcoPaths.addListener('insert_at', editHandler));
-      eventCancelers.push(mvcoPaths.addListener('remove_at', editHandler));
-      eventCancelers.push(mvcoPaths.addListener('set_at', editHandler));
-      _.each(mvcoPaths.getArray(), (mvcoPath) => {
-        eventCancelers.push(mvcoPath.addListener('insert_at', editHandler));
-        eventCancelers.push(mvcoPath.addListener('remove_at', editHandler));
-        eventCancelers.push(mvcoPath.addListener('set_at', editHandler));
-      });
-    }
-
-    const setPath = (paths) => {
-      // TODO Optimize this to avoid resetting events
-      _.each(eventCancelers, (id) => {
-        google.maps.event.removeListener(id);
-      });
-      eventCancelers.length = 0;
-      this.$polygonObject.setPaths(paths);
-      setupBind();
-    }
-
-    this.$watch('paths', () => {
-      stable++;
-      if (stable > -1) {
-        setPath(this.paths);
+        clearEvents = () => {
+          eventListeners.map(([obj, listenerHandle]) =>
+            obj.removeListener(listenerHandle))
+        }
       }
     }, {
-      deep: true
+      deep: this.deepWatch
     });
 
-    this.$watch('path', () => {
-      stable++;
-      if (stable > -1) {
-        setPath([this.path]);
+    this.$watch('path', (path) => {
+      if (path) {
+        clearEvents();
+
+        this.$polygonObject.setPaths(path);
+
+        const mvcPath = this.$polygonObject.getPath();
+        const eventListeners = [];
+
+        const updatePaths = () => {
+          this.$emit('g-path_changed', this.$polygonObject.getPath())
+        }
+
+        eventListeners.push([mvcPath, mvcPath.addListener('insert_at', updatePaths)])
+        eventListeners.push([mvcPath, mvcPath.addListener('remove_at', updatePaths)])
+        eventListeners.push([mvcPath, mvcPath.addListener('set_at', updatePaths)])
+
+        clearEvents = () => {
+          eventListeners.map(([obj, listenerHandle]) =>
+            obj.removeListener(listenerHandle))
+        }
       }
     }, {
-      deep: true
+      deep: this.deepWatch
     });
-
-    setupBind();
 
     // Display the map
     this.$polygonObject.setMap(this.$map);
   },
-
-})
-
+}
 
 </script>
-

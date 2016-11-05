@@ -124,11 +124,8 @@ export default Vue.extend({
       _.assign(options, copiedData);
       this.mapObject = new google.maps.Map(element, options);
 
-      // we con't want to bind props because it's a kind of "computed" property
-      const boundProps = _.clone(props);
-      delete boundProps.bounds;
-      //binding properties (two and one way)
-      propsBinder(this, this.mapObject, boundProps);
+      // binding properties (two and one way)
+      propsBinder(this, this.mapObject, props);
 
       //binding events
       eventsBinder(this, this.mapObject, events);

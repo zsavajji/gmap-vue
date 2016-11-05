@@ -1,7 +1,8 @@
 <template>
     <label>
         <span v-text="label"></span>
-        <input type="text" v-el:input :placeholder="placeholder" :class="class"/>
+        <input type="text" :placeholder="placeholder" :class="className"
+          ref="input"/>
     </label>
 </template>
 
@@ -12,36 +13,29 @@
   import downArrowSimulator from '../utils/simulateArrowDown.js'
   import getPropsValuesMixin from '../utils/getPropsValuesMixin.js'
   import {loaded} from '../manager.js'
+  import assert from 'assert';
 
   const props = {
       bounds: {
-          type: Object,
-          twoWay: true
+        type: Object,
       },
-      place: {
-          type: Object,
-          twoWay: true,
-          default: function() {
-            return {
-              name: ''
-            };
-          }
+      defaultPlace: {
+        type: String,
+        default: '',
       },
       componentRestrictions: {
-          type: Object,
-          twoWay: false,
-          default: null,
+        type: Object,
+        default: null,
       },
       types: {
-          type: Array,
-          twoWay: false,
-          default: function() { return []; }
+        type: Array,
+        default: function() { return []; }
       },
       placeholder: {
         required: false,
         type: String
       },
-      class: {
+      className: {
           required: false,
           type: String
       },
@@ -57,40 +51,31 @@
       }
   }
 
-  const events = [
-    'place_changed'
-  ];
-
   export default {
     mixins: [getPropsValuesMixin],
-    ready () {
-      const input = this.$els.input;
-      input.value = this.place.name;
+
+    mounted() {
+      const input = this.$refs.input;
+      input.value = this.defaultPlace;
       loaded.then(() => {
         window.i = input;
         const options = _.clone(this.getPropsValues());
         if (this.selectFirstOnEnter) {
-          downArrowSimulator(this.$els.input);
+          downArrowSimulator(this.$refs.input);
         }
-        this.autoCompleter = new google.maps.places.Autocomplete(this.$els.input, options);
-        eventBinder(this, this.autoCompleter, events);
-        const propsToBind = _.clone(props);
-        delete propsToBind.placeholder;
-        delete propsToBind.place;
-        delete propsToBind.selectFirstOnEnter;
-        propsBinder(this, this.autoCompleter, propsToBind);
-      }).catch(() => {
-        setTimeout(() => {
-          throw new Error("Impossible to load the Autocomplete Class from the google places api, did you loaded it ?");
-        }, 0);
-      });
-    },
 
+        assert(typeof(google.maps.places.Autocomplete) === 'function',
+          "google.maps.places.Autocomplete is undefined. Did you add 'places' to libraries when loading Google Maps?")
+
+        this.autoCompleter = new google.maps.places.Autocomplete(this.$refs.input, options);
+        propsBinder(this, this.autoCompleter, _.omit(props, ['placeholder', 'place', 'selectFirstOnEnter']));
+
+        this.autoCompleter.addListener('place_changed', () => {
+          this.$emit('g-place_changed', this.autoCompleter.getPlace())
+        })
+
+      })
+    },
     props: props,
-    events: {
-      'g-place_changed' () {
-        this.place = this.autoCompleter.getPlace();
-      }
-    }
   }
 </script>

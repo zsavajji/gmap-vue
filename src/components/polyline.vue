@@ -6,7 +6,7 @@ import _ from 'lodash';
 
 import eventBinder from '../utils/eventsBinder.js'
 import propsBinder from '../utils/propsBinder.js'
-import MapComponent from './mapComponent';
+import MapElementMixin from './mapElementMixin';
 import getPropsValuesMixin from '../utils/getPropsValuesMixin.js'
 
 const props = {
@@ -24,6 +24,10 @@ const props = {
     type: Array,
     twoWay: true
   },
+  deepWatch: {
+    type: Boolean,
+    default: false,
+  }
 }
 
 const events = [
@@ -40,81 +44,57 @@ const events = [
   'rightclick'
 ]
 
-export default MapComponent.extend({
-  mixins: [getPropsValuesMixin],
+export default {
+  mixins: [MapElementMixin, getPropsValuesMixin],
   props: props,
-  
-  ready () {
-    this.destroyed = false;
-  },
 
-  attached () {
-    if (this.$map && this.$polyLineObject.getMap() === null) {
-      this.$polyLineObject.setMap(this.$map);
-    }
-  },
+  render() { return '' },
 
   destroyed () {
-    this.destroyed = true;
     if (this.$polyLineObject) {
       this.$polyLineObject.setMap(null);
     }
   },
-  
+
   deferredReady() {
-    if (this.destroyed) return;
     const options = _.clone(this.getPropsValues());
     delete options.options;
     _.assign(options, this.options);
     this.$polyLineObject = new google.maps.Polyline(options);
-
     this.$polyLineObject.setMap(this.$map);
 
-    const localProps = _.clone(props);
-    //we don't want the propBinder to handle this one because it is specific
-    delete localProps.path;
-
-    propsBinder(this, this.$polyLineObject, localProps);
+    propsBinder(this, this.$polyLineObject, _.omit(props, ['deepWatch', 'path']));
     eventBinder(this, this.$polyLineObject, events);
 
-    const eventCancelers = [];
+    this.$watch('path', (path) => {
+      if (path) {
+        clearEvents();
 
-     
-    const editHandler = () => {
-      this.path = _.map(this.$polyLineObject.getPath().getArray(), (v) => {
-        return {
-          lat: v.lat(),
-          lng: v.lng()
+        this.$polyLineObject.setPaths(path);
+
+        const mvcPath = this.$polyLineObject.getPath();
+        const eventListeners = [];
+
+        const updatePaths = () => {
+          this.$emit('g-path_changed', this.$polyLineObject.getPath())
         }
-      });
-    }
 
-    const setupBind = () => {
-      const mvcoPath = this.$polyLineObject.getPath();
-      eventCancelers.push(mvcoPath.addListener('insert_at', editHandler));
-      eventCancelers.push(mvcoPath.addListener('remove_at', editHandler));
-      eventCancelers.push(mvcoPath.addListener('set_at', editHandler));
-    }
+        eventListeners.push([mvcPath, mvcPath.addListener('insert_at', updatePaths)])
+        eventListeners.push([mvcPath, mvcPath.addListener('remove_at', updatePaths)])
+        eventListeners.push([mvcPath, mvcPath.addListener('set_at', updatePaths)])
 
-    this.$watch('path', () => {
-      _.each(eventCancelers, (id) => {
-        google.maps.event.removeListener(id);
-      });
-      eventCancelers.length = 0;
-      this.$polyLineObject.setPath(this.path);
-      setupBind();
+        clearEvents = () => {
+          eventListeners.map(([obj, listenerHandle]) =>
+            obj.removeListener(listenerHandle))
+        }
+      }
     }, {
-      deep: true
+      deep: this.deepWatch
     });
-
-    setupBind();
 
     // Display the map
     this.$polyLineObject.setMap(this.$map);
   },
-
-})
-
+}
 
 </script>
-

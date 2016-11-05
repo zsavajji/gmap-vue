@@ -15,7 +15,7 @@
 import _ from 'lodash'
 import propsBinder from '../utils/propsBinder.js'
 import eventsBinder from '../utils/eventsBinder.js'
-import MapComponent from './mapComponent';
+import MapElementMixin from './mapElementMixin';
 import Marker from './marker.vue';
 
 const props = {
@@ -49,11 +49,13 @@ const events = [
   'content_changed',
 ]
 
-export default MapComponent.extend({
+export default {
+  mixins: [MapElementMixin],
   replace: false,
   props: props,
 
   created() {
+    this.$markerObject = null;
     this.$markerComponent = this.$findAncestor(
       (ans) => ans instanceof Marker
     )
@@ -99,26 +101,22 @@ export default MapComponent.extend({
       options.content = this.$refs.flyaway;
 
       // only set the position if the info window is not bound to a marker
-      if (this.$markerObject === null) {
+      if (this.$markerComponent === null) {
         options.position = this.position;
       }
 
       this.$infoWindow = new google.maps.InfoWindow(options);
 
       // Binding
-      const propsToBind = _.clone(props);
-      delete propsToBind.opened;
-      propsBinder(this, this.$infoWindow, propsToBind);
+      propsBinder(this, this.$infoWindow, _.omit(props, ['opened']));
       eventsBinder(this, this.$infoWindow, events);
 
+      this.openInfoWindow();
       this.$watch('opened', () => {
         this.openInfoWindow();
       });
-
-      // Open if needed
-      this.openInfoWindow();
     }
   },
-})
+}
 
 </script>
