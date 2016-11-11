@@ -1,7 +1,7 @@
 {
-  "name": "vue-google-maps",
+  "name": "vue2-google-maps",
   "version": "0.1.21",
-  "description": "This is a google map component for Vue.js",
+  "description": "This is a google map component for Vue.js, updated for Vue 2 compatibility",
   "main": "index.js",
   "scripts": {
     "dev": "webpack-dev-server --inline --hot --quiet --port 9999",
