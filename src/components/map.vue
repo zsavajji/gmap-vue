@@ -125,7 +125,17 @@ export default Vue.extend({
       this.mapObject = new google.maps.Map(element, options);
 
       // binding properties (two and one way)
-      propsBinder(this, this.mapObject, props);
+      propsBinder(this, this.mapObject, _.omit(props, ['center', 'zoom', 'bounds']));
+
+      // manually trigger center and zoom
+      this.mapObject.addListener('center_changed', () => {
+        this.$emit('g-center_changed', this.mapObject.getCenter())
+        this.$emit('g-bounds_changed', this.mapObject.getBounds())
+      })
+      this.mapObject.addListener('zoom_changed', () => {
+        this.$emit('g-zoom_changed', this.mapObject.getZoom())
+        this.$emit('g-bounds_changed', this.mapObject.getBounds())
+      })
 
       //binding events
       eventsBinder(this, this.mapObject, events);
