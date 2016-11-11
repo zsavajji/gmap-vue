@@ -66,6 +66,8 @@ export default {
     propsBinder(this, this.$polyLineObject, _.omit(props, ['deepWatch', 'path']));
     eventBinder(this, this.$polyLineObject, events);
 
+    var clearEvents = () => {}
+
     this.$watch('path', (path) => {
       if (path) {
         clearEvents();
