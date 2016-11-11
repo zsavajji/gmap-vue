@@ -72,7 +72,7 @@ export default {
       if (path) {
         clearEvents();
 
-        this.$polyLineObject.setPaths(path);
+        this.$polyLineObject.setPath(path);
 
         const mvcPath = this.$polyLineObject.getPath();
         const eventListeners = [];
@@ -87,7 +87,7 @@ export default {
 
         clearEvents = () => {
           eventListeners.map(([obj, listenerHandle]) =>
-            obj.removeListener(listenerHandle))
+            google.maps.event.removeListener(listenerHandle))
         }
       }
     }, {

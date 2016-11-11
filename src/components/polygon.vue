@@ -101,7 +101,7 @@ export default {
 
         clearEvents = () => {
           eventListeners.map(([obj, listenerHandle]) =>
-            obj.removeListener(listenerHandle))
+            google.maps.event.removeListener(listenerHandle))
         }
       }
     }, {
@@ -127,7 +127,7 @@ export default {
 
         clearEvents = () => {
           eventListeners.map(([obj, listenerHandle]) =>
-            obj.removeListener(listenerHandle))
+            google.maps.event.removeListener(listenerHandle))
         }
       }
     }, {
