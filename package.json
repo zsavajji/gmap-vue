@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "webpack-dev-server --inline --hot --quiet --port 9999",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
-    "test": "lab -T node_modules/lab-babel -t 100 -S test"
+    "test": "lab -T node_modules/lab-babel -t 100 -S test",
+    "deploy": "npm run build && cd examples && webpack && gh-pages -d ."
   },
   "dependencies": {
     "js-marker-clusterer": "^1.0.0"
@@ -23,9 +24,10 @@
     "babel-preset-stage-0": "^6.1.2",
     "babel-preset-stage-3": "^6.17.0",
     "babel-runtime": "^5.8.0",
-    "cross-env": "^1.0.5",
+    "cross-env": "^1.0.8",
     "css-loader": "^0.23.0",
     "file-loader": "^0.8.4",
+    "gh-pages": "^0.11.0",
     "jsdom": "^9.8.3",
     "lab": "^11.1.0",
     "lab-babel": "^1.1.1",
