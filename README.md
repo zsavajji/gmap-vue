@@ -11,9 +11,7 @@ you should be able to re-use the code you wrote for Vue 1.x.
 
 ## Demo:
 
-[Demo in production](http://en.papayapods.com/?utm_source=GtHub&utm_medium=LnK&utm_campaign=V.JS%20Map%20Cmpnt.#!/search/map?city=Lausanne)
-
-[Showcase with a lot of features](http://guillaumeleclerc.github.io/vue-google-maps-example/)
+[Showcase with a lot of features](http://xkjyeah.github.io/vue-google-maps/)
 
 ## Presentation
 
@@ -167,8 +165,5 @@ or for [localisation](https://developers.google.com/maps/documentation/javascrip
 
 ## Full documentation
 
-### Note on events
+See [API](API.md).
 
-__All events are prefixed with `g-`. Example : `g-click` so it does not interfere with DOM events.__
-
-__Documentation is up to date__: take a look at the wiki

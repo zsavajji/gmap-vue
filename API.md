@@ -1,5 +1,10 @@
 # vue2-google-maps
 
+## Note on events
+__All events are prefixed with `g-`. Example : `g-click` for compatibility with the previous
+version of `vue-google-maps`. (TODO: decide whether to disable this, since Vue 2.x distinguishes
+between component events and native DOM events)__
+
 ## Table of Contents
 
 * [vue2-google-maps](#vue2-google-maps)
