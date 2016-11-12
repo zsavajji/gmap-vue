@@ -9,6 +9,23 @@ If you have used vue-google-maps with Vue 1.x before, refer to [Upgrading](UPGRA
 API documentation is still pending, but by and large, unless you are using two-way bindings,
 you should be able to re-use the code you wrote for Vue 1.x.
 
+## Installation
+
+### With npm (Recommended)
+
+```
+npm install vue2-google-maps
+```
+
+### Manually
+
+Just download `dist/vue-google-maps.js` file and include it from your HTML.
+[Example](http://xkjyeah.github.io/vue-google-maps/overlay.html).
+
+### Basic usage / Documentation
+
+See [API](API.md).
+
 ## Demo:
 
 [Showcase with a lot of features](http://xkjyeah.github.io/vue-google-maps/)
@@ -77,35 +94,6 @@ Improvements to the tests are welcome :)
 
 Refer to the [examples](examples).
 
-## Installation
-
-### With npm (Recommended)
-
-```
-npm install vue-google-maps
-```
-
-You can append `--save` or `--save-dev` to add it to your dependency (if yor project also uses npm)
-
-### Manually
-
-Just download the `index.js` file on the root directory of this repository
-
-### Basic usage
-
-#### Reference `vue-google-maps` into your project
-
-If you are using a cool bundler (recommended) you can just do :
-
-```javascript
-import {load, Map, Marker} from 'vue-google-maps'
-```
-
-Or if you prefer the older ES5 syntax:
-
-```javascript
-const VueGoogleMap = require('vue-google-maps')
-```
 
 #### Standalone / CDN
 
@@ -162,8 +150,3 @@ VueGoogleMap.load({ ... })
 The parameters are passed in the query string to the Google Maps API, e.g. to set the [version](https://developers.google.com/maps/documentation/javascript/versions#version-rollover-and-version-types),
 [libraries](https://developers.google.com/maps/documentation/javascript/libraries),
 or for [localisation](https://developers.google.com/maps/documentation/javascript/basics).
-
-## Full documentation
-
-See [API](API.md).
-

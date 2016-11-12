@@ -5,6 +5,14 @@ __All events are prefixed with `g-`. Example : `g-click` for compatibility with 
 version of `vue-google-maps`. (TODO: decide whether to disable this, since Vue 2.x distinguishes
 between component events and native DOM events)__
 
+Most of the properties and events here are not documented unless they do not
+exist in the original [Google Maps API](https://developers.google.com/maps/documentation/javascript/reference).
+Otherwise they behave similarly to a direct call to the API so you are advised to read that
+instead.
+
+An exception is two-way bindings -- the `center_changed` event on Map instances
+have no argument, but in vue2-google-maps they do in order to ease two-way updates.
+
 ## Table of Contents
 
 * [vue2-google-maps](#vue2-google-maps)
