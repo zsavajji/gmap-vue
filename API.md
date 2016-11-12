@@ -16,7 +16,7 @@ have no argument, but in vue2-google-maps they do in order to ease two-way updat
 ## Table of Contents
 
 * [vue2-google-maps](#vue2-google-maps)
-   * [Table of Contents](#table-of-contents)
+   * [Note on events](#note-on-events)
    * [<a name="user-content-getting-started-cdn"></a> Getting Started (with CDN)](#-getting-started-with-cdn)
    * [<a name="user-content-getting-started-npm"></a> Getting Started (with NPM)](#-getting-started-with-npm)
    * [Classes](#classes)
@@ -201,6 +201,13 @@ have no argument, but in vue2-google-maps they do in order to ease two-way updat
             * [selectFirstOnEnter : boolean](#selectfirstonenter--boolean)
          * [Events](#events-7)
             * [place_changed](#place_changed)
+      * [DeferredReadyMixin](#deferredreadymixin)
+         * [Hooks](#hooks)
+            * [beforeDeferredReady() : () =&gt; Promise](#beforedeferredready----promise)
+            * [deferredReady() : () =&gt; Promise](#deferredready----promise)
+      * [MapElementMixin (mixes in <code>DeferredReadyMixin</code>)](#mapelementmixin-mixes-in-deferredreadymixin)
+         * [Fields](#fields-6)
+            * [$map : Map](#map--map)
 
 ## <a name="getting-started-cdn"></a> Getting Started (with CDN)
 
@@ -525,3 +532,27 @@ Simulates a 'down arrow' keypress on hitting 'return' when no pac suggestion is 
 
 #### Events
 ##### `place_changed`
+
+### `DeferredReadyMixin`
+#### Hooks
+##### `beforeDeferredReady() : () => Promise`
+Actions to be performed before `deferredReady()` is called.
+These is executed **after** all ancestor components' `deferredReady()` have
+been called.
+
+##### `deferredReady() : () => Promise`
+A hook that waits for ancestors' `deferredReady()` to complete (i.e. Promise resolved)
+before it is itself called.
+
+This Mixin is used in this package in order to initialize the Map component
+only after the Maps API has been loaded, and to initialize map elements only after
+the ancestor Map component has been initialized.
+
+### `MapElementMixin` (mixes in `DeferredReadyMixin`)
+This mixin adds a `beforeDeferredReady()` hook which initializes `this.$map`.
+
+#### Fields
+##### `$map : Map`
+A reference to the ancestor Map component. This is available only after
+`deferredReady()` has been called. You can access the map by:
+`this.$map.mapObject`.
