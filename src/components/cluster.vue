@@ -27,7 +27,7 @@ const props = {
     type: Number,
     twoWay: false
   },
-  calculor: {
+  calculator: {
     type: Function,
     twoWay: false
   },

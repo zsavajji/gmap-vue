@@ -20,10 +20,6 @@ const props = {
         default: 1000,
         twoWay: true
     },
-    bounds: {
-        type: Object,
-        twoWay: true
-    },
     draggable: {
         type: Boolean,
         default: false,
@@ -49,7 +45,6 @@ const events = [
     'mouseout',
     'mouseover',
     'mouseup',
-    'radius_changed',
     'rightclick'
 ]
 
@@ -81,9 +76,8 @@ export default {
               this.$emit('g-bounds_changed', this.$circleObject.getBounds())
             }
 
-            this.$watch('radius', updateBounds);
-            // because center is an object and we need to be warned even if only the lat or lng change. not the whole reference
-            this.$watch('center', updateBounds, {deep: true});
+            this.$on('g-radius_changed', updateBounds)
+            this.$on('g-center_changed', updateBounds)
         }
     },
 

@@ -51,8 +51,8 @@ export default {
   render() { return '' },
 
   destroyed () {
-    if (this.$polyLineObject) {
-      this.$polyLineObject.setMap(null);
+    if (this.$polylineObject) {
+      this.$polylineObject.setMap(null);
     }
   },
 
@@ -60,11 +60,11 @@ export default {
     const options = _.clone(this.getPropsValues());
     delete options.options;
     _.assign(options, this.options);
-    this.$polyLineObject = new google.maps.Polyline(options);
-    this.$polyLineObject.setMap(this.$map);
+    this.$polylineObject = new google.maps.Polyline(options);
+    this.$polylineObject.setMap(this.$map);
 
-    propsBinder(this, this.$polyLineObject, _.omit(props, ['deepWatch', 'path']));
-    eventBinder(this, this.$polyLineObject, events);
+    propsBinder(this, this.$polylineObject, _.omit(props, ['deepWatch', 'path']));
+    eventBinder(this, this.$polylineObject, events);
 
     var clearEvents = () => {}
 
@@ -72,13 +72,13 @@ export default {
       if (path) {
         clearEvents();
 
-        this.$polyLineObject.setPath(path);
+        this.$polylineObject.setPath(path);
 
-        const mvcPath = this.$polyLineObject.getPath();
+        const mvcPath = this.$polylineObject.getPath();
         const eventListeners = [];
 
         const updatePaths = () => {
-          this.$emit('g-path_changed', this.$polyLineObject.getPath())
+          this.$emit('g-path_changed', this.$polylineObject.getPath())
         }
 
         eventListeners.push([mvcPath, mvcPath.addListener('insert_at', updatePaths)])
@@ -95,7 +95,7 @@ export default {
     });
 
     // Display the map
-    this.$polyLineObject.setMap(this.$map);
+    this.$polylineObject.setMap(this.$map);
   },
 }
 
