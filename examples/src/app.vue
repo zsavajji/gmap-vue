@@ -60,7 +60,7 @@
   <place-input
     label="Add a marker at this place"
     :select-first-on-enter="true"
-    @g-place_changed="updatePlace($event)"
+    @place_changed="updatePlace($event)"
   ></place-input>
   <br>
   <h1> Standalone infoWindow </h1>
@@ -117,14 +117,14 @@
     :zoom="zoom"
     :map-type-id="mapType"
     :options="{styles: mapStyles, scrollwheel: scrollwheel}"
-    @g-rightclick="mapRclicked"
-    @g-drag="drag++"
-    @g-click="mapClickedCount++"
+    @rightclick="mapRclicked"
+    @drag="drag++"
+    @click="mapClickedCount++"
 
-    @g-zoom_changed="update('zoom', $event)"
-    @g-center_changed="update('center', $event)"
-    @g-maptypeid_changed="update('mapType', $event)"
-    @g-bounds_changed="update('bounds', $event)"
+    @zoom_changed="update('zoom', $event)"
+    @center_changed="update('reportedCenter', $event)"
+    @maptypeid_changed="update('mapType', $event)"
+    @bounds_changed="update('bounds', $event)"
     >
     <gmap-cluster
     :grid-size="gridSize"
@@ -135,11 +135,11 @@
         :position="m.position"
         :opacity="m.opacity"
         :draggable="m.draggable"
-        @g-click="m.clicked++"
-        @g-rightclick="m.rightClicked++"
-        @g-dragend="m.dragended++"
+        @click="m.clicked++"
+        @rightclick="m.rightClicked++"
+        @dragend="m.dragended++"
 
-        @g-position_changed="updateChild(m, 'position', $event)"
+        @position_changed="updateChild(m, 'position', $event)"
 
         v-for="m in activeMarkers"
       >
@@ -155,10 +155,10 @@
       :position="m.position"
       :opacity="m.opacity"
       :draggable="m.draggable"
-      @g-click="m.clicked++"
-      @g-rightclick="m.rightClicked++"
-      @g-dragend="m.dragended++"
-      @g-position_changed="updateChild(m, 'position', $event)"
+      @click="m.clicked++"
+      @rightclick="m.rightClicked++"
+      @dragend="m.dragended++"
+      @position_changed="updateChild(m, 'position', $event)"
       v-for="m in activeMarkers"
       >
         <gmap-info-window
@@ -185,23 +185,23 @@
     ></gmap-info-window>
 
     <gmap-polyline v-if="plvisible" :path="plPath" :editable="pleditable" :draggable="true" :options="{geodesic:true, strokeColor:'#FF0000'}"
-      @g-path_changed="updatePolylinePath($event)">
+      @path_changed="updatePolylinePath($event)">
     </gmap-polyline>
     <gmap-polygon v-if="pgvisible" :paths="pgPath" :editable="true"
       :options="{geodesic:true, strokeColor:'#FF0000', fillColor:'#000000'}"
-      @g-paths_changed="updatePolygonPaths($event)">
+      @paths_changed="updatePolygonPaths($event)">
     </gmap-polygon>
     <gmap-circle v-if="displayCircle" :bounds="circleBounds"
       :center="center" :radius="100000"
       :options="{editable: true}"
 
-      @g-radius_changed="updateCircle('radius', $event)"
-      @g-bounds_changed="updateCircle('bounds', $event)"
+      @radius_changed="updateCircle('radius', $event)"
+      @bounds_changed="updateCircle('bounds', $event)"
 
       ></gmap-circle>
     <gmap-rectangle v-if="displayRectangle" :bounds="rectangleBounds"
     :options="{editable: true}"
-    @g-bounds_changed="updateRectangle('bounds', $event)"></gmap-rectangle>
+    @bounds_changed="updateRectangle('bounds', $event)"></gmap-rectangle>
   </gmap-map>
 </div>
 </div>
