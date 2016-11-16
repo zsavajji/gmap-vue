@@ -38,7 +38,7 @@ export default (vueElement, googleMapsElement, props, options) => {
             return;
           }
           else {
-            vueElement.$emit('g-' + eventName, googleMapsElement[getMethodName]());
+            vueElement.$emit(eventName, googleMapsElement[getMethodName]());
           }
         }
       );

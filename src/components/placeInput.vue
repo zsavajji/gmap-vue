@@ -71,7 +71,7 @@
         propsBinder(this, this.autoCompleter, _.omit(props, ['placeholder', 'place', 'selectFirstOnEnter']));
 
         this.autoCompleter.addListener('place_changed', () => {
-          this.$emit('g-place_changed', this.autoCompleter.getPlace())
+          this.$emit('place_changed', this.autoCompleter.getPlace())
         })
 
       })

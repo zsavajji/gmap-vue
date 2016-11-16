@@ -129,20 +129,16 @@ export default Vue.extend({
 
       // manually trigger center and zoom
       this.mapObject.addListener('center_changed', () => {
-        this.$emit('g-center_changed', this.mapObject.getCenter())
-        this.$emit('g-bounds_changed', this.mapObject.getBounds())
+        this.$emit('center_changed', this.mapObject.getCenter())
+        this.$emit('bounds_changed', this.mapObject.getBounds())
       })
       this.mapObject.addListener('zoom_changed', () => {
-        this.$emit('g-zoom_changed', this.mapObject.getZoom())
-        this.$emit('g-bounds_changed', this.mapObject.getBounds())
+        this.$emit('zoom_changed', this.mapObject.getZoom())
+        this.$emit('bounds_changed', this.mapObject.getBounds())
       })
 
       //binding events
       eventsBinder(this, this.mapObject, events);
-
-      _.forEach(eventListeners, (fn, event) => {
-        this.$on(event, fn.bind(this));
-      })
 
       this.mapCreatedDeferred.resolve(this.mapObject);
 

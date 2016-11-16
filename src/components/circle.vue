@@ -73,11 +73,11 @@ export default {
             eventBinder(this, this.$circleObject, events);
 
             const updateBounds = () => {
-              this.$emit('g-bounds_changed', this.$circleObject.getBounds())
+              this.$emit('bounds_changed', this.$circleObject.getBounds())
             }
 
-            this.$on('g-radius_changed', updateBounds)
-            this.$on('g-center_changed', updateBounds)
+            this.$on('radius_changed', updateBounds)
+            this.$on('center_changed', updateBounds)
         }
     },
 

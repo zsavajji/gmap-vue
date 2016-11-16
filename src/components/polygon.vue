@@ -85,7 +85,7 @@ export default {
         this.$polygonObject.setPaths(paths);
 
         const updatePaths = () => {
-          this.$emit('g-paths_changed', this.$polygonObject.getPaths())
+          this.$emit('paths_changed', this.$polygonObject.getPaths())
         }
         const eventListeners = [];
 
@@ -118,7 +118,7 @@ export default {
         const eventListeners = [];
 
         const updatePaths = () => {
-          this.$emit('g-path_changed', this.$polygonObject.getPath())
+          this.$emit('path_changed', this.$polygonObject.getPath())
         }
 
         eventListeners.push([mvcPath, mvcPath.addListener('insert_at', updatePaths)])
