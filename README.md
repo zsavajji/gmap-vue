@@ -6,9 +6,6 @@ This is the Vue 2.x port of vue-google-maps!
 
 If you have used vue-google-maps with Vue 1.x before, refer to [Upgrading](UPGRADING.md).
 
-API documentation is still pending, but by and large, unless you are using two-way bindings,
-you should be able to re-use the code you wrote for Vue 1.x.
-
 ## Installation
 
 ### With npm (Recommended)
