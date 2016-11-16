@@ -72,34 +72,40 @@ const events = [
   'tilesloaded',
 ];
 
-const callableMethods = [
+// Plain Google Maps methods exposed here for convenience
+const linkedMethods = _([
   'panBy',
   'panTo',
   'panToBounds',
   'fitBounds'
-];
+])
+  .map(methodName => [methodName, function() {
+    if (this.mapObject)
+      this.mapObject[methodName].apply(this.mapObject, arguments);
+  }])
+  .toPairs()
+  .value()
+;
 
-const methods = {
+// Other convenience methods exposed by Vue Google Maps
+const customMethods = {
   resize() {
     if (this.mapObject) {
       google.maps.event.trigger(this.mapObject, 'resize');
-
-      // FIXME: In version 1, we preserved the center of the map
     }
+  },
+  resizePreserveCenter() {
+    if (!this.mapObject)
+      return;
+
+    const oldCenter = this.mapObject.getCenter();
+    google.maps.event.trigger(this.mapObject, 'resize');
+    this.mapObject.setCenter(oldCenter);
   }
 };
 
-const eventListeners = {}
-
-_.each(callableMethods, function (methodName) {
-   const applier = function() {
-    if (this.mapObject) {
-      this.mapObject[methodName].apply(this.mapObject, arguments);
-    }
-  }
-  eventListeners['g-' + methodName] = applier;
-  methods[methodName] = applier;
-});
+// Methods is a combination of customMethods and linkedMethods
+const methods = _.assign({}, customMethods, linkedMethods);
 
 export default Vue.extend({
   mixins: [getPropsMixin, DeferredReadyMixin],
@@ -110,6 +116,20 @@ export default Vue.extend({
     this.mapCreated = new Promise((resolve, reject) => {
       this.mapCreatedDeferred = {resolve, reject}
     });
+  },
+
+  watch: {
+    center: {
+      deep: true,
+      handler(val) {
+        if (this.mapObject) {
+          this.mapObject.setCenter(val);
+        }
+      }
+    },
+    zoom(zoom) {
+      this.mapObject.setZoom(zoom);
+    }
   },
 
   deferredReady() {

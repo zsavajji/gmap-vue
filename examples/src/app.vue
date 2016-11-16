@@ -3,9 +3,13 @@
 <div class="app-panel">
 <div class="settings-panel">
   <h1>Map information</h1>
-  Map center latitude: <input type="number" v-model="center.lat" number>
+  Map center latitude:
+    <input type="number" v-model="reportedCenter.lat" number
+      @change="updateMapCenter" />
   <br>
-  Map center longitude: <input type="number" v-model="center.lng" number>
+  Map center longitude:
+    <input type="number" v-model="reportedCenter.lng" number
+      @change="updateMapCenter">
   <br>
   Map bounds: {{mapBounds | json}}
   <br>
@@ -169,7 +173,7 @@
     </div>
 
     <gmap-info-window
-    :position="center"
+    :position="reportedCenter"
     :opened.sync="ifw"
     >
     To show you the bindings are working I will stay on the center of the screen whatever you do :)
@@ -179,7 +183,7 @@
     </gmap-info-window>
 
     <gmap-info-window
-    :position="center"
+    :position="reportedCenter"
     :opened.sync="ifw2"
     :content="ifw2text"
     ></gmap-info-window>
@@ -192,7 +196,7 @@
       @paths_changed="updatePolygonPaths($event)">
     </gmap-polygon>
     <gmap-circle v-if="displayCircle" :bounds="circleBounds"
-      :center="center" :radius="100000"
+      :center="reportedCenter" :radius="100000"
       :options="{editable: true}"
 
       @radius_changed="updateCircle('radius', $event)"
@@ -237,12 +241,13 @@ gmap-map {
 
 import {load, Marker, Map, Cluster, InfoWindow, Polyline, Rectangle, Circle, Polygon, PlaceInput} from '../../index.js'
 
-load('AIzaSyBzlLYISGjL_ovJwAehh6ydhB56fCCpPQw', '3.24', ['places']);
+load('AIzaSyBzlLYISGjL_ovJwAehh6ydhB56fCCpPQw', '3.26', ['places']);
 
 export default {
   data: function data() {
     return {
       center: { lat: 48.8538302, lng: 2.2982161 },
+      reportedCenter: { lat: 48.8538302, lng: 2.2982161 },
       mapBounds: {},
       clustering: true,
       zoom: 7,
@@ -388,6 +393,9 @@ export default {
   },
 
   methods: {
+    updateMapCenter(which, value) {
+      this.center = _.clone(this.reportedCenter)
+    },
     mapClicked (mouseArgs) {
       console.log('map clicked', mouseArgs);
     },
@@ -415,12 +423,21 @@ export default {
     },
 
     update(field, event) {
-      if (field === 'center') {
+      if (field === 'reportedCenter') {
+        // N.B. It is dangerous to update this.center
+        // Because the center reported by Google Maps is not exactly
+        // the same as the center you pass it.
+        // Instead we update this.center only when the input field is changed.
+
         console.log('CENTER REPORTED', event);
-        this.center = {
+        this.reportedCenter = {
           lat: event.lat(),
           lng: event.lng(),
         }
+
+        // If you wish to test the problem out for yourself, uncomment the following
+        // and see how your browser begins to hang:
+        // this.center = _.clone(this.reportedCenter)
       } else if (field === 'bounds') {
         this.mapBounds = event;
       } else {

@@ -30,6 +30,8 @@ have no argument, but in vue2-google-maps they do in order to ease two-way updat
             * [panTo()](#panto)
             * [panToBounds()](#pantobounds)
             * [fitBounds()](#fitbounds)
+            * [resize()](#resize)
+            * [resizePreserveCenter()](#resizepreservecenter)
          * [Properties](#properties)
             * [center : {lat: number, lng: number} | google.maps.LatLng†](#center--lat-number-lng-number--googlemapslatlng)
             * [zoom : number†](#zoom--number)
@@ -309,13 +311,54 @@ Promise resolved when the map has been created
 ##### `panToBounds()`
 ##### `fitBounds()`
 
+##### `resize()`
+A shorthand for:
+```js
+google.maps.event.trigger(mapComponent.mapObject, 'resize')
+```
+
+##### `resizePreserveCenter()`
+The same as `resize()`, but keeps the center of the map.
+
 #### Properties
 ##### `center : {lat: number, lng: number} | google.maps.LatLng`&dagger;
+
+__Warning__: Do not do the following if you need two-way binding:
+```html
+<gmap-map :center="center" @center_changed="updateCenter"></gmap-map>
+```
+```js
+methods: {
+  updateCenter(center) {
+    this.center = {
+      lat: center.lat(),
+      lng: center.lng()
+    }
+  }
+}
+```
+
+The center reported by `center_changed` is not guaranteed to be the same
+as the center you give to the maps. As a result, you are going to get an endless
+loop:
+`this.center = {...} --> center_changed --> this.center = {...} --> center_changed --> ...`
+
+Instead, if you need two-way binding, save the center from `center_changed`
+in a separate property, and synchronize it with the map center only when you
+really need to. Refer to [app.vue](examples/src/app.vue#L426) in the examples.
+
+__Can we get the old behaviour back?__ No. `vue-google-maps` v0.1.x was able
+to prevent the infinite loop
+because it handled two-way binding on its own, and therefore can set up the
+event listeners to break the endless loop before it happens.
+In `vue2-google-maps` the events are provided by the parent component.
+The Map component is not able to tell which of the event listeners are listening
+for all events, and which event listeners are listening only for UI-initiated
+events for the purpose of two-way binding
+(or maybe it could, with some extra attributes. Submit a PR ^.^). Therefore
+the responsibility of breaking the infinite loop now lies with you, the user.
+
 ##### `zoom : number`&dagger;
-Map's ***initial*** zoom and centre. If you need to change the
-centre of the map after setting it initially, you need to call
-`setCenter()` on the map object. (If doesn't seem like
-the correct behaviour, please file an issue.)
 ##### `mapTypeId`&dagger;
 ##### `options`
 
