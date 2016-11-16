@@ -275,7 +275,7 @@ new Vue({
 ## Classes
 
 Properties described here have a corresponding
-`g-property_changed` event if they are marked with &dagger;.
+`property_changed` event if they are marked with &dagger;.
 
 They correspond to two-way properties in `vue-google-maps`, but allows you
 two work around the lack of two-way bindings in Vue 2.
