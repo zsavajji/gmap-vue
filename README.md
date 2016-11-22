@@ -51,7 +51,7 @@ Or use the power of Vue.js within a google map like this:
       :position="m.position"
       :clickable="true"
       :draggable="true"
-      @g-click="center=m.position"
+      @click="center=m.position"
     ></gmap-marker>
   </gmap-map>
 </template>
