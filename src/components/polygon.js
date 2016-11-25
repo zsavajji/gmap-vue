@@ -1,7 +1,3 @@
-/* vim: set softtabstop=2 shiftwidth=2 expandtab : */
-
-<script>
-
 import _ from 'lodash';
 
 import eventBinder from '../utils/eventsBinder.js'
@@ -138,5 +134,3 @@ export default {
     this.$polygonObject.setMap(this.$map);
   },
 }
-
-</script>
