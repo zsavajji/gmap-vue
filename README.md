@@ -59,7 +59,7 @@ Or use the power of Vue.js within a google map like this:
 <script>
   /////////////////////////////////////////
   // New in 0.4.0
-  import * as VueGoogleMaps from 'vue-google-maps';
+  import * as VueGoogleMaps from 'vue2-google-maps';
   import Vue from 'vue';
 
   Vue.use(VueGoogleMaps, {
