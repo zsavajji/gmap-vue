@@ -7,16 +7,7 @@
         extending the class
 **/
 
-<template>
-  <div> <!-- needed because Vue 2 disallows root slot element -->
-    <slot></slot>
-  </div>
-</template>
-
-<script>
-
 import _ from 'lodash';
-import Vue from 'vue';
 import propsBinder from '../utils/propsBinder.js'
 import MapElementMixin from './mapElementMixin';
 import getPropsValuesMixin from '../utils/getPropsValuesMixin.js'
@@ -41,9 +32,17 @@ const props = {
   }
 };
 
-export default Vue.extend({
+export default {
   mixins: [MapElementMixin, getPropsValuesMixin],
   props: props,
+
+  render(h) {
+    // <div><slot></slot></div>
+    return h(
+      'div',
+      this.$slots.default
+    )
+  },
 
   deferredReady () {
     const options = _.clone(this.getPropsValues());
@@ -61,6 +60,4 @@ export default Vue.extend({
   detached() {
     this.$clusterObject.clearMarkers();
   },
-})
-
-</script>
+}

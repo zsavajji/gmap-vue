@@ -1,14 +1,9 @@
-/* vim: set softtabstop=2 shiftwidth=2 expandtab : */
-
-<script>
-
 import _ from 'lodash';
 import eventsBinder from '../utils/eventsBinder.js';
 import propsBinder from '../utils/propsBinder.js';
 import getPropsValuesMixin from '../utils/getPropsValuesMixin.js'
 import MapElementMixin from './mapElementMixin';
-import Clusterer from './cluster.vue';
-import Vue from 'vue';
+import Clusterer from './cluster';
 import assert from 'assert';
 
 const props = {
@@ -95,26 +90,29 @@ var container;
  * reasons. Otherwise we should use a cluster-marker mixin or
  * subclass.
  */
-export default Vue.extend({
+export default {
   mixins: [MapElementMixin, getPropsValuesMixin],
   props: props,
+
+  component: {
+    GmapCluster: Clusterer
+  },
 
   render() { return '' },
 
   created() {
-    let search = this.$parent;
+    let search = this.$findAncestor(
+      ans => ans instanceof this.constructor.component('GmapCluster')
+    );
     let clusterObjectPromise = null;
 
-    while (search) {
-      if (search instanceof Clusterer) {
-        this.$clusterAncestor = search;
-        clusterObjectPromise = search.$deferredReadyPromise
-          .then(() => {
-            this.$clusterObject = search.$clusterObject;
-          })
-        break;
-      }
-      search = search.$parent;
+    this.$clusterAncestor = search;
+
+    if (search) {
+      clusterObjectPromise = search.$deferredReadyPromise
+        .then(() => {
+          this.$clusterObject = search.$clusterObject;
+        })
     }
 
     this.$clusterObjectPromise = clusterObjectPromise || Promise.resolve(null);
@@ -151,6 +149,4 @@ export default Vue.extend({
       }
     }
   },
-})
-
-</script>
+}
