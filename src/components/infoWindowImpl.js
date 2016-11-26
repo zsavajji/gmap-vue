@@ -40,10 +40,6 @@ export default {
   replace: false,
   props: props,
 
-  components: {
-    GmapMarker: Marker
-  },
-
   mounted() {
     const el = this.$refs.flyaway;
     el.parentNode.removeChild(el);
