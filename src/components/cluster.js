@@ -11,7 +11,7 @@ import _ from 'lodash';
 import propsBinder from '../utils/propsBinder.js'
 import MapElementMixin from './mapElementMixin';
 import getPropsValuesMixin from '../utils/getPropsValuesMixin.js'
-require('js-marker-clusterer');
+import MarkerClusterer from 'marker-clusterer-plus'
 
 const props = {
   maxZoom: {
@@ -46,6 +46,12 @@ export default {
 
   deferredReady () {
     const options = _.clone(this.getPropsValues());
+
+    if (typeof MarkerClusterer === 'undefined') {
+      console.error("MarkerClusterer is not installed! require() it or include it from https://cdnjs.cloudflare.com/ajax/libs/js-marker-clusterer/1.0.0/markerclusterer.js")
+      throw new Error("MarkerClusterer is not installed! require() it or include it from https://cdnjs.cloudflare.com/ajax/libs/js-marker-clusterer/1.0.0/markerclusterer.js")
+    }
+
     this.$clusterObject = new MarkerClusterer(this.$map, [], options);
 
     propsBinder(this, this.$clusterObject, props, {
