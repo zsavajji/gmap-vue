@@ -622,4 +622,4 @@ This mixin adds a `beforeDeferredReady()` hook which initializes `this.$map`.
 ##### `$map : Map`
 A reference to the ancestor Map component. This is available only after
 `deferredReady()` has been called. You can access the map by:
-`this.$map.mapObject`.
+`this.$map.$mapObject`.
