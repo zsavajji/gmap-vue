@@ -147,10 +147,10 @@
 
         v-for="m in activeMarkers"
       >
-      <gmap-info-window
-      :opened.sync="m.ifw"
-      :content="m.ifw2text"
-      ></gmap-info-window>
+        <gmap-info-window
+        :opened="m.ifw"
+        :content="m.ifw2text"
+        ></gmap-info-window>
       </gmap-marker>
     </gmap-cluster>
     <div v-if="!clustering">
@@ -166,7 +166,7 @@
       v-for="m in activeMarkers"
       >
         <gmap-info-window
-        :opened.sync="m.ifw"
+        :opened="m.ifw"
         :content="m.ifw2text"
         ></gmap-info-window>
       </gmap-marker>
@@ -174,7 +174,7 @@
 
     <gmap-info-window
     :position="reportedCenter"
-    :opened.sync="ifw"
+    :opened="ifw"
     >
     To show you the bindings are working I will stay on the center of the screen whatever you do :)
     <br/>
@@ -184,7 +184,7 @@
 
     <gmap-info-window
     :position="reportedCenter"
-    :opened.sync="ifw2"
+    :opened="ifw2"
     :content="ifw2text"
     ></gmap-info-window>
 
