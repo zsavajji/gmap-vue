@@ -40,6 +40,7 @@ var webConfig = _.clone(baseConfig);
 webConfig.externals = {
   vue: 'Vue',
   lodash: '_',
+  'marker-clusterer-plus': 'MarkerClusterer'
 };
 webConfig.output = {
 	path: './dist',
