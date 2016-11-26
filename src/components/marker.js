@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import eventsBinder from '../utils/eventsBinder.js';
 import propsBinder from '../utils/propsBinder.js';
-import VgmInheritance from '../utils/vgmInheritance.js';
 import getPropsValuesMixin from '../utils/getPropsValuesMixin.js'
 import MapElementMixin from './mapElementMixin';
 import Clusterer from './cluster';
@@ -94,26 +93,12 @@ var container;
 export default {
   mixins: [MapElementMixin, getPropsValuesMixin],
   props: props,
-  $vgmInheritance: { [Symbol()] : true },
 
-  render() { return '' },
-
-  created() {
-    let search = this.$findAncestor(
-      ans => ans.$vgmInstanceOf && ans.$vgmInstanceOf(Clusterer)
-    );
-    let clusterObjectPromise = null;
-
-    this.$clusterAncestor = search;
-
-    if (search) {
-      clusterObjectPromise = search.$deferredReadyPromise
-        .then(() => {
-          this.$clusterObject = search.$clusterObject;
-        })
-    }
-
-    this.$clusterObjectPromise = clusterObjectPromise || Promise.resolve(null);
+  render(h) {
+    return h( // So that infowindows can have a marker parent
+      'div',
+      this.$slots.default
+    )
   },
 
   destroyed() {
@@ -132,8 +117,13 @@ export default {
     const options = _.mapValues(props, (value, prop) => this[prop]);
     options.map = this.$map;
 
-    this.$clusterObjectPromise.then(() =>
-      this.createMarker(options, this.$map));
+    // search ancestors for cluster object
+    let search = this.$findAncestor(
+      ans => ans.$clusterObject
+    );
+
+    this.$clusterObject = search ? search.$clusterObject : null;
+    this.createMarker(options, this.$map);
   },
 
   methods: {

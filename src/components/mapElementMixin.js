@@ -2,9 +2,7 @@
 
 import {DeferredReadyMixin} from '../utils/deferredReady'
 import {DeferredReady} from '../utils/deferredReady.js'
-import VgmInheritance from '../utils/vgmInheritance.js'
 import Map from './map.vue'
-import _ from 'lodash';
 
 /**
  * @class MapElementMixin @mixins DeferredReadyMixin
@@ -17,26 +15,25 @@ import _ from 'lodash';
  * */
 export default {
 
-  mixins: [DeferredReadyMixin, VgmInheritance],
-  $vgmInheritance: { [Symbol()] : true },
+  mixins: [DeferredReadyMixin],
 
   created() {
     /* Search for the Map component in the parent */
     let search = this.$findAncestor(
-      ans => ans.$vgmInstanceOf && ans.$vgmInstanceOf(Map)
+      ans => ans.$mapCreated
     );
 
     if (!search) {
       throw new Error(`${this.constructor.name} component must be used within a <Map>`)
     }
 
-    this.$mapPromise = search.mapCreated.then((map) => {
+    this.$mapPromise = search.$mapCreated.then((map) => {
       this.$map = map
     })
     // FIXME: This is a hack to ensure correct loading
     // when the map has already be instantiated.
-    if (search.mapObject) {
-      this.$map = search.mapObject;
+    if (search.$mapObject) {
+      this.$map = search.$mapObject;
     }
     this.$MapElementMixin = search;
     this.$map = null;

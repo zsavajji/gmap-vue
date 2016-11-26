@@ -1,7 +1,6 @@
 import _ from 'lodash'
 import eventBinder from '../utils/eventsBinder.js'
 import propsBinder from '../utils/propsBinder.js'
-import VgmInheritance from '../utils/vgmInheritance.js';
 import downArrowSimulator from '../utils/simulateArrowDown.js'
 import getPropsValuesMixin from '../utils/getPropsValuesMixin.js'
 import {
@@ -49,7 +48,6 @@ const props = {
 
 export default {
   mixins: [getPropsValuesMixin],
-  $vgmInheritance: { [Symbol()] : true },
 
   mounted() {
     const input = this.$refs.input;

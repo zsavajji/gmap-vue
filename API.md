@@ -26,8 +26,8 @@ Table of Contents
          * [loaded() : Promise](#loaded--promise)
          * [Map class (mixes in <code>DeferredReadyMixin</code>)](#map-class-mixes-in-deferredreadymixin)
             * [Fields](#fields)
-               * [mapObject : google.maps.Map](#mapobject--googlemapsmap)
-               * [mapCreated : Promise`](#mapcreated--promise)
+               * [$mapObject : google.maps.Map](#mapobject--googlemapsmap)
+               * [$mapCreated : Promise`](#mapcreated--promise)
             * [Methods](#methods)
                * [panBy()](#panby)
                * [panTo()](#panto)
@@ -323,12 +323,12 @@ Promise resolved once the Google Maps API is loaded.
 `deferredReady` is called once `mapObject` has been initialized.
 
 #### Fields
-##### `mapObject : google.maps.Map`
+##### `$mapObject : google.maps.Map`
 The Google Maps instance. Example usage:
 ```js
 google.maps.event.trigger(this.$refs.map.mapObject, 'resize')
 ```
-##### `mapCreated` : Promise<google.maps.Map>`
+##### `$mapCreated` : Promise<google.maps.Map>`
 Promise resolved when the map has been created
 
 #### Methods

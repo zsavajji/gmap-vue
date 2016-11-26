@@ -1,7 +1,6 @@
 import _ from 'lodash'
 import propsBinder from '../utils/propsBinder.js'
 import eventsBinder from '../utils/eventsBinder.js'
-import VgmInheritance from '../utils/vgmInheritance.js';
 import MapElementMixin from './mapElementMixin';
 import Marker from './marker';
 
@@ -40,13 +39,9 @@ export default {
   mixins: [MapElementMixin],
   replace: false,
   props: props,
-  $vgmInheritance: { [Symbol()] : true },
 
-  created() {
-    this.$markerObject = null;
-    this.$markerComponent = this.$findAncestor(
-      ans => ans.$vgmInstanceOf && ans.$vgmInstanceOf(Marker)
-    )
+  components: {
+    GmapMarker: Marker
   },
 
   mounted() {
@@ -55,6 +50,11 @@ export default {
   },
 
   deferredReady() {
+    this.$markerObject = null;
+    this.$markerComponent = this.$findAncestor(
+      (ans) => ans.$markerObject
+    )
+
     if (this.$markerComponent) {
       this.$markerObject = this.$markerComponent.$markerObject;
     }

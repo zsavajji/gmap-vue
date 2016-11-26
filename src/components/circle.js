@@ -2,7 +2,6 @@ import _ from 'lodash';
 
 import eventBinder from '../utils/eventsBinder.js'
 import propsBinder from '../utils/propsBinder.js'
-import VgmInheritance from '../utils/vgmInheritance.js';
 import MapElementMixin from './mapElementMixin';
 import getPropsValuesMixin from '../utils/getPropsValuesMixin.js'
 
@@ -49,7 +48,6 @@ export default {
     mixins: [MapElementMixin, getPropsValuesMixin],
     props: props,
     version: 2,
-    $vgmInheritance: { [Symbol()] : true },
 
     render() { return '' },
 

@@ -4,7 +4,6 @@ import {loaded} from '../manager.js';
 import {DeferredReadyMixin} from '../utils/deferredReady.js';
 import eventsBinder from '../utils/eventsBinder.js';
 import propsBinder from '../utils/propsBinder.js';
-import VgmInheritance from '../utils/vgmInheritance.js';
 import {DeferredReady} from '../utils/deferredReady.js'
 import getPropsMixin from '../utils/getPropsValuesMixin.js'
 
@@ -68,8 +67,8 @@ const linkedMethods = _([
   'fitBounds'
 ])
   .map(methodName => [methodName, function() {
-    if (this.mapObject)
-      this.mapObject[methodName].apply(this.mapObject, arguments);
+    if (this.$mapObject)
+      this.$mapObject[methodName].apply(this.$mapObject, arguments);
   }])
   .toPairs()
   .value()
@@ -78,17 +77,17 @@ const linkedMethods = _([
 // Other convenience methods exposed by Vue Google Maps
 const customMethods = {
   resize() {
-    if (this.mapObject) {
-      google.maps.event.trigger(this.mapObject, 'resize');
+    if (this.$mapObject) {
+      google.maps.event.trigger(this.$mapObject, 'resize');
     }
   },
   resizePreserveCenter() {
-    if (!this.mapObject)
+    if (!this.$mapObject)
       return;
 
-    const oldCenter = this.mapObject.getCenter();
-    google.maps.event.trigger(this.mapObject, 'resize');
-    this.mapObject.setCenter(oldCenter);
+    const oldCenter = this.$mapObject.getCenter();
+    google.maps.event.trigger(this.$mapObject, 'resize');
+    this.$mapObject.setCenter(oldCenter);
   }
 };
 
@@ -96,14 +95,13 @@ const customMethods = {
 const methods = _.assign({}, customMethods, linkedMethods);
 
 export default {
-  mixins: [getPropsMixin, DeferredReadyMixin, VgmInheritance],
+  mixins: [getPropsMixin, DeferredReadyMixin],
   props: props,
   replace: false, // necessary for css styles
-  $vgmInheritance: { [Symbol()] : true },
 
   created() {
-    this.mapCreated = new Promise((resolve, reject) => {
-      this.mapCreatedDeferred = {resolve, reject}
+    this.$mapCreated = new Promise((resolve, reject) => {
+      this.$mapCreatedDeferred = {resolve, reject}
     });
   },
 
@@ -111,13 +109,13 @@ export default {
     center: {
       deep: true,
       handler(val) {
-        if (this.mapObject) {
-          this.mapObject.setCenter(val);
+        if (this.$mapObject) {
+          this.$mapObject.setCenter(val);
         }
       }
     },
     zoom(zoom) {
-      this.mapObject.setZoom(zoom);
+      this.$mapObject.setZoom(zoom);
     }
   },
 
@@ -131,27 +129,27 @@ export default {
       delete copiedData.options;
       const options = _.clone(this.options);
       _.assign(options, copiedData);
-      this.mapObject = new google.maps.Map(element, options);
+      this.$mapObject = new google.maps.Map(element, options);
 
       // binding properties (two and one way)
-      propsBinder(this, this.mapObject, _.omit(props, ['center', 'zoom', 'bounds']));
+      propsBinder(this, this.$mapObject, _.omit(props, ['center', 'zoom', 'bounds']));
 
       // manually trigger center and zoom
-      this.mapObject.addListener('center_changed', () => {
-        this.$emit('center_changed', this.mapObject.getCenter())
-        this.$emit('bounds_changed', this.mapObject.getBounds())
+      this.$mapObject.addListener('center_changed', () => {
+        this.$emit('center_changed', this.$mapObject.getCenter())
+        this.$emit('bounds_changed', this.$mapObject.getBounds())
       })
-      this.mapObject.addListener('zoom_changed', () => {
-        this.$emit('zoom_changed', this.mapObject.getZoom())
-        this.$emit('bounds_changed', this.mapObject.getBounds())
+      this.$mapObject.addListener('zoom_changed', () => {
+        this.$emit('zoom_changed', this.$mapObject.getZoom())
+        this.$emit('bounds_changed', this.$mapObject.getBounds())
       })
 
       //binding events
-      eventsBinder(this, this.mapObject, events);
+      eventsBinder(this, this.$mapObject, events);
 
-      this.mapCreatedDeferred.resolve(this.mapObject);
+      this.$mapCreatedDeferred.resolve(this.$mapObject);
 
-      return this.mapCreated;
+      return this.$mapCreated;
     })
     .catch((error) => {
       throw error;

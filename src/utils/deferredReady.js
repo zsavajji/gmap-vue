@@ -77,9 +77,6 @@ export var DeferredReadyMixin = {
     while (search) {
       if (search.$deferredReadyPromise) {
         this.$deferredReadyAncestor = search;
-        search.$deferredReadyPromise.then(() => {
-          runHooks(this);
-        })
         break;
       }
       search = search.$parent;
@@ -89,8 +86,15 @@ export var DeferredReadyMixin = {
   mounted() {
     // Execute the hooks only if this is the first
     // ancestor that is a DeferredReady
+    // this.$deferredReadyMountedPromiseResolve();
+
     if (!this.$deferredReadyAncestor) {
       runHooks(this);
+    } else {
+      this.$deferredReadyAncestor.$deferredReadyPromise
+      .then(() => {
+        runHooks(this);
+      })
     }
   },
 };
