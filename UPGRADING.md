@@ -6,7 +6,7 @@ In general,
 the move away from two-way bindings is a good thing, as Google Maps is usually
 unable to fully honour your positioning / centering / bounds requests. This means that
 usually, `mapInstance.center` (vue-google-maps property) and
-`mapInstance.mapObject.getCenter()`
+`mapInstance.$mapObject.getCenter()`
 (Google Maps API method) were be returning different values, and some
 hackery was needed to avoid endless update loops.
 
@@ -65,7 +65,7 @@ However, in `vue-google-maps` we provide the zoom value in the argument for
 convenience:
 ```js
 gmap.$on('zoom_changed', (zoom) => {
-  console.log(zoom === gmap.mapObject.getZoom()); // true
+  console.log(zoom === gmap.$mapObject.getZoom()); // true
 })
 ```
 

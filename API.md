@@ -326,7 +326,7 @@ Promise resolved once the Google Maps API is loaded.
 ##### `$mapObject : google.maps.Map`
 The Google Maps instance. Example usage:
 ```js
-google.maps.event.trigger(this.$refs.map.mapObject, 'resize')
+google.maps.event.trigger(this.$refs.map.$mapObject, 'resize')
 ```
 ##### `$mapCreated` : Promise<google.maps.Map>`
 Promise resolved when the map has been created
@@ -340,7 +340,7 @@ Promise resolved when the map has been created
 ##### `resize()`
 A shorthand for:
 ```js
-google.maps.event.trigger(mapComponent.mapObject, 'resize')
+google.maps.event.trigger(mapComponent.$mapObject, 'resize')
 ```
 
 ##### `resizePreserveCenter()`
