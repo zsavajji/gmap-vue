@@ -20,18 +20,11 @@ var _getPropsValuesMixin = require('../utils/getPropsValuesMixin.js');
 
 var _getPropsValuesMixin2 = _interopRequireDefault(_getPropsValuesMixin);
 
+var _markerClustererPlus = require('marker-clusterer-plus');
+
+var _markerClustererPlus2 = _interopRequireDefault(_markerClustererPlus);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/* vim: set softtabstop=2 shiftwidth=2 expandtab : */
-
-/**
-  * @class Cluster
-  * @prop $clusterObject -- Exposes the marker clusterer to
-        descendent Marker classes. Override this if you area
-        extending the class
-**/
-
-require('js-marker-clusterer');
 
 var props = {
   maxZoom: {
@@ -50,7 +43,14 @@ var props = {
     type: Array,
     twoWay: false
   }
-};
+}; /* vim: set softtabstop=2 shiftwidth=2 expandtab : */
+
+/**
+  * @class Cluster
+  * @prop $clusterObject -- Exposes the marker clusterer to
+        descendent Marker classes. Override this if you area
+        extending the class
+**/
 
 exports.default = {
   mixins: [_mapElementMixin2.default, _getPropsValuesMixin2.default],
@@ -64,7 +64,13 @@ exports.default = {
     var _this = this;
 
     var options = _lodash2.default.clone(this.getPropsValues());
-    this.$clusterObject = new MarkerClusterer(this.$map, [], options);
+
+    if (typeof _markerClustererPlus2.default === 'undefined') {
+      console.error("MarkerClusterer is not installed! require() it or include it from https://cdnjs.cloudflare.com/ajax/libs/js-marker-clusterer/1.0.0/markerclusterer.js");
+      throw new Error("MarkerClusterer is not installed! require() it or include it from https://cdnjs.cloudflare.com/ajax/libs/js-marker-clusterer/1.0.0/markerclusterer.js");
+    }
+
+    this.$clusterObject = new _markerClustererPlus2.default(this.$map, [], options);
 
     (0, _propsBinder2.default)(this, this.$clusterObject, props, {
       afterModelChanged: function afterModelChanged(a, v) {
