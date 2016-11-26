@@ -4,6 +4,7 @@ import {loaded} from '../manager.js';
 import {DeferredReadyMixin} from '../utils/deferredReady.js';
 import eventsBinder from '../utils/eventsBinder.js';
 import propsBinder from '../utils/propsBinder.js';
+import VgmInheritance from '../utils/vgmInheritance.js';
 import {DeferredReady} from '../utils/deferredReady.js'
 import getPropsMixin from '../utils/getPropsValuesMixin.js'
 
@@ -95,9 +96,10 @@ const customMethods = {
 const methods = _.assign({}, customMethods, linkedMethods);
 
 export default {
-  mixins: [getPropsMixin, DeferredReadyMixin],
+  mixins: [getPropsMixin, DeferredReadyMixin, VgmInheritance],
   props: props,
   replace: false, // necessary for css styles
+  $vgmInheritance: { [Symbol()] : true },
 
   created() {
     this.mapCreated = new Promise((resolve, reject) => {

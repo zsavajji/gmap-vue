@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import eventsBinder from '../utils/eventsBinder.js';
 import propsBinder from '../utils/propsBinder.js';
+import VgmInheritance from '../utils/vgmInheritance.js';
 import getPropsValuesMixin from '../utils/getPropsValuesMixin.js'
 import MapElementMixin from './mapElementMixin';
 import Clusterer from './cluster';
@@ -93,16 +94,13 @@ var container;
 export default {
   mixins: [MapElementMixin, getPropsValuesMixin],
   props: props,
-
-  component: {
-    GmapCluster: Clusterer
-  },
+  $vgmInheritance: { [Symbol()] : true },
 
   render() { return '' },
 
   created() {
     let search = this.$findAncestor(
-      ans => ans instanceof this.constructor.component('GmapCluster')
+      ans => ans.$vgmInstanceOf && ans.$vgmInstanceOf(Clusterer)
     );
     let clusterObjectPromise = null;
 

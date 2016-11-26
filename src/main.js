@@ -23,6 +23,10 @@ export function install(Vue, options) {
     installComponents: true,
   });
 
+  // Set up the inheritance checking mechanism
+  Vue.config.optionMergeStrategies.$vgmInheritance = Vue.config.optionMergeStrategies.methods;
+  Vue.config.optionMergeStrategies.$vgmInstanceOf = (toVal, fromVal) => fromVal;
+
   Vue.use(DeferredReady);
 
   if (options.load) {

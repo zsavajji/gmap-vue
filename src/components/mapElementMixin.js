@@ -2,7 +2,9 @@
 
 import {DeferredReadyMixin} from '../utils/deferredReady'
 import {DeferredReady} from '../utils/deferredReady.js'
+import VgmInheritance from '../utils/vgmInheritance.js'
 import Map from './map.vue'
+import _ from 'lodash';
 
 /**
  * @class MapElementMixin @mixins DeferredReadyMixin
@@ -15,11 +17,14 @@ import Map from './map.vue'
  * */
 export default {
 
-  mixins: [DeferredReadyMixin],
+  mixins: [DeferredReadyMixin, VgmInheritance],
+  $vgmInheritance: { [Symbol()] : true },
 
   created() {
     /* Search for the Map component in the parent */
-    let search = this.$findAncestor(ans => ans instanceof this.constructor.component('GmapMap'));
+    let search = this.$findAncestor(
+      ans => ans.$vgmInstanceOf && ans.$vgmInstanceOf(Map)
+    );
 
     if (!search) {
       throw new Error(`${this.constructor.name} component must be used within a <Map>`)
@@ -39,10 +44,6 @@ export default {
 
   beforeDeferredReady () {
     return this.$mapPromise;
-  },
-
-  components: {
-    GmapMap: Map
   },
 
   methods: {
