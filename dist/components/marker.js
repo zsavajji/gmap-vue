@@ -4,10 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _promise = require('babel-runtime/core-js/promise');
-
-var _promise2 = _interopRequireDefault(_promise);
-
 var _lodash = require('lodash');
 
 var _lodash2 = _interopRequireDefault(_lodash);
@@ -114,30 +110,9 @@ exports.default = {
   mixins: [_mapElementMixin2.default, _getPropsValuesMixin2.default],
   props: props,
 
-  component: {
-    GmapCluster: _cluster2.default
-  },
-
-  render: function render() {
-    return '';
-  },
-  created: function created() {
-    var _this = this;
-
-    var search = this.$findAncestor(function (ans) {
-      return ans instanceof _this.constructor.component('GmapCluster');
-    });
-    var clusterObjectPromise = null;
-
-    this.$clusterAncestor = search;
-
-    if (search) {
-      clusterObjectPromise = search.$deferredReadyPromise.then(function () {
-        _this.$clusterObject = search.$clusterObject;
-      });
-    }
-
-    this.$clusterObjectPromise = clusterObjectPromise || _promise2.default.resolve(null);
+  render: function render(h) {
+    return h( // So that infowindows can have a marker parent
+    'div', this.$slots.default);
   },
   destroyed: function destroyed() {
     if (!this.$markerObject) return;
@@ -149,16 +124,20 @@ exports.default = {
     }
   },
   deferredReady: function deferredReady() {
-    var _this2 = this;
+    var _this = this;
 
     var options = _lodash2.default.mapValues(props, function (value, prop) {
-      return _this2[prop];
+      return _this[prop];
     });
     options.map = this.$map;
 
-    this.$clusterObjectPromise.then(function () {
-      return _this2.createMarker(options, _this2.$map);
+    // search ancestors for cluster object
+    var search = this.$findAncestor(function (ans) {
+      return ans.$clusterObject;
     });
+
+    this.$clusterObject = search ? search.$clusterObject : null;
+    this.createMarker(options, this.$map);
   },
 
 

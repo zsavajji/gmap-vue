@@ -32,20 +32,20 @@ exports.default = {
 
     /* Search for the Map component in the parent */
     var search = this.$findAncestor(function (ans) {
-      return ans instanceof _this.constructor.component('GmapMap');
+      return ans.$mapCreated;
     });
 
     if (!search) {
       throw new Error(this.constructor.name + ' component must be used within a <Map>');
     }
 
-    this.$mapPromise = search.mapCreated.then(function (map) {
+    this.$mapPromise = search.$mapCreated.then(function (map) {
       _this.$map = map;
     });
     // FIXME: This is a hack to ensure correct loading
     // when the map has already be instantiated.
-    if (search.mapObject) {
-      this.$map = search.mapObject;
+    if (search.$mapObject) {
+      this.$map = search.$mapObject;
     }
     this.$MapElementMixin = search;
     this.$map = null;
@@ -54,10 +54,6 @@ exports.default = {
     return this.$mapPromise;
   },
 
-
-  components: {
-    GmapMap: _map2.default
-  },
 
   methods: {
     $findAncestor: function $findAncestor(condition) {

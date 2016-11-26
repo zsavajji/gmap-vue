@@ -58,23 +58,16 @@ exports.default = {
   replace: false,
   props: props,
 
-  components: {
-    GmapMarker: _marker2.default
-  },
-
-  created: function created() {
-    var _this = this;
-
-    this.$markerObject = null;
-    this.$markerComponent = this.$findAncestor(function (ans) {
-      return ans instanceof _this.constructor.component('GmapMarker');
-    });
-  },
   mounted: function mounted() {
     var el = this.$refs.flyaway;
     el.parentNode.removeChild(el);
   },
   deferredReady: function deferredReady() {
+    this.$markerObject = null;
+    this.$markerComponent = this.$findAncestor(function (ans) {
+      return ans.$markerObject;
+    });
+
     if (this.$markerComponent) {
       this.$markerObject = this.$markerComponent.$markerObject;
     }
@@ -103,7 +96,7 @@ exports.default = {
       }
     },
     createInfoWindow: function createInfoWindow(map) {
-      var _this2 = this;
+      var _this = this;
 
       // setting options
       var options = _lodash2.default.clone(this.options);
@@ -122,7 +115,7 @@ exports.default = {
 
       this.openInfoWindow();
       this.$watch('opened', function () {
-        _this2.openInfoWindow();
+        _this.openInfoWindow();
       });
     }
   }

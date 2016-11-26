@@ -88,19 +88,24 @@ var DeferredReadyMixin = exports.DeferredReadyMixin = {
     while (search) {
       if (search.$deferredReadyPromise) {
         this.$deferredReadyAncestor = search;
-        search.$deferredReadyPromise.then(function () {
-          runHooks(_this);
-        });
         break;
       }
       search = search.$parent;
     }
   },
   mounted: function mounted() {
+    var _this2 = this;
+
     // Execute the hooks only if this is the first
     // ancestor that is a DeferredReady
+    // this.$deferredReadyMountedPromiseResolve();
+
     if (!this.$deferredReadyAncestor) {
       runHooks(this);
+    } else {
+      this.$deferredReadyAncestor.$deferredReadyPromise.then(function () {
+        runHooks(_this2);
+      });
     }
   }
 };
