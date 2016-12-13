@@ -51,7 +51,13 @@ export default {
 
   mounted() {
     const input = this.$refs.input;
+
+    // Allow default place to be set
     input.value = this.defaultPlace;
+    this.$watch('defaultPlace', () => {
+      input.value = this.defaultPlace;
+    })
+
     loaded.then(() => {
       window.i = input;
       const options = _.clone(this.getPropsValues());
@@ -68,7 +74,6 @@ export default {
       this.autoCompleter.addListener('place_changed', () => {
         this.$emit('place_changed', this.autoCompleter.getPlace())
       })
-
     })
   },
   props: props,
