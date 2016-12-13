@@ -52,6 +52,12 @@
     "webpack": "^1.12.2",
     "webpack-dev-server": "^1.12.0"
   },
+  "browserify": {
+    "transform": [
+      "babelify",
+      "vueify"
+    ]
+  },
   "author": "Daniel Sim, Guillaume Leclerc",
   "license": "MIT"
 }
