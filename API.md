@@ -21,7 +21,7 @@ Table of Contents
       * [<a name="user-content-getting-started-npm"></a> Getting Started (with NPM)](#-getting-started-with-npm)
       * [Classes](#classes)
          * [install(Vue: Vue, options: InstallOptions) : void](#installvue-vue-options-installoptions--void)
-            * [installComponents : InstallOptions](#installcomponents--installoptions)
+            * [installComponents : boolean](#installcomponents--installoptions)
             * [load : LoadOptions](#load--loadoptions)
          * [loaded() : Promise](#loaded--promise)
          * [Map class (mixes in <code>DeferredReadyMixin</code>)](#map-class-mixes-in-deferredreadymixin)
@@ -303,7 +303,7 @@ interface LoadOptions {
 
 Installs VueGoogleMaps on an instance of Vue.
 
-#### `installComponents : InstallOptions`
+#### `installComponents : boolean`
 Automatically installs the available components
 as `Gmap*`. If you would like to give the components your
 own names, set this to false, then install the components manually,
