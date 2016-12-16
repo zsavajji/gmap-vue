@@ -77,7 +77,13 @@ exports.default = {
     var _this = this;
 
     var input = this.$refs.input;
+
+    // Allow default place to be set
     input.value = this.defaultPlace;
+    this.$watch('defaultPlace', function () {
+      input.value = _this.defaultPlace;
+    });
+
     _manager.loaded.then(function () {
       window.i = input;
       var options = _lodash2.default.clone(_this.getPropsValues());
