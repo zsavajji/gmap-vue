@@ -111,7 +111,7 @@ However you will need to include Vue and Lodash beforehand:
 
 ```html
 <head>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.3/vue.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.6/vue.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.16.4/lodash.js"></script>
   <script src="dist/vue-google-maps.js"></script>
 </head>
