@@ -121,7 +121,9 @@ exports.default = {
       }
     },
     zoom: function zoom(_zoom) {
-      this.$mapObject.setZoom(_zoom);
+      if (this.$mapObject) {
+        this.$mapObject.setZoom(_zoom);
+      }
     }
   },
 
