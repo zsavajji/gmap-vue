@@ -115,7 +115,9 @@ export default {
       }
     },
     zoom(zoom) {
-      this.$mapObject.setZoom(zoom);
+      if (this.$mapObject) {
+        this.$mapObject.setZoom(zoom);
+      }
     }
   },
 
