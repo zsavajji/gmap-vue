@@ -114,9 +114,21 @@ exports.default = {
   watch: {
     center: {
       deep: true,
-      handler: function handler(val) {
+      handler: function handler(val, oldVal) {
+        // Observed bug with Vue 2.1.6 under certain circumstances:
+        // If you pass an object constant into :center, the deep watch
+        // is still triggered
+        function isChanged(prop) {
+          var oldProp = typeof oldVal[prop] === 'number' ? oldVal[prop] : typeof oldVal[prop] === 'function' ? oldVal[prop].apply(oldVal) : oldVal[prop]; // don't know how to handle
+          var newProp = typeof val[prop] === 'number' ? val[prop] : typeof val[prop] === 'function' ? val[prop].apply(val) : val[prop]; // don't know how to handle
+          return oldProp !== newProp;
+        }
+
         if (this.$mapObject) {
-          this.$mapObject.setCenter(val);
+          // Check if the value has really changed
+          if (isChanged('lat') || isChanged('lng')) {
+            this.$mapObject.setCenter(val);
+          }
         }
       }
     },
