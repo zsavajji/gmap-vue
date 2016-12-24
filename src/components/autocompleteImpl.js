@@ -12,10 +12,6 @@ const props = {
   bounds: {
     type: Object,
   },
-  defaultPlace: {
-    type: String,
-    default: '',
-  },
   componentRestrictions: {
     type: Object,
     default: null,
@@ -34,6 +30,10 @@ const props = {
     require: false,
     type: Boolean,
     default: false
+  },
+  value: {
+    type: String,
+    default: ''
   }
 }
 
@@ -53,7 +53,7 @@ export default {
         "google.maps.places.Autocomplete is undefined. Did you add 'places' to libraries when loading Google Maps?")
 
       this.$autocomplete = new google.maps.places.Autocomplete(this.$refs.input, options);
-      propsBinder(this, this.autoCompleter, _.omit(props, ['placeholder', 'place', 'selectFirstOnEnter', 'defaultPlace']));
+      propsBinder(this, this.autoCompleter, _.omit(props, ['placeholder', 'place', 'selectFirstOnEnter', 'value']));
 
       this.$autocomplete.addListener('place_changed', () => {
         this.$emit('place_changed', this.$autocomplete.getPlace())
