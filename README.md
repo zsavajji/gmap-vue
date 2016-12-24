@@ -73,10 +73,6 @@ Or use the power of Vue.js within a google map like this:
   });
 
   export default {
-    components: {
-      gmapMap: Map,
-      gmapMarker: Marker
-    }
     data () {
       return {
         center: {lat: 10.0, lng: 10.0},
