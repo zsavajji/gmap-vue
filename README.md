@@ -38,6 +38,7 @@ If you want to write google map this way :
   :center="{lat:10, lng:10}"
   map-type-id="terrain"
   :zoom="7"
+  style="width: 500px; height: 300px"
 ></gmap-map>
 ```
 
