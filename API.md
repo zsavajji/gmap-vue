@@ -11,7 +11,6 @@ instead.
 An exception is two-way bindings -- the `center_changed` event on Map instances
 have no argument, but in vue2-google-maps they do in order to ease two-way updates.
 
-
 Table of Contents
 =================
 
@@ -54,10 +53,13 @@ Table of Contents
                * [resize](#resize-1)
                * [rightclick](#rightclick)
                * [tilesloaded](#tilesloaded)
+            * [Slots](#slots)
+               * [(default slot)](#default-slot)
+               * [visible slot](#visible-slot)
          * [StreetViewPanorama class (mixes in <code>DeferredReadyMixin</code>)](#streetviewpanorama-class-mixes-in-deferredreadymixin)
             * [Fields](#fields-1)
                * [$panoObject : google.maps.StreetViewPanorama](#panoobject--googlemapsstreetviewpanorama)
-               * [$panoCreated : Promise`](#panocreated--promise)
+               * [$panoCreated : Promise&lt;google.maps.StreetViewPanorama&gt;](#panocreated--promisegooglemapsstreetviewpanorama)
             * [Methods](#methods-1)
                * [resize()](#resize-2)
             * [Properties](#properties-1)
@@ -432,6 +434,28 @@ the responsibility of breaking the infinite loop now lies with you, the user.
 ##### `resize`
 ##### `rightclick`
 ##### `tilesloaded`
+
+#### Slots
+
+##### (default slot)
+
+HTML elements in the default slot are invisible.
+This is because some elements require auxiliary HTML elements,
+and keeping the default slot invisible **should** (I haven't tested it) improve rendering speeds.
+
+##### `visible` slot
+
+The map container has CSS position `relative` by default.
+This allows you to overlay regular HTML elements over
+the map by placing them
+in the `visible` slot.
+
+For example, you can place position-selection crosshairs
+in the centre of the map
+(used in mobile apps like Uber) by specifying
+`{left: 50%, top: 50%, position: absolute}`; you can
+add a status bar to show information when hovering over
+markers such as in the [Info Bar example](https://xkjyeah.github.io/vue-google-maps/examples/info-bar.html).
 
 ### `StreetViewPanorama` class (mixes in `DeferredReadyMixin`)
 
