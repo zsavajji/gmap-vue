@@ -15,11 +15,13 @@ import PlaceInput from './components/placeInput.vue'
 import Autocomplete from './components/autocomplete.vue'
 
 import MapElementMixin from './components/mapElementMixin'
+import MountableMixin from './utils/mountableMixin'
 import {DeferredReady} from './utils/deferredReady'
 
 // export everything
 export {load, loaded, Marker, Cluster, Polyline, Polygon, Circle, Rectangle,
-  InfoWindow, Map, PlaceInput, MapElementMixin, Autocomplete};
+  InfoWindow, Map, PlaceInput, MapElementMixin, Autocomplete,
+  MountableMixin};
 
 export function install(Vue, options) {
   options = _.defaults(options, {
@@ -27,6 +29,14 @@ export function install(Vue, options) {
   });
 
   Vue.use(DeferredReady);
+
+  const defaultResizeBus = new Vue();
+  Vue.$gmapDefaultResizeBus = defaultResizeBus;
+  Vue.mixin({
+    created() {
+      this.$gmapDefaultResizeBus = defaultResizeBus;
+    }
+  })
 
   if (options.load) {
     load(options.load);

@@ -6,6 +6,7 @@ import eventsBinder from '../utils/eventsBinder.js';
 import propsBinder from '../utils/propsBinder.js';
 import {DeferredReady} from '../utils/deferredReady.js'
 import getPropsMixin from '../utils/getPropsValuesMixin.js'
+import mountableMixin from '../utils/mountableMixin.js'
 import latlngChangedHandler from '../utils/latlngChangedHandler.js';
 
 const props = {
@@ -31,7 +32,7 @@ const props = {
     type: Boolean
   },
   visible: {
-    twoWay: false,
+    twoWay: true,
     type: Boolean,
     default: true,
   },
@@ -60,7 +61,7 @@ const customMethods = {
 const methods = _.assign({}, customMethods);
 
 export default {
-  mixins: [getPropsMixin, DeferredReadyMixin],
+  mixins: [getPropsMixin, DeferredReadyMixin, mountableMixin],
   props: props,
   replace: false, // necessary for css styles
   methods,
@@ -69,12 +70,6 @@ export default {
     this.$panoCreated = new Promise((resolve, reject) => {
       this.$panoCreatedDeferred = {resolve, reject}
     });
-  },
-
-  data() {
-    return {
-      _changeIndicators: {} // For propsBinder trackProperties
-    }
   },
 
   watch: {
