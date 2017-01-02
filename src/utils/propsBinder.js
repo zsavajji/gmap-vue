@@ -8,8 +8,8 @@ function capitalizeFirstLetter(string) {
 
 export default (vueElement, googleMapsElement, props, options) => {
   options = options || {};
-  var {afterModelChanged : afterModelChanged} = options;
-  _.forEach(props, ({twoWay: twoWay, type:type}, attribute) => {
+  var {afterModelChanged} = options;
+  _.forEach(props, ({twoWay, type, trackProperties}, attribute) => {
     const setMethodName = 'set' + capitalizeFirstLetter(attribute);
     const getMethodName = 'get' + capitalizeFirstLetter(attribute);
     const eventName = attribute.toLowerCase() + '_changed';
@@ -19,17 +19,41 @@ export default (vueElement, googleMapsElement, props, options) => {
     // although this may really be the user's responsibility
     var timesSet = 0;
 
-    vueElement.$watch(attribute, () => {
-      const attributeValue = vueElement[attribute];
+    if (type !== Object || !trackProperties) {
+      // Track the object deeply
+      vueElement.$watch(attribute, () => {
+        const attributeValue = vueElement[attribute];
 
-      timesSet++;
-      googleMapsElement[setMethodName](attributeValue);
-      if (afterModelChanged) {
-        afterModelChanged(attribute, attributeValue);
-      }
-    }, {
-      deep: type === Object
-    });
+        timesSet++;
+        googleMapsElement[setMethodName](attributeValue);
+        if (afterModelChanged) {
+          afterModelChanged(attribute, attributeValue);
+        }
+      }, {
+        deep: type === Object
+      });
+    } else if (type === Object && trackProperties) {
+      // The indicator variable that is updated whenever any of the properties have changed
+      // This ensures that the event handler will only be fired once
+      let attributeTrackerName = `_${attribute}_changeTracker`;
+      let attributeTrackerRoot = '$data._changeIndicators'
+
+      vueElement.$set(vueElement.$data._changeIndicators, attributeTrackerName, 0);
+
+      vueElement.$watch(attributeTrackerRoot + '.' + attributeTrackerName, () => {
+        googleMapsElement[setMethodName](vueElement[attribute]);
+        if (afterModelChanged) {
+          afterModelChanged(attribute, attributeValue);
+        }
+      })
+
+      trackProperties.forEach(propName => {
+        vueElement.$watch(`${attribute}.${propName}`, () => {
+          vueElement.$set(attributeTrackerRoot, attributeTrackerName,
+            vueElement.$get(attributeTrackerRoot, attributeTrackerName) + 1);
+        })
+      })
+    }
 
     if (twoWay) {
       googleMapsElement.addListener(eventName, (ev) => {

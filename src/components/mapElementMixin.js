@@ -16,6 +16,12 @@ import Map from './map.vue'
 export default {
 
   mixins: [DeferredReadyMixin],
+  
+  data() {
+    return {
+      _changeIndicators: {} // For propsBinder trackProperties
+    }
+  },
 
   created() {
     /* Search for the Map component in the parent */

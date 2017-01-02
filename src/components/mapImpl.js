@@ -6,6 +6,7 @@ import eventsBinder from '../utils/eventsBinder.js';
 import propsBinder from '../utils/propsBinder.js';
 import {DeferredReady} from '../utils/deferredReady.js'
 import getPropsMixin from '../utils/getPropsValuesMixin.js'
+import latlngChangedHandler from '../utils/latlngChangedHandler.js';
 
 const props = {
   center: {
@@ -108,27 +109,11 @@ export default {
   watch: {
     center: {
       deep: true,
-      handler(val, oldVal) {
-        // Observed bug with Vue 2.1.6 under certain circumstances:
-        // If you pass an object constant into :center, the deep watch
-        // is still triggered
-        function isChanged(prop) {
-          var oldProp = (typeof oldVal[prop] === 'number') ? oldVal[prop] :
-                       (typeof oldVal[prop] === 'function') ? oldVal[prop].apply(oldVal) :
-                       oldVal[prop]; // don't know how to handle
-          var newProp = (typeof val[prop] === 'number') ? val[prop] :
-                       (typeof val[prop] === 'function') ? val[prop].apply(val) :
-                       val[prop]; // don't know how to handle
-          return oldProp !== newProp;
-        }
-
+      handler: latlngChangedHandler((val, oldVal) => {
         if (this.$mapObject) {
-          // Check if the value has really changed
-          if (isChanged('lat') || isChanged('lng')) {
-            this.$mapObject.setCenter(val);
-          }
+          this.$mapObject.setCenter(val);
         }
-      }
+      }),
     },
     zoom(zoom) {
       if (this.$mapObject) {

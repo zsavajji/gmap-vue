@@ -10,6 +10,7 @@ import _ from 'lodash'
 // Vue component imports
 import InfoWindow from './components/infoWindow.vue'
 import Map from './components/map.vue';
+import StreetViewPanorama from './components/streetViewPanorama.vue';
 import PlaceInput from './components/placeInput.vue'
 import Autocomplete from './components/autocomplete.vue'
 
@@ -42,5 +43,6 @@ export function install(Vue, options) {
     Vue.component('GmapRectangle', Rectangle);
     Vue.component('GmapAutocomplete', Autocomplete);
     Vue.component('GmapPlaceInput', PlaceInput);
+    Vue.component('GmapStreetViewPanorama', StreetViewPanorama);
   }
 }
