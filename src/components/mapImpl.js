@@ -117,7 +117,7 @@ export default {
   watch: {
     center: {
       deep: true,
-      handler: latlngChangedHandler((val, oldVal) => {
+      handler: latlngChangedHandler(function (val, oldVal) {
         if (this.$mapObject) {
           this.$mapObject.setCenter(val);
         }

@@ -12,10 +12,10 @@ function isChanged(prop, val, oldVal) {
 }
 
 export default function handler(action) {
-  return (val, oldVal) => {
+  return function (val, oldVal) {
     // Check if the value has really changed
     if (isChanged('lat', val, oldVal) || isChanged('lng', val, oldVal)) {
-      action(val, oldVal);
+      action.apply(this, [val, oldVal]);
     }
   }
 }
