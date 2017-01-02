@@ -440,7 +440,7 @@ it yet, so I can't dogfood this implementation.)
 
 #### Fields
 ##### `$panoObject : google.maps.StreetViewPanorama`
-##### `$panoCreated` : Promise<google.maps.StreetViewPanorama>`
+##### `$panoCreated : Promise<google.maps.StreetViewPanorama>`
 Promise resolved when the map has been created
 
 #### Methods
@@ -711,7 +711,7 @@ A reference to the ancestor Map component. This is available only after
 
 ### `MountableMixin`
 
-***Props***: `resizeBus : Vue`
+***Props***: `resizeBus : Vue` (Default: `Vue.$gmapDefaultResizeBus`)
 
 ***Methods***: `_resizeCallback()`
 
