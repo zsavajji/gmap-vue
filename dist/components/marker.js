@@ -57,7 +57,6 @@ var props = {
     default: false
   },
   icon: {
-    type: Object,
     twoWay: true
   },
   label: {},
