@@ -15,9 +15,6 @@
     "build-examples": "npm run build-examples-before && npm run build-examples-webpack",
     "deploy": "npm run build-examples && gh-pages -d examples"
   },
-  "dependencies": {
-    "vue-loader": "^10.0.0"
-  },
   "peerDependencies": {
     "vue": "^2.1.0",
     "lodash": "^4.15.0",
