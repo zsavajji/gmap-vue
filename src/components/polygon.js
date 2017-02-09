@@ -86,7 +86,8 @@ export default {
         const eventListeners = [];
 
         const mvcArray = this.$polygonObject.getPaths();
-        for (let mvcPath of mvcArray) {
+        for (let i=0; i<mvcArray.getLength(); i++) {
+          let mvcPath = mvcArray.getAt(i);
           eventListeners.push([mvcPath, mvcPath.addListener('insert_at', updatePaths)])
           eventListeners.push([mvcPath, mvcPath.addListener('remove_at', updatePaths)])
           eventListeners.push([mvcPath, mvcPath.addListener('set_at', updatePaths)])
@@ -101,7 +102,8 @@ export default {
         }
       }
     }, {
-      deep: this.deepWatch
+      deep: this.deepWatch,
+      immediate: true,
     });
 
     this.$watch('path', (path) => {
@@ -127,7 +129,8 @@ export default {
         }
       }
     }, {
-      deep: this.deepWatch
+      deep: this.deepWatch,
+      immediate: true,
     });
 
     // Display the map
