@@ -148,10 +148,11 @@ export default {
       // manually trigger center and zoom
       this.$mapObject.addListener('center_changed', () => {
         this.$emit('center_changed', this.$mapObject.getCenter())
-        this.$emit('bounds_changed', this.$mapObject.getBounds())
       })
       this.$mapObject.addListener('zoom_changed', () => {
         this.$emit('zoom_changed', this.$mapObject.getZoom())
+      })
+      this.$mapObject.addListener('bounds_changed', () => {
         this.$emit('bounds_changed', this.$mapObject.getBounds())
       })
 
