@@ -4,10 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _getIterator2 = require('babel-runtime/core-js/get-iterator');
-
-var _getIterator3 = _interopRequireDefault(_getIterator2);
-
 var _slicedToArray2 = require('babel-runtime/helpers/slicedToArray');
 
 var _slicedToArray3 = _interopRequireDefault(_slicedToArray2);
@@ -106,33 +102,12 @@ exports.default = {
           var eventListeners = [];
 
           var mvcArray = _this.$polygonObject.getPaths();
-          var _iteratorNormalCompletion = true;
-          var _didIteratorError = false;
-          var _iteratorError = undefined;
-
-          try {
-            for (var _iterator = (0, _getIterator3.default)(mvcArray), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-              var mvcPath = _step.value;
-
-              eventListeners.push([mvcPath, mvcPath.addListener('insert_at', updatePaths)]);
-              eventListeners.push([mvcPath, mvcPath.addListener('remove_at', updatePaths)]);
-              eventListeners.push([mvcPath, mvcPath.addListener('set_at', updatePaths)]);
-            }
-          } catch (err) {
-            _didIteratorError = true;
-            _iteratorError = err;
-          } finally {
-            try {
-              if (!_iteratorNormalCompletion && _iterator.return) {
-                _iterator.return();
-              }
-            } finally {
-              if (_didIteratorError) {
-                throw _iteratorError;
-              }
-            }
+          for (var i = 0; i < mvcArray.getLength(); i++) {
+            var mvcPath = mvcArray.getAt(i);
+            eventListeners.push([mvcPath, mvcPath.addListener('insert_at', updatePaths)]);
+            eventListeners.push([mvcPath, mvcPath.addListener('remove_at', updatePaths)]);
+            eventListeners.push([mvcPath, mvcPath.addListener('set_at', updatePaths)]);
           }
-
           eventListeners.push([mvcArray, mvcArray.addListener('insert_at', updatePaths)]);
           eventListeners.push([mvcArray, mvcArray.addListener('remove_at', updatePaths)]);
           eventListeners.push([mvcArray, mvcArray.addListener('set_at', updatePaths)]);
@@ -149,7 +124,8 @@ exports.default = {
         })();
       }
     }, {
-      deep: this.deepWatch
+      deep: this.deepWatch,
+      immediate: true
     });
 
     this.$watch('path', function (path) {
@@ -182,7 +158,8 @@ exports.default = {
         })();
       }
     }, {
-      deep: this.deepWatch
+      deep: this.deepWatch,
+      immediate: true
     });
 
     // Display the map
