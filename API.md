@@ -561,6 +561,9 @@ Example:
 ```js
 <gmap-info-window>Hello world!</gmap-info-window>
 ```
+
+[InfoWindow example](https://xkjyeah.github.io/vue-google-maps/examples/infowindow.html)
+
 #### Properties
 ##### `options : object`
 ##### `opened : object`
