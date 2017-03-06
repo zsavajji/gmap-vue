@@ -75,9 +75,9 @@ export default {
   watch: {
     position: {
       deep: true,
-      handler: latlngChangedHandler((val, oldVal) => {
+      handler: latlngChangedHandler(function(val, oldVal) {
         if (this.$panoObject) {
-          this.$panoObject.setCenter(val);
+          this.$panoObject.setPosition(val);
         }
       }),
     },
