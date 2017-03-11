@@ -131,6 +131,7 @@ exports.default = {
     center: {
       deep: true,
       handler: (0, _latlngChangedHandler2.default)(function (val, oldVal) {
+        // eslint-disable-line no-unused-vars
         if (this.$mapObject) {
           this.$mapObject.setCenter(val);
         }

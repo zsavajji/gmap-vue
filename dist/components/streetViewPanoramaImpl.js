@@ -107,8 +107,9 @@ exports.default = {
     position: {
       deep: true,
       handler: (0, _latlngChangedHandler2.default)(function (val, oldVal) {
-        if (undefined.$panoObject) {
-          undefined.$panoObject.setCenter(val);
+        // eslint-disable-line no-unused-vars
+        if (this.$panoObject) {
+          this.$panoObject.setPosition(val);
         }
       })
     },
@@ -128,7 +129,6 @@ exports.default = {
 
       // creating the map
       var options = _lodash2.default.defaults({}, _lodash2.default.omit(_this2.getPropsValues(), ['options']), _this2.options);
-      console.log(options);
 
       _this2.$panoObject = new google.maps.StreetViewPanorama(element, options);
 

@@ -46,6 +46,7 @@ exports.default = {
 
   watch: {
     resizeBus: function resizeBus(newVal, oldVal) {
+      // eslint-disable-line no-unused-vars
       this.$data._actualResizeBus = newVal;
     },
     '$data._actualResizeBus': function $data_actualResizeBus(newVal, oldVal) {

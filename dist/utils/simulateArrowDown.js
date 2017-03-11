@@ -13,7 +13,7 @@ exports.default = function (input) {
   function addEventListenerWrapper(type, listener) {
     // Simulate a 'down arrow' keypress on hitting 'return' when no pac suggestion is selected,
     // and then trigger the original listener.
-    if (type == "keydown") {
+    if (type == 'keydown') {
       var orig_listener = listener;
       listener = function listener(event) {
         var suggestion_selected = document.getElementsByClassName('pac-item-selected').length > 0;

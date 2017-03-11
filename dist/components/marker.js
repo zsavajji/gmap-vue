@@ -24,14 +24,6 @@ var _mapElementMixin = require('./mapElementMixin');
 
 var _mapElementMixin2 = _interopRequireDefault(_mapElementMixin);
 
-var _cluster = require('./cluster');
-
-var _cluster2 = _interopRequireDefault(_cluster);
-
-var _assert = require('assert');
-
-var _assert2 = _interopRequireDefault(_assert);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var props = {
@@ -91,8 +83,6 @@ var props = {
 
 var events = ['click', 'rightclick', 'dblclick', 'drag', 'dragstart', 'dragend', 'mouseup', 'mousedown', 'mouseover', 'mouseout'];
 
-var container;
-
 /**
  * @class Marker
  *
@@ -136,12 +126,12 @@ exports.default = {
     });
 
     this.$clusterObject = search ? search.$clusterObject : null;
-    this.createMarker(options, this.$map);
+    this.createMarker(options);
   },
 
 
   methods: {
-    createMarker: function createMarker(options, map) {
+    createMarker: function createMarker(options) {
       this.$markerObject = new google.maps.Marker(options);
       (0, _propsBinder2.default)(this, this.$markerObject, props);
       (0, _eventsBinder2.default)(this, this.$markerObject, events);

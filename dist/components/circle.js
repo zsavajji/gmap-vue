@@ -1,7 +1,7 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 
 var _lodash = require('lodash');
@@ -27,72 +27,72 @@ var _getPropsValuesMixin2 = _interopRequireDefault(_getPropsValuesMixin);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var props = {
-    center: {
-        type: Object,
-        twoWay: true,
-        required: true
-    },
-    radius: {
-        type: Number,
-        default: 1000,
-        twoWay: true
-    },
-    draggable: {
-        type: Boolean,
-        default: false
-    },
-    editable: {
-        type: Boolean,
-        default: false
-    },
-    options: {
-        type: Object,
-        twoWay: false
-    }
+  center: {
+    type: Object,
+    twoWay: true,
+    required: true
+  },
+  radius: {
+    type: Number,
+    default: 1000,
+    twoWay: true
+  },
+  draggable: {
+    type: Boolean,
+    default: false
+  },
+  editable: {
+    type: Boolean,
+    default: false
+  },
+  options: {
+    type: Object,
+    twoWay: false
+  }
 };
 
 var events = ['click', 'dblclick', 'drag', 'dragend', 'dragstart', 'mousedown', 'mousemove', 'mouseout', 'mouseover', 'mouseup', 'rightclick'];
 
 exports.default = {
-    mixins: [_mapElementMixin2.default, _getPropsValuesMixin2.default],
-    props: props,
-    version: 2,
+  mixins: [_mapElementMixin2.default, _getPropsValuesMixin2.default],
+  props: props,
+  version: 2,
 
-    render: function render() {
-        return '';
-    },
-    deferredReady: function deferredReady() {
-        var options = _lodash2.default.clone(this.getPropsValues());
-        options.map = this.$map;
-        delete options.bounds;
-        this.createCircle(options, this.$map);
-    },
+  render: function render() {
+    return '';
+  },
+  deferredReady: function deferredReady() {
+    var options = _lodash2.default.clone(this.getPropsValues());
+    options.map = this.$map;
+    delete options.bounds;
+    this.createCircle(options);
+  },
 
 
-    methods: {
-        createCircle: function createCircle(options, map) {
-            var _this = this;
+  methods: {
+    createCircle: function createCircle(options) {
+      var _this = this;
 
-            this.$circleObject = new google.maps.Circle(options);
-            // we cant bind bounds because there is no `setBounds` method
-            // on the Circle object
-            var boundProps = _lodash2.default.clone(props);
-            delete boundProps.bounds;
-            (0, _propsBinder2.default)(this, this.$circleObject, boundProps);
-            (0, _eventsBinder2.default)(this, this.$circleObject, events);
+      this.$circleObject = new google.maps.Circle(options);
+      // we cant bind bounds because there is no `setBounds` method
+      // on the Circle object
+      var boundProps = _lodash2.default.clone(props);
+      delete boundProps.bounds;
+      (0, _propsBinder2.default)(this, this.$circleObject, boundProps);
+      (0, _eventsBinder2.default)(this, this.$circleObject, events);
 
-            var updateBounds = function updateBounds() {
-                _this.$emit('bounds_changed', _this.$circleObject.getBounds());
-            };
+      var updateBounds = function updateBounds() {
+        _this.$emit('bounds_changed', _this.$circleObject.getBounds());
+      };
 
-            this.$on('radius_changed', updateBounds);
-            this.$on('center_changed', updateBounds);
-        }
-    },
-
-    destroyed: function destroyed() {
-        if (this.$circleObject) {
-            this.$circleObject.setMap(null);
-        }
+      this.$on('radius_changed', updateBounds);
+      this.$on('center_changed', updateBounds);
     }
+  },
+
+  destroyed: function destroyed() {
+    if (this.$circleObject) {
+      this.$circleObject.setMap(null);
+    }
+  }
 };

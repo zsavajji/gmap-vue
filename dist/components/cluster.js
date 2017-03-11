@@ -66,14 +66,16 @@ exports.default = {
     var options = _lodash2.default.clone(this.getPropsValues());
 
     if (typeof _markerClustererPlus2.default === 'undefined') {
-      console.error("MarkerClusterer is not installed! require() it or include it from https://cdnjs.cloudflare.com/ajax/libs/js-marker-clusterer/1.0.0/markerclusterer.js");
-      throw new Error("MarkerClusterer is not installed! require() it or include it from https://cdnjs.cloudflare.com/ajax/libs/js-marker-clusterer/1.0.0/markerclusterer.js");
+      /* eslint-disable no-console */
+      console.error('MarkerClusterer is not installed! require() it or include it from https://cdnjs.cloudflare.com/ajax/libs/js-marker-clusterer/1.0.0/markerclusterer.js');
+      throw new Error('MarkerClusterer is not installed! require() it or include it from https://cdnjs.cloudflare.com/ajax/libs/js-marker-clusterer/1.0.0/markerclusterer.js');
     }
 
     this.$clusterObject = new _markerClustererPlus2.default(this.$map, [], options);
 
     (0, _propsBinder2.default)(this, this.$clusterObject, props, {
       afterModelChanged: function afterModelChanged(a, v) {
+        // eslint-disable-line no-unused-vars
         var oldMarkers = _this.$clusterObject.getMarkers();
         _this.$clusterObject.clearMarkers();
         _this.$clusterObject.addMarkers(oldMarkers);

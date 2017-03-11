@@ -1,10 +1,10 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _typeof2 = require("babel-runtime/helpers/typeof");
+var _typeof2 = require('babel-runtime/helpers/typeof');
 
 var _typeof3 = _interopRequireDefault(_typeof2);
 
@@ -33,9 +33,9 @@ exports.default = function (element, callback) {
       };
     }();
 
-    if ((typeof _ret === "undefined" ? "undefined" : (0, _typeof3.default)(_ret)) === "object") return _ret.v;
+    if ((typeof _ret === 'undefined' ? 'undefined' : (0, _typeof3.default)(_ret)) === "object") return _ret.v;
   } else {
-    var oldContent = "";
+    var oldContent = '';
     // IE Fallback !!!! crappy browser
     setInterval(function () {
       if (oldContent != element.innerHTML) {

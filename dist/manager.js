@@ -24,6 +24,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var setUp = false;
 
 var loaded = exports.loaded = new _promise2.default(function (resolve, reject) {
+  // eslint-disable-line no-unused-vars
   window['vueGoogleMapsInit'] = resolve;
 });
 
@@ -76,7 +77,7 @@ var load = exports.load = function load(apiKey, version, libraries, loadCn) {
     }
 
     // libraries
-    var librariesPath = "";
+    var librariesPath = '';
     if (libraries && libraries.length > 0) {
       librariesPath = libraries.join(',');
       options['libraries'] = librariesPath;

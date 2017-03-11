@@ -57,12 +57,12 @@ exports.default = {
   deferredReady: function deferredReady() {
     var options = _lodash2.default.clone(this.getPropsValues());
     options.map = this.$map;
-    this.createRectangle(options, this.$map);
+    this.createRectangle(options);
   },
 
 
   methods: {
-    createRectangle: function createRectangle(options, map) {
+    createRectangle: function createRectangle(options) {
       this.$rectangleObject = new google.maps.Rectangle(options);
       (0, _propsBinder2.default)(this, this.$rectangleObject, props);
       (0, _eventsBinder2.default)(this, this.$rectangleObject, events);

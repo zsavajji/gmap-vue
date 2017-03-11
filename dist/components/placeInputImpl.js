@@ -8,10 +8,6 @@ var _lodash = require('lodash');
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
-var _eventsBinder = require('../utils/eventsBinder.js');
-
-var _eventsBinder2 = _interopRequireDefault(_eventsBinder);
-
 var _propsBinder = require('../utils/propsBinder.js');
 
 var _propsBinder2 = _interopRequireDefault(_propsBinder);
@@ -90,7 +86,7 @@ exports.default = {
         (0, _simulateArrowDown2.default)(_this.$refs.input);
       }
 
-      (0, _assert2.default)(typeof google.maps.places.Autocomplete === 'function', "google.maps.places.Autocomplete is undefined. Did you add 'places' to libraries when loading Google Maps?");
+      (0, _assert2.default)(typeof google.maps.places.Autocomplete === 'function', 'google.maps.places.Autocomplete is undefined. Did you add \'places\' to libraries when loading Google Maps?');
 
       _this.autoCompleter = new google.maps.places.Autocomplete(_this.$refs.input, options);
       (0, _propsBinder2.default)(_this, _this.autoCompleter, _lodash2.default.omit(props, ['placeholder', 'place', 'selectFirstOnEnter', 'defaultPlace']));
@@ -101,7 +97,7 @@ exports.default = {
     });
   },
   created: function created() {
-    console.warn('The PlaceInput class is deprecated! Please consider using the Autocomplete input instead');
+    console.warn('The PlaceInput class is deprecated! Please consider using the Autocomplete input instead'); //eslint-disable-line no-console
   },
 
   props: props

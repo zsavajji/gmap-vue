@@ -20,10 +20,6 @@ var _mapElementMixin = require('./mapElementMixin');
 
 var _mapElementMixin2 = _interopRequireDefault(_mapElementMixin);
 
-var _marker = require('./marker');
-
-var _marker2 = _interopRequireDefault(_marker);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var props = {
@@ -71,7 +67,7 @@ exports.default = {
     if (this.$markerComponent) {
       this.$markerObject = this.$markerComponent.$markerObject;
     }
-    this.createInfoWindow(this.$map);
+    this.createInfoWindow();
   },
   destroyed: function destroyed() {
     if (this.disconnect) {
@@ -95,7 +91,7 @@ exports.default = {
         this.$infoWindow.close();
       }
     },
-    createInfoWindow: function createInfoWindow(map) {
+    createInfoWindow: function createInfoWindow() {
       var _this = this;
 
       // setting options

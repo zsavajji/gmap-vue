@@ -39,6 +39,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var DeferredReady = exports.DeferredReady = {
   install: function install(Vue, options) {
+    // eslint-disable-line no-unused-vars
     // Use the same merge strategy as regular hooks
     Vue.config.optionMergeStrategies.deferredReady = Vue.config.optionMergeStrategies.created;
     Vue.config.optionMergeStrategies.beforeDeferredReady = Vue.config.optionMergeStrategies.beforeDeferredReady;
@@ -59,7 +60,7 @@ function runHooks(vm) {
       try {
         return x.apply(vm);
       } catch (err) {
-        console.error(err.stack);
+        console.error(err.stack); // eslint-disable-line no-console
       }
     }));
     // execute all handlers, expecting them to return promises
@@ -81,6 +82,7 @@ var DeferredReadyMixin = exports.DeferredReadyMixin = {
     var _this = this;
 
     this.$deferredReadyPromise = new _promise2.default(function (resolve, reject) {
+      // eslint-disable-line no-unused-vars
       _this.$deferredReadyPromiseResolve = resolve;
     });
 

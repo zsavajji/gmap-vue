@@ -52,6 +52,7 @@ exports.default = function (vueElement, googleMapsElement, props, options) {
         // This ensures that the event handler will only be fired once
         var attributeTrackerName = '_' + attribute + '_changeTracker';
         var attributeTrackerRoot = '$data._changeIndicators';
+        var attributeValue = vueElement[attribute];
 
         vueElement.$set(vueElement.$data._changeIndicators, attributeTrackerName, 0);
 
@@ -72,6 +73,7 @@ exports.default = function (vueElement, googleMapsElement, props, options) {
 
     if (twoWay) {
       googleMapsElement.addListener(eventName, function (ev) {
+        // eslint-disable-line no-unused-vars
         if (timesSet > 0) {
           timesSet--;
           return;

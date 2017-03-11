@@ -103,7 +103,9 @@ exports.default = {
                   obj = _ref2[0],
                   listenerHandle = _ref2[1];
 
-              return google.maps.event.removeListener(listenerHandle);
+              return (// eslint-disable-line no-unused-vars
+                google.maps.event.removeListener(listenerHandle)
+              );
             });
           };
         })();
