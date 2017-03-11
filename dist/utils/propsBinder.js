@@ -27,6 +27,7 @@ exports.default = function (vueElement, googleMapsElement, props, options) {
     var setMethodName = 'set' + capitalizeFirstLetter(attribute);
     var getMethodName = 'get' + capitalizeFirstLetter(attribute);
     var eventName = attribute.toLowerCase() + '_changed';
+    var initialValue = vueElement[attribute];
 
     // We need to avoid an endless
     // propChanged -> event emitted -> propChanged -> event emitted loop
@@ -44,6 +45,7 @@ exports.default = function (vueElement, googleMapsElement, props, options) {
           afterModelChanged(attribute, attributeValue);
         }
       }, {
+        immediate: typeof initialValue !== 'undefined',
         deep: type === Object
       });
     } else if (type === Object && trackProperties) {
@@ -61,11 +63,15 @@ exports.default = function (vueElement, googleMapsElement, props, options) {
           if (afterModelChanged) {
             afterModelChanged(attribute, attributeValue);
           }
+        }, {
+          immediate: typeof initialValue !== 'undefined'
         });
 
         trackProperties.forEach(function (propName) {
           vueElement.$watch(attribute + '.' + propName, function () {
             vueElement.$set(attributeTrackerRoot, attributeTrackerName, vueElement.$get(attributeTrackerRoot, attributeTrackerName) + 1);
+          }, {
+            immediate: typeof initialValue !== 'undefined'
           });
         });
       })();
