@@ -3,23 +3,21 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+/* vim: set softtabstop=2 shiftwidth=2 expandtab : */
 
-var _lodash = require('lodash');
-
-var _lodash2 = _interopRequireDefault(_lodash);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _ = require('lodash');
+var assert = require('assert');
 
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
-} /* vim: set softtabstop=2 shiftwidth=2 expandtab : */
+}
 
 exports.default = function (vueElement, googleMapsElement, props, options) {
   options = options || {};
   var _options = options,
       afterModelChanged = _options.afterModelChanged;
 
-  _lodash2.default.forEach(props, function (_ref, attribute) {
+  _.forEach(props, function (_ref, attribute) {
     var twoWay = _ref.twoWay,
         type = _ref.type,
         trackProperties = _ref.trackProperties;
@@ -29,11 +27,12 @@ exports.default = function (vueElement, googleMapsElement, props, options) {
     var eventName = attribute.toLowerCase() + '_changed';
     var initialValue = vueElement[attribute];
 
+    assert(googleMapsElement[setMethodName], setMethodName + ' is not a method of (the Maps object corresponding to) ' + vueElement.$options._componentTag);
+
     // We need to avoid an endless
     // propChanged -> event emitted -> propChanged -> event emitted loop
     // although this may really be the user's responsibility
     var timesSet = 0;
-
     if (type !== Object || !trackProperties) {
       // Track the object deeply
       vueElement.$watch(attribute, function () {

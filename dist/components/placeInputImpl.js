@@ -89,7 +89,7 @@ exports.default = {
       (0, _assert2.default)(typeof google.maps.places.Autocomplete === 'function', 'google.maps.places.Autocomplete is undefined. Did you add \'places\' to libraries when loading Google Maps?');
 
       _this.autoCompleter = new google.maps.places.Autocomplete(_this.$refs.input, options);
-      (0, _propsBinder2.default)(_this, _this.autoCompleter, _lodash2.default.omit(props, ['placeholder', 'place', 'selectFirstOnEnter', 'defaultPlace']));
+      (0, _propsBinder2.default)(_this, _this.autoCompleter, _lodash2.default.omit(props, ['placeholder', 'place', 'selectFirstOnEnter', 'defaultPlace', 'className', 'label']));
 
       _this.autoCompleter.addListener('place_changed', function () {
         _this.$emit('place_changed', _this.autoCompleter.getPlace());

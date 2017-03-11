@@ -30,9 +30,7 @@ var props = {
       return {};
     }
   },
-  content: {
-    default: null
-  },
+  content: {},
   opened: {
     type: Boolean,
     default: true

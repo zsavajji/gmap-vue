@@ -82,7 +82,7 @@ exports.default = {
     }
     this.$polygonObject = new google.maps.Polygon(options);
 
-    (0, _propsBinder2.default)(this, this.$polygonObject, _lodash2.default.omit(props, ['path', 'paths']));
+    (0, _propsBinder2.default)(this, this.$polygonObject, _lodash2.default.omit(props, ['path', 'paths', 'deepWatch']));
     (0, _eventsBinder2.default)(this, this.$polygonObject, events);
 
     var clearEvents = function clearEvents() {};
