@@ -12,7 +12,6 @@ const props = {
     }
   },
   content: {
-    default: null
   },
   opened: {
     type: Boolean,
