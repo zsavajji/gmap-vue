@@ -8,48 +8,48 @@ operations so it exposes a property which accepts a bus
 */
 
 export default {
-    props: ['resizeBus'],
+  props: ['resizeBus'],
 
-    data() {
-        return {
+  data() {
+    return {
       // For propsBinder trackProperties
-            _changeIndicators: {},
-            _actualResizeBus: null,
-        };
-    },
+      _changeIndicators: {},
+      _actualResizeBus: null,
+    };
+  },
 
-    created() {
-        if (typeof this.resizeBus === 'undefined') {
-            this.$data._actualResizeBus = this.$gmapDefaultResizeBus;
-        } else {
-            this.$data._actualResizeBus = this.resizeBus;
-        }
-    },
-
-    methods: {
-        _resizeCallback() {
-            this.resize();
-        },
-        _delayedResizeCallback() {
-            this.$nextTick(() => this._resizeCallback());
-        }
-    },
-
-    watch: {
-        resizeBus(newVal, oldVal) {
-            this.$data._actualResizeBus = newVal;
-        },
-        '$data._actualResizeBus'(newVal, oldVal) {
-            if (oldVal) {
-                oldVal.$off('resize', this._delayedResizeCallback);
-            }
-            if (newVal) {
-                newVal.$on('resize', this._delayedResizeCallback);
-            }
-        }
-    },
-
-    destroyed() {
-        this.$data._actualResizeBus.$off('resize', this._delayedResizeCallback);
+  created() {
+    if (typeof this.resizeBus === 'undefined') {
+      this.$data._actualResizeBus = this.$gmapDefaultResizeBus;
+    } else {
+      this.$data._actualResizeBus = this.resizeBus;
     }
+  },
+
+  methods: {
+    _resizeCallback() {
+      this.resize();
+    },
+    _delayedResizeCallback() {
+      this.$nextTick(() => this._resizeCallback());
+    }
+  },
+
+  watch: {
+    resizeBus(newVal, oldVal) { // eslint-disable-line no-unused-vars
+      this.$data._actualResizeBus = newVal;
+    },
+    '$data._actualResizeBus'(newVal, oldVal) {
+      if (oldVal) {
+        oldVal.$off('resize', this._delayedResizeCallback);
+      }
+      if (newVal) {
+        newVal.$on('resize', this._delayedResizeCallback);
+      }
+    }
+  },
+
+  destroyed() {
+    this.$data._actualResizeBus.$off('resize', this._delayedResizeCallback);
+  }
 };

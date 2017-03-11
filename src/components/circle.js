@@ -6,80 +6,80 @@ import MapElementMixin from './mapElementMixin';
 import getPropsValuesMixin from '../utils/getPropsValuesMixin.js';
 
 const props = {
-    center: {
-        type: Object,
-        twoWay: true,
-        required: true
-    },
-    radius: {
-        type: Number,
-        default: 1000,
-        twoWay: true
-    },
-    draggable: {
-        type: Boolean,
-        default: false,
-    },
-    editable: {
-        type: Boolean,
-        default: false,
-    },
-    options: {
-        type: Object,
-        twoWay: false
-    }
+  center: {
+    type: Object,
+    twoWay: true,
+    required: true
+  },
+  radius: {
+    type: Number,
+    default: 1000,
+    twoWay: true
+  },
+  draggable: {
+    type: Boolean,
+    default: false,
+  },
+  editable: {
+    type: Boolean,
+    default: false,
+  },
+  options: {
+    type: Object,
+    twoWay: false
+  }
 };
 
 const events = [
-    'click',
-    'dblclick',
-    'drag',
-    'dragend',
-    'dragstart',
-    'mousedown',
-    'mousemove',
-    'mouseout',
-    'mouseover',
-    'mouseup',
-    'rightclick'
+  'click',
+  'dblclick',
+  'drag',
+  'dragend',
+  'dragstart',
+  'mousedown',
+  'mousemove',
+  'mouseout',
+  'mouseover',
+  'mouseup',
+  'rightclick'
 ];
 
 export default {
-    mixins: [MapElementMixin, getPropsValuesMixin],
-    props: props,
-    version: 2,
+  mixins: [MapElementMixin, getPropsValuesMixin],
+  props: props,
+  version: 2,
 
-    render() { return ''; },
+  render() { return ''; },
 
-    deferredReady() {
-        const options = _.clone(this.getPropsValues());
-        options.map = this.$map;
-        delete options.bounds;
-        this.createCircle(options, this.$map);
-    },
+  deferredReady() {
+    const options = _.clone(this.getPropsValues());
+    options.map = this.$map;
+    delete options.bounds;
+    this.createCircle(options);
+  },
 
-    methods: {
-        createCircle (options, map) {
-            this.$circleObject = new google.maps.Circle(options);
+  methods: {
+    createCircle (options) {
+      this.$circleObject = new google.maps.Circle(options);
             // we cant bind bounds because there is no `setBounds` method
             // on the Circle object
-            const boundProps = _.clone(props);
-            delete boundProps.bounds;
-            propsBinder(this, this.$circleObject, boundProps);
-            eventBinder(this, this.$circleObject, events);
+      const boundProps = _.clone(props);
+      delete boundProps.bounds;
+      propsBinder(this, this.$circleObject, boundProps);
+      eventBinder(this, this.$circleObject, events);
 
-            const updateBounds = () => {
-                this.$emit('bounds_changed', this.$circleObject.getBounds());
-            };
+      const updateBounds = () => {
+        this.$emit('bounds_changed', this.$circleObject.getBounds());
+      };
 
-            this.$on('radius_changed', updateBounds);
-            this.$on('center_changed', updateBounds);
-        }
-    },
+      this.$on('radius_changed', updateBounds);
+      this.$on('center_changed', updateBounds);
+    }
+  },
 
-    destroyed () {
-        if (this.$circleObject) {
-            this.$circleObject.setMap(null);
-        }
-    },
+  destroyed () {
+    if (this.$circleObject) {
+      this.$circleObject.setMap(null);
+    }
+  },
 };

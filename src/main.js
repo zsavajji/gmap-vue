@@ -24,35 +24,35 @@ export {load, loaded, Marker, Cluster, Polyline, Polygon, Circle, Rectangle,
   MountableMixin};
 
 export function install(Vue, options) {
-    options = _.defaults(options, {
-        installComponents: true,
-    });
+  options = _.defaults(options, {
+    installComponents: true,
+  });
 
-    Vue.use(DeferredReady);
+  Vue.use(DeferredReady);
 
-    const defaultResizeBus = new Vue();
-    Vue.$gmapDefaultResizeBus = defaultResizeBus;
-    Vue.mixin({
-        created() {
-            this.$gmapDefaultResizeBus = defaultResizeBus;
-        }
-    });
-
-    if (options.load) {
-        load(options.load);
+  const defaultResizeBus = new Vue();
+  Vue.$gmapDefaultResizeBus = defaultResizeBus;
+  Vue.mixin({
+    created() {
+      this.$gmapDefaultResizeBus = defaultResizeBus;
     }
+  });
 
-    if (options.installComponents) {
-        Vue.component('GmapMap', Map);
-        Vue.component('GmapMarker', Marker);
-        Vue.component('GmapCluster', Cluster);
-        Vue.component('GmapInfoWindow', InfoWindow);
-        Vue.component('GmapPolyline', Polyline);
-        Vue.component('GmapPolygon', Polygon);
-        Vue.component('GmapCircle', Circle);
-        Vue.component('GmapRectangle', Rectangle);
-        Vue.component('GmapAutocomplete', Autocomplete);
-        Vue.component('GmapPlaceInput', PlaceInput);
-        Vue.component('GmapStreetViewPanorama', StreetViewPanorama);
-    }
+  if (options.load) {
+    load(options.load);
+  }
+
+  if (options.installComponents) {
+    Vue.component('GmapMap', Map);
+    Vue.component('GmapMarker', Marker);
+    Vue.component('GmapCluster', Cluster);
+    Vue.component('GmapInfoWindow', InfoWindow);
+    Vue.component('GmapPolyline', Polyline);
+    Vue.component('GmapPolygon', Polygon);
+    Vue.component('GmapCircle', Circle);
+    Vue.component('GmapRectangle', Rectangle);
+    Vue.component('GmapAutocomplete', Autocomplete);
+    Vue.component('GmapPlaceInput', PlaceInput);
+    Vue.component('GmapStreetViewPanorama', StreetViewPanorama);
+  }
 }

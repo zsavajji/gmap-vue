@@ -6,64 +6,64 @@ import MapElementMixin from './mapElementMixin';
 import getPropsValuesMixin from '../utils/getPropsValuesMixin.js';
 
 const props = {
-    bounds: {
-        type: Object,
-        twoWay: true
-    },
-    draggable: {
-        type: Boolean,
-        default: false,
-    },
-    editable: {
-        type: Boolean,
-        default: false,
-    },
-    options: {
-        type: Object,
-        twoWay: false
-    }
+  bounds: {
+    type: Object,
+    twoWay: true
+  },
+  draggable: {
+    type: Boolean,
+    default: false,
+  },
+  editable: {
+    type: Boolean,
+    default: false,
+  },
+  options: {
+    type: Object,
+    twoWay: false
+  }
 };
 
 const events = [
-    'click',
-    'dblclick',
-    'drag',
-    'dragend',
-    'dragstart',
-    'mousedown',
-    'mousemove',
-    'mouseout',
-    'mouseover',
-    'mouseup',
-    'rightclick'
+  'click',
+  'dblclick',
+  'drag',
+  'dragend',
+  'dragstart',
+  'mousedown',
+  'mousemove',
+  'mouseout',
+  'mouseover',
+  'mouseup',
+  'rightclick'
 ];
 
 export default {
-    mixins: [MapElementMixin, getPropsValuesMixin],
-    props: props,
+  mixins: [MapElementMixin, getPropsValuesMixin],
+  props: props,
 
-    render() {
-        return '';
+  render() {
+    return '';
+  },
+
+  deferredReady() {
+    const options = _.clone(this.getPropsValues());
+    options.map = this.$map;
+    this.createRectangle(options);
+  },
+
+  methods: {
+    createRectangle(options) {
+      this.$rectangleObject = new google.maps.Rectangle(options);
+      propsBinder(this, this.$rectangleObject, props);
+      eventBinder(this, this.$rectangleObject, events);
     },
 
-    deferredReady() {
-        const options = _.clone(this.getPropsValues());
-        options.map = this.$map;
-        this.createRectangle(options, this.$map);
-    },
+  },
 
-    methods: {
-        createRectangle(options, map) {
-            this.$rectangleObject = new google.maps.Rectangle(options);
-            propsBinder(this, this.$rectangleObject, props);
-            eventBinder(this, this.$rectangleObject, events);
-        },
-
-    },
-
-    destroyed() {
-        if (this.$rectangleObject) {
-            this.$rectangleObject.setMap(null);
-        }
-    },
+  destroyed() {
+    if (this.$rectangleObject) {
+      this.$rectangleObject.setMap(null);
+    }
+  },
 };
