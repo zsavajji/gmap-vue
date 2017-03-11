@@ -13,6 +13,7 @@ export default (vueElement, googleMapsElement, props, options) => {
     const setMethodName = 'set' + capitalizeFirstLetter(attribute);
     const getMethodName = 'get' + capitalizeFirstLetter(attribute);
     const eventName = attribute.toLowerCase() + '_changed';
+    const initialValue = vueElement[attribute];
 
     // We need to avoid an endless
     // propChanged -> event emitted -> propChanged -> event emitted loop
@@ -30,6 +31,7 @@ export default (vueElement, googleMapsElement, props, options) => {
           afterModelChanged(attribute, attributeValue);
         }
       }, {
+        immediate: typeof initialValue !== 'undefined',
         deep: type === Object
       });
     } else if (type === Object && trackProperties) {
@@ -46,12 +48,16 @@ export default (vueElement, googleMapsElement, props, options) => {
         if (afterModelChanged) {
           afterModelChanged(attribute, attributeValue);
         }
+      }, {
+        immediate: typeof initialValue !== 'undefined',
       });
 
       trackProperties.forEach(propName => {
         vueElement.$watch(`${attribute}.${propName}`, () => {
           vueElement.$set(attributeTrackerRoot, attributeTrackerName,
             vueElement.$get(attributeTrackerRoot, attributeTrackerName) + 1);
+        }, {
+          immediate: typeof initialValue !== 'undefined',
         });
       });
     }

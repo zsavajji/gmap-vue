@@ -31,10 +31,6 @@ const props = {
     twoWay: true,
     type: Object,
   },
-  projection: {
-    twoWay: true,
-    type: Object,
-  },
   tilt: {
     twoWay: true,
     type: Number,
