@@ -1,9 +1,9 @@
 import _ from 'lodash';
 
-import eventBinder from '../utils/eventsBinder.js'
-import propsBinder from '../utils/propsBinder.js'
+import eventBinder from '../utils/eventsBinder.js';
+import propsBinder from '../utils/propsBinder.js';
 import MapElementMixin from './mapElementMixin';
-import getPropsValuesMixin from '../utils/getPropsValuesMixin.js'
+import getPropsValuesMixin from '../utils/getPropsValuesMixin.js';
 
 const props = {
     center: {
@@ -28,7 +28,7 @@ const props = {
         type: Object,
         twoWay: false
     }
-}
+};
 
 const events = [
     'click',
@@ -42,14 +42,14 @@ const events = [
     'mouseover',
     'mouseup',
     'rightclick'
-]
+];
 
 export default {
     mixins: [MapElementMixin, getPropsValuesMixin],
     props: props,
     version: 2,
 
-    render() { return '' },
+    render() { return ''; },
 
     deferredReady() {
         const options = _.clone(this.getPropsValues());
@@ -69,17 +69,17 @@ export default {
             eventBinder(this, this.$circleObject, events);
 
             const updateBounds = () => {
-              this.$emit('bounds_changed', this.$circleObject.getBounds())
-            }
+                this.$emit('bounds_changed', this.$circleObject.getBounds());
+            };
 
-            this.$on('radius_changed', updateBounds)
-            this.$on('center_changed', updateBounds)
+            this.$on('radius_changed', updateBounds);
+            this.$on('center_changed', updateBounds);
         }
     },
 
     destroyed () {
-      if (this.$circleObject) {
-        this.$circleObject.setMap(null);
-      }
+        if (this.$circleObject) {
+            this.$circleObject.setMap(null);
+        }
     },
-}
+};
