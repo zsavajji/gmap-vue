@@ -60,6 +60,8 @@ exports.default = {
   },
 
   destroyed: function destroyed() {
-    this.$data._actualResizeBus.$off('resize', this._delayedResizeCallback);
+    if (this.$data._actualResizeBus) {
+      this.$data._actualResizeBus.$off('resize', this._delayedResizeCallback);
+    }
   }
 };
