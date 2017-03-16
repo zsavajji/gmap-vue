@@ -57,7 +57,7 @@ const props = {
   visible: {
     twoWay: true,
     default: true,
-  }
+  },
 };
 
 const events = [
