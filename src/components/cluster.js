@@ -8,6 +8,7 @@
 **/
 
 import _ from 'lodash';
+import eventsBinder from '../utils/eventsBinder.js';
 import propsBinder from '../utils/propsBinder.js';
 import MapElementMixin from './mapElementMixin';
 import getPropsValuesMixin from '../utils/getPropsValuesMixin.js';
@@ -31,6 +32,20 @@ const props = {
     twoWay: false
   }
 };
+
+const events = [
+  'click',
+  'rightclick',
+  'dblclick',
+  'drag',
+  'dragstart',
+  'dragend',
+  'mouseup',
+  'mousedown',
+  'mouseover',
+  'mouseout'
+];
+
 
 export default {
   mixins: [MapElementMixin, getPropsValuesMixin],
@@ -62,6 +77,7 @@ export default {
         this.$clusterObject.addMarkers(oldMarkers);
       }
     });
+    eventsBinder(this, this.$clusterObject, events);
   },
 
   detached() {
