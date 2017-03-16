@@ -8,6 +8,10 @@ var _lodash = require('lodash');
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
+var _eventsBinder = require('../utils/eventsBinder.js');
+
+var _eventsBinder2 = _interopRequireDefault(_eventsBinder);
+
 var _propsBinder = require('../utils/propsBinder.js');
 
 var _propsBinder2 = _interopRequireDefault(_propsBinder);
@@ -26,6 +30,15 @@ var _markerClustererPlus2 = _interopRequireDefault(_markerClustererPlus);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/* vim: set softtabstop=2 shiftwidth=2 expandtab : */
+
+/**
+  * @class Cluster
+  * @prop $clusterObject -- Exposes the marker clusterer to
+        descendent Marker classes. Override this if you area
+        extending the class
+**/
+
 var props = {
   maxZoom: {
     type: Number,
@@ -43,14 +56,9 @@ var props = {
     type: Array,
     twoWay: false
   }
-}; /* vim: set softtabstop=2 shiftwidth=2 expandtab : */
+};
 
-/**
-  * @class Cluster
-  * @prop $clusterObject -- Exposes the marker clusterer to
-        descendent Marker classes. Override this if you area
-        extending the class
-**/
+var events = ['click', 'rightclick', 'dblclick', 'drag', 'dragstart', 'dragend', 'mouseup', 'mousedown', 'mouseover', 'mouseout'];
 
 exports.default = {
   mixins: [_mapElementMixin2.default, _getPropsValuesMixin2.default],
@@ -81,6 +89,7 @@ exports.default = {
         _this.$clusterObject.addMarkers(oldMarkers);
       }
     });
+    (0, _eventsBinder2.default)(this, this.$clusterObject, events);
   },
   detached: function detached() {
     this.$clusterObject.clearMarkers();
