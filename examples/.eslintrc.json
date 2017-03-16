@@ -30,7 +30,7 @@
   "globals": {
     "google": false,
     "Vue": false,
-    "VueGoogleMap": false
+    "VueGoogleMaps": false
   },
   "plugins": [
     "html"

@@ -40,7 +40,7 @@ webConfig.externals = {
 webConfig.output = {
 	path: './dist',
     filename: "vue-google-maps.js",
-    library: ["VueGoogleMap"],
+    library: ["VueGoogleMaps"],
     libraryTarget: "umd"
 };
 
