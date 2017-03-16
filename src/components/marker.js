@@ -57,7 +57,10 @@ const props = {
   visible: {
     twoWay: true,
     default: true,
-  }
+  },
+  customData: {
+    type: Object,
+  },
 };
 
 const events = [

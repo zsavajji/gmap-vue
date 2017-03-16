@@ -7,6 +7,7 @@ import propsBinder from '../utils/propsBinder.js';
 import getPropsMixin from '../utils/getPropsValuesMixin.js';
 import mountableMixin from '../utils/mountableMixin.js';
 import latlngChangedHandler from '../utils/latlngChangedHandler.js';
+import prototypesGmaps from '../utils/prototypesGmaps';
 
 const props = {
   center: {
@@ -136,6 +137,9 @@ export default {
       const options = _.clone(this.options);
       _.assign(options, copiedData);
       this.$mapObject = new google.maps.Map(element, options);
+
+      //Adding additional prototypes to gmaps
+      prototypes_gmaps();
 
       // binding properties (two and one way)
       propsBinder(this, this.$mapObject, _.omit(props, ['center', 'zoom', 'bounds']));
