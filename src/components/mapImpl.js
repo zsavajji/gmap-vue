@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
-import {loaded} from '../manager.js';
-import {DeferredReadyMixin} from '../utils/deferredReady.js';
+import { loaded } from '../manager.js';
+import { DeferredReadyMixin } from '../utils/deferredReady.js';
 import eventsBinder from '../utils/eventsBinder.js';
 import propsBinder from '../utils/propsBinder.js';
 import getPropsMixin from '../utils/getPropsValuesMixin.js';
@@ -38,7 +38,7 @@ const props = {
   },
   options: {
     type: Object,
-    default () {return {};}
+    default() { return {}; }
   }
 };
 
@@ -64,13 +64,13 @@ const linkedMethods = _([
   'panToBounds',
   'fitBounds'
 ])
-  .map(methodName => [methodName, function() {
+  .map(methodName => [methodName, function () {
     if (this.$mapObject)
       this.$mapObject[methodName].apply(this.$mapObject, arguments);
   }])
   .fromPairs()
   .value()
-;
+  ;
 
 // Other convenience methods exposed by Vue Google Maps
 const customMethods = {
@@ -106,7 +106,7 @@ export default {
 
   created() {
     this.$mapCreated = new Promise((resolve, reject) => {
-      this.$mapCreatedDeferred = {resolve, reject};
+      this.$mapCreatedDeferred = { resolve, reject };
     });
   },
 
@@ -139,7 +139,7 @@ export default {
       this.$mapObject = new google.maps.Map(element, options);
 
       //Adding additional prototypes to gmaps
-      prototypes_gmaps();
+      prototypesGmaps();
 
       // binding properties (two and one way)
       propsBinder(this, this.$mapObject, _.omit(props, ['center', 'zoom', 'bounds']));
@@ -162,9 +162,9 @@ export default {
 
       return this.$mapCreated;
     })
-    .catch((error) => {
-      throw error;
-    });
+      .catch((error) => {
+        throw error;
+      });
   },
   methods: methods
 };

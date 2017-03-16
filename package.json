@@ -1,6 +1,6 @@
 {
   "name": "vue2-google-maps",
-  "version": "0.6.3",
+  "version": "0.6.4",
   "description": "This is a google map component for Vue.js, updated for Vue 2 compatibility",
   "main": "dist/main.js",
   "scripts": {
@@ -9,7 +9,7 @@
     "build-babel": "babel src --out-dir dist",
     "build-webpack": "cross-env NODE_ENV=production webpack --progress --hide-modules",
     "build": "npm run build-babel && npm run build-copy && npm run build-webpack",
-    "test": "npm run eslint && npm run lab-tests",
+    "test": "npm run lint && npm run lab-tests",
     "lint": "eslint --ext .vue,.js src && eslint --ext .vue,.html,.js examples",
     "lab-tests": "lab -T node_modules/lab-babel -t 100 -S test",
     "build-examples-webpack": "cd examples && webpack",
@@ -47,6 +47,7 @@
     "css-loader": "^0.23.0",
     "eslint": "^3.17.1",
     "eslint-config-standard": "^7.0.1",
+    "eslint-plugin-html": "^2.0.1",
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-standard": "^2.1.1",
     "file-loader": "^0.8.4",
@@ -56,7 +57,6 @@
     "lab-babel": "^1.1.1",
     "less": "^2.5.3",
     "less-loader": "^2.2.2",
-    "marker-clusterer-plus": "^2.1.4",
     "shx": "^0.2.0",
     "style-loader": "^0.13.0",
     "stylus-loader": "^1.4.0",
