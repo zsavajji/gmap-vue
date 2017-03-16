@@ -78,6 +78,9 @@ var props = {
   visible: {
     twoWay: true,
     default: true
+  },
+  customData: {
+    type: Object
   }
 };
 

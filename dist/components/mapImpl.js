@@ -36,6 +36,10 @@ var _latlngChangedHandler = require('../utils/latlngChangedHandler.js');
 
 var _latlngChangedHandler2 = _interopRequireDefault(_latlngChangedHandler);
 
+var _prototypesGmaps = require('../utils/prototypesGmaps');
+
+var _prototypesGmaps2 = _interopRequireDefault(_prototypesGmaps);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var props = {
@@ -153,6 +157,9 @@ exports.default = {
       var options = _lodash2.default.clone(_this2.options);
       _lodash2.default.assign(options, copiedData);
       _this2.$mapObject = new google.maps.Map(element, options);
+
+      //Adding additional prototypes to gmaps
+      (0, _prototypesGmaps2.default)();
 
       // binding properties (two and one way)
       (0, _propsBinder2.default)(_this2, _this2.$mapObject, _lodash2.default.omit(props, ['center', 'zoom', 'bounds']));
