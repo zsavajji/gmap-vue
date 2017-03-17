@@ -90,12 +90,12 @@ export default {
   props: props,
 
   render(h) {
-    if (this.$slots.default.length == 0) {
+    if (!this.$slots.default || this.$slots.default.length == 0) {
       return '';
-    } else if (this.$slots.default.length == 1) {
+    } else if (this.$slots.default.length == 1) { // So that infowindows can have a marker parent
       return this.$slots.default[0];
     } else {
-      return h( // So that infowindows can have a marker parent
+      return h(
         'div',
         this.$slots.default
       );
