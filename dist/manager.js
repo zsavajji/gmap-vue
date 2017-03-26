@@ -25,6 +25,10 @@ var setUp = false;
 
 var loaded = exports.loaded = new _promise2.default(function (resolve, reject) {
   // eslint-disable-line no-unused-vars
+  if (typeof window === 'undefined') {
+    // Do nothing if run from server-side
+    return;
+  }
   window['vueGoogleMapsInit'] = resolve;
 });
 
@@ -57,6 +61,10 @@ var loaded = exports.loaded = new _promise2.default(function (resolve, reject) {
  * ```
  */
 var load = exports.load = function load(apiKey, version, libraries, loadCn) {
+  if (typeof document === 'undefined') {
+    // Do nothing if run from server-side
+    return;
+  }
   if (!setUp) {
     var googleMapScript = document.createElement('SCRIPT');
 
