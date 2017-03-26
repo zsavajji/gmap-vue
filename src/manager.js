@@ -3,6 +3,10 @@
 var setUp = false;
 
 export const loaded = new Promise((resolve, reject) => { // eslint-disable-line no-unused-vars
+  if (typeof window === 'undefined') {
+    // Do nothing if run from server-side
+    return;
+  }
   window['vueGoogleMapsInit'] = resolve;
 });
 
@@ -35,6 +39,10 @@ export const loaded = new Promise((resolve, reject) => { // eslint-disable-line 
  * ```
  */
 export const load = (apiKey, version, libraries, loadCn) => {
+  if (typeof document === 'undefined') {
+    // Do nothing if run from server-side
+    return;
+  }
   if (!setUp) {
     const googleMapScript = document.createElement('SCRIPT');
 
