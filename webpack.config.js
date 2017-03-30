@@ -12,6 +12,7 @@ var baseConfig = {
       {
         test: /\.vue$/,
         loader: 'vue-loader',
+        options: { target: 'node' }
       },
       {
         test: /\.js$/,
@@ -61,6 +62,7 @@ stubbedConfig.output = {
     library: ["VueGoogleMaps"],
     libraryTarget: "commonjs2"
 };
+stubbedConfig.target = 'node';
 
 
 module.exports = [
