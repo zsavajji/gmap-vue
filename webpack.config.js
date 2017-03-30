@@ -16,7 +16,10 @@ var baseConfig = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        exclude: /node_modules/,
+        exclude: [
+          /node_modules/,
+          /src\/stubs/,
+        ]
       },
       {
         test: /\.(png|jpg|gif)$/,
@@ -38,14 +41,31 @@ webConfig.externals = {
   'marker-clusterer-plus': 'MarkerClusterer'
 };
 webConfig.output = {
-	path: './dist',
+	path: path.resolve(__dirname, 'dist'),
     filename: "vue-google-maps.js",
     library: ["VueGoogleMaps"],
     libraryTarget: "umd"
 };
 
+var stubbedConfig = _.clone(baseConfig);
+stubbedConfig.resolve = {
+  alias: {
+    lodash: path.resolve(__dirname, './src/stubs/stub-lodash.js'),
+    'marker-clusterer-plus': path.resolve(__dirname, './src/stubs/stub-marker-clusterer-plus.js'),
+  }
+};
+stubbedConfig.module.noParse = /stub-/
+stubbedConfig.output = {
+	path: path.resolve(__dirname, 'dist'),
+    filename: "vue-google-maps-stubbed.js",
+    library: ["VueGoogleMaps"],
+    libraryTarget: "commonjs2"
+};
+
+
 module.exports = [
     webConfig,
+    stubbedConfig,
 ];
 
 if (process.env.NODE_ENV === 'production') {
