@@ -17,6 +17,7 @@ Table of Contents
    * [vue2-google-maps](#vue2-google-maps)
       * [Note on events](#note-on-events)
    * [Table of Contents](#table-of-contents)
+      * [<a name="user-content-getting-started-nuxt"></a> Getting Started (with Nuxt.js)](#-getting-started-with-nuxt)
       * [<a name="user-content-getting-started-cdn"></a> Getting Started (with CDN)](#-getting-started-with-cdn)
       * [<a name="user-content-getting-started-npm"></a> Getting Started (with NPM)](#-getting-started-with-npm)
       * [Classes](#classes)
@@ -246,6 +247,32 @@ Table of Contents
          * [MountableMixin](#mountablemixin)
 
 Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
+
+## <a name="getting-started-nuxt"></a> Getting Started (with Nuxt.js)
+
+1. Create a plugin:
+
+**plugins/maps.js**
+```js
+import Vue from 'vue'
+import * as VueGoogleMaps from 'vue2-google-maps/dist/vue-google-maps-stubbed'
+
+Vue.use(VueGoogleMaps)
+```
+
+Note that you should use the stubbed version instead of the default version.
+The stubbed version will ensure that you get full server-side rendering.
+
+2. Include your plugin in `nuxt.config.js`:
+
+**nuxt.config.js**
+```js
+{
+  plugins: [
+    '~plugins/maps.js'
+  ]
+}
+```
 
 ## <a name="getting-started-cdn"></a> Getting Started (with CDN)
 
