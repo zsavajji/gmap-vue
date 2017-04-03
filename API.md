@@ -339,7 +339,7 @@ new Vue({
 ```
 
 ## Styling the Map
-Use the `options` property in `gmap-map` compontent to add styles and options (see Google Maps API for details on this).
+Use the `options` property in `gmap-map` compontent to add styles and options (see [Google Maps API](https://developers.google.com/maps/documentation/javascript/3.exp/reference#MapOptions) for details on this).
 ```
 <template>
   <gmap-map :options="{styles: styles}" ></gmap-map>
