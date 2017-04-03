@@ -338,6 +338,23 @@ new Vue({
 </script>
 ```
 
+## Styling the Map
+Use the `options` property in `gmap-map` compontent to add styles and options (see [Google Maps API](https://developers.google.com/maps/documentation/javascript/3.exp/reference#MapOptions) for details on this).
+```
+<template>
+  <gmap-map :options="{styles: styles}" ></gmap-map>
+</template>
+<script>
+  export default {
+    data () {
+      return {
+        styles: [ // styles here ]
+      }
+    }
+  }
+</script>
+```
+
 ## Classes
 
 Properties described here have a corresponding
