@@ -37,27 +37,36 @@ export default (vueElement, googleMapsElement, props, options) => {
         deep: type === Object
       });
     } else if (type === Object && trackProperties) {
-      // The indicator variable that is updated whenever any of the properties have changed
+      // I can watch multiple properties, but the danger is that each of
+      // them triggers the event handler multiple times
       // This ensures that the event handler will only be fired once
-      let attributeTrackerName = `_${attribute}_changeTracker`;
-      let attributeTrackerRoot = '$data._changeIndicators';
-      const attributeValue = vueElement[attribute];
+      let tick = 0, expectedTick = 0;
 
-      vueElement.$set(vueElement.$data._changeIndicators, attributeTrackerName, 0);
+      const raiseExpectation = () => {
+        expectedTick += 1
+      }
 
-      vueElement.$watch(attributeTrackerRoot + '.' + attributeTrackerName, () => {
-        googleMapsElement[setMethodName](vueElement[attribute]);
-        if (afterModelChanged) {
-          afterModelChanged(attribute, attributeValue);
+      const updateTick = () => {
+        tick = Math.max(expectedTick, tick + 1)
+      }
+
+      const respondToChange = () => {
+        if (tick < expectedTick) {
+          googleMapsElement[setMethodName](vueElement[attribute]);
+
+          if (afterModelChanged) {
+            afterModelChanged(attribute, attributeValue);
+          }
+
+          updateTick()
         }
-      }, {
-        immediate: typeof initialValue !== 'undefined',
-      });
+      }
 
       trackProperties.forEach(propName => {
+        // When any props change -- assume they change on the same tick
         vueElement.$watch(`${attribute}.${propName}`, () => {
-          vueElement.$set(attributeTrackerRoot, attributeTrackerName,
-            vueElement.$get(attributeTrackerRoot, attributeTrackerName) + 1);
+          raiseExpectation();
+          vueElement.$nextTick(respondToChange);
         }, {
           immediate: typeof initialValue !== 'undefined',
         });
