@@ -66,15 +66,17 @@ export default (vueElement, googleMapsElement, props, options) => {
 
     if (twoWay) {
       googleMapsElement.addListener(eventName, (ev) => { // eslint-disable-line no-unused-vars
-        if (timesSet > 0) {
+        /* Check for type === Object because we're quite happy
+          when primitive types change -- the change detection is cheap
+        */
+        if (type === Object && timesSet > 0) {
           timesSet --;
           return;
         }
         else {
           vueElement.$emit(eventName, googleMapsElement[getMethodName]());
         }
-      }
-      );
+      });
     }
   });
 };
