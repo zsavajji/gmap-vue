@@ -108,6 +108,8 @@ export default {
     });
 
     const updateCenter = () => {
+      if (!this.$mapObject) return;
+      
       this.$mapObject.setCenter({
         lat: this.finalLat,
         lng: this.finalLng,
