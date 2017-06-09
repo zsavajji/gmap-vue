@@ -70,6 +70,8 @@ export default {
     });
 
     const updateCenter = () => {
+      if (!this.panoObject) return;
+      
       this.$panoObject.setPosition({
         lat: this.finalLat,
         lng: this.finalLng,
