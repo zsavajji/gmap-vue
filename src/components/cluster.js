@@ -80,7 +80,14 @@ export default {
     eventsBinder(this, this.$clusterObject, events);
   },
 
-  detached() {
+  beforeDestroy() {
+    /* Performance optimization when destroying a large number of markers */
+    this.$children.forEach(marker => {
+      if (marker.$clusterObject === this.$clusterObject) {
+        marker.$clusterObject = null
+      }
+    })
+
     this.$clusterObject.clearMarkers();
   },
 };
