@@ -4,7 +4,6 @@
   <div>
     <div ref="flyaway"> <!-- so named because it will fly away to another component -->
       <slot>
-        <div v-html="content"></div>
       </slot>
     </div>
   </div>

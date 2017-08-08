@@ -11,8 +11,6 @@ const props = {
       return {};
     }
   },
-  content: {
-  },
   opened: {
     type: Boolean,
     default: true,

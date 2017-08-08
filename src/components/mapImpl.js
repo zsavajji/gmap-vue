@@ -56,19 +56,16 @@ const events = [
 ];
 
 // Plain Google Maps methods exposed here for convenience
-const linkedMethods = _([
+const linkedMethods = _.fromPairs([
   'panBy',
   'panTo',
   'panToBounds',
   'fitBounds'
-])
+]
   .map(methodName => [methodName, function () {
     if (this.$mapObject)
       this.$mapObject[methodName].apply(this.$mapObject, arguments);
-  }])
-  .fromPairs()
-  .value()
-  ;
+  }]))
 
 // Other convenience methods exposed by Vue Google Maps
 const customMethods = {
@@ -109,7 +106,7 @@ export default {
 
     const updateCenter = () => {
       if (!this.$mapObject) return;
-      
+
       this.$mapObject.setCenter({
         lat: this.finalLat,
         lng: this.finalLng,

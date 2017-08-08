@@ -618,8 +618,6 @@ Example:
 #### Properties
 ##### `options : object`
 ##### `opened : object`
-##### `content : string`
-Alternative to setting the contents within the tag.
 ##### `position : {lat: number, lng: number} | google.maps.LatLng`
 ##### `zIndex : number`
 #### Events

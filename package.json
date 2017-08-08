@@ -12,7 +12,7 @@
     "test": "npm run lint && npm run lab-tests",
     "lint": "eslint --ext .vue,.js src && eslint --ext .vue,.html,.js examples",
     "lab-tests": "lab -T node_modules/lab-babel -t 100 -S test",
-    "build-examples-webpack": "cd examples && webpack",
+    "build-examples-webpack": "cd examples && cross-env NODE_ENV=production webpack",
     "build-examples-before": "npm run build && shx cp dist/vue-google-maps.js examples",
     "build-examples": "npm run build-examples-before && npm run build-examples-webpack",
     "deploy": "npm run build-examples && gh-pages -d examples"
@@ -26,9 +26,10 @@
   },
   "homepage": "https://github.com/xkjyeah/vue-google-maps#readme",
   "dependencies": {
-    "marker-clusterer-plus": "^2.1.4",
+    "babel-plugin-lodash": "^3.2.11",
     "babel-plugin-transform-runtime": "^6.15.0",
-    "babel-runtime": "^5.8.0"
+    "babel-runtime": "^5.8.0",
+    "marker-clusterer-plus": "^2.1.4"
   },
   "peerDependencies": {
     "vue": "^2.2.1",
