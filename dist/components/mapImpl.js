@@ -72,14 +72,14 @@ var props = {
 var events = ['click', 'dblclick', 'drag', 'dragend', 'dragstart', 'idle', 'mousemove', 'mouseout', 'mouseover', 'resize', 'rightclick', 'tilesloaded'];
 
 // Plain Google Maps methods exposed here for convenience
-var linkedMethods = (0, _lodash2.default)(['panBy', 'panTo', 'panToBounds', 'fitBounds']).map(function (methodName) {
+var linkedMethods = _lodash2.default.fromPairs(['panBy', 'panTo', 'panToBounds', 'fitBounds'].map(function (methodName) {
   return [methodName, function () {
     if (this.$mapObject) this.$mapObject[methodName].apply(this.$mapObject, arguments);
   }];
-}).fromPairs().value();
+})
 
 // Other convenience methods exposed by Vue Google Maps
-var customMethods = {
+);var customMethods = {
   resize: function resize() {
     if (this.$mapObject) {
       google.maps.event.trigger(this.$mapObject, 'resize');
