@@ -5,7 +5,6 @@ import Polyline from './components/polyline';
 import Polygon from './components/polygon';
 import Circle from './components/circle';
 import Rectangle from './components/rectangle';
-import _ from 'lodash';
 
 // Vue component imports
 import InfoWindow from './components/infoWindow.vue';
@@ -24,9 +23,9 @@ export {load, loaded, Marker, Cluster, Polyline, Polygon, Circle, Rectangle,
   MountableMixin};
 
 export function install(Vue, options) {
-  options = _.defaults(options, {
+  options = Object.assign({}, {
     installComponents: true,
-  });
+  }, options);
 
   Vue.use(DeferredReady);
 

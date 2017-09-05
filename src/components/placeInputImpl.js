@@ -1,11 +1,10 @@
-import _ from 'lodash';
+import {omit, clone} from 'lodash';
 import propsBinder from '../utils/propsBinder.js';
 import downArrowSimulator from '../utils/simulateArrowDown.js';
 import getPropsValuesMixin from '../utils/getPropsValuesMixin.js';
 import {
   loaded
 } from '../manager.js';
-import assert from 'assert';
 
 const props = {
   bounds: {
@@ -58,16 +57,17 @@ export default {
     });
 
     loaded.then(() => {
-      const options = _.clone(this.getPropsValues());
+      const options = clone(this.getPropsValues());
       if (this.selectFirstOnEnter) {
         downArrowSimulator(this.$refs.input);
       }
 
-      assert(typeof(google.maps.places.Autocomplete) === 'function',
-        'google.maps.places.Autocomplete is undefined. Did you add \'places\' to libraries when loading Google Maps?');
+      if(typeof(google.maps.places.Autocomplete) !== 'function'){
+        throw new Error('google.maps.places.Autocomplete is undefined. Did you add \'places\' to libraries when loading Google Maps?');
+      }
 
       this.autoCompleter = new google.maps.places.Autocomplete(this.$refs.input, options);
-      propsBinder(this, this.autoCompleter, _.omit(props, ['placeholder', 'place', 'selectFirstOnEnter',
+      propsBinder(this, this.autoCompleter, omit(props, ['placeholder', 'place', 'selectFirstOnEnter',
         'defaultPlace', 'className', 'label']));
 
       this.autoCompleter.addListener('place_changed', () => {

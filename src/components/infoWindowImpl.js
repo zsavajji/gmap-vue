@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import {omit, clone} from 'lodash';
 import propsBinder from '../utils/propsBinder.js';
 import eventsBinder from '../utils/eventsBinder.js';
 import MapElementMixin from './mapElementMixin';
@@ -77,7 +77,7 @@ export default {
 
     createInfoWindow() {
       // setting options
-      const options = _.clone(this.options);
+      const options = clone(this.options);
       options.content = this.$refs.flyaway;
 
       // only set the position if the info window is not bound to a marker
@@ -88,7 +88,7 @@ export default {
       this.$infoWindow = new google.maps.InfoWindow(options);
 
       // Binding
-      propsBinder(this, this.$infoWindow, _.omit(props, ['opened']));
+      propsBinder(this, this.$infoWindow, omit(props, ['opened']));
       eventsBinder(this, this.$infoWindow, events);
 
       this.openInfoWindow();

@@ -4,9 +4,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _lodash = require('lodash');
+var _mapValues2 = require('lodash/mapValues');
 
-var _lodash2 = _interopRequireDefault(_lodash);
+var _mapValues3 = _interopRequireDefault(_mapValues2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -15,7 +15,7 @@ exports.default = {
     getPropsValues: function getPropsValues() {
       var _this = this;
 
-      return _lodash2.default.mapValues(this.$options.props, function (v, k) {
+      return (0, _mapValues3.default)(this.$options.props, function (v, k) {
         return _this[k];
       });
     }
