@@ -4,9 +4,17 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _lodash = require('lodash');
+var _omit2 = require('lodash/omit');
 
-var _lodash2 = _interopRequireDefault(_lodash);
+var _omit3 = _interopRequireDefault(_omit2);
+
+var _pickBy2 = require('lodash/pickBy');
+
+var _pickBy3 = _interopRequireDefault(_pickBy2);
+
+var _clone2 = require('lodash/clone');
+
+var _clone3 = _interopRequireDefault(_clone2);
 
 var _propsBinder = require('../utils/propsBinder.js');
 
@@ -21,10 +29,6 @@ var _getPropsValuesMixin = require('../utils/getPropsValuesMixin.js');
 var _getPropsValuesMixin2 = _interopRequireDefault(_getPropsValuesMixin);
 
 var _manager = require('../manager.js');
-
-var _assert = require('assert');
-
-var _assert2 = _interopRequireDefault(_assert);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -66,27 +70,29 @@ exports.default = {
     var _this = this;
 
     _manager.loaded.then(function () {
-      var options = _lodash2.default.clone(_this.getPropsValues());
+      var options = (0, _clone3.default)(_this.getPropsValues());
       if (_this.selectFirstOnEnter) {
         (0, _simulateArrowDown2.default)(_this.$refs.input);
       }
 
-      (0, _assert2.default)(typeof google.maps.places.Autocomplete === 'function', 'google.maps.places.Autocomplete is undefined. Did you add \'places\' to libraries when loading Google Maps?');
+      if (typeof google.maps.places.Autocomplete !== 'function') {
+        throw new Error('google.maps.places.Autocomplete is undefined. Did you add \'places\' to libraries when loading Google Maps?');
+      }
 
       /* eslint-disable no-unused-vars */
-      var finalOptions = _lodash2.default.pickBy(_lodash2.default.defaults({}, options.options, _lodash2.default.omit(options, ['options', 'selectFirstOnEnter', 'value', 'place', 'placeholder'])), function (v, k) {
+      var finalOptions = (0, _pickBy3.default)(Object.assign({}, (0, _omit3.default)(options, ['options', 'selectFirstOnEnter', 'value', 'place', 'placeholder']), options.options), function (v, k) {
         return v !== undefined;
-      });
+      }
 
       // Component restrictions is rather particular. Undefined not allowed
-      _this.$watch('componentRestrictions', function (v) {
+      );_this.$watch('componentRestrictions', function (v) {
         if (v !== undefined) {
           _this.$autocomplete.setComponentRestrictions(v);
         }
       });
 
       _this.$autocomplete = new google.maps.places.Autocomplete(_this.$refs.input, finalOptions);
-      (0, _propsBinder2.default)(_this, _this.$autocomplete, _lodash2.default.omit(props, ['placeholder', 'place', 'selectFirstOnEnter', 'value', 'componentRestrictions']));
+      (0, _propsBinder2.default)(_this, _this.$autocomplete, (0, _omit3.default)(props, ['placeholder', 'place', 'selectFirstOnEnter', 'value', 'componentRestrictions']));
 
       _this.$autocomplete.addListener('place_changed', function () {
         _this.$emit('place_changed', _this.$autocomplete.getPlace());

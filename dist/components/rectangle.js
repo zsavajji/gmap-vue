@@ -4,9 +4,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _lodash = require('lodash');
+var _clone2 = require('lodash/clone');
 
-var _lodash2 = _interopRequireDefault(_lodash);
+var _clone3 = _interopRequireDefault(_clone2);
 
 var _eventsBinder = require('../utils/eventsBinder.js');
 
@@ -55,7 +55,7 @@ exports.default = {
     return '';
   },
   deferredReady: function deferredReady() {
-    var options = _lodash2.default.clone(this.getPropsValues());
+    var options = (0, _clone3.default)(this.getPropsValues());
     options.map = this.$map;
     this.createRectangle(options);
   },
