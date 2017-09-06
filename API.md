@@ -252,7 +252,7 @@ Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
 **plugins/maps.js**
 ```js
 import Vue from 'vue'
-import * as VueGoogleMaps from '~/node_modules/vue2-google-maps'
+import * as VueGoogleMaps from '~/node_modules/vue2-google-maps/src/main'
 
 Vue.use(VueGoogleMaps, {
   load: {
