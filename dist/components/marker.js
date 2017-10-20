@@ -56,6 +56,9 @@ var props = {
     type: Number,
     default: 1
   },
+  options: {
+    type: Object
+  },
   place: {
     type: Object
   },
@@ -125,6 +128,8 @@ exports.default = {
       return _this[prop];
     });
     options.map = this.$map;
+    delete options.options;
+    Object.assign(options, this.options);
 
     // search ancestors for cluster object
     var search = this.$findAncestor(function (ans) {
