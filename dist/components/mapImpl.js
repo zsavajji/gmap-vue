@@ -32,6 +32,10 @@ var _mountableMixin = require('../utils/mountableMixin.js');
 
 var _mountableMixin2 = _interopRequireDefault(_mountableMixin);
 
+var _TwoWayBindingWrapper = require('../utils/TwoWayBindingWrapper.js');
+
+var _TwoWayBindingWrapper2 = _interopRequireDefault(_TwoWayBindingWrapper);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var props = {
@@ -77,10 +81,10 @@ var linkedMethods = ['panBy', 'panTo', 'panToBounds', 'fitBounds'].reduce(functi
     if (this.$mapObject) this.$mapObject[methodName].apply(this.$mapObject, arguments);
   };
   return all;
-}, {}
+}, {});
 
 // Other convenience methods exposed by Vue Google Maps
-);var customMethods = {
+var customMethods = {
   resize: function resize() {
     if (this.$mapObject) {
       google.maps.event.trigger(this.$mapObject, 'resize');
@@ -117,17 +121,6 @@ exports.default = {
     this.$mapCreated = new Promise(function (resolve, reject) {
       _this.$mapCreatedDeferred = { resolve: resolve, reject: reject };
     });
-
-    var updateCenter = function updateCenter() {
-      if (!_this.$mapObject) return;
-
-      _this.$mapObject.setCenter({
-        lat: _this.finalLat,
-        lng: _this.finalLng
-      });
-    };
-    this.$watch('finalLat', updateCenter);
-    this.$watch('finalLng', updateCenter);
   },
 
 
@@ -137,6 +130,9 @@ exports.default = {
     },
     finalLng: function finalLng() {
       return this.center && typeof this.center.lng === 'function' ? this.center.lng() : this.center.lng;
+    },
+    finalLatLng: function finalLatLng() {
+      return { lat: this.finalLat, lng: this.finalLng };
     }
   },
 
@@ -166,8 +162,19 @@ exports.default = {
       (0, _propsBinder2.default)(_this2, _this2.$mapObject, (0, _omit3.default)(props, ['center', 'zoom', 'bounds']));
 
       // manually trigger center and zoom
-      _this2.$mapObject.addListener('center_changed', function () {
-        _this2.$emit('center_changed', _this2.$mapObject.getCenter());
+      new _TwoWayBindingWrapper2.default(function (increment, decrement, shouldUpdate) {
+        _this2.$mapObject.addListener('center_changed', function () {
+          if (shouldUpdate()) {
+            _this2.$emit('center_changed', _this2.$mapObject.getCenter());
+          }
+          decrement();
+        });
+
+        var updateCenter = function updateCenter() {
+          increment();
+          _this2.$mapObject.setCenter(_this2.finalLatLng);
+        };
+        _this2.$watch('finalLatLng', updateCenter);
       });
       _this2.$mapObject.addListener('zoom_changed', function () {
         _this2.$emit('zoom_changed', _this2.$mapObject.getZoom());
