@@ -7,6 +7,8 @@ import propsBinder from '../utils/propsBinder.js';
 import getPropsMixin from '../utils/getPropsValuesMixin.js';
 import mountableMixin from '../utils/mountableMixin.js';
 
+import TwoWayBindingWrapper from '../utils/TwoWayBindingWrapper.js'
+
 const props = {
   center: {
     required: true,
@@ -105,17 +107,6 @@ export default {
     this.$mapCreated = new Promise((resolve, reject) => {
       this.$mapCreatedDeferred = { resolve, reject };
     });
-
-    const updateCenter = () => {
-      if (!this.$mapObject) return;
-
-      this.$mapObject.setCenter({
-        lat: this.finalLat,
-        lng: this.finalLng,
-      })
-    }
-    this.$watch('finalLat', updateCenter)
-    this.$watch('finalLng', updateCenter)
   },
 
   computed: {
@@ -127,6 +118,9 @@ export default {
       return this.center &&
         (typeof this.center.lng === 'function') ? this.center.lng() : this.center.lng
     },
+    finalLatLng () {
+      return {lat: this.finalLat, lng: this.finalLng}
+    }
   },
 
   watch: {
@@ -153,9 +147,20 @@ export default {
       propsBinder(this, this.$mapObject, omit(props, ['center', 'zoom', 'bounds']));
 
       // manually trigger center and zoom
-      this.$mapObject.addListener('center_changed', () => {
-        this.$emit('center_changed', this.$mapObject.getCenter());
-      });
+      new TwoWayBindingWrapper((increment, decrement, shouldUpdate) => {
+        this.$mapObject.addListener('center_changed', () => {
+          if (shouldUpdate()) {
+            this.$emit('center_changed', this.$mapObject.getCenter());
+          }
+          decrement()
+        });
+
+        const updateCenter = () => {
+          increment()
+          this.$mapObject.setCenter(this.finalLatLng)
+        }
+        this.$watch('finalLatLng', updateCenter)
+      })
       this.$mapObject.addListener('zoom_changed', () => {
         this.$emit('zoom_changed', this.$mapObject.getZoom());
       });
