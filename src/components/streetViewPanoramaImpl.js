@@ -7,6 +7,8 @@ import propsBinder from '../utils/propsBinder.js';
 import getPropsMixin from '../utils/getPropsValuesMixin.js';
 import mountableMixin from '../utils/mountableMixin.js';
 
+import TwoWayBindingWrapper from '../utils/TwoWayBindingWrapper.js'
+
 const props = {
   zoom: {
     twoWay: true,
@@ -90,6 +92,12 @@ export default {
       return this.position &&
         (typeof this.position.lng === 'function') ? this.position.lng() : this.position.lng
     },
+    finalLatLng () {
+      return {
+        lat: this.finalLat,
+        lng: this.finalLng,
+      }
+    }
   },
 
   watch: {
@@ -115,7 +123,25 @@ export default {
 
       // binding properties (two and one way)
       propsBinder(this, this.$panoObject,
-          omit(props, ['position', 'zoom']));
+          omit(props, ['position']));
+
+      // manually trigger position
+      new TwoWayBindingWrapper((increment, decrement, shouldUpdate) => {
+        // Panos take a while to load
+        increment()
+
+        this.$panoObject.addListener('position_changed', () => {
+          if (shouldUpdate()) {
+            this.$emit('position_changed', this.$panoObject.getPosition());
+          }
+          decrement()
+        });
+
+        this.$watch('finalLatLng', () => {
+          increment()
+          this.$panoObject.setPosition(this.finalLatLng)
+        })
+      })
 
       //binding events
       eventsBinder(this, this.$panoObject, events);
