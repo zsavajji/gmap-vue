@@ -28,6 +28,10 @@ var _mountableMixin = require('../utils/mountableMixin.js');
 
 var _mountableMixin2 = _interopRequireDefault(_mountableMixin);
 
+var _TwoWayBindingWrapper = require('../utils/TwoWayBindingWrapper.js');
+
+var _TwoWayBindingWrapper2 = _interopRequireDefault(_TwoWayBindingWrapper);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var props = {
@@ -112,6 +116,12 @@ exports.default = {
     },
     finalLng: function finalLng() {
       return this.position && typeof this.position.lng === 'function' ? this.position.lng() : this.position.lng;
+    },
+    finalLatLng: function finalLatLng() {
+      return {
+        lat: this.finalLat,
+        lng: this.finalLng
+      };
     }
   },
 
@@ -136,7 +146,25 @@ exports.default = {
       _this2.$panoObject = new google.maps.StreetViewPanorama(element, options);
 
       // binding properties (two and one way)
-      (0, _propsBinder2.default)(_this2, _this2.$panoObject, (0, _omit3.default)(props, ['position', 'zoom']));
+      (0, _propsBinder2.default)(_this2, _this2.$panoObject, (0, _omit3.default)(props, ['position']));
+
+      // manually trigger position
+      new _TwoWayBindingWrapper2.default(function (increment, decrement, shouldUpdate) {
+        // Panos take a while to load
+        increment();
+
+        _this2.$panoObject.addListener('position_changed', function () {
+          if (shouldUpdate()) {
+            _this2.$emit('position_changed', _this2.$panoObject.getPosition());
+          }
+          decrement();
+        });
+
+        _this2.$watch('finalLatLng', function () {
+          increment();
+          _this2.$panoObject.setPosition(_this2.finalLatLng);
+        });
+      });
 
       //binding events
       (0, _eventsBinder2.default)(_this2, _this2.$panoObject, events);
