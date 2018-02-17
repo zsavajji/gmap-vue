@@ -1,7 +1,7 @@
 import Lab from 'lab';
 import {jsdom} from 'jsdom';
 import _ from 'lodash';
-import {DeferredReadyMixin} from '../src/deferredReady';
+import {DeferredReadyMixin} from '../src/utils/deferredReady';
 import {expect, fail} from 'code';
 
 export var lab = Lab.script();
