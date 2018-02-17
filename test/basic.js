@@ -1,7 +1,4 @@
-import Lab from 'lab';
-import {jsdom} from 'jsdom';
-import _ from 'lodash';
-import {expect, fail} from 'code';
+import Lab from 'lab'
 import assert from 'assert'
 import Puppeteer from 'puppeteer'
 import * as path from 'path'
@@ -39,20 +36,20 @@ lab.experiment('Basic tests', function () {
 
     assert(await page.evaluate(() =>
       VueGoogleMaps.loaded.then(() => !!google.maps)),
-      'google.maps is defined')
+    'google.maps is defined')
 
     assert(await page.evaluate(
       (vue) =>
         vue.$refs.map.$mapCreated
-        .then(() => vue.$refs.map.$mapObject instanceof google.maps.Map),
+          .then(() => vue.$refs.map.$mapObject instanceof google.maps.Map),
       vue), '$mapPromise is defined')
 
     assert(await page.evaluate(
       (vue) =>
         vue.$refs.map.$mapObject
-        .getDiv().parentNode.classList.contains('map-container'),
+          .getDiv().parentNode.classList.contains('map-container'),
       vue),
-      'Parent of $mapObject.div is a .map-container')
+    'Parent of $mapObject.div is a .map-container')
   })
 
   lab.test('Panning of map works', {timeout: 7000}, async function () {
@@ -72,15 +69,15 @@ lab.experiment('Basic tests', function () {
     // Wait for map to load first...
     await page.evaluate((vue) =>
       vue.$refs.map.$mapCreated
-      .then(() =>
-        new Promise(resolve => {
-          google.maps.event.addListener(
-            vue.$refs.map.$mapObject,
-            'idle',
-            resolve
-          )
-        })),
-      vue)
+        .then(() =>
+          new Promise(resolve => {
+            google.maps.event.addListener(
+              vue.$refs.map.$mapObject,
+              'idle',
+              resolve
+            )
+          })),
+    vue)
 
     // Then try to pan the page
     await page.mouse.move(right - 4, top + 4)
@@ -96,4 +93,4 @@ lab.experiment('Basic tests', function () {
     assert(lat > 1.45, 'Lat greater than 1.45')
     assert(lng > 103.9, 'Lng greater than 103.9')
   })
-});
+})

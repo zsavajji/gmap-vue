@@ -1,7 +1,6 @@
 import webpack from 'webpack'
-import path from 'path'
 
-export default new Promise((resolve) => {
+export default new Promise((resolve, reject) => {
   const webpackConfig = require('../webpack.config.js')[0]
 
   webpack(

@@ -47,7 +47,7 @@ export default {
         downArrowSimulator(this.$refs.input)
       }
 
-      if(typeof(google.maps.places.Autocomplete) !== 'function'){
+      if (typeof (google.maps.places.Autocomplete) !== 'function') {
         throw new Error('google.maps.places.Autocomplete is undefined. Did you add \'places\' to libraries when loading Google Maps?')
       }
 
