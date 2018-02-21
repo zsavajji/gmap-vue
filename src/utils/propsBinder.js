@@ -1,6 +1,6 @@
 /* vim: set softtabstop=2 shiftwidth=2 expandtab : */
 
-import {forEach} from 'lodash'
+import {forIn} from 'lodash'
 
 function capitalizeFirstLetter (string) {
   return string.charAt(0).toUpperCase() + string.slice(1)
@@ -9,7 +9,7 @@ function capitalizeFirstLetter (string) {
 export default (vueElement, googleMapsElement, props, options) => {
   options = options || {}
   var {afterModelChanged} = options
-  forEach(props, ({twoWay, type, trackProperties}, attribute) => {
+  forIn(props, ({twoWay, type, trackProperties}, attribute) => {
     const setMethodName = 'set' + capitalizeFirstLetter(attribute)
     const getMethodName = 'get' + capitalizeFirstLetter(attribute)
     const eventName = attribute.toLowerCase() + '_changed'
@@ -37,7 +37,7 @@ export default (vueElement, googleMapsElement, props, options) => {
         immediate: typeof initialValue !== 'undefined',
         deep: type === Object
       })
-    } else if (type === Object && trackProperties) {
+    } else {
       // I can watch multiple properties, but the danger is that each of
       // them triggers the event handler multiple times
       // This ensures that the event handler will only be fired once
