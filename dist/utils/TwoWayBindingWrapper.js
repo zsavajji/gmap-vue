@@ -3,11 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
+exports.default = TwoWayBindingWrapper;
 /**
  * When you have two-way bindings, but the actual bound value will not equal
  * the value you initially passed in, then to avoid an infinite loop you
@@ -47,41 +43,14 @@ new TwoWayBindingWrapper((increment, decrement, shouldUpdate) => {
   })
 })
  */
-var TwoWayBindingWrapper = function () {
-  function TwoWayBindingWrapper(fn) {
-    var _this = this;
+function TwoWayBindingWrapper(fn) {
+  var counter = 0;
 
-    _classCallCheck(this, TwoWayBindingWrapper);
-
-    this.counter = 0;
-
-    fn(function () {
-      return _this.increment();
-    }, function () {
-      return _this.decrement();
-    }, function () {
-      return _this.shouldUpdate();
-    });
-  }
-
-  _createClass(TwoWayBindingWrapper, [{
-    key: "increment",
-    value: function increment() {
-      this.counter += 1;
-    }
-  }, {
-    key: "decrement",
-    value: function decrement() {
-      this.counter = Math.max(0, this.counter - 1);
-    }
-  }, {
-    key: "shouldUpdate",
-    value: function shouldUpdate() {
-      return this.counter === 0;
-    }
-  }]);
-
-  return TwoWayBindingWrapper;
-}();
-
-exports.default = TwoWayBindingWrapper;
+  fn(function () {
+    counter += 1;
+  }, function () {
+    counter = Math.max(0, counter - 1);
+  }, function () {
+    return counter === 0;
+  });
+}

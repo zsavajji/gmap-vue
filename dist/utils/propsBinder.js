@@ -4,24 +4,18 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _forEach2 = require('lodash/forEach');
-
-var _forEach3 = _interopRequireDefault(_forEach2);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/* vim: set softtabstop=2 shiftwidth=2 expandtab : */
+var _lodash = require('lodash');
 
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
-}
+} /* vim: set softtabstop=2 shiftwidth=2 expandtab : */
 
 exports.default = function (vueElement, googleMapsElement, props, options) {
   options = options || {};
   var _options = options,
       afterModelChanged = _options.afterModelChanged;
 
-  (0, _forEach3.default)(props, function (_ref, attribute) {
+  (0, _lodash.forIn)(props, function (_ref, attribute) {
     var twoWay = _ref.twoWay,
         type = _ref.type,
         trackProperties = _ref.trackProperties;
@@ -53,12 +47,12 @@ exports.default = function (vueElement, googleMapsElement, props, options) {
         immediate: typeof initialValue !== 'undefined',
         deep: type === Object
       });
-    } else if (type === Object && trackProperties) {
+    } else {
       // I can watch multiple properties, but the danger is that each of
       // them triggers the event handler multiple times
       // This ensures that the event handler will only be fired once
-      var tick = 0,
-          expectedTick = 0;
+      var tick = 0;
+      var expectedTick = 0;
 
       var raiseExpectation = function raiseExpectation() {
         expectedTick += 1;
@@ -73,7 +67,7 @@ exports.default = function (vueElement, googleMapsElement, props, options) {
           googleMapsElement[setMethodName](vueElement[attribute]);
 
           if (afterModelChanged) {
-            afterModelChanged(attribute, attributeValue);
+            afterModelChanged(attribute, vueElement[attribute]);
           }
 
           updateTick();
@@ -99,7 +93,6 @@ exports.default = function (vueElement, googleMapsElement, props, options) {
         */
         if (type === Object && timesSet > 0) {
           timesSet--;
-          return;
         } else {
           vueElement.$emit(eventName, googleMapsElement[getMethodName]());
         }

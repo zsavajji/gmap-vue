@@ -4,13 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _clone2 = require('lodash/clone');
-
-var _clone3 = _interopRequireDefault(_clone2);
-
-var _omit2 = require('lodash/omit');
-
-var _omit3 = _interopRequireDefault(_omit2);
+var _lodash = require('lodash');
 
 var _manager = require('../manager.js');
 
@@ -78,7 +72,9 @@ var events = ['click', 'dblclick', 'drag', 'dragend', 'dragstart', 'idle', 'mous
 // Plain Google Maps methods exposed here for convenience
 var linkedMethods = ['panBy', 'panTo', 'panToBounds', 'fitBounds'].reduce(function (all, methodName) {
   all[methodName] = function () {
-    if (this.$mapObject) this.$mapObject[methodName].apply(this.$mapObject, arguments);
+    if (this.$mapObject) {
+      this.$mapObject[methodName].apply(this.$mapObject, arguments);
+    }
   };
   return all;
 }, {});
@@ -91,7 +87,9 @@ var customMethods = {
     }
   },
   resizePreserveCenter: function resizePreserveCenter() {
-    if (!this.$mapObject) return;
+    if (!this.$mapObject) {
+      return;
+    }
 
     var oldCenter = this.$mapObject.getCenter();
     google.maps.event.trigger(this.$mapObject, 'resize');
@@ -152,17 +150,17 @@ exports.default = {
       var element = _this2.$refs['vue-map'];
 
       // creating the map
-      var copiedData = (0, _clone3.default)(_this2.getPropsValues());
+      var copiedData = (0, _lodash.clone)(_this2.getPropsValues());
       delete copiedData.options;
-      var options = (0, _clone3.default)(_this2.options);
+      var options = (0, _lodash.clone)(_this2.options);
       Object.assign(options, copiedData);
       _this2.$mapObject = new google.maps.Map(element, options);
 
       // binding properties (two and one way)
-      (0, _propsBinder2.default)(_this2, _this2.$mapObject, (0, _omit3.default)(props, ['center', 'zoom', 'bounds']));
+      (0, _propsBinder2.default)(_this2, _this2.$mapObject, (0, _lodash.omit)(props, ['center', 'zoom', 'bounds']));
 
       // manually trigger center and zoom
-      new _TwoWayBindingWrapper2.default(function (increment, decrement, shouldUpdate) {
+      (0, _TwoWayBindingWrapper2.default)(function (increment, decrement, shouldUpdate) {
         _this2.$mapObject.addListener('center_changed', function () {
           if (shouldUpdate()) {
             _this2.$emit('center_changed', _this2.$mapObject.getCenter());
@@ -183,7 +181,7 @@ exports.default = {
         _this2.$emit('bounds_changed', _this2.$mapObject.getBounds());
       });
 
-      //binding events
+      // binding events
       (0, _eventsBinder2.default)(_this2, _this2.$mapObject, events);
 
       _this2.$mapCreatedDeferred.resolve(_this2.$mapObject);
