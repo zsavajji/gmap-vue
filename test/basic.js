@@ -48,7 +48,7 @@ lab.experiment('Basic tests', function () {
     'Parent of $mapObject.div is a .map-container')
   })
 
-  lab.test('Panning of map works', {timeout: 7000}, async function () {
+  lab.test('Panning of map works', {timeout: 10000}, async function () {
     await loadPage()
     const vue = await mountVue()
 
