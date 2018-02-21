@@ -1,8 +1,6 @@
 import Lab from 'lab'
 import assert from 'assert'
-import Puppeteer from 'puppeteer'
-import * as path from 'path'
-import CompileStandalone from './compile-standalone'
+import {getPage, loadFile} from './test-common'
 
 export const lab = Lab.script()
 
@@ -10,15 +8,12 @@ lab.experiment('Basic tests', function () {
   let page = null
 
   async function loadPage () {
-    return page.goto(path.resolve(__dirname, './test-pages/test-marker-with-infowindow.html'), {
+    return loadFile(page, './test-pages/test-marker-with-infowindow.html', {
       waitUntil: 'domcontentloaded'
     })
   }
 
-  lab.before({timeout: 8000}, async function () {
-    await CompileStandalone
-    page = await Puppeteer.launch().then(browser => browser.newPage())
-  })
+  lab.before({timeout: 8000}, getPage(p => { page = p }))
 
   lab.test('Clicking the marker triggers the infowindow', {timeout: 5000}, async function () {
     await loadPage()

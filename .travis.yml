@@ -3,4 +3,5 @@ node_js:
   - '9'
 script:
   - npm run test
-
+env:
+  - THIS_IS_ON_TRAVIS_AND_SANDBOX_IS_NOT_ALLOWED=true

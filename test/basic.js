@@ -1,8 +1,6 @@
 import Lab from 'lab'
 import assert from 'assert'
-import Puppeteer from 'puppeteer'
-import * as path from 'path'
-import CompileStandalone from './compile-standalone'
+import {getPage, loadFile} from './test-common'
 
 export const lab = Lab.script()
 
@@ -10,10 +8,11 @@ lab.experiment('Basic tests', function () {
   let page = null
 
   async function loadPage () {
-    return page.goto(path.resolve(__dirname, './test-pages/test-plain-map.html'), {
+    return loadFile(page, './test-pages/test-plain-map.html', {
       waitUntil: 'domcontentloaded'
     })
   }
+
   async function mountVue () {
     return page.evaluateHandle(() =>
       new Promise((resolve) => {
@@ -25,10 +24,7 @@ lab.experiment('Basic tests', function () {
       }))
   }
 
-  lab.before({timeout: 8000}, async function () {
-    await CompileStandalone
-    page = await Puppeteer.launch().then(browser => browser.newPage())
-  })
+  lab.before({timeout: 8000}, getPage(p => { page = p }))
 
   lab.test('Maps API is loaded', {timeout: 5000}, async function () {
     await loadPage()
