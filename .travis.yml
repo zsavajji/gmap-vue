@@ -3,6 +3,7 @@ node_js:
   - '9'
 script:
   - npm run test
+before_deploy: 'git checkout -f HEAD'
 deploy:
   provider: script
   script: npm run deploy
