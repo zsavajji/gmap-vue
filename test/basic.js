@@ -1,6 +1,8 @@
 import Lab from 'lab'
 import assert from 'assert'
-import {getPage, loadFile} from './test-common'
+import fs from 'fs'
+import path from 'path'
+import {getPage, loadFile} from './test-setup/test-common'
 
 export const lab = Lab.script()
 
@@ -81,5 +83,17 @@ lab.experiment('Basic tests', {timeout: 15000}, function () {
     }, vue)
     assert(lat > 1.45, 'Lat greater than 1.45')
     assert(lng > 103.9, 'Lng greater than 103.9')
+  })
+
+  lab.test('Lodash library is not bloating up the library', async () => {
+    const libraryOutput = fs.readFileSync(
+      path.join(__dirname, '../dist/vue-google-maps.js'),
+      'utf-8'
+    )
+
+    if (/Lodash <http(.*)>/.test(libraryOutput)) {
+      assert(false,
+        'Lodash found! This is bad because you are bloating up the library')
+    }
   })
 })

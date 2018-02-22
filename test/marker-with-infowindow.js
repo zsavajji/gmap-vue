@@ -1,6 +1,6 @@
 import Lab from 'lab'
 import assert from 'assert'
-import {getPage, loadFile} from './test-common'
+import {getPage, loadFile} from './test-setup/test-common'
 
 export const lab = Lab.script()
 

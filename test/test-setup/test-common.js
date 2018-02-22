@@ -19,5 +19,5 @@ export function getPage (p) {
 }
 
 export async function loadFile (page, relpath, options) {
-  return page.goto('file:///' + path.join(__dirname, relpath), options)
+  return page.goto('file:///' + path.join(__dirname, '../', relpath), options)
 }
