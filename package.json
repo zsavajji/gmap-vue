@@ -11,7 +11,7 @@
     "build": "npm run build-babel && npm run build-copy && npm run build-webpack",
     "test": "npm run lab-tests && npm run lint",
     "lint": "eslint --ext .vue,.js src && eslint --ext .vue,.html,.js test",
-    "lab-tests": "lab -T node_modules/lab-babel -S test",
+    "lab-tests": "lab -T node_modules/lab-babel -l -S test",
     "build-examples-webpack": "cd examples && cross-env NODE_ENV=production webpack",
     "build-examples-before": "npm run build && shx cp dist/vue-google-maps.js examples",
     "build-examples": "npm run build-examples-before && npm run build-examples-webpack",
