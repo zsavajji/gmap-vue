@@ -1,4 +1,5 @@
-import {omit, clone} from 'lodash'
+import omit from 'lodash/omit'
+import clone from 'lodash/clone'
 
 import { loaded } from '../manager.js'
 import { DeferredReadyMixin } from '../utils/deferredReady.js'

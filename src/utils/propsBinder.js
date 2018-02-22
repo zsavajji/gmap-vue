@@ -1,6 +1,6 @@
 /* vim: set softtabstop=2 shiftwidth=2 expandtab : */
 
-import {forIn} from 'lodash'
+import forIn from 'lodash/forIn'
 
 function capitalizeFirstLetter (string) {
   return string.charAt(0).toUpperCase() + string.slice(1)

@@ -1,4 +1,4 @@
-import {omit} from 'lodash'
+import omit from 'lodash/omit'
 
 import {loaded} from '../manager.js'
 import {DeferredReadyMixin} from '../utils/deferredReady.js'

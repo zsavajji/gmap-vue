@@ -1,4 +1,4 @@
-import {mapValues} from 'lodash'
+import mapValues from 'lodash/mapValues'
 import eventsBinder from '../utils/eventsBinder.js'
 import propsBinder from '../utils/propsBinder.js'
 import getPropsValuesMixin from '../utils/getPropsValuesMixin.js'

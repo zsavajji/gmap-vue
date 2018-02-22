@@ -7,7 +7,7 @@
         extending the class
 **/
 
-import {clone} from 'lodash'
+import clone from 'lodash/clone'
 import eventsBinder from '../utils/eventsBinder.js'
 import propsBinder from '../utils/propsBinder.js'
 import MapElementMixin from './mapElementMixin'

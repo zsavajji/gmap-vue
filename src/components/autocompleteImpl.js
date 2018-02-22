@@ -1,4 +1,6 @@
-import { clone, pickBy, omit } from 'lodash'
+import clone from 'lodash/clone'
+import pickBy from 'lodash/pickBy'
+import omit from 'lodash/omit'
 import propsBinder from '../utils/propsBinder.js'
 import downArrowSimulator from '../utils/simulateArrowDown.js'
 import getPropsValuesMixin from '../utils/getPropsValuesMixin.js'
