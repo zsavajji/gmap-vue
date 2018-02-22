@@ -3,5 +3,10 @@ node_js:
   - '9'
 script:
   - npm run test
+deploy:
+  provider: script
+  script: npm run deploy
+  on:
+    branch: vue2
 env:
   - THIS_IS_ON_TRAVIS_AND_SANDBOX_IS_NOT_ALLOWED=true
