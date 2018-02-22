@@ -4,7 +4,7 @@ import {getPage, loadFile} from './test-common'
 
 export const lab = Lab.script()
 
-lab.experiment('Basic tests', function () {
+lab.experiment('Basic tests', {timeout: 15000}, function () {
   let page = null
 
   async function loadPage () {
@@ -19,14 +19,14 @@ lab.experiment('Basic tests', function () {
         new Vue({
           created () {
             resolve(this)
-          }
+          },
         }).$mount('#test1')
       }))
   }
 
-  lab.before({timeout: 8000}, getPage(p => { page = p }))
+  lab.before({timeout: 15000}, getPage(p => { page = p }))
 
-  lab.test('Maps API is loaded', {timeout: 5000}, async function () {
+  lab.test('Maps API is loaded', async function () {
     await loadPage()
     const vue = await mountVue()
 
@@ -48,7 +48,7 @@ lab.experiment('Basic tests', function () {
     'Parent of $mapObject.div is a .map-container')
   })
 
-  lab.test('Panning of map works', {timeout: 10000}, async function () {
+  lab.test('Panning of map works', {timeout: 30000}, async function () {
     await loadPage()
     const vue = await mountVue()
 
@@ -65,15 +65,8 @@ lab.experiment('Basic tests', function () {
     // Wait for map to load first...
     await page.evaluate((vue) =>
       vue.$refs.map.$mapCreated
-        .then(() =>
-          new Promise(resolve => {
-            google.maps.event.addListener(
-              vue.$refs.map.$mapObject,
-              'idle',
-              resolve
-            )
-          })),
-    vue)
+        .then(() => new Promise(resolve => setTimeout(resolve, 500))),
+      vue)
 
     // Then try to pan the page
     await page.mouse.move(right - 4, top + 4)

@@ -4,7 +4,7 @@ import {getPage, loadFile} from './test-common'
 
 export const lab = Lab.script()
 
-lab.experiment('Basic tests', function () {
+lab.experiment('Basic tests', {timeout: 15000}, function () {
   let page = null
 
   async function loadPage () {
@@ -13,9 +13,9 @@ lab.experiment('Basic tests', function () {
     })
   }
 
-  lab.before({timeout: 8000}, getPage(p => { page = p }))
+  lab.before({timeout: 15000}, getPage(p => { page = p }))
 
-  lab.test('Clicking the marker triggers the infowindow', {timeout: 5000}, async function () {
+  lab.test('Clicking the marker triggers the infowindow', async function () {
     await loadPage()
 
     await page.evaluate(() => {
