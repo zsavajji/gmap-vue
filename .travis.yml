@@ -3,11 +3,14 @@ node_js:
   - '9'
 script:
   - npm run test
-before_deploy: 'git checkout -f HEAD'
+before_deploy: 'npm run build-examples'
 deploy:
-  provider: script
-  script: npm run deploy
+  provider: pages
+  github-token: $GITHUB_TOKEN
+  keep-history: true
+  local-dir: examples
   on:
     branch: vue2
+  skip_cleanup: true
 env:
   - THIS_IS_ON_TRAVIS_AND_SANDBOX_IS_NOT_ALLOWED=true

@@ -14,7 +14,7 @@ internals.transform = function (content, filename) {
     sourceFileName: filename,
     auxiliaryCommentBefore: '$lab:coverage:off$',
     auxiliaryCommentAfter: '$lab:coverage:on$',
-    presets: ['es2016'],
+    presets: ['es2015'],
     plugins: ['transform-object-rest-spread'],
   })
 
