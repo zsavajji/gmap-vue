@@ -4,7 +4,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _lodash = require('lodash');
+var _forIn = require('lodash/forIn');
+
+var _forIn2 = _interopRequireDefault(_forIn);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
@@ -15,7 +19,7 @@ exports.default = function (vueElement, googleMapsElement, props, options) {
   var _options = options,
       afterModelChanged = _options.afterModelChanged;
 
-  (0, _lodash.forIn)(props, function (_ref, attribute) {
+  (0, _forIn2.default)(props, function (_ref, attribute) {
     var twoWay = _ref.twoWay,
         type = _ref.type,
         trackProperties = _ref.trackProperties;

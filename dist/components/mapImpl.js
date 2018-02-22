@@ -4,7 +4,13 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _lodash = require('lodash');
+var _omit = require('lodash/omit');
+
+var _omit2 = _interopRequireDefault(_omit);
+
+var _clone = require('lodash/clone');
+
+var _clone2 = _interopRequireDefault(_clone);
 
 var _manager = require('../manager.js');
 
@@ -150,14 +156,14 @@ exports.default = {
       var element = _this2.$refs['vue-map'];
 
       // creating the map
-      var copiedData = (0, _lodash.clone)(_this2.getPropsValues());
+      var copiedData = (0, _clone2.default)(_this2.getPropsValues());
       delete copiedData.options;
-      var options = (0, _lodash.clone)(_this2.options);
+      var options = (0, _clone2.default)(_this2.options);
       Object.assign(options, copiedData);
       _this2.$mapObject = new google.maps.Map(element, options);
 
       // binding properties (two and one way)
-      (0, _propsBinder2.default)(_this2, _this2.$mapObject, (0, _lodash.omit)(props, ['center', 'zoom', 'bounds']));
+      (0, _propsBinder2.default)(_this2, _this2.$mapObject, (0, _omit2.default)(props, ['center', 'zoom', 'bounds']));
 
       // manually trigger center and zoom
       (0, _TwoWayBindingWrapper2.default)(function (increment, decrement, shouldUpdate) {

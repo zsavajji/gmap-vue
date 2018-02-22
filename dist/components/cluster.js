@@ -4,7 +4,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _lodash = require('lodash');
+var _clone = require('lodash/clone');
+
+var _clone2 = _interopRequireDefault(_clone);
 
 var _eventsBinder = require('../utils/eventsBinder.js');
 
@@ -69,7 +71,7 @@ exports.default = {
   deferredReady: function deferredReady() {
     var _this = this;
 
-    var options = (0, _lodash.clone)(this.getPropsValues());
+    var options = (0, _clone2.default)(this.getPropsValues());
 
     if (typeof _markerClustererPlus2.default === 'undefined') {
       /* eslint-disable no-console */

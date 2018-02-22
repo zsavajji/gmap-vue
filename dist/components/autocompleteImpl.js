@@ -4,7 +4,17 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _lodash = require('lodash');
+var _clone = require('lodash/clone');
+
+var _clone2 = _interopRequireDefault(_clone);
+
+var _pickBy = require('lodash/pickBy');
+
+var _pickBy2 = _interopRequireDefault(_pickBy);
+
+var _omit = require('lodash/omit');
+
+var _omit2 = _interopRequireDefault(_omit);
 
 var _propsBinder = require('../utils/propsBinder.js');
 
@@ -60,7 +70,7 @@ exports.default = {
     var _this = this;
 
     _manager.loaded.then(function () {
-      var options = (0, _lodash.clone)(_this.getPropsValues());
+      var options = (0, _clone2.default)(_this.getPropsValues());
       if (_this.selectFirstOnEnter) {
         (0, _simulateArrowDown2.default)(_this.$refs.input);
       }
@@ -70,7 +80,7 @@ exports.default = {
       }
 
       /* eslint-disable no-unused-vars */
-      var finalOptions = (0, _lodash.pickBy)(Object.assign({}, (0, _lodash.omit)(options, ['options', 'selectFirstOnEnter', 'value', 'place', 'placeholder']), options.options), function (v, k) {
+      var finalOptions = (0, _pickBy2.default)(Object.assign({}, (0, _omit2.default)(options, ['options', 'selectFirstOnEnter', 'value', 'place', 'placeholder']), options.options), function (v, k) {
         return v !== undefined;
       });
 
@@ -82,7 +92,7 @@ exports.default = {
       });
 
       _this.$autocomplete = new google.maps.places.Autocomplete(_this.$refs.input, finalOptions);
-      (0, _propsBinder2.default)(_this, _this.$autocomplete, (0, _lodash.omit)(props, ['placeholder', 'place', 'selectFirstOnEnter', 'value', 'componentRestrictions']));
+      (0, _propsBinder2.default)(_this, _this.$autocomplete, (0, _omit2.default)(props, ['placeholder', 'place', 'selectFirstOnEnter', 'value', 'componentRestrictions']));
 
       _this.$autocomplete.addListener('place_changed', function () {
         _this.$emit('place_changed', _this.$autocomplete.getPlace());
