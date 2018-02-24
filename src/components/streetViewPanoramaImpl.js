@@ -1,7 +1,6 @@
 import omit from 'lodash/omit'
 
 import {loaded} from '../manager.js'
-import {DeferredReadyMixin} from '../utils/deferredReady.js'
 import eventsBinder from '../utils/eventsBinder.js'
 import propsBinder from '../utils/propsBinder.js'
 import getPropsMixin from '../utils/getPropsValuesMixin.js'
@@ -61,14 +60,14 @@ const customMethods = {
 const methods = Object.assign({}, customMethods)
 
 export default {
-  mixins: [getPropsMixin, DeferredReadyMixin, mountableMixin],
+  mixins: [getPropsMixin, mountableMixin],
   props: props,
   replace: false, // necessary for css styles
   methods,
 
   created () {
-    this.$panoCreated = new Promise((resolve, reject) => {
-      this.$panoCreatedDeferred = {resolve, reject}
+    this.$panoPromise = new Promise((resolve, reject) => {
+      this.$panoPromiseDeferred = {resolve, reject}
     })
 
     const updateCenter = () => {
@@ -108,7 +107,7 @@ export default {
     }
   },
 
-  deferredReady () {
+  mounted () {
     return loaded.then(() => {
       // getting the DOM element where to create the map
       const element = this.$refs['vue-street-view-pano']
@@ -146,12 +145,12 @@ export default {
       // binding events
       eventsBinder(this, this.$panoObject, events)
 
-      this.$panoCreatedDeferred.resolve(this.$panoObject)
+      this.$panoPromiseDeferred.resolve(this.$panoObject)
 
-      return this.$panoCreated
+      return this.$panoPromise
     })
-      .catch((error) => {
-        throw error
-      })
+    .catch((error) => {
+      throw error
+    })
   },
 }

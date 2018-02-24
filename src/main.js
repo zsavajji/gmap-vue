@@ -15,7 +15,6 @@ import Autocomplete from './components/autocomplete.vue'
 
 import MapElementMixin from './components/mapElementMixin'
 import MountableMixin from './utils/mountableMixin'
-import {DeferredReady} from './utils/deferredReady'
 
 // export everything
 export {load, loaded, Marker, Cluster, Polyline, Polygon, Circle, Rectangle,
@@ -26,8 +25,6 @@ export function install (Vue, options) {
   options = Object.assign({}, {
     installComponents: true,
   }, options)
-
-  Vue.use(DeferredReady)
 
   const defaultResizeBus = new Vue()
   Vue.$gmapDefaultResizeBus = defaultResizeBus

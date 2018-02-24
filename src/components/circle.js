@@ -51,11 +51,13 @@ export default {
 
   render () { return '' },
 
-  deferredReady () {
-    const options = clone(this.getPropsValues())
-    options.map = this.$map
-    delete options.bounds
-    this.createCircle(options)
+  created () {
+    this.$mapPromise.then((map) => {
+      const options = clone(this.getPropsValues())
+      options.map = map
+      delete options.bounds
+      this.createCircle(options)
+    })
   },
 
   methods: {

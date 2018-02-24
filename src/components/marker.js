@@ -92,6 +92,12 @@ export default {
   mixins: [MapElementMixin, getPropsValuesMixin],
   props: props,
 
+  inject: {
+    '$clusterPromise': {
+      default: null,
+    },
+  },
+
   render (h) {
     if (!this.$slots.default || this.$slots.default.length === 0) {
       return ''
@@ -115,30 +121,40 @@ export default {
     }
   },
 
-  deferredReady () {
-    const options = mapValues(props, (value, prop) => this[prop])
-    options.map = this.$map
-    delete options.options
-    Object.assign(options, this.options)
+  provide () {
+    const markerPromise = this.$mapPromise.then((map) => {
+      const options = mapValues(props, (value, prop) => this[prop])
+      options.map = map
+      delete options.options
+      Object.assign(options, this.options)
 
-    // search ancestors for cluster object
-    let search = this.$findAncestor(
-      ans => ans.$clusterObject
-    )
+      // search ancestors for cluster object
+      const clusterPromise = this.$clusterPromise
+        ? this.$clusterPromise.then(co => this.$clusterObject = co)
+        : Promise.resolve(null)
 
-    this.$clusterObject = search ? search.$clusterObject : null
-    this.createMarker(options)
+      return clusterPromise.then(() => {
+        const marker = this.createMarker(options)
+        this.$markerObject = marker
+        return marker
+      })
+    })
+
+    return {
+      '$markerPromise': markerPromise
+    }
   },
 
   methods: {
     createMarker (options) {
-      this.$markerObject = new google.maps.Marker(options)
-      propsBinder(this, this.$markerObject, props)
-      eventsBinder(this, this.$markerObject, events)
+      const markerObject = new google.maps.Marker(options)
+      propsBinder(this, markerObject, props)
+      eventsBinder(this, markerObject, events)
 
       if (this.$clusterObject) {
-        this.$clusterObject.addMarker(this.$markerObject)
+        this.$clusterObject.addMarker(markerObject)
       }
+      return markerObject
     }
   },
 }

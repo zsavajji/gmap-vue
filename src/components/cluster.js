@@ -66,25 +66,40 @@ export default {
     )
   },
 
-  deferredReady () {
-    const options = clone(this.getPropsValues())
+  provide () {
+    const clusterPromise = this.$mapPromise.then((map) => {
+      const options = clone(this.getPropsValues())
 
-    if (typeof MarkerClusterer === 'undefined') {
-      /* eslint-disable no-console */
-      console.error('MarkerClusterer is not installed! require() it or include it from https://cdnjs.cloudflare.com/ajax/libs/js-marker-clusterer/1.0.0/markerclusterer.js')
-      throw new Error('MarkerClusterer is not installed! require() it or include it from https://cdnjs.cloudflare.com/ajax/libs/js-marker-clusterer/1.0.0/markerclusterer.js')
-    }
-
-    this.$clusterObject = new MarkerClusterer(this.$map, [], options)
-
-    propsBinder(this, this.$clusterObject, props, {
-      afterModelChanged: (a, v) => { // eslint-disable-line no-unused-vars
-        const oldMarkers = this.$clusterObject.getMarkers()
-        this.$clusterObject.clearMarkers()
-        this.$clusterObject.addMarkers(oldMarkers)
+      if (typeof MarkerClusterer === 'undefined') {
+        /* eslint-disable no-console */
+        console.error('MarkerClusterer is not installed! require() it or include it from https://cdnjs.cloudflare.com/ajax/libs/js-marker-clusterer/1.0.0/markerclusterer.js')
+        throw new Error('MarkerClusterer is not installed! require() it or include it from https://cdnjs.cloudflare.com/ajax/libs/js-marker-clusterer/1.0.0/markerclusterer.js')
       }
+
+      this.$clusterObject = new MarkerClusterer(map, [], options)
+
+      propsBinder(this, this.$clusterObject, props, {
+        afterModelChanged: (a, v) => { // eslint-disable-line no-unused-vars
+          const oldMarkers = this.$clusterObject.getMarkers()
+
+          this.$clusterObject.clearMarkers()
+          this.$clusterObject.addMarkers(oldMarkers)
+        }
+      })
+      eventsBinder(this, this.$clusterObject, events)
+
+      return this.$clusterObject
     })
-    eventsBinder(this, this.$clusterObject, events)
+
+    return {
+      $clusterPromise: clusterPromise
+    }
+  },
+
+  created () {
+    this.$mapPromise.then(() => {
+
+    })
   },
 
   updated () {
@@ -98,6 +113,7 @@ export default {
         marker.$clusterObject = null
       }
     })
+
     if (this.$clusterObject) {
       this.$clusterObject.clearMarkers()
     }

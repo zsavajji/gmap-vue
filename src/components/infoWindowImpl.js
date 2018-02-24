@@ -37,21 +37,27 @@ export default {
   replace: false,
   props: props,
 
+  inject: {
+    '$markerPromise': {
+      default: null,
+    }
+  },
+
   mounted () {
     const el = this.$refs.flyaway
     el.parentNode.removeChild(el)
   },
 
-  deferredReady () {
-    this.$markerObject = null
-    this.$markerComponent = this.$findAncestor(
-      (ans) => ans.$markerObject
-    )
+  created () {
+    const markerPromise = this.$markerPromise
+      ? this.$markerPromise.then(mo => this.$markerObject = mo)
+      : Promise.resolve(null)
 
-    if (this.$markerComponent) {
-      this.$markerObject = this.$markerComponent.$markerObject
-    }
-    this.createInfoWindow()
+    const mapPromise = this.$mapPromise
+
+    return mapPromise
+      .then(() => markerPromise)
+      .then(() => this.createInfoWindow())
   },
 
   destroyed () {

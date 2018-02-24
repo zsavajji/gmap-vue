@@ -2,7 +2,6 @@ import omit from 'lodash/omit'
 import clone from 'lodash/clone'
 
 import { loaded } from '../manager.js'
-import { DeferredReadyMixin } from '../utils/deferredReady.js'
 import eventsBinder from '../utils/eventsBinder.js'
 import propsBinder from '../utils/propsBinder.js'
 import getPropsMixin from '../utils/getPropsValuesMixin.js'
@@ -98,14 +97,16 @@ const customMethods = {
 const methods = Object.assign({}, customMethods, linkedMethods)
 
 export default {
-  mixins: [getPropsMixin, DeferredReadyMixin, mountableMixin],
+  mixins: [getPropsMixin, mountableMixin],
   props: props,
   replace: false, // necessary for css styles
 
-  created () {
-    this.$mapCreated = new Promise((resolve, reject) => {
-      this.$mapCreatedDeferred = { resolve, reject }
-    })
+  provide () {
+    return {
+      '$mapPromise': new Promise((resolve, reject) => {
+        this.$mapPromiseDeferred = { resolve, reject }
+      })
+    }
   },
 
   computed: {
@@ -130,7 +131,7 @@ export default {
     }
   },
 
-  deferredReady () {
+  mounted () {
     return loaded.then(() => {
       // getting the DOM element where to create the map
       const element = this.$refs['vue-map']
@@ -170,13 +171,13 @@ export default {
       // binding events
       eventsBinder(this, this.$mapObject, events)
 
-      this.$mapCreatedDeferred.resolve(this.$mapObject)
+      this.$mapPromiseDeferred.resolve(this.$mapObject)
 
-      return this.$mapCreated
+      return this.$mapObject
     })
-      .catch((error) => {
-        throw error
-      })
+    .catch((error) => {
+      throw error
+    })
   },
   methods: methods
 }

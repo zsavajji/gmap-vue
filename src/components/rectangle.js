@@ -46,10 +46,12 @@ export default {
     return ''
   },
 
-  deferredReady () {
-    const options = clone(this.getPropsValues())
-    options.map = this.$map
-    this.createRectangle(options)
+  created () {
+    this.$mapPromise.then((map) => {
+      const options = clone(this.getPropsValues())
+      options.map = map
+      this.createRectangle(options)
+    })
   },
 
   methods: {
