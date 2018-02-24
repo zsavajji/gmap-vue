@@ -63,7 +63,7 @@ const base = {
         loader: 'file-loader?name=[name].[ext]?[hash]',
       }
     ],
-  },
+  }
 };
 
 
