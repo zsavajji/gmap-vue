@@ -50,7 +50,7 @@ export function bindProps(vueInst, googleMapsInst, props, options) {
     } else {
       WatchedObjectWrapper(
         vueInst,
-        trackProperties,
+        trackProperties.map(prop => `${attribute}.${prop}`),
         () => {
           googleMapsInst[setMethodName](vueInst[attribute])
         },
@@ -62,7 +62,7 @@ export function bindProps(vueInst, googleMapsInst, props, options) {
         vueInst.$gmapOptions.autobindAllEvents ||
         vueInst.$listeners[eventName]) {
       googleMapsInst.addListener(eventName, (ev) => { // eslint-disable-line no-unused-vars
-        vueInst.$emit(eventName, googleMapsElement[getMethodName]())
+        vueInst.$emit(eventName, googleMapsInst[getMethodName]())
       })
     }
   })
