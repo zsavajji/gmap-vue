@@ -41,7 +41,7 @@ const props = {
 export default {
   mounted () {
     loaded.then(() => {
-      const options = clone(this.getPropsValues())
+      const options = clone(getPropsValues(this))
       if (this.selectFirstOnEnter) {
         downArrowSimulator(this.$refs.input)
       }
