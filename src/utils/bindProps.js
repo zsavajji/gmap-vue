@@ -1,6 +1,6 @@
 import mapValues from 'lodash/mapValues'
 import forIn from 'lodash/forIn'
-import WatchedObjectWrapper from '../utils/WatchedObjectWrapper'
+import WatchPrimitiveProperties from '../utils/WatchPrimitiveProperties'
 
 function capitalizeFirstLetter (string) {
   return string.charAt(0).toUpperCase() + string.slice(1)
@@ -48,7 +48,7 @@ export function bindProps(vueInst, googleMapsInst, props, options) {
         deep: type === Object
       })
     } else {
-      WatchedObjectWrapper(
+      WatchPrimitiveProperties(
         vueInst,
         trackProperties.map(prop => `${attribute}.${prop}`),
         () => {

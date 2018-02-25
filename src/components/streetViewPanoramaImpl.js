@@ -6,6 +6,7 @@ import {bindProps, getPropsValues} from '../utils/bindProps.js'
 import mountableMixin from '../utils/mountableMixin.js'
 
 import TwoWayBindingWrapper from '../utils/TwoWayBindingWrapper.js'
+import WatchPrimitiveProperties from '../utils/WatchPrimitiveProperties.js'
 
 const props = {
   zoom: {
@@ -126,10 +127,16 @@ export default {
           decrement()
         })
 
-        this.$watch('finalLatLng', () => {
+        const updateCenter = () => {
           increment()
           this.$panoObject.setPosition(this.finalLatLng)
-        })
+        }
+
+        WatchPrimitiveProperties(
+          this,
+          ['finalLat', 'finalLng'],
+          updateCenter
+        )
       })
 
       // binding events
