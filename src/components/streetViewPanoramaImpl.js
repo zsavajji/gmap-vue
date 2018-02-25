@@ -64,21 +64,12 @@ export default {
   replace: false, // necessary for css styles
   methods,
 
-  created () {
-    this.$panoPromise = new Promise((resolve, reject) => {
-      this.$panoPromiseDeferred = {resolve, reject}
-    })
-
-    const updateCenter = () => {
-      if (!this.panoObject) return
-
-      this.$panoObject.setPosition({
-        lat: this.finalLat,
-        lng: this.finalLng,
+  provide () {
+    return {
+      '$panoPromise': new Promise((resolve, reject) => {
+        this.$panoPromiseDeferred = {resolve, reject}
       })
     }
-    this.$watch('finalLat', updateCenter)
-    this.$watch('finalLng', updateCenter)
   },
 
   computed: {
