@@ -29,17 +29,17 @@
     </br>
     Grid size: <input type="number" v-model.number="gridSize">
     <br>
-    <h1>Polyline</h1> Editable: <input type="checkbox" number v-model="pleditable">
+    <h1>Polyline</h1> Editable: <input type="checkbox" v-model="pleditable">
     <button @click="resetPlPath">Reset path</button>
     <br> Visible: <input type="checkbox" number v-model="plvisible">
     <br>
-    <h1>Polygon</h1> Visible: <input type="checkbox" number v-model="pgvisible"> <br>
+    <h1>Polygon</h1> Visible: <input type="checkbox" v-model="pgvisible"> <br>
     <button @click="pgPath = opgPath">Reset Polygon to pentagon</button><br>
     <button @click="pgPath = originalPlPath">Reset Polygon to a simple polygon</button><br> Path: {{pgPath | json}}
     <br>
-    <h1>Circle</h1> Visible: <input type="checkbox" number v-model="displayCircle"><br> {{circleBounds | json}}
+    <h1>Circle</h1> Visible: <input type="checkbox" v-model="displayCircle"><br> {{circleBounds | json}}
     <br>
-    <h1>Rectangle</h1> Visible: <input type="checkbox" number v-model="displayRectangle"><br> {{rectangleBounds | json}}
+    <h1>Rectangle</h1> Visible: <input type="checkbox" v-model="displayRectangle"><br> {{rectangleBounds | json}}
     <br>
     <h1>PlaceInput</h1>
     <gmap-place-input label="Add a marker at this place" :select-first-on-enter="true" @place_changed="updatePlace($event)"></gmap-place-input>
