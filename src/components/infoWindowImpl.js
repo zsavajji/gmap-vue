@@ -1,7 +1,7 @@
 import omit from 'lodash/omit'
 import clone from 'lodash/clone'
-import propsBinder from '../utils/propsBinder.js'
-import eventsBinder from '../utils/eventsBinder.js'
+import {bindProps, getPropsValues} from '../utils/bindProps.js'
+import bindEvents from '../utils/bindEvents.js'
 import MapElementMixin from './mapElementMixin'
 
 const props = {
@@ -56,6 +56,7 @@ export default {
     const mapPromise = this.$mapPromise
 
     return mapPromise
+      .then(map => this.$map = map)
       .then(() => markerPromise)
       .then(() => this.createInfoWindow())
   },
@@ -95,8 +96,8 @@ export default {
       this.$infoWindow = new google.maps.InfoWindow(options)
 
       // Binding
-      propsBinder(this, this.$infoWindow, omit(props, ['opened']))
-      eventsBinder(this, this.$infoWindow, events)
+      bindProps(this, this.$infoWindow, omit(props, ['opened']))
+      bindEvents(this, this.$infoWindow, events)
 
       this.openInfoWindow()
       this.$watch('opened', () => {

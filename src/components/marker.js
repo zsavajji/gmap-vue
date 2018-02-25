@@ -1,7 +1,6 @@
 import mapValues from 'lodash/mapValues'
-import eventsBinder from '../utils/eventsBinder.js'
-import propsBinder from '../utils/propsBinder.js'
-import getPropsValuesMixin from '../utils/getPropsValuesMixin.js'
+import bindEvents from '../utils/bindEvents.js'
+import {bindProps, getPropsValues} from '../utils/bindProps.js'
 import MapElementMixin from './mapElementMixin'
 
 const props = {
@@ -89,7 +88,7 @@ const events = [
  * subclass.
  */
 export default {
-  mixins: [MapElementMixin, getPropsValuesMixin],
+  mixins: [MapElementMixin],
   props: props,
 
   inject: {
@@ -148,8 +147,8 @@ export default {
   methods: {
     createMarker (options) {
       const markerObject = new google.maps.Marker(options)
-      propsBinder(this, markerObject, props)
-      eventsBinder(this, markerObject, events)
+      bindProps(this, markerObject, props)
+      bindEvents(this, markerObject, events)
 
       if (this.$clusterObject) {
         this.$clusterObject.addMarker(markerObject)

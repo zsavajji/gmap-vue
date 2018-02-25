@@ -22,15 +22,18 @@ export {load, loaded, Marker, Cluster, Polyline, Polygon, Circle, Rectangle,
   MountableMixin}
 
 export function install (Vue, options) {
-  options = Object.assign({}, {
+  options = {
     installComponents: true,
-  }, options)
+    autobindAllEvents: false,
+    ...options
+  }
 
   const defaultResizeBus = new Vue()
   Vue.$gmapDefaultResizeBus = defaultResizeBus
   Vue.mixin({
     created () {
       this.$gmapDefaultResizeBus = defaultResizeBus
+      this.$gmapOptions = options
     }
   })
 

@@ -8,10 +8,9 @@
 **/
 
 import clone from 'lodash/clone'
-import eventsBinder from '../utils/eventsBinder.js'
-import propsBinder from '../utils/propsBinder.js'
+import bindEvents from '../utils/bindEvents.js'
+import {bindProps, getPropsValues} from '../utils/bindProps.js'
 import MapElementMixin from './mapElementMixin'
-import getPropsValuesMixin from '../utils/getPropsValuesMixin.js'
 import MarkerClusterer from 'marker-clusterer-plus'
 
 const props = {
@@ -55,7 +54,7 @@ const events = [
 ]
 
 export default {
-  mixins: [MapElementMixin, getPropsValuesMixin],
+  mixins: [MapElementMixin],
   props: props,
 
   render (h) {
@@ -68,7 +67,7 @@ export default {
 
   provide () {
     const clusterPromise = this.$mapPromise.then((map) => {
-      const options = clone(this.getPropsValues())
+      const options = clone(getPropsValues(this))
 
       if (typeof MarkerClusterer === 'undefined') {
         /* eslint-disable no-console */
@@ -78,7 +77,7 @@ export default {
 
       this.$clusterObject = new MarkerClusterer(map, [], options)
 
-      propsBinder(this, this.$clusterObject, props, {
+      bindProps(this, this.$clusterObject, props, {
         afterModelChanged: (a, v) => { // eslint-disable-line no-unused-vars
           const oldMarkers = this.$clusterObject.getMarkers()
 
@@ -86,7 +85,7 @@ export default {
           this.$clusterObject.addMarkers(oldMarkers)
         }
       })
-      eventsBinder(this, this.$clusterObject, events)
+      bindEvents(this, this.$clusterObject, events)
 
       return this.$clusterObject
     })

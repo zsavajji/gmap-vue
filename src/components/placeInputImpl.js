@@ -1,8 +1,7 @@
 import omit from 'lodash/omit'
 import clone from 'lodash/clone'
-import propsBinder from '../utils/propsBinder.js'
+import {bindProps, getPropsValues} from '../utils/bindProps.js'
 import downArrowSimulator from '../utils/simulateArrowDown.js'
-import getPropsValuesMixin from '../utils/getPropsValuesMixin.js'
 import {
   loaded
 } from '../manager.js'
@@ -46,8 +45,6 @@ const props = {
 }
 
 export default {
-  mixins: [getPropsValuesMixin],
-
   mounted () {
     const input = this.$refs.input
 
@@ -58,7 +55,7 @@ export default {
     })
 
     loaded.then(() => {
-      const options = clone(this.getPropsValues())
+      const options = clone(getPropsValues(this))
       if (this.selectFirstOnEnter) {
         downArrowSimulator(this.$refs.input)
       }
@@ -68,7 +65,7 @@ export default {
       }
 
       this.autoCompleter = new google.maps.places.Autocomplete(this.$refs.input, options)
-      propsBinder(this, this.autoCompleter, omit(props, ['placeholder', 'place', 'selectFirstOnEnter',
+      bindProps(this, this.autoCompleter, omit(props, ['placeholder', 'place', 'selectFirstOnEnter',
         'defaultPlace', 'className', 'label']))
 
       this.autoCompleter.addListener('place_changed', () => {

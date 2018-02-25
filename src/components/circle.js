@@ -1,9 +1,8 @@
 import clone from 'lodash/clone'
 
-import eventBinder from '../utils/eventsBinder.js'
-import propsBinder from '../utils/propsBinder.js'
+import bindEvents from '../utils/bindEvents.js'
+import {bindProps, getPropsValues} from '../utils/bindProps.js'
 import MapElementMixin from './mapElementMixin'
-import getPropsValuesMixin from '../utils/getPropsValuesMixin.js'
 
 const props = {
   center: {
@@ -45,7 +44,7 @@ const events = [
 ]
 
 export default {
-  mixins: [MapElementMixin, getPropsValuesMixin],
+  mixins: [MapElementMixin],
   props: props,
   version: 2,
 
@@ -53,7 +52,7 @@ export default {
 
   created () {
     this.$mapPromise.then((map) => {
-      const options = clone(this.getPropsValues())
+      const options = clone(getPropsValues(this))
       options.map = map
       delete options.bounds
       this.createCircle(options)
@@ -67,8 +66,8 @@ export default {
       // on the Circle object
       const boundProps = clone(props)
       delete boundProps.bounds
-      propsBinder(this, this.$circleObject, boundProps)
-      eventBinder(this, this.$circleObject, events)
+      bindProps(this, this.$circleObject, boundProps)
+      bindEvents(this, this.$circleObject, events)
 
       const updateBounds = () => {
         this.$emit('bounds_changed', this.$circleObject.getBounds())

@@ -1,10 +1,9 @@
 import omit from 'lodash/omit'
 import clone from 'lodash/clone'
 
-import eventBinder from '../utils/eventsBinder.js'
-import propsBinder from '../utils/propsBinder.js'
+import bindEvents from '../utils/bindEvents.js'
+import {bindProps, getPropsValues} from '../utils/bindProps.js'
 import MapElementMixin from './mapElementMixin'
-import getPropsValuesMixin from '../utils/getPropsValuesMixin.js'
 
 const props = {
   draggable: {
@@ -45,7 +44,7 @@ const events = [
 ]
 
 export default {
-  mixins: [MapElementMixin, getPropsValuesMixin],
+  mixins: [MapElementMixin],
   props: props,
 
   render () { return '' },
@@ -57,8 +56,8 @@ export default {
   },
 
   created () {
-    this.$mapPromise.then(() => {
-      const options = clone(this.getPropsValues())
+    this.$mapPromise.then((map) => {
+      const options = clone(getPropsValues(this))
       delete options.options
       Object.assign(options, this.options)
       if (!options.path) {
@@ -69,8 +68,8 @@ export default {
       }
       this.$polygonObject = new google.maps.Polygon(options)
 
-      propsBinder(this, this.$polygonObject, omit(props, ['path', 'paths', 'deepWatch']))
-      eventBinder(this, this.$polygonObject, events)
+      bindProps(this, this.$polygonObject, omit(props, ['path', 'paths', 'deepWatch']))
+      bindEvents(this, this.$polygonObject, events)
 
       var clearEvents = () => {}
 
@@ -136,7 +135,7 @@ export default {
       })
 
       // Display the map
-      this.$polygonObject.setMap(this.$map)
+      this.$polygonObject.setMap(map)
     })
   },
 }

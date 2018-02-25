@@ -1,9 +1,8 @@
 import omit from 'lodash/omit'
 
 import {loaded} from '../manager.js'
-import eventsBinder from '../utils/eventsBinder.js'
-import propsBinder from '../utils/propsBinder.js'
-import getPropsMixin from '../utils/getPropsValuesMixin.js'
+import bindEvents from '../utils/bindEvents.js'
+import {bindProps, getPropsValues} from '../utils/bindProps.js'
 import mountableMixin from '../utils/mountableMixin.js'
 
 import TwoWayBindingWrapper from '../utils/TwoWayBindingWrapper.js'
@@ -60,7 +59,7 @@ const customMethods = {
 const methods = Object.assign({}, customMethods)
 
 export default {
-  mixins: [getPropsMixin, mountableMixin],
+  mixins: [mountableMixin],
   props: props,
   replace: false, // necessary for css styles
   methods,
@@ -115,13 +114,13 @@ export default {
       // creating the map
       const options = Object.assign({},
         this.options,
-        omit(this.getPropsValues(), ['options'])
+        omit(getPropsValues(this), ['options'])
       )
 
       this.$panoObject = new google.maps.StreetViewPanorama(element, options)
 
       // binding properties (two and one way)
-      propsBinder(this, this.$panoObject,
+      bindProps(this, this.$panoObject,
         omit(props, ['position']))
 
       // manually trigger position
@@ -143,7 +142,7 @@ export default {
       })
 
       // binding events
-      eventsBinder(this, this.$panoObject, events)
+      bindEvents(this, this.$panoObject, events)
 
       this.$panoPromiseDeferred.resolve(this.$panoObject)
 

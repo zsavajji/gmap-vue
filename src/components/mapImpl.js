@@ -2,9 +2,8 @@ import omit from 'lodash/omit'
 import clone from 'lodash/clone'
 
 import { loaded } from '../manager.js'
-import eventsBinder from '../utils/eventsBinder.js'
-import propsBinder from '../utils/propsBinder.js'
-import getPropsMixin from '../utils/getPropsValuesMixin.js'
+import bindEvents from '../utils/bindEvents.js'
+import {bindProps, getPropsValues} from '../utils/bindProps.js'
 import mountableMixin from '../utils/mountableMixin.js'
 
 import TwoWayBindingWrapper from '../utils/TwoWayBindingWrapper.js'
@@ -97,7 +96,7 @@ const customMethods = {
 const methods = Object.assign({}, customMethods, linkedMethods)
 
 export default {
-  mixins: [getPropsMixin, mountableMixin],
+  mixins: [mountableMixin],
   props: props,
   replace: false, // necessary for css styles
 
@@ -137,14 +136,14 @@ export default {
       const element = this.$refs['vue-map']
 
       // creating the map
-      const copiedData = clone(this.getPropsValues())
+      const copiedData = clone(getPropsValues(this))
       delete copiedData.options
       const options = clone(this.options)
       Object.assign(options, copiedData)
       this.$mapObject = new google.maps.Map(element, options)
 
       // binding properties (two and one way)
-      propsBinder(this, this.$mapObject, omit(props, ['center', 'zoom', 'bounds']))
+      bindProps(this, this.$mapObject, omit(props, ['center', 'zoom', 'bounds']))
 
       // manually trigger center and zoom
       TwoWayBindingWrapper((increment, decrement, shouldUpdate) => {
@@ -169,7 +168,7 @@ export default {
       })
 
       // binding events
-      eventsBinder(this, this.$mapObject, events)
+      bindEvents(this, this.$mapObject, events)
 
       this.$mapPromiseDeferred.resolve(this.$mapObject)
 
