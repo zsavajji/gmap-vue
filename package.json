@@ -15,7 +15,8 @@
     "build-examples-webpack": "cd examples && cross-env NODE_ENV=production webpack",
     "build-examples-before": "npm run build && shx cp dist/vue-google-maps.js examples",
     "build-examples": "npm run build-examples-before && npm run build-examples-webpack",
-    "deploy": "npm run build-examples && gh-pages -d examples"
+    "deploy": "npm run build-examples && gh-pages -d examples",
+    "prepare": "npm run build"
   },
   "repository": {
     "type": "git",
