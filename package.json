@@ -51,14 +51,17 @@
     "file-loader": "^0.8.4",
     "gh-pages": "^0.11.0",
     "jsdom": "^9.8.3",
+    "json-loader": "^0.5.7",
     "lab": "^15.3.0",
     "less": "^2.5.3",
     "less-loader": "^2.2.2",
     "lodash": "^4.15.0",
     "lodash-es": "^4.17.4",
     "lodash-webpack-plugin": "^0.11.4",
+    "node-sass": "^4.8.3",
     "puppeteer": "^1.1.0",
     "raw-loader": "^0.5.1",
+    "sass-loader": "^7.0.1",
     "shx": "^0.2.0",
     "style-loader": "^0.13.0",
     "stylus-loader": "^1.4.0",
@@ -70,7 +73,8 @@
     "vue-router": "^2.7.0",
     "vue-template-compiler": "^2.1.6",
     "webpack": "^4.0.1",
-    "webpack-cli": "^2.0.10"
+    "webpack-cli": "^2.0.10",
+    "yaml-loader": "^0.5.0"
   },
   "author": "Daniel Sim, Guillaume Leclerc",
   "license": "MIT"

@@ -58,6 +58,11 @@ const base = {
         loader: 'babel-loader',
       },
       {
+        test: /\.yml$/,
+        exclude: /node_modules/,
+        loader: 'json-loader!yaml-loader',
+      },
+      {
         // edit this for additional asset file types
         test: /\.(png|jpg|gif)$/,
         loader: 'file-loader?name=[name].[ext]?[hash]',
@@ -77,6 +82,17 @@ module.exports = [
     output: {
       ...base.output,
       filename: 'build.js'
+    }
+  },
+  {
+    ...base,
+    entry: [
+      'babel-polyfill',
+      './src/autoapi.js'
+    ],
+    output: {
+      ...base.output,
+      filename: 'autoapi.js'
     }
   },
   {

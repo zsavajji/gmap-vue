@@ -62,6 +62,7 @@ export default function (options) {
   assert(!(rest.props instanceof Array), '`props` should be an object, not Array')
 
   return {
+    ...(typeof GENERATE_DOC !== 'undefined' ? {$vgmOptions: options} : {}),
     mixins: [MapElementMixin],
     props: {
       ...props,
