@@ -1,6 +1,5 @@
 import {load, loaded} from './manager.js'
 import Marker from './components/marker'
-import Cluster from './components/cluster'
 import Polyline from './components/polyline'
 import Polygon from './components/polygon'
 import Circle from './components/circle'
@@ -18,7 +17,7 @@ import MapElementFactory from './components/mapElementFactory'
 import MountableMixin from './utils/mountableMixin'
 
 // export everything
-export {load, loaded, Marker, Cluster, Polyline, Polygon, Circle, Rectangle,
+export {load, loaded, Marker, Polyline, Polygon, Circle, Rectangle,
   InfoWindow, Map, PlaceInput, MapElementMixin, MapElementFactory, Autocomplete,
   MountableMixin, StreetViewPanorama}
 
@@ -45,7 +44,6 @@ export function install (Vue, options) {
   if (options.installComponents) {
     Vue.component('GmapMap', Map)
     Vue.component('GmapMarker', Marker)
-    Vue.component('GmapCluster', Cluster)
     Vue.component('GmapInfoWindow', InfoWindow)
     Vue.component('GmapPolyline', Polyline)
     Vue.component('GmapPolygon', Polygon)
