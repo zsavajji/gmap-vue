@@ -1,5 +1,3 @@
-import omit from 'lodash/omit'
-import clone from 'lodash/clone'
 import {bindProps, getPropsValues} from '../utils/bindProps.js'
 import downArrowSimulator from '../utils/simulateArrowDown.js'
 import {
@@ -55,7 +53,7 @@ export default {
     })
 
     loaded.then(() => {
-      const options = clone(getPropsValues(this, props))
+      const options = getPropsValues(this, props)
       if (this.selectFirstOnEnter) {
         downArrowSimulator(this.$refs.input)
       }
@@ -65,8 +63,8 @@ export default {
       }
 
       this.autoCompleter = new google.maps.places.Autocomplete(this.$refs.input, options)
-      bindProps(this, this.autoCompleter, omit(props, ['placeholder', 'place', 'selectFirstOnEnter',
-        'defaultPlace', 'className', 'label']))
+      const {placeholder, place, defaultPlace, className, label, selectFirstOnEnter, ...rest} = props // eslint-disable-line
+      bindProps(this, this.autoCompleter, rest)
 
       this.autoCompleter.addListener('place_changed', () => {
         this.$emit('place_changed', this.autoCompleter.getPlace())
