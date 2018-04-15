@@ -2,7 +2,6 @@ import {load, loaded} from './manager.js'
 import Marker from './components/marker'
 import Polyline from './components/polyline'
 import Polygon from './components/polygon'
-import Cluster from './components/cluster'
 import Circle from './components/circle'
 import Rectangle from './components/rectangle'
 
@@ -16,6 +15,16 @@ import Autocomplete from './components/autocomplete.vue'
 import MapElementMixin from './components/mapElementMixin'
 import MapElementFactory from './components/mapElementFactory'
 import MountableMixin from './utils/mountableMixin'
+
+// HACK: Cluster should be loaded conditionally
+// However in the web version, it's not possible to write
+// `import 'vue2-google-maps/src/components/cluster'`, so we need to
+// import it anyway (but we don't have to register it)
+// Therefore we use babel-plugin-transform-inline-environment-variables to
+// set BUILD_DEV to truthy / falsy
+const Cluster = (process.env.BUILD_DEV === '1')
+  ? undefined
+  : (s => s.default || s)(require('./components/cluster'))
 
 // export everything
 export {load, loaded, Marker, Polyline, Polygon, Circle, Cluster, Rectangle,
