@@ -86,6 +86,36 @@ Vue.use(VueGoogleMaps, {
 })
 ```
 
+If you need to gain access to the `Map` instance (e.g. to call `panToBounds`, `panTo`):
+```vue
+<template>
+<GmapMap ref="mapRef" ...>
+</GmapMap>
+</template>
+<script>
+export default {
+  mounted () {
+    // At this point, the child GmapMap has been mounted, but
+    // its map has not been initialized.
+    // Therefore we need to write mapRef.$mapPromise.then(() => ...)
+    
+    this.$refs.mapRef.$mapPromise.then((map) => {
+      map.panTo({lat: 1.38, lng: 103.80})
+    })
+  }
+}
+```
+
+If you need to gain access to the `google` object:
+```js
+import {loaded} from 'vue2-google-maps'
+
+let size = null
+loaded.then(() => {
+  size = new google.maps.Size(500, 600)
+})
+```
+
 ### Officially supported components:
 
 The list of officially support components are:
@@ -98,6 +128,7 @@ The list of officially support components are:
 - Cluster* (via `marker-clusterer-plus`)
 
 You can find examples of this [on the website](http://xkjyeah.github.io/vue-google-maps/).
+Auto-generated API documentation for these components are [here](http://xkjyeah.github.io/vue-google-maps/autoapi.html).
 
 For `Cluster`, you **must** import the class specifically, e.g.
 ```js
