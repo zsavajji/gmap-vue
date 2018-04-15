@@ -2,6 +2,7 @@ import {load, loaded} from './manager.js'
 import Marker from './components/marker'
 import Polyline from './components/polyline'
 import Polygon from './components/polygon'
+import Cluster from './components/cluster'
 import Circle from './components/circle'
 import Rectangle from './components/rectangle'
 
@@ -17,7 +18,7 @@ import MapElementFactory from './components/mapElementFactory'
 import MountableMixin from './utils/mountableMixin'
 
 // export everything
-export {load, loaded, Marker, Polyline, Polygon, Circle, Rectangle,
+export {load, loaded, Marker, Polyline, Polygon, Circle, Cluster, Rectangle,
   InfoWindow, Map, PlaceInput, MapElementMixin, MapElementFactory, Autocomplete,
   MountableMixin, StreetViewPanorama}
 
