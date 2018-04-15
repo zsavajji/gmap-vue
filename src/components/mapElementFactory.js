@@ -97,7 +97,7 @@ export default function (options) {
           ? new (Function.prototype.bind.call(
             ConstructorObject,
             null,
-            ...ctrArgs(options, getPropsValues(this, props))
+            ...ctrArgs(options, getPropsValues(this, props || {}))
           ))()
           : new ConstructorObject(options)
 
