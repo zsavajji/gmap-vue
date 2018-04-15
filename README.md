@@ -135,6 +135,22 @@ export default MapElementFactory({
 })
 ```
 
+Thereafter, it's easy to use the newly-minted component!
+```vue
+<template>
+  <GmapMap :zoom="..." :center="...">
+    <DirectionsRenderer />
+  </GmapMap>
+</template>
+<script>
+import DirectionsRenderer from './DirectionsRenderer.js'
+
+export default {
+  components: {DirectionsRenderer}
+}
+</script>
+```
+
 ## Testing
 
 More automated tests should be written to help new contributors.
