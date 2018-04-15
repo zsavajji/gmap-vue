@@ -70,7 +70,19 @@ Vue.use(VueGoogleMaps, {
     
     //// If you want to set the version, you can do so:
     // v: '3.26',
-  }
+  },
+  
+  //// If you intend to programmatically custom event listener code
+  //// (e.g. `this.$refs.gmap.$on('zoom_changed', someFunc)`)
+  //// instead of going through Vue templates (e.g. `<GmapMap @zoom_changed="someFunc">`)
+  //// you might need to turn this on.
+  // autobindAllEvents: false,
+  
+  //// If you want to manually install components, e.g.
+  //// import {GmapMarker} from 'vue2-google-maps/src/components/marker'
+  //// Vue.component('GmapMarker', GmapMarker)
+  //// then disable the following:
+  // installComponents: true,
 })
 ```
 
@@ -83,8 +95,18 @@ The list of officially support components are:
 - Marker
 - InfoWindow
 - Autocomplete
+- Cluster* (via `marker-clusterer-plus`)
 
 You can find examples of this [on the website](http://xkjyeah.github.io/vue-google-maps/).
+
+For `Cluster`, you **must** import the class specifically, e.g.
+```js
+import GmapCluster from 'vue2-google-maps/src/components/cluster' // replace src with dist if you have Babel issues
+
+Vue.component('GmapCluster', GmapCluster)
+```
+Inconvenient, but this means all other users don't have to bundle the marker clusterer package
+in their source code.
 
 ### Adding your own components
 
@@ -115,7 +137,6 @@ export default MapElementFactory({
   // If you specify `noBind`, then neither will be set up. You should manually
   // create your watchers in `afterCreate()`.
   mappedProps: {
-  
     routeIndex: { type: Number },
     options: { type: Object },
     panel: { },
