@@ -58,7 +58,7 @@ export default {
       }
 
       this.$autocomplete = new google.maps.places.Autocomplete(this.$refs.input, finalOptions)
-      bindProps(this, this.$autocomplete, props)
+      bindProps(this, this.$autocomplete, mappedProps)
 
       this.$watch('componentRestrictions', v => {
         if (v !== undefined) {
