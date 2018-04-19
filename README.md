@@ -57,8 +57,8 @@ In your `main.js` or inside a Nuxt plugin:
 import Vue from 'vue'
 // Regular Webpack:
 import * as VueGoogleMaps from 'vue2-google-maps'
-//// If you encounter issues with UglifyJS and Nuxt.js, try the following instead:
-// import * as VueGoogleMaps from '~/node_modules/vue2-google-maps/src/main'
+// For Nuxt.js:
+// import * as VueGoogleMaps from 'vue2-google-maps/src/main'
 
 Vue.use(VueGoogleMaps, {
   load: {
@@ -113,6 +113,41 @@ import {loaded} from 'vue2-google-maps'
 let size = null
 loaded.then(() => {
   size = new google.maps.Size(500, 600)
+})
+```
+
+### Nuxt.js config
+
+Add the following to your `nuxt.config.js`'s `build.extend()`:
+```js
+if (!isClient) {
+  // This instructs Webpack to include `vue2-google-maps`'s Vue files
+  // for server-side rendering
+  config.externals.splice(0, 0, function (context, request, callback) {
+    if (/^vue2-google-maps\//.test(request)) {
+      callback(null, false)
+    } else {
+      callback()
+    }
+  })
+}
+
+// Find the rule that matches regular javascript files
+// This should be the standard Babel config
+const babelConfig = config.module.rules.find(rule =>
+  'file.js'.match(rule.test) &&
+  rule.loader === 'babel-loader')
+const path = require('path')
+
+// For Nuxt.js, we are importing the src/ versions
+// Therefore we need to include the src/ files for transpilation
+// We copy the babel transpilation config from Nuxt.js, but
+// override the `test` and `include` sections.
+config.module.rules.splice(0, 0, {
+  options: babelConfig.options,
+  loader: babelConfig.loader,
+  test: /.js$/,
+  include: [path.resolve(__dirname, 'node_modules/vue2-google-maps/src')],
 })
 ```
 
