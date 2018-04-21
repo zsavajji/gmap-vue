@@ -18,7 +18,6 @@ const baseConfig = {
         loader: 'babel-loader',
         exclude: [
           /node_modules/,
-          /src\/stubs/,
         ]
       },
       {
@@ -49,26 +48,6 @@ const webConfig = {
   }
 }
 
-const stubbedConfig = {
-  ...baseConfig,
-  externals: {
-    lodash: '_',
-    'marker-clusterer-plus': 'MarkerClusterer'
-  },
-  module: {
-    ...baseConfig.module,
-    noParse: /stub-/,
-  },
-  output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: "vue-google-maps-stubbed.js",
-    library: ["VueGoogleMaps"],
-    libraryTarget: "commonjs2"
-  },
-  target: 'node',
-}
-
 module.exports = [
-  webConfig,
-  stubbedConfig,
+  webConfig
 ];
