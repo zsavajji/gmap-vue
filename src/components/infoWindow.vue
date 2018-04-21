@@ -9,9 +9,6 @@
   </div>
 </template>
 
-<script src="./infoWindowImpl.js">
-// We still export this component as a Vue component,
-// but we move the JS implementation out so that
-// we don't have to make assumptions about the user's build environment
-// (e.g. ES6 support)
+<script>
+export default (x => x.default || x)(require('./infoWindowImpl.js'))
 </script>
