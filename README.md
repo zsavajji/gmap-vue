@@ -55,10 +55,7 @@ In your `main.js` or inside a Nuxt plugin:
 
 ```js
 import Vue from 'vue'
-// Regular Webpack:
 import * as VueGoogleMaps from 'vue2-google-maps'
-// For Nuxt.js:
-// import * as VueGoogleMaps from 'vue2-google-maps/src/main'
 
 Vue.use(VueGoogleMaps, {
   load: {
@@ -149,7 +146,7 @@ Auto-generated API documentation for these components are [here](http://xkjyeah.
 
 For `Cluster`, you **must** import the class specifically, e.g.
 ```js
-import GmapCluster from 'vue2-google-maps/src/components/cluster' // replace src with dist if you have Babel issues
+import GmapCluster from 'vue2-google-maps/dist/components/cluster' // replace src with dist if you have Babel issues
 
 Vue.component('GmapCluster', GmapCluster)
 ```
