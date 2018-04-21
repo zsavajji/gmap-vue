@@ -131,24 +131,6 @@ if (!isClient) {
     }
   })
 }
-
-// Find the rule that matches regular javascript files
-// This should be the standard Babel config
-const babelConfig = config.module.rules.find(rule =>
-  'file.js'.match(rule.test) &&
-  rule.loader === 'babel-loader')
-const path = require('path')
-
-// For Nuxt.js, we are importing the src/ versions
-// Therefore we need to include the src/ files for transpilation
-// We copy the babel transpilation config from Nuxt.js, but
-// override the `test` and `include` sections.
-config.module.rules.splice(0, 0, {
-  options: babelConfig.options,
-  loader: babelConfig.loader,
-  test: /.js$/,
-  include: [path.resolve(__dirname, 'node_modules/vue2-google-maps/src')],
-})
 ```
 
 ### Officially supported components:
