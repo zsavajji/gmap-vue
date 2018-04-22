@@ -106,13 +106,8 @@ export default {
 If you need to gain access to the `google` object:
 ```vue
 <template>
-
-  <GmapMap
-    :center="{lat: 1.38, lng: 103.8}"
-    :zoom="12">
-    <GmapMarker ref="myMarker"
-      :position="google && new google.maps.LatLng(1.38, 103.8)" />
-  </GmapMap>
+  <GmapMarker ref="myMarker"
+    :position="google && new google.maps.LatLng(1.38, 103.8)" />
 </template>
 <script>
 import {gmapApi} from 'vue2-google-maps'
