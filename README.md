@@ -64,17 +64,17 @@ Vue.use(VueGoogleMaps, {
     // OR: libraries: 'places,drawing'
     // OR: libraries: 'places,drawing,visualization'
     // (as you require)
-    
+
     //// If you want to set the version, you can do so:
     // v: '3.26',
   },
-  
+
   //// If you intend to programmatically custom event listener code
   //// (e.g. `this.$refs.gmap.$on('zoom_changed', someFunc)`)
   //// instead of going through Vue templates (e.g. `<GmapMap @zoom_changed="someFunc">`)
   //// you might need to turn this on.
   // autobindAllEvents: false,
-  
+
   //// If you want to manually install components, e.g.
   //// import {GmapMarker} from 'vue2-google-maps/src/components/marker'
   //// Vue.component('GmapMarker', GmapMarker)
@@ -95,7 +95,7 @@ export default {
     // At this point, the child GmapMap has been mounted, but
     // its map has not been initialized.
     // Therefore we need to write mapRef.$mapPromise.then(() => ...)
-    
+
     this.$refs.mapRef.$mapPromise.then((map) => {
       map.panTo({lat: 1.38, lng: 103.80})
     })
@@ -104,13 +104,25 @@ export default {
 ```
 
 If you need to gain access to the `google` object:
-```js
-import {loaded} from 'vue2-google-maps'
+```vue
+<template>
 
-let size = null
-loaded.then(() => {
-  size = new google.maps.Size(500, 600)
-})
+  <GmapMap
+    :center="{lat: 1.38, lng: 103.8}"
+    :zoom="12">
+    <GmapMarker ref="myMarker"
+      :position="google && new google.maps.LatLng(1.38, 103.8)" />
+  </GmapMap>
+</template>
+<script>
+import {gmapApi} from 'vue2-google-maps'
+
+export default {
+  computed: {
+    google: gmapApi
+  }
+}
+</script>
 ```
 
 ### Nuxt.js config
@@ -170,7 +182,7 @@ export default MapElementFactory({
   //// e.g. for GroundOverlay
   // ctrArgs: (options, otherProps) => [options],
   events: ['directions_changed'],
-  
+
   // Mapped Props will automatically set up
   //   this.$watch('propertyName', (v) => instance.setPropertyName(v))
   //

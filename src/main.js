@@ -26,6 +26,8 @@ const Cluster = (process.env.BUILD_DEV === '1')
   ? undefined
   : (s => s.default || s)(require('./components/cluster'))
 
+const GmapApi = new Vue({data: {gmapApi: null}})
+
 // export everything
 export {load, loaded, Marker, Polyline, Polygon, Circle, Cluster, Rectangle,
   InfoWindow, Map, PlaceInput, MapElementMixin, MapElementFactory, Autocomplete,
@@ -47,6 +49,8 @@ export function install (Vue, options) {
     }
   })
 
+  loaded.then(() => GmapApi.gmapApi = {})
+
   if (options.load) {
     load(options.load, options.loadCn)
   }
@@ -63,4 +67,8 @@ export function install (Vue, options) {
     Vue.component('GmapPlaceInput', PlaceInput)
     Vue.component('GmapStreetViewPanorama', StreetViewPanorama)
   }
+}
+
+export function gmapApi() {
+  return GmapApi.gmapApi && window.google
 }
