@@ -33,6 +33,6 @@ lab.experiment('Effectiveness of gmapApi guard', {timeout: 15000}, function () {
     assert(!isError)
     assert(await page.evaluate(() => {
       return google && (window.vue.$refs.myMarker.position instanceof google.maps.LatLng)
-    }), "Marker is loaded with a position")
+    }), 'Marker is loaded with a position')
   })
 })

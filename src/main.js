@@ -26,7 +26,7 @@ const Cluster = (process.env.BUILD_DEV === '1')
   ? undefined
   : (s => s.default || s)(require('./components/cluster'))
 
-const GmapApi = new Vue({data: {gmapApi: null}})
+let GmapApi
 
 // export everything
 export {load, loaded, Marker, Polyline, Polygon, Circle, Cluster, Rectangle,
@@ -49,7 +49,8 @@ export function install (Vue, options) {
     }
   })
 
-  loaded.then(() => GmapApi.gmapApi = {})
+  GmapApi = new Vue({data: {gmapApi: null}})
+  loaded.then(() => { GmapApi.gmapApi = {} })
 
   if (options.load) {
     load(options.load, options.loadCn)
@@ -69,6 +70,6 @@ export function install (Vue, options) {
   }
 }
 
-export function gmapApi() {
+export function gmapApi () {
   return GmapApi.gmapApi && window.google
 }
