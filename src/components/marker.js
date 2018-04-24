@@ -112,7 +112,7 @@ export default mapElementFactory({
   destroyed () {
     if (!this.$markerObject) { return }
 
-    if (this.$clusterPromise) {
+    if (this.$clusterObject) {
       // Repaint will be performed in `updated()` of cluster
       this.$clusterObject.removeMarker(this.$markerObject, true)
     } else {
