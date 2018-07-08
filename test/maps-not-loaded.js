@@ -4,7 +4,7 @@ import {getPage, loadFile} from './test-setup/test-common'
 
 export const lab = Lab.script()
 
-lab.experiment('Basic tests', {timeout: 15000}, function () {
+lab.experiment('On-demand API loading', {timeout: 15000}, function () {
   let page = null
 
   async function loadPage () {
@@ -29,7 +29,7 @@ lab.experiment('Basic tests', {timeout: 15000}, function () {
 
   lab.before({timeout: 15000}, getPage(p => { page = p }))
 
-  lab.test('Maps API is loaded', async function () {
+  lab.test('Maps API is loaded only on demand', async function () {
     await loadPage()
     const vue = await mountVue()
 
@@ -51,9 +51,11 @@ lab.experiment('Basic tests', {timeout: 15000}, function () {
 
           return new Promise((resolve) => setTimeout(resolve, 100))
         })
-        .then(() => {
+        .then(() => vue.$refs.gmap.$mapPromise.then(() => !!window.google))
+        .then((isGoogleLoaded) => {
           const allScriptElements = Array.prototype.slice.call(document.getElementsByTagName('SCRIPT'), 0)
           return (
+            isGoogleLoaded &&
             allScriptElements.some(s => s.src.toLowerCase().includes('maps.googleapis.com'))
           )
         })
