@@ -32,10 +32,6 @@ lab.experiment('Basic tests', {timeout: 15000}, function () {
     await loadPage()
     const vue = await mountVue()
 
-    assert(await page.evaluate(() =>
-      VueGoogleMaps.loaded.then(() => !!google.maps)),
-    'google.maps is defined')
-
     assert(await page.evaluate(
       (vue) =>
         vue.$refs.map.$mapPromise

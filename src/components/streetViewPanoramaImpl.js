@@ -1,4 +1,3 @@
-import {loaded} from '../manager.js'
 import bindEvents from '../utils/bindEvents.js'
 import {bindProps, getPropsValues} from '../utils/bindProps.js'
 import mountableMixin from '../utils/mountableMixin.js'
@@ -95,7 +94,7 @@ export default {
   },
 
   mounted () {
-    return loaded.then(() => {
+    return this.$gmapApiPromiseLazy().then(() => {
       // getting the DOM element where to create the map
       const element = this.$refs['vue-street-view-pano']
 

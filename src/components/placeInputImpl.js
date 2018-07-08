@@ -1,8 +1,5 @@
 import {bindProps, getPropsValues} from '../utils/bindProps.js'
 import downArrowSimulator from '../utils/simulateArrowDown.js'
-import {
-  loaded
-} from '../manager.js'
 
 const props = {
   bounds: {
@@ -52,7 +49,7 @@ export default {
       input.value = this.defaultPlace
     })
 
-    loaded.then(() => {
+    this.$gmapApiPromiseLazy().then(() => {
       const options = getPropsValues(this, props)
       if (this.selectFirstOnEnter) {
         downArrowSimulator(this.$refs.input)
