@@ -1,14 +1,4 @@
-/* vim: set softtabstop=2 shiftwidth=2 expandtab : */
-
-var setUp = false
-
-export const loaded = new Promise((resolve, reject) => { // eslint-disable-line no-unused-vars
-  if (typeof window === 'undefined') {
-    // Do nothing if run from server-side
-    return
-  }
-  window['vueGoogleMapsInit'] = resolve
-})
+let isApiSetUp = false
 
 /**
  * @param apiKey    API Key, or object with the URL parameters. For example
@@ -38,12 +28,14 @@ export const loaded = new Promise((resolve, reject) => { // eslint-disable-line 
  *      })
  * ```
  */
-export const load = (options, loadCn) => {
+export const loadGmapApi = (options, loadCn) => {
   if (typeof document === 'undefined') {
     // Do nothing if run from server-side
     return
   }
-  if (!setUp) {
+  if (!isApiSetUp) {
+    isApiSetUp = true
+
     const googleMapScript = document.createElement('SCRIPT')
 
     // Allow options to be an object.

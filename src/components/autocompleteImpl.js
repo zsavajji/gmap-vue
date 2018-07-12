@@ -1,6 +1,5 @@
 import {bindProps, getPropsValues} from '../utils/bindProps.js'
 import downArrowSimulator from '../utils/simulateArrowDown.js'
-import {loaded} from '../manager.js'
 import {mappedPropsToVueProps} from './mapElementFactory'
 
 const mappedProps = {
@@ -42,7 +41,7 @@ const props = {
 
 export default {
   mounted () {
-    loaded.then(() => {
+    this.$gmapApiPromiseLazy().then(() => {
       if (this.selectFirstOnEnter) {
         downArrowSimulator(this.$refs.input)
       }
