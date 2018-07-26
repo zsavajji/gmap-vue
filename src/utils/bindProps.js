@@ -28,7 +28,7 @@ export function bindProps (vueInst, googleMapsInst, props, options) {
   for (let attribute in props) {
     let {twoWay, type, trackProperties, noBind} = props[attribute]
 
-    if (noBind) return
+    if (noBind) continue
 
     const setMethodName = 'set' + capitalizeFirstLetter(attribute)
     const getMethodName = 'get' + capitalizeFirstLetter(attribute)
