@@ -1,6 +1,7 @@
 /* vim: set softtabstop=2 shiftwidth=2 expandtab : */
-const webpack = require('webpack');
+const webpack = require('webpack')
 const path = require('path')
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 const baseConfig = {
   entry: [
@@ -11,7 +12,7 @@ const baseConfig = {
       {
         test: /\.vue$/,
         loader: 'vue-loader',
-        options: { target: 'node' }
+        // options: { target: 'node' }
       },
       {
         test: /\.js$/,
@@ -21,6 +22,10 @@ const baseConfig = {
         ]
       },
       {
+        test: /\.(css|less)$/,
+        use: ['style-loader', 'css-loader', 'less-loader']
+      },
+      {
         test: /\.(png|jpg|gif)$/,
         use: [{
           loader: 'file-loader?name=[name].[ext]?[hash]',
@@ -28,8 +33,11 @@ const baseConfig = {
       },
     ],
   },
+  plugins: [
+    new VueLoaderPlugin()
+  ],
   mode: process.env.NODE_ENV || 'development'
-}; /* baseConfig */
+} /* baseConfig */
 
 /**
  * Web config uses a global Vue and Lodash object.
@@ -41,13 +49,13 @@ const webConfig = {
     'marker-clusterer-plus': 'MarkerClusterer'
   },
   output: {
-  	path: path.resolve(__dirname, 'dist'),
-    filename: "vue-google-maps.js",
-    library: ["VueGoogleMaps"],
-    libraryTarget: "umd"
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'vue-google-maps.js',
+    library: ['VueGoogleMaps'],
+    libraryTarget: 'umd'
   }
 }
 
 module.exports = [
   webConfig
-];
+]
