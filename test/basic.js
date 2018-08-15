@@ -1,8 +1,8 @@
-import Lab from 'lab'
-import assert from 'assert'
-import fs from 'fs'
-import path from 'path'
-import {getPage, loadFile} from './test-setup/test-common'
+const Lab = require('lab')
+const assert = require('assert')
+const fs = require('fs')
+const path = require('path')
+const {getPage, loadFile} = require('./test-setup/test-common')
 
 export const lab = Lab.script()
 
@@ -21,7 +21,7 @@ lab.experiment('Basic tests', {timeout: 15000}, function () {
         new Vue({
           created () {
             resolve(this)
-          },
+          }
         }).$mount('#test1')
       }))
   }
@@ -64,7 +64,7 @@ lab.experiment('Basic tests', {timeout: 15000}, function () {
     await page.evaluate((vue) =>
       vue.$refs.map.$mapPromise
         .then(() => new Promise(resolve => setTimeout(resolve, 500))),
-      vue)
+    vue)
 
     // Then try to pan the page
     await page.mouse.move(right - 4, top + 4)
@@ -83,7 +83,7 @@ lab.experiment('Basic tests', {timeout: 15000}, function () {
 
   lab.test('Lodash library is not bloating up the library', async () => {
     const libraryOutput = fs.readFileSync(
-      path.join(__dirname, '../dist/vue-google-maps.js'),
+      path.join(__dirname, '..', 'dist', 'vue-google-maps.js'),
       'utf-8'
     )
 
