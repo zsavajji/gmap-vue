@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/xkjyeah/vue-google-maps#readme",
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
     "babel-runtime": "^5.8.0",
     "marker-clusterer-plus": "^2.1.4"
   },
