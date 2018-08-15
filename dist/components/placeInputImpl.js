@@ -1,18 +1,19 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.default = void 0;
 
-var _bindProps = require('../utils/bindProps.js');
+var _bindProps = require("../utils/bindProps.js");
 
-var _simulateArrowDown = require('../utils/simulateArrowDown.js');
-
-var _simulateArrowDown2 = _interopRequireDefault(_simulateArrowDown);
+var _simulateArrowDown = _interopRequireDefault(require("../utils/simulateArrowDown.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
 
 var props = {
   bounds: {
@@ -51,23 +52,21 @@ var props = {
     default: false
   }
 };
-
-exports.default = {
+var _default = {
   mounted: function mounted() {
     var _this = this;
 
-    var input = this.$refs.input;
+    var input = this.$refs.input; // Allow default place to be set
 
-    // Allow default place to be set
     input.value = this.defaultPlace;
     this.$watch('defaultPlace', function () {
       input.value = _this.defaultPlace;
     });
-
     this.$gmapApiPromiseLazy().then(function () {
       var options = (0, _bindProps.getPropsValues)(_this, props);
+
       if (_this.selectFirstOnEnter) {
-        (0, _simulateArrowDown2.default)(_this.$refs.input);
+        (0, _simulateArrowDown.default)(_this.$refs.input);
       }
 
       if (typeof google.maps.places.Autocomplete !== 'function') {
@@ -82,7 +81,7 @@ exports.default = {
           className = props.className,
           label = props.label,
           selectFirstOnEnter = props.selectFirstOnEnter,
-          rest = _objectWithoutProperties(props, ['placeholder', 'place', 'defaultPlace', 'className', 'label', 'selectFirstOnEnter']); // eslint-disable-line
+          rest = _objectWithoutProperties(props, ["placeholder", "place", "defaultPlace", "className", "label", "selectFirstOnEnter"]); // eslint-disable-line
 
 
       (0, _bindProps.bindProps)(_this, _this.autoCompleter, rest);
@@ -95,6 +94,6 @@ exports.default = {
   created: function created() {
     console.warn('The PlaceInput class is deprecated! Please consider using the Autocomplete input instead'); // eslint-disable-line no-console
   },
-
   props: props
 };
+exports.default = _default;

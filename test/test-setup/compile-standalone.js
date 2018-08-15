@@ -1,14 +1,14 @@
-import webpack from 'webpack'
-import * as shell from 'shelljs'
-import path from 'path'
+const webpack = require('webpack')
+const shell = require('shelljs')
+const path = require('path')
 
-export default new Promise((resolve, reject) => {
+module.exports = new Promise((resolve, reject) => {
   const webpackConfig = require('../../webpack.config.js')[0]
 
   webpack(
     {
       ...webpackConfig,
-      mode: 'development',
+      mode: 'development'
     },
     (err, status) => {
       if (!err) {

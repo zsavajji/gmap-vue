@@ -1,20 +1,21 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.default = void 0;
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+var _bindProps = require("../utils/bindProps.js");
 
-var _bindProps = require('../utils/bindProps.js');
+var _simulateArrowDown = _interopRequireDefault(require("../utils/simulateArrowDown.js"));
 
-var _simulateArrowDown = require('../utils/simulateArrowDown.js');
-
-var _simulateArrowDown2 = _interopRequireDefault(_simulateArrowDown);
-
-var _mapElementFactory = require('./mapElementFactory');
+var _mapElementFactory = require("./mapElementFactory");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var mappedProps = {
   bounds: {
@@ -33,7 +34,6 @@ var mappedProps = {
     }
   }
 };
-
 var props = {
   placeholder: {
     required: false,
@@ -52,22 +52,22 @@ var props = {
     type: Object
   }
 };
-
-exports.default = {
+var _default = {
   mounted: function mounted() {
     var _this = this;
 
     this.$gmapApiPromiseLazy().then(function () {
       if (_this.selectFirstOnEnter) {
-        (0, _simulateArrowDown2.default)(_this.$refs.input);
+        (0, _simulateArrowDown.default)(_this.$refs.input);
       }
 
       if (typeof google.maps.places.Autocomplete !== 'function') {
         throw new Error('google.maps.places.Autocomplete is undefined. Did you add \'places\' to libraries when loading Google Maps?');
       }
-
       /* eslint-disable no-unused-vars */
-      var finalOptions = _extends({}, (0, _bindProps.getPropsValues)(_this, mappedProps), _this.options);
+
+
+      var finalOptions = _objectSpread({}, (0, _bindProps.getPropsValues)(_this, mappedProps), _this.options);
 
       _this.$autocomplete = new google.maps.places.Autocomplete(_this.$refs.input, finalOptions);
       (0, _bindProps.bindProps)(_this, _this.$autocomplete, mappedProps);
@@ -76,15 +76,15 @@ exports.default = {
         if (v !== undefined) {
           _this.$autocomplete.setComponentRestrictions(v);
         }
-      });
-
-      // Not using `bindEvents` because we also want
+      }); // Not using `bindEvents` because we also want
       // to return the result of `getPlace()`
+
+
       _this.$autocomplete.addListener('place_changed', function () {
         _this.$emit('place_changed', _this.$autocomplete.getPlace());
       });
     });
   },
-
-  props: _extends({}, (0, _mapElementFactory.mappedPropsToVueProps)(mappedProps), props)
+  props: _objectSpread({}, (0, _mapElementFactory.mappedPropsToVueProps)(mappedProps), props)
 };
+exports.default = _default;

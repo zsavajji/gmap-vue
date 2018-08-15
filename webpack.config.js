@@ -1,5 +1,3 @@
-/* vim: set softtabstop=2 shiftwidth=2 expandtab : */
-const webpack = require('webpack')
 const path = require('path')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
@@ -11,15 +9,18 @@ const baseConfig = {
     rules: [
       {
         test: /\.vue$/,
-        loader: 'vue-loader',
+        loader: 'vue-loader'
         // options: { target: 'node' }
       },
       {
         test: /\.js$/,
-        loader: 'babel-loader',
-        exclude: [
-          /node_modules/,
-        ]
+        exclude: /(node_modules|bower_components)/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env']
+          }
+        }
       },
       {
         test: /\.(css|less)$/,
@@ -28,10 +29,10 @@ const baseConfig = {
       {
         test: /\.(png|jpg|gif)$/,
         use: [{
-          loader: 'file-loader?name=[name].[ext]?[hash]',
+          loader: 'file-loader?name=[name].[ext]?[hash]'
         }]
-      },
-    ],
+      }
+    ]
   },
   plugins: [
     new VueLoaderPlugin()

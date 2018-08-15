@@ -3,14 +3,13 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.default = void 0;
 
 // This piece of code was orignally written by sindresorhus and can be seen here
 // https://github.com/sindresorhus/lazy-value/blob/master/index.js
-
-exports.default = function (fn) {
+var _default = function _default(fn) {
   var called = false;
-  var ret = void 0;
-
+  var ret;
   return function () {
     if (!called) {
       called = true;
@@ -20,3 +19,5 @@ exports.default = function (fn) {
     return ret;
   };
 };
+
+exports.default = _default;

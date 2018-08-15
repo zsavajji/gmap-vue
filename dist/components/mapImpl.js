@@ -1,32 +1,27 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.default = void 0;
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+var _bindEvents = _interopRequireDefault(require("../utils/bindEvents.js"));
 
-var _bindEvents = require('../utils/bindEvents.js');
+var _bindProps = require("../utils/bindProps.js");
 
-var _bindEvents2 = _interopRequireDefault(_bindEvents);
+var _mountableMixin = _interopRequireDefault(require("../utils/mountableMixin.js"));
 
-var _bindProps = require('../utils/bindProps.js');
+var _TwoWayBindingWrapper = _interopRequireDefault(require("../utils/TwoWayBindingWrapper.js"));
 
-var _mountableMixin = require('../utils/mountableMixin.js');
+var _WatchPrimitiveProperties = _interopRequireDefault(require("../utils/WatchPrimitiveProperties.js"));
 
-var _mountableMixin2 = _interopRequireDefault(_mountableMixin);
-
-var _TwoWayBindingWrapper = require('../utils/TwoWayBindingWrapper.js');
-
-var _TwoWayBindingWrapper2 = _interopRequireDefault(_TwoWayBindingWrapper);
-
-var _WatchPrimitiveProperties = require('../utils/WatchPrimitiveProperties.js');
-
-var _WatchPrimitiveProperties2 = _interopRequireDefault(_WatchPrimitiveProperties);
-
-var _mapElementFactory = require('./mapElementFactory.js');
+var _mapElementFactory = require("./mapElementFactory.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var props = {
   center: {
@@ -60,20 +55,18 @@ var props = {
     }
   }
 };
+var events = ['bounds_changed', 'click', 'dblclick', 'drag', 'dragend', 'dragstart', 'idle', 'mousemove', 'mouseout', 'mouseover', 'resize', 'rightclick', 'tilesloaded']; // Plain Google Maps methods exposed here for convenience
 
-var events = ['bounds_changed', 'click', 'dblclick', 'drag', 'dragend', 'dragstart', 'idle', 'mousemove', 'mouseout', 'mouseover', 'resize', 'rightclick', 'tilesloaded'];
-
-// Plain Google Maps methods exposed here for convenience
 var linkedMethods = ['panBy', 'panTo', 'panToBounds', 'fitBounds'].reduce(function (all, methodName) {
   all[methodName] = function () {
     if (this.$mapObject) {
       this.$mapObject[methodName].apply(this.$mapObject, arguments);
     }
   };
-  return all;
-}, {});
 
-// Other convenience methods exposed by Vue Google Maps
+  return all;
+}, {}); // Other convenience methods exposed by Vue Google Maps
+
 var customMethods = {
   resize: function resize() {
     if (this.$mapObject) {
@@ -89,8 +82,6 @@ var customMethods = {
     google.maps.event.trigger(this.$mapObject, 'resize');
     this.$mapObject.setCenter(oldCenter);
   },
-
-
   /// Override mountableMixin::_resizeCallback
   /// because resizePreserveCenter is usually the
   /// expected behaviour
@@ -98,23 +89,22 @@ var customMethods = {
     this.resizePreserveCenter();
   }
 };
-
-exports.default = {
-  mixins: [_mountableMixin2.default],
+var _default = {
+  mixins: [_mountableMixin.default],
   props: (0, _mapElementFactory.mappedPropsToVueProps)(props),
-
   provide: function provide() {
     var _this = this;
 
     this.$mapPromise = new Promise(function (resolve, reject) {
-      _this.$mapPromiseDeferred = { resolve: resolve, reject: reject };
+      _this.$mapPromiseDeferred = {
+        resolve: resolve,
+        reject: reject
+      };
     });
     return {
       '$mapPromise': this.$mapPromise
     };
   },
-
-
   computed: {
     finalLat: function finalLat() {
       return this.center && typeof this.center.lat === 'function' ? this.center.lat() : this.center.lat;
@@ -123,10 +113,12 @@ exports.default = {
       return this.center && typeof this.center.lng === 'function' ? this.center.lng() : this.center.lng;
     },
     finalLatLng: function finalLatLng() {
-      return { lat: this.finalLat, lng: this.finalLng };
+      return {
+        lat: this.finalLat,
+        lng: this.finalLng
+      };
     }
   },
-
   watch: {
     zoom: function zoom(_zoom) {
       if (this.$mapObject) {
@@ -134,41 +126,42 @@ exports.default = {
       }
     }
   },
-
   mounted: function mounted() {
     var _this2 = this;
 
     return this.$gmapApiPromiseLazy().then(function () {
       // getting the DOM element where to create the map
-      var element = _this2.$refs['vue-map'];
+      var element = _this2.$refs['vue-map']; // creating the map
 
-      // creating the map
-      var options = _extends({}, _this2.options, (0, _bindProps.getPropsValues)(_this2, props));
+      var options = _objectSpread({}, _this2.options, (0, _bindProps.getPropsValues)(_this2, props));
+
       delete options.options;
-      _this2.$mapObject = new google.maps.Map(element, options);
+      _this2.$mapObject = new google.maps.Map(element, options); // binding properties (two and one way)
 
-      // binding properties (two and one way)
-      (0, _bindProps.bindProps)(_this2, _this2.$mapObject, props);
-      // binding events
-      (0, _bindEvents2.default)(_this2, _this2.$mapObject, events);
+      (0, _bindProps.bindProps)(_this2, _this2.$mapObject, props); // binding events
 
-      // manually trigger center and zoom
-      (0, _TwoWayBindingWrapper2.default)(function (increment, decrement, shouldUpdate) {
+      (0, _bindEvents.default)(_this2, _this2.$mapObject, events); // manually trigger center and zoom
+
+      (0, _TwoWayBindingWrapper.default)(function (increment, decrement, shouldUpdate) {
         _this2.$mapObject.addListener('center_changed', function () {
           if (shouldUpdate()) {
             _this2.$emit('center_changed', _this2.$mapObject.getCenter());
           }
+
           decrement();
         });
 
-        (0, _WatchPrimitiveProperties2.default)(_this2, ['finalLat', 'finalLng'], function updateCenter() {
+        (0, _WatchPrimitiveProperties.default)(_this2, ['finalLat', 'finalLng'], function updateCenter() {
           increment();
+
           _this2.$mapObject.setCenter(_this2.finalLatLng);
         });
       });
+
       _this2.$mapObject.addListener('zoom_changed', function () {
         _this2.$emit('zoom_changed', _this2.$mapObject.getZoom());
       });
+
       _this2.$mapObject.addListener('bounds_changed', function () {
         _this2.$emit('bounds_changed', _this2.$mapObject.getBounds());
       });
@@ -180,6 +173,6 @@ exports.default = {
       throw error;
     });
   },
-
-  methods: _extends({}, customMethods, linkedMethods)
+  methods: _objectSpread({}, customMethods, linkedMethods)
 };
+exports.default = _default;

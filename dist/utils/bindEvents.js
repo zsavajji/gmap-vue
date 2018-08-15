@@ -3,32 +3,33 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.default = void 0;
 
-exports.default = function (vueInst, googleMapsInst, events) {
-  var _loop = function (eventName) {
-    if (vueInst.$gmapOptions.autobindAllEvents || vueInst.$listeners[eventName]) {
-      googleMapsInst.addListener(eventName, function (ev) {
-        vueInst.$emit(eventName, ev);
-      });
-    }
-  };
-
+var _default = function _default(vueInst, googleMapsInst, events) {
   var _iteratorNormalCompletion = true;
   var _didIteratorError = false;
   var _iteratorError = undefined;
 
   try {
-    for (var _iterator = events[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+    var _loop = function () {
       var eventName = _step.value;
 
-      _loop(eventName);
+      if (vueInst.$gmapOptions.autobindAllEvents || vueInst.$listeners[eventName]) {
+        googleMapsInst.addListener(eventName, function (ev) {
+          vueInst.$emit(eventName, ev);
+        });
+      }
+    };
+
+    for (var _iterator = events[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+      _loop();
     }
   } catch (err) {
     _didIteratorError = true;
     _iteratorError = err;
   } finally {
     try {
-      if (!_iteratorNormalCompletion && _iterator.return) {
+      if (!_iteratorNormalCompletion && _iterator.return != null) {
         _iterator.return();
       }
     } finally {
@@ -38,3 +39,5 @@ exports.default = function (vueInst, googleMapsInst, events) {
     }
   }
 };
+
+exports.default = _default;

@@ -1,12 +1,11 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.default = void 0;
 
-var _mapElementFactory = require('./mapElementFactory.js');
-
-var _mapElementFactory2 = _interopRequireDefault(_mapElementFactory);
+var _mapElementFactory = _interopRequireDefault(require("./mapElementFactory.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -27,10 +26,9 @@ var props = {
     twoWay: true
   }
 };
-
 var events = ['domready', 'closeclick', 'content_changed'];
 
-exports.default = (0, _mapElementFactory2.default)({
+var _default = (0, _mapElementFactory.default)({
   mappedProps: props,
   events: events,
   name: 'infoWindow',
@@ -43,13 +41,11 @@ exports.default = (0, _mapElementFactory2.default)({
       default: true
     }
   },
-
   inject: {
     '$markerPromise': {
       default: null
     }
   },
-
   mounted: function mounted() {
     var el = this.$refs.flyaway;
     el.parentNode.removeChild(el);
@@ -67,8 +63,6 @@ exports.default = (0, _mapElementFactory2.default)({
       });
     }
   },
-
-
   methods: {
     _openInfoWindow: function _openInfoWindow() {
       if (this.opened) {
@@ -82,13 +76,15 @@ exports.default = (0, _mapElementFactory2.default)({
       }
     }
   },
-
   afterCreate: function afterCreate() {
     var _this2 = this;
 
     this._openInfoWindow();
+
     this.$watch('opened', function () {
       _this2._openInfoWindow();
     });
   }
 });
+
+exports.default = _default;

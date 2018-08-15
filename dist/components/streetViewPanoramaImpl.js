@@ -1,32 +1,27 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.default = void 0;
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+var _bindEvents = _interopRequireDefault(require("../utils/bindEvents.js"));
 
-var _bindEvents = require('../utils/bindEvents.js');
+var _bindProps = require("../utils/bindProps.js");
 
-var _bindEvents2 = _interopRequireDefault(_bindEvents);
+var _mountableMixin = _interopRequireDefault(require("../utils/mountableMixin.js"));
 
-var _bindProps = require('../utils/bindProps.js');
+var _TwoWayBindingWrapper = _interopRequireDefault(require("../utils/TwoWayBindingWrapper.js"));
 
-var _mountableMixin = require('../utils/mountableMixin.js');
+var _WatchPrimitiveProperties = _interopRequireDefault(require("../utils/WatchPrimitiveProperties.js"));
 
-var _mountableMixin2 = _interopRequireDefault(_mountableMixin);
-
-var _TwoWayBindingWrapper = require('../utils/TwoWayBindingWrapper.js');
-
-var _TwoWayBindingWrapper2 = _interopRequireDefault(_TwoWayBindingWrapper);
-
-var _WatchPrimitiveProperties = require('../utils/WatchPrimitiveProperties.js');
-
-var _WatchPrimitiveProperties2 = _interopRequireDefault(_WatchPrimitiveProperties);
-
-var _mapElementFactory = require('./mapElementFactory.js');
+var _mapElementFactory = require("./mapElementFactory.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var props = {
   zoom: {
@@ -64,13 +59,12 @@ var props = {
     }
   }
 };
-
 var events = ['closeclick', 'status_changed'];
-
-exports.default = {
-  mixins: [_mountableMixin2.default],
+var _default = {
+  mixins: [_mountableMixin.default],
   props: (0, _mapElementFactory.mappedPropsToVueProps)(props),
-  replace: false, // necessary for css styles
+  replace: false,
+  // necessary for css styles
   methods: {
     resize: function resize() {
       if (this.$panoObject) {
@@ -78,20 +72,21 @@ exports.default = {
       }
     }
   },
-
   provide: function provide() {
     var _this = this;
 
     var promise = new Promise(function (resolve, reject) {
-      _this.$panoPromiseDeferred = { resolve: resolve, reject: reject };
+      _this.$panoPromiseDeferred = {
+        resolve: resolve,
+        reject: reject
+      };
     });
     return {
       '$panoPromise': promise,
       '$mapPromise': promise // so that we can use it with markers
+
     };
   },
-
-
   computed: {
     finalLat: function finalLat() {
       return this.position && typeof this.position.lat === 'function' ? this.position.lat() : this.position.lat;
@@ -106,7 +101,6 @@ exports.default = {
       };
     }
   },
-
   watch: {
     zoom: function zoom(_zoom) {
       if (this.$panoObject) {
@@ -114,27 +108,23 @@ exports.default = {
       }
     }
   },
-
   mounted: function mounted() {
     var _this2 = this;
 
     return this.$gmapApiPromiseLazy().then(function () {
       // getting the DOM element where to create the map
-      var element = _this2.$refs['vue-street-view-pano'];
+      var element = _this2.$refs['vue-street-view-pano']; // creating the map
 
-      // creating the map
-      var options = _extends({}, _this2.options, (0, _bindProps.getPropsValues)(_this2, props));
+      var options = _objectSpread({}, _this2.options, (0, _bindProps.getPropsValues)(_this2, props));
+
       delete options.options;
+      _this2.$panoObject = new google.maps.StreetViewPanorama(element, options); // binding properties (two and one way)
 
-      _this2.$panoObject = new google.maps.StreetViewPanorama(element, options);
+      (0, _bindProps.bindProps)(_this2, _this2.$panoObject, props); // binding events
 
-      // binding properties (two and one way)
-      (0, _bindProps.bindProps)(_this2, _this2.$panoObject, props);
-      // binding events
-      (0, _bindEvents2.default)(_this2, _this2.$panoObject, events);
+      (0, _bindEvents.default)(_this2, _this2.$panoObject, events); // manually trigger position
 
-      // manually trigger position
-      (0, _TwoWayBindingWrapper2.default)(function (increment, decrement, shouldUpdate) {
+      (0, _TwoWayBindingWrapper.default)(function (increment, decrement, shouldUpdate) {
         // Panos take a while to load
         increment();
 
@@ -142,11 +132,13 @@ exports.default = {
           if (shouldUpdate()) {
             _this2.$emit('position_changed', _this2.$panoObject.getPosition());
           }
+
           decrement();
         });
 
-        (0, _WatchPrimitiveProperties2.default)(_this2, ['finalLat', 'finalLng'], function updateCenter() {
+        (0, _WatchPrimitiveProperties.default)(_this2, ['finalLat', 'finalLng'], function updateCenter() {
           increment();
+
           _this2.$panoObject.setPosition(_this2.finalLatLng);
         });
       });
@@ -159,3 +151,4 @@ exports.default = {
     });
   }
 };
+exports.default = _default;

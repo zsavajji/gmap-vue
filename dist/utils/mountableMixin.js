@@ -1,8 +1,10 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.default = void 0;
+
 /*
 Mixin for objects that are mounted by Google Maps
 Javascript API.
@@ -11,10 +13,8 @@ These are objects that are sensitive to element resize
 operations so it exposes a property which accepts a bus
 
 */
-
-exports.default = {
+var _default = {
   props: ['resizeBus'],
-
   data: function data() {
     return {
       _actualResizeBus: null
@@ -27,8 +27,6 @@ exports.default = {
       this.$data._actualResizeBus = this.resizeBus;
     }
   },
-
-
   methods: {
     _resizeCallback: function _resizeCallback() {
       this.resize();
@@ -41,7 +39,6 @@ exports.default = {
       });
     }
   },
-
   watch: {
     resizeBus: function resizeBus(newVal) {
       // eslint-disable-line no-unused-vars
@@ -51,15 +48,16 @@ exports.default = {
       if (oldVal) {
         oldVal.$off('resize', this._delayedResizeCallback);
       }
+
       if (newVal) {
         newVal.$on('resize', this._delayedResizeCallback);
       }
     }
   },
-
   destroyed: function destroyed() {
     if (this.$data._actualResizeBus) {
       this.$data._actualResizeBus.$off('resize', this._delayedResizeCallback);
     }
   }
 };
+exports.default = _default;

@@ -1,12 +1,11 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.default = void 0;
 
-var _mapElementFactory = require('./mapElementFactory.js');
-
-var _mapElementFactory2 = _interopRequireDefault(_mapElementFactory);
+var _mapElementFactory = _interopRequireDefault(require("./mapElementFactory.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -67,9 +66,7 @@ var props = {
     default: true
   }
 };
-
 var events = ['click', 'rightclick', 'dblclick', 'drag', 'dragstart', 'dragend', 'mouseup', 'mousedown', 'mouseover', 'mouseout'];
-
 /**
  * @class Marker
  *
@@ -82,20 +79,19 @@ var events = ['click', 'rightclick', 'dblclick', 'drag', 'dragstart', 'dragend',
  * reasons. Otherwise we should use a cluster-marker mixin or
  * subclass.
  */
-exports.default = (0, _mapElementFactory2.default)({
+
+var _default = (0, _mapElementFactory.default)({
   mappedProps: props,
   events: events,
   name: 'marker',
   ctr: function ctr() {
     return google.maps.Marker;
   },
-
   inject: {
     '$clusterPromise': {
       default: null
     }
   },
-
   render: function render(h) {
     if (!this.$slots.default || this.$slots.default.length === 0) {
       return '';
@@ -136,3 +132,5 @@ exports.default = (0, _mapElementFactory2.default)({
     }
   }
 });
+
+exports.default = _default;

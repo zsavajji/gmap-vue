@@ -1,20 +1,16 @@
 {
   "presets": [
-    ["env", {
+    ["@babel/env", {
       "targets": {
         "browsers": [
           "last 2 versions",
           "safari >= 7"
         ]
-      },
-      "useBuiltIns": true,
-      "polyfills": [
-        "es7.finally",
-      ]
+      }
     }]
   ],
   "plugins": [
-    "transform-object-rest-spread",
+    "@babel/plugin-proposal-object-rest-spread",
     "transform-inline-environment-variables",
     "minify-dead-code-elimination"
   ]

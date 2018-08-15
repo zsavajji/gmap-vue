@@ -1,8 +1,10 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.default = void 0;
+
 /**
  * @class MapElementMixin
  *
@@ -12,11 +14,12 @@ Object.defineProperty(exports, "__esModule", {
  *
  *
  * */
-exports.default = {
+var _default = {
   inject: {
-    '$mapPromise': { default: 'abcdef' }
+    '$mapPromise': {
+      default: 'abcdef'
+    }
   },
-
   provide: function provide() {
     var _this = this;
 
@@ -32,7 +35,7 @@ exports.default = {
     this.$mapPromise.then(function (map) {
       _this.$map = map;
     });
-
     return {};
   }
 };
+exports.default = _default;

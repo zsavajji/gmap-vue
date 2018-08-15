@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -6,9 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.getPropsValues = getPropsValues;
 exports.bindProps = bindProps;
 
-var _WatchPrimitiveProperties = require('../utils/WatchPrimitiveProperties');
-
-var _WatchPrimitiveProperties2 = _interopRequireDefault(_WatchPrimitiveProperties);
+var _WatchPrimitiveProperties = _interopRequireDefault(require("../utils/WatchPrimitiveProperties"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -21,10 +19,10 @@ function getPropsValues(vueInst, props) {
     if (vueInst[prop] !== undefined) {
       acc[prop] = vueInst[prop];
     }
+
     return acc;
   }, {});
 }
-
 /**
   * Binds the properties defined in props to the google maps instance.
   * If the prop is an Object type, and we wish to track the properties
@@ -32,6 +30,8 @@ function getPropsValues(vueInst, props) {
   * watch. For deep watch, we also prevent the _changed event from being
   * emitted if the data source was external.
   */
+
+
 function bindProps(vueInst, googleMapsInst, props) {
   var _loop = function (attribute) {
     var _props$attribute = props[attribute],
@@ -39,35 +39,31 @@ function bindProps(vueInst, googleMapsInst, props) {
         type = _props$attribute.type,
         trackProperties = _props$attribute.trackProperties,
         noBind = _props$attribute.noBind;
-
-
-    if (noBind) return 'continue';
-
+    if (noBind) return "continue";
     var setMethodName = 'set' + capitalizeFirstLetter(attribute);
     var getMethodName = 'get' + capitalizeFirstLetter(attribute);
     var eventName = attribute.toLowerCase() + '_changed';
     var initialValue = vueInst[attribute];
 
     if (typeof googleMapsInst[setMethodName] === 'undefined') {
-      throw new Error(setMethodName + ' is not a method of (the Maps object corresponding to) ' + vueInst.$options._componentTag);
-    }
-
-    // We need to avoid an endless
+      throw new Error("".concat(setMethodName, " is not a method of (the Maps object corresponding to) ").concat(vueInst.$options._componentTag));
+    } // We need to avoid an endless
     // propChanged -> event emitted -> propChanged -> event emitted loop
     // although this may really be the user's responsibility
+
+
     if (type !== Object || !trackProperties) {
       // Track the object deeply
       vueInst.$watch(attribute, function () {
         var attributeValue = vueInst[attribute];
-
         googleMapsInst[setMethodName](attributeValue);
       }, {
         immediate: typeof initialValue !== 'undefined',
         deep: type === Object
       });
     } else {
-      (0, _WatchPrimitiveProperties2.default)(vueInst, trackProperties.map(function (prop) {
-        return attribute + '.' + prop;
+      (0, _WatchPrimitiveProperties.default)(vueInst, trackProperties.map(function (prop) {
+        return "".concat(attribute, ".").concat(prop);
       }), function () {
         googleMapsInst[setMethodName](vueInst[attribute]);
       }, vueInst[attribute] !== undefined);
@@ -84,6 +80,6 @@ function bindProps(vueInst, googleMapsInst, props) {
   for (var attribute in props) {
     var _ret = _loop(attribute);
 
-    if (_ret === 'continue') continue;
+    if (_ret === "continue") continue;
   }
 }

@@ -1,6 +1,6 @@
 // Adapted from https://github.com/nlf/lab-babel/blob/master/lib/index.js
-require('babel-polyfill')
-var Babel = require('babel-core')
+require('@babel/polyfill')
+var Babel = require('@babel/core')
 
 var internals = {}
 internals.transform = function (content, filename) {
@@ -14,8 +14,8 @@ internals.transform = function (content, filename) {
     sourceFileName: filename,
     auxiliaryCommentBefore: '$lab:coverage:off$',
     auxiliaryCommentAfter: '$lab:coverage:on$',
-    presets: ['es2015'],
-    plugins: ['transform-object-rest-spread'],
+    presets: ['@babel/env'],
+    plugins: ['@babel/plugin-proposal-object-rest-spread']
   })
 
   return transformed.code
