@@ -1,8 +1,8 @@
-const Lab = require('lab')
-const assert = require('assert')
-const fs = require('fs')
-const path = require('path')
-const {getPage, loadFile} = require('./test-setup/test-common')
+import Lab from 'lab'
+import assert from 'assert'
+import fs from 'fs'
+import path from 'path'
+import { getPage, loadFile } from './test-setup/test-common'
 
 export const lab = Lab.script()
 

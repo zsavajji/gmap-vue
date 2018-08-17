@@ -10,7 +10,6 @@
     }]
   ],
   "plugins": [
-    "@babel/plugin-proposal-object-rest-spread",
     "transform-inline-environment-variables",
     "minify-dead-code-elimination"
   ]
