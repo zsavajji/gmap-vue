@@ -124,25 +124,7 @@ export default {
 
 Add the following to your `nuxt.config.js`'s `build.extend()`:
 ```js
-if (!isClient) {
-  // This instructs Webpack to include `vue2-google-maps`'s Vue files
-  // for server-side rendering
-  config.externals.splice(0, 0, function (context, request, callback) {
-    if (/^vue2-google-maps($|\/)/.test(request)) {
-      callback(null, false)
-    } else {
-      callback()
-    }
-  })
-}
-```
-
-In addition, for IE11 support, you will need the `babel-polyfill` vendor:
-```js
-// nuxt.config.js
-build: {
-  vendors: ['babel-polyfill']
-}
+transpile: [/^vue2-google-maps($|\/)/]    
 ```
 
 ### Officially supported components:
