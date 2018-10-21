@@ -1,4 +1,4 @@
-# vue-google-maps
+# vue-google-maps | Valerio test
 
 [![Build Status](https://travis-ci.org/xkjyeah/vue-google-maps.svg?branch=vue2)](https://travis-ci.org/xkjyeah/vue-google-maps)
 
