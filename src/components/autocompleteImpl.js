@@ -21,18 +21,10 @@ const mappedProps = {
 }
 
 const props = {
-  placeholder: {
-    required: false,
-    type: String
-  },
   selectFirstOnEnter: {
-    require: false,
+    required: false,
     type: Boolean,
     default: false
-  },
-  value: {
-    type: String,
-    default: ''
   },
   options: {
     type: Object
