@@ -3,6 +3,9 @@
   * @prop $clusterObject -- Exposes the marker clusterer to
         descendent Marker classes. Override this if you area
         extending the class
+        
+  List of properties from
+  https://github.com/googlemaps/v3-utility-library/blob/master/markerclustererplus/src/markerclusterer.js
 **/
 import MarkerClusterer from 'marker-clusterer-plus'
 import mapElementFactory from './mapElementFactory.js'
@@ -12,12 +15,40 @@ const props = {
     type: Number,
     twoWay: false
   },
+  batchSize: {
+    type: Number,
+    twoWay: false
+  },
+  batchSizeIE: {
+    type: Number,
+    twoWay: false
+  },
   calculator: {
     type: Function,
     twoWay: false
   },
+  enableRetinaIcons: {
+    type: Boolean,
+    twoWay: false
+  },
   gridSize: {
     type: Number,
+    twoWay: false
+  },
+  ignoreHidden: {
+    type: Boolean,
+    twoWay: false
+  },
+  imageExtension: {
+    type: String,
+    twoWay: false
+  },
+  imagePath: {
+    type: String,
+    twoWay: false
+  },
+  imageSizes: {
+    type: Array,
     twoWay: false
   },
   minimumClusterSize: {
