@@ -15,10 +15,6 @@ const props = {
     type: Number,
     twoWay: false
   },
-  batchSize: {
-    type: Number,
-    twoWay: false
-  },
   batchSizeIE: {
     type: Number,
     twoWay: false
