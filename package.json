@@ -76,5 +76,11 @@
     "yaml-loader": "^0.5.0"
   },
   "author": "Daniel Sim, Guillaume Leclerc",
-  "license": "MIT"
+  "license": "MIT",
+  "browserify": {
+    "transform": [
+      "babelify",
+      "vueify"
+    ]
+  }
 }
