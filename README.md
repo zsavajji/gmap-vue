@@ -137,6 +137,17 @@ export default {
 </script>
 ```
 
+Add region and language localization:
+Example for [Localization](https://developers.google.com/maps/documentation/javascript/localization):
+```vue
+Vue.use(VueGoogleMaps, {
+  load: {
+    region: 'VI',
+    language: 'vi',
+  },
+})
+```
+
 ### Nuxt.js config
 
 Add the following to your `nuxt.config.js`'s `build.extend()`:
