@@ -137,7 +137,26 @@ export default {
 </script>
 ```
 
+Control the options of the map with the options property:
+
+Example of [MapOptions](https://developers.google.com/maps/documentation/javascript/reference/map#MapOptions):
+ ```vue
+ <GmapMap
+  :options="{
+    zoomControl: true,
+    mapTypeControl: false,
+    scaleControl: false,
+    streetViewControl: false,
+    rotateControl: false,
+    fullscreenControl: true,
+    disableDefaultUi: false
+  }"
+>
+</GmapMap>
+```
+
 Add region and language localization:
+
 Example for [Localization](https://developers.google.com/maps/documentation/javascript/localization):
 ```vue
 Vue.use(VueGoogleMaps, {
@@ -152,7 +171,7 @@ Vue.use(VueGoogleMaps, {
 
 Add the following to your `nuxt.config.js`'s `build.extend()`:
 ```js
-transpile: [/^vue2-google-maps($|\/)/]    
+transpile: [/^vue2-google-maps($|\/)/]
 ```
 
 ### Officially supported components:
