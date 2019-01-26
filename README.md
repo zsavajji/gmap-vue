@@ -174,6 +174,8 @@ Add the following to your `nuxt.config.js`'s `build.extend()`:
 transpile: [/^vue2-google-maps($|\/)/]
 ```
 
+Example project by [Alexander Lichter](https://github.com/manniL): https://codesandbox.io/s/31j9l75xjm
+
 ### Officially supported components:
 
 The list of officially support components are:
