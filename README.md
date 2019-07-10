@@ -1,3 +1,20 @@
+# CONTRIBUTORS NEEDED!
+
+It's been increasingly difficult for me to make time to maintain this project.
+My projects at work have also gradually migrated away from Google Maps (but still on Vue -- Vue's awesome!),
+so there's less and less incentive to maintain.
+
+If you have time to contribute to a rather frequently used library, feel free to make a PR!
+For more background, please refer to [this issue](https://github.com/xkjyeah/vue-google-maps/issues/514).
+
+What's urgently needed are:
+
+1. Better automated tests
+2. Better integration tests with the popular frameworks, especially Nuxt and Vue template
+3. Better documentation (examples, recommendations)
+
+The above three will go a long way to keeping the project maintainable and contributable, and will address many of the open issues.
+
 # vue-google-maps
 
 [![Build Status](https://travis-ci.org/xkjyeah/vue-google-maps.svg?branch=vue2)](https://travis-ci.org/xkjyeah/vue-google-maps)
@@ -78,8 +95,9 @@ Vue.use(VueGoogleMaps, {
   //// If you want to manually install components, e.g.
   //// import {GmapMarker} from 'vue2-google-maps/src/components/marker'
   //// Vue.component('GmapMarker', GmapMarker)
-  //// then disable the following:
-  // installComponents: true,
+  //// then set installComponents to 'false'.
+  //// If you want to automatically install all the components this property must be set to 'true':
+  installComponents: true
 })
 ```
 
@@ -120,11 +138,42 @@ export default {
 </script>
 ```
 
+Control the options of the map with the options property:
+
+Example of [MapOptions](https://developers.google.com/maps/documentation/javascript/reference/map#MapOptions):
+ ```vue
+ <GmapMap
+  :options="{
+    zoomControl: true,
+    mapTypeControl: false,
+    scaleControl: false,
+    streetViewControl: false,
+    rotateControl: false,
+    fullscreenControl: true,
+    disableDefaultUi: false
+  }"
+>
+</GmapMap>
+```
+
+Add region and language localization:
+
+Example for [Localization](https://developers.google.com/maps/documentation/javascript/localization):
+```vue
+Vue.use(VueGoogleMaps, {
+  load: {
+    region: 'VI',
+    language: 'vi',
+  },
+})
+```
+
 ### Nuxt.js config
 
 Add the following to your `nuxt.config.js`'s `build.extend()`:
+
 ```js
-transpile: [/^vue2-google-maps($|\/)/]    
+transpile: [/^vue2-google-maps($|\/)/]
 ```
 
 ### Officially supported components:

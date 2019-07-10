@@ -1,6 +1,9 @@
 <template>
-  <input type="text" :placeholder="placeholder" ref="input"
-    :value="value"/>
+  <input
+    ref="input"
+    v-bind="$attrs"
+    v-on="$listeners"
+    />
 </template>
 
 <script>

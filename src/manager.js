@@ -6,10 +6,10 @@ let isApiSetUp = false
  *                    `{ client: <YOUR-CLIENT-ID> }`.
  *                  You may pass the libraries and/or version (as `v`) parameter into
  *                  this parameter and skip the next two parameters
- * @param version   Google for Maps version
+ * @param version   Google Maps version
  * @param libraries Libraries to load (@see
  *                  https://developers.google.com/maps/documentation/javascript/libraries)
- * @param loadCn    Boolean. If set to true, the map will be loaded form goole maps China
+ * @param loadCn    Boolean. If set to true, the map will be loaded from google maps China
  *                  (@see https://developers.google.com/maps/documentation/javascript/basics#GoogleMapsChina)
  *
  * Example:
@@ -55,7 +55,7 @@ export const loadGmapApi = (options, loadCn) => {
     let baseUrl = 'https://maps.googleapis.com/'
 
     if (typeof loadCn === 'boolean' && loadCn === true) {
-      baseUrl = 'http://maps.google.cn/'
+      baseUrl = 'https://maps.google.cn/'
     }
 
     let url = baseUrl + 'maps/api/js?' +
