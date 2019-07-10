@@ -86,7 +86,7 @@ export default mapElementFactory({
     }
     return MarkerClusterer
   },
-  ctrArgs: ({map, ...otherOptions}) => [map, [], otherOptions],
+  ctrArgs: ({ map, ...otherOptions }) => [map, [], otherOptions],
 
   render (h) {
     // <div><slot></slot></div>
@@ -127,5 +127,5 @@ export default mapElementFactory({
     if (this.$clusterObject) {
       this.$clusterObject.clearMarkers()
     }
-  },
+  }
 })
