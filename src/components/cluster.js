@@ -31,6 +31,10 @@ const props = {
     type: Number,
     twoWay: false
   },
+  averageCenter: {
+    type: Boolean,
+    twoWay: false
+  },
   ignoreHidden: {
     type: Boolean,
     twoWay: false
