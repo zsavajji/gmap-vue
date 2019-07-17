@@ -54,7 +54,6 @@
     "gh-pages": "^1.2.0",
     "json-loader": "^0.5.7",
     "lab": "^18.0.2",
-    "mini-css-extract-plugin": "^0.4.5",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "puppeteer": "^1.18.1",
     "raw-loader": "^0.5.1",
