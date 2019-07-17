@@ -1,7 +1,6 @@
 const path = require('path')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 
 const config = {
@@ -9,18 +8,11 @@ const config = {
     path.resolve('./src/main.js')
   ],
   optimization: {
-    runtimeChunk: {
-      name: 'runtime'
-    },
     minimizer: [
       new UglifyJsPlugin({
         cache: true,
         parallel: true,
         sourceMap: true
-      }),
-      new MiniCssExtractPlugin({
-        filename: '[name].[hash].css',
-        chunkFilename: '[id].[hash].css'
       }),
       new OptimizeCSSAssetsPlugin({})
     ]
@@ -44,7 +36,7 @@ const config = {
       {
         test: /\.(css)$/,
         use: [
-          MiniCssExtractPlugin.loader,
+          'style-loader',
           'css-loader']
       },
       {
