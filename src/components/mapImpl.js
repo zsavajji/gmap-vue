@@ -139,7 +139,7 @@ export default {
         ...getPropsValues(this, props)
       }
       delete options.options
-      if (window.globalGmap) {
+      if (window.globalGmap && window.globalGmapDiv) {
         element.appendChild(window.globalGmapDiv)
         this.$mapObject = window.globalGmap
         this.$mapObject.setOptions(options)
