@@ -124,6 +124,10 @@ export default {
     }
   },
 
+  beforeDestroy () {
+    window.globalGmapDiv = this.$mapObject.getDiv()
+  },
+
   mounted () {
     return this.$gmapApiPromiseLazy().then(() => {
       // getting the DOM element where to create the map
@@ -135,7 +139,14 @@ export default {
         ...getPropsValues(this, props)
       }
       delete options.options
-      this.$mapObject = new google.maps.Map(element, options)
+      if (window.globalGmap) {
+        element.appendChild(window.globalGmapDiv)
+        this.$mapObject = window.globalGmap
+        this.$mapObject.setOptions(options)
+      } else {
+        this.$mapObject = new google.maps.Map(element, options)
+        window.globalGmap = this.$mapObject
+      }
 
       // binding properties (two and one way)
       bindProps(this, this.$mapObject, props)
