@@ -89,6 +89,8 @@ const customMethods = {
   }
 }
 
+const recyclePrefix = '__gmc__'
+
 export default {
   mixins: [mountableMixin],
   props: mappedPropsToVueProps(props),
@@ -125,7 +127,7 @@ export default {
   },
 
   beforeDestroy () {
-    const recycleKey = this.options.recycle ? '__gmc' + this.options.recycle : false
+    const recycleKey = this.options.recycle ? recyclePrefix + this.options.recycle : recyclePrefix
     if (window[recycleKey]) {
       window[recycleKey].div = this.$mapObject.getDiv()
     }
@@ -143,12 +145,13 @@ export default {
       }
       delete options.options
 
-      const recycleKey = options.recycle ? '__gmc' + options.recycle : false
-      if (options.recycle && window[recycleKey]) {
+      const recycleKey = this.options.recycle ? recyclePrefix + this.options.recycle : recyclePrefix
+      if (this.options.recycle && window[recycleKey]) {
         element.appendChild(window[recycleKey].div)
         this.$mapObject = window[recycleKey].map
         this.$mapObject.setOptions(options)
       } else {
+        console.warn('[vue2-google-maps] New google map created')
         this.$mapObject = new google.maps.Map(element, options)
         window[recycleKey] = { map: this.$mapObject }
       }
