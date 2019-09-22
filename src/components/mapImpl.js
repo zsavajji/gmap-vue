@@ -125,7 +125,10 @@ export default {
   },
 
   beforeDestroy () {
-    window.globalGmapDiv = this.$mapObject.getDiv()
+    const recycleKey = this.options.recycle ? '__gmc' + this.options.recycle : false
+    if (window[recycleKey]) {
+      window[recycleKey].div = this.$mapObject.getDiv()
+    }
   },
 
   mounted () {
@@ -139,13 +142,15 @@ export default {
         ...getPropsValues(this, props)
       }
       delete options.options
-      if (window.globalGmap && window.globalGmapDiv) {
-        element.appendChild(window.globalGmapDiv)
-        this.$mapObject = window.globalGmap
+
+      const recycleKey = options.recycle ? '__gmc' + options.recycle : false
+      if (options.recycle && window[recycleKey]) {
+        element.appendChild(window[recycleKey].div)
+        this.$mapObject = window[recycleKey].map
         this.$mapObject.setOptions(options)
       } else {
         this.$mapObject = new google.maps.Map(element, options)
-        window.globalGmap = this.$mapObject
+        window[recycleKey] = { map: this.$mapObject }
       }
 
       // binding properties (two and one way)
