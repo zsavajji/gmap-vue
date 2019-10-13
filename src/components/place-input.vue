@@ -6,5 +6,5 @@
     </label>
 </template>
 
-<script src="./placeInputImpl.js">
+<script src="../components-implementation/place-input.js">
 </script>

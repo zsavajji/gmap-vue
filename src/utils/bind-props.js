@@ -1,4 +1,4 @@
-import WatchPrimitiveProperties from '../utils/WatchPrimitiveProperties'
+import WatchPrimitiveProperties from './watch-primitive-properties'
 
 function capitalizeFirstLetter (string) {
   return string.charAt(0).toUpperCase() + string.slice(1)

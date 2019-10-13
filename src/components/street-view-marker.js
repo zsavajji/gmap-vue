@@ -1,4 +1,7 @@
-import mapElementFactory from '../factories/map-element'
+import mapValues from 'lodash/mapValues'
+import eventsBinder from '../utils/bind-events'
+import { bindProps, getPropsValues } from '../utils/bind-props'
+import streetViewElementMixin from '../mixins/street-view-element'
 
 const props = {
   animation: {
@@ -84,17 +87,9 @@ const events = [
  * reasons. Otherwise we should use a cluster-marker mixin or
  * subclass.
  */
-export default mapElementFactory({
-  mappedProps: props,
-  events,
-  name: 'marker',
-  ctr: () => google.maps.Marker,
-
-  inject: {
-    '$clusterPromise': {
-      default: null
-    }
-  },
+export default {
+  mixins: [streetViewElementMixin, getPropsValues],
+  props: props,
 
   render (h) {
     if (!this.$slots.default || this.$slots.default.length === 0) {
@@ -113,27 +108,36 @@ export default mapElementFactory({
     if (!this.$markerObject) { return }
 
     if (this.$clusterObject) {
-      // Repaint will be performed in `updated()` of cluster
       this.$clusterObject.removeMarker(this.$markerObject, true)
     } else {
       this.$markerObject.setMap(null)
     }
   },
 
-  beforeCreate (options) {
-    if (this.$clusterPromise) {
-      options.map = null
-    }
+  deferredReady () {
+    const options = mapValues(props, (value, prop) => this[prop])
+    options.map = this.$pano
+    delete options.options
+    Object.assign(options, this.options)
 
-    return this.$clusterPromise
+    // search ancestors for cluster object
+    let search = this.$findAncestor(
+      ans => ans.$clusterObject
+    )
+
+    this.$clusterObject = search ? search.$clusterObject : null
+    this.createMarker(options)
   },
 
-  afterCreate (inst) {
-    if (this.$clusterPromise) {
-      this.$clusterPromise.then((co) => {
-        co.addMarker(inst)
-        this.$clusterObject = co
-      })
+  methods: {
+    createMarker (options) {
+      this.$markerObject = new google.maps.Marker(options)
+      bindProps(this, this.$markerObject, props)
+      eventsBinder(this, this.$markerObject, events)
+
+      if (this.$clusterObject) {
+        this.$clusterObject.addMarker(this.$markerObject)
+      }
     }
   }
-})
+}

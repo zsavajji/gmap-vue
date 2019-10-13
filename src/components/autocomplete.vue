@@ -7,5 +7,5 @@
 </template>
 
 <script>
-export default (function (x) { return x.default || x })(require('./autocompleteImpl.js'))
+export default ((x) => x.default || x )(require('../components-implementation/autocomplete'))
 </script>

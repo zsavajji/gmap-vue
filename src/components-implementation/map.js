@@ -1,10 +1,10 @@
-import bindEvents from '../utils/bindEvents.js'
-import { bindProps, getPropsValues } from '../utils/bindProps.js'
-import mountableMixin from '../utils/mountableMixin.js'
+import bindEvents from '../utils/bind-events'
+import { bindProps, getPropsValues } from '../utils/bind-props'
+import mountableMixin from '../mixins/mountable'
 
-import TwoWayBindingWrapper from '../utils/TwoWayBindingWrapper.js'
-import WatchPrimitiveProperties from '../utils/WatchPrimitiveProperties.js'
-import { mappedPropsToVueProps } from './mapElementFactory.js'
+import twoWayBindingWrapper from '../utils/two-way-binding-wrapper'
+import watchPrimitiveProperties from '../utils/watch-primitive-properties'
+import mappedPropsToVueProps from '../utils/mapped-props-to-vue-props'
 
 const props = {
   center: {
@@ -60,8 +60,8 @@ const linkedMethods = [
   'panToBounds',
   'fitBounds'
 ].reduce((all, methodName) => {
-  all[methodName] = function () {
-    if (this.$mapObject) { this.$mapObject[methodName].apply(this.$mapObject, arguments) }
+  all[methodName] = function (...args) {
+    if (this.$mapObject) { this.$mapObject[methodName].apply(this.$mapObject, args) }
   }
   return all
 }, {})
@@ -130,11 +130,15 @@ export default {
       const element = this.$refs['vue-map']
 
       // creating the map
-      const options = {
+      const initialOptions = {
         ...this.options,
         ...getPropsValues(this, props)
       }
-      delete options.options
+
+      // don't use delete keyword in order to create a more predictable code for the engine
+      let { options, ...finalOptions } = initialOptions
+      options = finalOptions
+
       this.$mapObject = new google.maps.Map(element, options)
 
       // binding properties (two and one way)
@@ -143,7 +147,7 @@ export default {
       bindEvents(this, this.$mapObject, events)
 
       // manually trigger center and zoom
-      TwoWayBindingWrapper((increment, decrement, shouldUpdate) => {
+      twoWayBindingWrapper((increment, decrement, shouldUpdate) => {
         this.$mapObject.addListener('center_changed', () => {
           if (shouldUpdate()) {
             this.$emit('center_changed', this.$mapObject.getCenter())
@@ -156,7 +160,7 @@ export default {
           this.$mapObject.setCenter(this.finalLatLng)
         }
 
-        WatchPrimitiveProperties(
+        watchPrimitiveProperties(
           this,
           ['finalLat', 'finalLng'],
           updateCenter
@@ -172,10 +176,9 @@ export default {
       this.$mapPromiseDeferred.resolve(this.$mapObject)
 
       return this.$mapObject
+    }).catch((error) => {
+      throw error
     })
-      .catch((error) => {
-        throw error
-      })
   },
   methods: {
     ...customMethods,

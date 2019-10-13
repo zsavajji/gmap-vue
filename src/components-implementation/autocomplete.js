@@ -1,6 +1,6 @@
-import { bindProps, getPropsValues } from '../utils/bindProps.js'
-import downArrowSimulator from '../utils/simulateArrowDown.js'
-import { mappedPropsToVueProps } from './mapElementFactory'
+import { bindProps, getPropsValues } from '../utils/bind-props'
+import downArrowSimulator from '../utils/simulate-arrow-down'
+import mappedPropsToVueProps from '../utils/mapped-props-to-vue-props'
 
 const mappedProps = {
   bounds: {
