@@ -2,13 +2,13 @@
 require('@babel/polyfill')
 const Babel = require('@babel/core')
 
-let internals = {}
+const internals = {}
 internals.transform = (content, filename) => {
   if (/^node_modules/.test(filename)) {
     return content
   }
 
-  let { code } = Babel.transform(content, {
+  const { code } = Babel.transform(content, {
     filename: filename,
     sourceMap: 'inline',
     sourceFileName: filename,

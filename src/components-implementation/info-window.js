@@ -37,7 +37,7 @@ export default mapElementFactory({
   },
 
   inject: {
-    '$markerPromise': {
+    $markerPromise: {
       default: null
     }
   },

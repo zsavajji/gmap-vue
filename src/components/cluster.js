@@ -107,7 +107,7 @@ export default mapElementFactory({
       inst.addMarkers(oldMarkers)
     }
 
-    for (let prop in props) {
+    for (const prop in props) {
       if (props[prop].twoWay) {
         this.$on(prop.toLowerCase() + '_changed', reinsertMarkers)
       }

@@ -63,8 +63,8 @@ export default {
       this.$panoPromiseDeferred = { resolve, reject }
     })
     return {
-      '$panoPromise': promise,
-      '$mapPromise': promise // so that we can use it with markers
+      $panoPromise: promise,
+      $mapPromise: promise // so that we can use it with markers
     }
   },
 

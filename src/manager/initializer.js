@@ -50,11 +50,11 @@ export default (() => {
       }
 
       // libraries
-      if (Array.prototype.isPrototypeOf(options.libraries)) {
+      if (Object.prototype.isPrototypeOf.call(Array.prototype, options.libraries)) {
         options.libraries = options.libraries.join(',')
       }
 
-      options['callback'] = 'vueGoogleMapsInit'
+      options.callback = 'vueGoogleMapsInit'
 
       let baseUrl = 'https://maps.googleapis.com/'
 

@@ -9,7 +9,7 @@
  * */
 export default {
   inject: {
-    '$mapPromise': { default: 'abcdef' }
+    $mapPromise: { default: 'abcdef' }
   },
 
   provide () {

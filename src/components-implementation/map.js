@@ -98,7 +98,7 @@ export default {
       this.$mapPromiseDeferred = { resolve, reject }
     })
     return {
-      '$mapPromise': this.$mapPromise
+      $mapPromise: this.$mapPromise
     }
   },
 

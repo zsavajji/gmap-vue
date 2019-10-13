@@ -16,7 +16,7 @@ export default function (loadGmapApi, GmapApi) {
         } else {
           return new Promise((resolve, reject) => {
             try {
-              window['vueGoogleMapsInit'] = resolve
+              window.vueGoogleMapsInit = resolve
               loadGmapApi(options.load, options.loadCn)
             } catch (err) {
               reject(err)
@@ -32,7 +32,7 @@ export default function (loadGmapApi, GmapApi) {
           // Do nothing if run from server-side
           return
         }
-        window['vueGoogleMapsInit'] = resolve
+        window.vueGoogleMapsInit = resolve
       }).then(onApiLoaded)
 
       return lazy(() => promise)

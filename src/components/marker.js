@@ -91,7 +91,7 @@ export default mapElementFactory({
   ctr: () => google.maps.Marker,
 
   inject: {
-    '$clusterPromise': {
+    $clusterPromise: {
       default: null
     }
   },

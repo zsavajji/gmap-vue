@@ -31,9 +31,11 @@ const Cluster = (process.env.BUILD_DEV === '1')
 let GmapApi = null
 
 // export everything
-export { loadGmapApi, Marker, Polyline, Polygon, Circle, Cluster, Rectangle,
+export {
+  loadGmapApi, Marker, Polyline, Polygon, Circle, Cluster, Rectangle,
   InfoWindow, Map, PlaceInput, mapElementMixin, mapElementFactory, Autocomplete,
-  mountableMixin, StreetViewPanorama }
+  mountableMixin, StreetViewPanorama
+}
 
 export function install (Vue, options) {
   // Set defaults

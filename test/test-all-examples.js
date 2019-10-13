@@ -30,7 +30,7 @@ lab.experiment('Examples test', { timeout: 15000 }, function () {
 
     assert(!isErrored)
 
-    for (let file of files) {
+    for (const file of files) {
       await loadPage('../examples/' + file)
       if (isErrored) {
         throw new Error(`The example file ../examples/${file} threw an error ${isErrored}`)

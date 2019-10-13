@@ -25,8 +25,8 @@ export function getPropsValues (vueInst, props) {
   * emitted if the data source was external.
   */
 export function bindProps (vueInst, googleMapsInst, props, options) {
-  for (let attribute in props) {
-    let { twoWay, type, trackProperties, noBind } = props[attribute]
+  for (const attribute in props) {
+    const { twoWay, type, trackProperties, noBind } = props[attribute]
 
     if (noBind) continue
 
