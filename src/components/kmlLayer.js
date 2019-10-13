@@ -33,7 +33,7 @@ export default mapElementFactory({
   ctr: () => google.maps.KmlLayer,
 
   inject: {
-    
+
   },
 
   render (h) {
