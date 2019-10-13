@@ -6,7 +6,6 @@ import Polyline from './components/polyline'
 import Polygon from './components/polygon'
 import Circle from './components/circle'
 import Rectangle from './components/rectangle'
-import StreetViewPanoramaMarker from './components/street-view-marker'
 
 // Vue component imports
 import InfoWindow from './components/info-window.vue'
@@ -16,7 +15,6 @@ import PlaceInput from './components/place-input.vue'
 import Autocomplete from './components/autocomplete.vue'
 
 import mapElementMixin from './mixins/map-element'
-import streetViewElementMixin from './mixins/street-view-element'
 import mapElementFactory from './factories/map-element'
 import mountableMixin from './mixins/mountable'
 
@@ -35,7 +33,7 @@ let GmapApi = null
 // export everything
 export { loadGmapApi, Marker, Polyline, Polygon, Circle, Cluster, Rectangle,
   InfoWindow, Map, PlaceInput, mapElementMixin, mapElementFactory, Autocomplete,
-  mountableMixin, StreetViewPanorama, StreetViewPanoramaMarker, streetViewElementMixin }
+  mountableMixin, StreetViewPanorama }
 
 export function install (Vue, options) {
   // Set defaults
@@ -81,7 +79,6 @@ export function install (Vue, options) {
     Vue.component('GmapAutocomplete', Autocomplete)
     Vue.component('GmapPlaceInput', PlaceInput)
     Vue.component('GmapStreetViewPanorama', StreetViewPanorama)
-    Vue.component('GmapStreetViewPanoramaMarker', StreetViewPanoramaMarker)
   }
 }
 
