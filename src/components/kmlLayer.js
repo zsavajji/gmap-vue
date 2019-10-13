@@ -32,10 +32,6 @@ export default mapElementFactory({
   name: 'kmlLayer',
   ctr: () => google.maps.KmlLayer,
 
-  inject: {
-
-  },
-
   render (h) {
     // no-op
   },
