@@ -1,8 +1,7 @@
-import Lab from 'lab'
 import assert from 'assert'
 import { getPage, loadFile } from './test-setup/test-common'
-
-export const lab = Lab.script()
+const Lab = require('@hapi/lab')
+const lab = exports.lab = Lab.script()
 
 lab.experiment('Effectiveness of gmapApi guard', { timeout: 15000 }, function () {
   let page = null

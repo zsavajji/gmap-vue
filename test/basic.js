@@ -1,10 +1,9 @@
-import Lab from 'lab'
 import assert from 'assert'
 import fs from 'fs'
 import path from 'path'
 import { getPage, loadFile } from './test-setup/test-common'
-
-export const lab = Lab.script()
+const Lab = require('@hapi/lab')
+const lab = exports.lab = Lab.script()
 
 lab.experiment('Basic tests', { timeout: 15000 }, function () {
   let page = null
