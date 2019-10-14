@@ -30,21 +30,5 @@ export default mapElementFactory({
   mappedProps: props,
   events,
   name: 'kmlLayer',
-  ctr: () => google.maps.KmlLayer,
-
-  render (h) {
-    // no-op
-  },
-
-  destroyed () {
-    // no-op
-  },
-
-  beforeCreate (options) {
-    // no-op
-  },
-
-  afterCreate (inst) {
-    // no-op
-  }
+  ctr: () => google.maps.KmlLayer
 })
