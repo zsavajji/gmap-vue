@@ -89,6 +89,8 @@ const customMethods = {
   }
 }
 
+const recyclePrefix = '__gmc__'
+
 export default {
   mixins: [mountableMixin],
   props: mappedPropsToVueProps(props),
@@ -124,6 +126,13 @@ export default {
     }
   },
 
+  beforeDestroy () {
+    const recycleKey = this.getRecycleKey()
+    if (window[recycleKey]) {
+      window[recycleKey].div = this.$mapObject.getDiv()
+    }
+  },
+
   mounted () {
     return this.$gmapApiPromiseLazy().then(() => {
       // getting the DOM element where to create the map
@@ -139,7 +148,16 @@ export default {
       let { options, ...finalOptions } = initialOptions
       options = finalOptions
 
-      this.$mapObject = new google.maps.Map(element, options)
+      const recycleKey = this.getRecycleKey()
+      if (this.options.recycle && window[recycleKey]) {
+        element.appendChild(window[recycleKey].div)
+        this.$mapObject = window[recycleKey].map
+        this.$mapObject.setOptions(options)
+      } else {
+        // console.warn('[vue2-google-maps] New google map created')
+        this.$mapObject = new google.maps.Map(element, options)
+        window[recycleKey] = { map: this.$mapObject }
+      }
 
       // binding properties (two and one way)
       bindProps(this, this.$mapObject, props)
@@ -182,6 +200,9 @@ export default {
   },
   methods: {
     ...customMethods,
-    ...linkedMethods
+    ...linkedMethods,
+    getRecycleKey () {
+      return this.options.recycle ? recyclePrefix + this.options.recycle : recyclePrefix
+    }
   }
 }
