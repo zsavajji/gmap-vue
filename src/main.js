@@ -1,6 +1,7 @@
 import lazy from './utils/lazyValue'
 import { loadGmapApi } from './manager'
 
+import KmlLayer from './components/kmlLayer'
 import Marker from './components/marker'
 import Polyline from './components/polyline'
 import Polygon from './components/polygon'
@@ -31,7 +32,7 @@ const Cluster = (process.env.BUILD_DEV === '1')
 let GmapApi = null
 
 // export everything
-export { loadGmapApi, Marker, Polyline, Polygon, Circle, Cluster, Rectangle,
+export { loadGmapApi, KmlLayer, Marker, Polyline, Polygon, Circle, Cluster, Rectangle,
   InfoWindow, Map, PlaceInput, MapElementMixin, MapElementFactory, Autocomplete,
   MountableMixin, StreetViewPanorama }
 
@@ -70,6 +71,7 @@ export function install (Vue, options) {
     Vue.component('GmapMap', Map)
     Vue.component('GmapMarker', Marker)
     Vue.component('GmapInfoWindow', InfoWindow)
+    Vue.component('GmapKmlLayer', KmlLayer)
     Vue.component('GmapPolyline', Polyline)
     Vue.component('GmapPolygon', Polygon)
     Vue.component('GmapCircle', Circle)
