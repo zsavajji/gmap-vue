@@ -9,7 +9,7 @@
 </template>
 
 <script>
-export default (function (x) { return x.default || x })(require('./mapImpl.js'))
+export default ((x) => x.default || x)(require('../components-implementation/map'))
 </script>
 
 <style lang="css">

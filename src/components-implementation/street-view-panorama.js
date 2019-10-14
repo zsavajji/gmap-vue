@@ -1,10 +1,10 @@
-import bindEvents from '../utils/bindEvents.js'
-import { bindProps, getPropsValues } from '../utils/bindProps.js'
-import mountableMixin from '../utils/mountableMixin.js'
+import bindEvents from '../utils/bind-events'
+import { bindProps, getPropsValues } from '../utils/bind-props'
+import mountableMixin from '../mixins/mountable'
 
-import TwoWayBindingWrapper from '../utils/TwoWayBindingWrapper.js'
-import WatchPrimitiveProperties from '../utils/WatchPrimitiveProperties.js'
-import { mappedPropsToVueProps } from './mapElementFactory.js'
+import twoWayBindingWrapper from '../utils/two-way-binding-wrapper'
+import watchPrimitiveProperties from '../utils/watch-primitive-properties'
+import mappedPropsToVueProps from '../utils/mapped-props-to-vue-props'
 
 const props = {
   zoom: {
@@ -63,8 +63,8 @@ export default {
       this.$panoPromiseDeferred = { resolve, reject }
     })
     return {
-      '$panoPromise': promise,
-      '$mapPromise': promise // so that we can use it with markers
+      $panoPromise: promise,
+      $mapPromise: promise // so that we can use it with markers
     }
   },
 
@@ -113,7 +113,7 @@ export default {
       bindEvents(this, this.$panoObject, events)
 
       // manually trigger position
-      TwoWayBindingWrapper((increment, decrement, shouldUpdate) => {
+      twoWayBindingWrapper((increment, decrement, shouldUpdate) => {
         // Panos take a while to load
         increment()
 
@@ -129,7 +129,7 @@ export default {
           this.$panoObject.setPosition(this.finalLatLng)
         }
 
-        WatchPrimitiveProperties(
+        watchPrimitiveProperties(
           this,
           ['finalLat', 'finalLng'],
           updateCenter
@@ -139,9 +139,8 @@ export default {
       this.$panoPromiseDeferred.resolve(this.$panoObject)
 
       return this.$panoPromise
+    }).catch((error) => {
+      throw error
     })
-      .catch((error) => {
-        throw error
-      })
   }
 }

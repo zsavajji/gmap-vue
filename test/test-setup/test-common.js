@@ -3,9 +3,9 @@ import CompileStandalone from './compile-standalone'
 import path from 'path'
 
 const puppeteerPromise = CompileStandalone.then(() => {
-  let options = {}
+  const options = {}
 
-  if (process.env['THIS_IS_ON_TRAVIS_AND_SANDBOX_IS_NOT_ALLOWED'] === 'true') {
+  if (process.env.THIS_IS_ON_TRAVIS_AND_SANDBOX_IS_NOT_ALLOWED === 'true') {
     options.args = ['--no-sandbox', '--disable-setuid-sandbox']
   }
 

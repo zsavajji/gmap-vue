@@ -1,4 +1,4 @@
-import mapElementFactory from './mapElementFactory.js'
+import mapElementFactory from '../factories/map-element'
 
 const props = {
   options: {
@@ -37,7 +37,7 @@ export default mapElementFactory({
   },
 
   inject: {
-    '$markerPromise': {
+    $markerPromise: {
       default: null
     }
   },

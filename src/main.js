@@ -1,7 +1,7 @@
-import lazy from './utils/lazyValue'
-import { loadGmapApi } from './manager'
+import loadGmapApi from './manager/initializer'
+import promiseLazyFactory from './factories/promise-lazy'
 
-import KmlLayer from './components/kmlLayer'
+import KmlLayer from './components/kml-layer'
 import Marker from './components/marker'
 import Polyline from './components/polyline'
 import Polygon from './components/polygon'
@@ -9,15 +9,15 @@ import Circle from './components/circle'
 import Rectangle from './components/rectangle'
 
 // Vue component imports
-import InfoWindow from './components/infoWindow.vue'
+import InfoWindow from './components/info-window.vue'
 import Map from './components/map.vue'
-import StreetViewPanorama from './components/streetViewPanorama.vue'
-import PlaceInput from './components/placeInput.vue'
+import StreetViewPanorama from './components/street-view-panorama.vue'
+import PlaceInput from './components/place-input.vue'
 import Autocomplete from './components/autocomplete.vue'
 
-import MapElementMixin from './components/mapElementMixin'
-import MapElementFactory from './components/mapElementFactory'
-import MountableMixin from './utils/mountableMixin'
+import mapElementMixin from './mixins/map-element'
+import mapElementFactory from './factories/map-element'
+import mountableMixin from './mixins/mountable'
 
 // HACK: Cluster should be loaded conditionally
 // However in the web version, it's not possible to write
@@ -27,14 +27,16 @@ import MountableMixin from './utils/mountableMixin'
 // set BUILD_DEV to truthy / falsy
 const Cluster = (process.env.BUILD_DEV === '1')
   ? undefined
-  : (s => s.default || s)(require('./components/cluster'))
+  : ((s) => s.default || s)(require('./components/cluster'))
 
 let GmapApi = null
 
 // export everything
-export { loadGmapApi, KmlLayer, Marker, Polyline, Polygon, Circle, Cluster, Rectangle,
-  InfoWindow, Map, PlaceInput, MapElementMixin, MapElementFactory, Autocomplete,
-  MountableMixin, StreetViewPanorama }
+export {
+  loadGmapApi, KmlLayer, Marker, Polyline, Polygon, Circle, Cluster, Rectangle,
+  InfoWindow, Map, PlaceInput, mapElementMixin, mapElementFactory, Autocomplete,
+  mountableMixin, StreetViewPanorama
+}
 
 export function install (Vue, options) {
   // Set defaults
@@ -55,7 +57,8 @@ export function install (Vue, options) {
 
   // Use a lazy to only load the API when
   // a VGM component is loaded
-  let gmapApiPromiseLazy = makeGmapApiPromiseLazy(options)
+  const promiseLazyCreator = promiseLazyFactory(loadGmapApi, GmapApi)
+  const gmapApiPromiseLazy = promiseLazyCreator(options)
 
   Vue.mixin({
     created () {
@@ -64,6 +67,7 @@ export function install (Vue, options) {
       this.$gmapApiPromiseLazy = gmapApiPromiseLazy
     }
   })
+
   Vue.$gmapDefaultResizeBus = defaultResizeBus
   Vue.$gmapApiPromiseLazy = gmapApiPromiseLazy
 
@@ -79,45 +83,6 @@ export function install (Vue, options) {
     Vue.component('GmapAutocomplete', Autocomplete)
     Vue.component('GmapPlaceInput', PlaceInput)
     Vue.component('GmapStreetViewPanorama', StreetViewPanorama)
-  }
-}
-
-function makeGmapApiPromiseLazy (options) {
-  // Things to do once the API is loaded
-  function onApiLoaded () {
-    GmapApi.gmapApi = {}
-    return window.google
-  }
-
-  if (options.load) { // If library should load the API
-    return lazy(() => { // Load the
-      // This will only be evaluated once
-      if (typeof window === 'undefined') { // server side -- never resolve this promise
-        return new Promise(() => {}).then(onApiLoaded)
-      } else {
-        return new Promise((resolve, reject) => {
-          try {
-            window['vueGoogleMapsInit'] = resolve
-            loadGmapApi(options.load, options.loadCn)
-          } catch (err) {
-            reject(err)
-          }
-        })
-          .then(onApiLoaded)
-      }
-    })
-  } else { // If library should not handle API, provide
-    // end-users with the global `vueGoogleMapsInit: () => undefined`
-    // when the Google Maps API has been loaded
-    const promise = new Promise((resolve) => {
-      if (typeof window === 'undefined') {
-        // Do nothing if run from server-side
-        return
-      }
-      window['vueGoogleMapsInit'] = resolve
-    }).then(onApiLoaded)
-
-    return lazy(() => promise)
   }
 }
 

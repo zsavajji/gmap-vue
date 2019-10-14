@@ -8,7 +8,7 @@
   https://github.com/googlemaps/v3-utility-library/blob/master/markerclustererplus/src/markerclusterer.js
 **/
 import MarkerClusterer from 'marker-clusterer-plus'
-import mapElementFactory from './mapElementFactory.js'
+import mapElementFactory from '../factories/map-element'
 
 const props = {
   maxZoom: {
@@ -107,7 +107,7 @@ export default mapElementFactory({
       inst.addMarkers(oldMarkers)
     }
 
-    for (let prop in props) {
+    for (const prop in props) {
       if (props[prop].twoWay) {
         this.$on(prop.toLowerCase() + '_changed', reinsertMarkers)
       }

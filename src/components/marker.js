@@ -1,4 +1,4 @@
-import mapElementFactory from './mapElementFactory.js'
+import mapElementFactory from '../factories/map-element'
 
 const props = {
   animation: {
@@ -91,7 +91,7 @@ export default mapElementFactory({
   ctr: () => google.maps.Marker,
 
   inject: {
-    '$clusterPromise': {
+    $clusterPromise: {
       default: null
     }
   },

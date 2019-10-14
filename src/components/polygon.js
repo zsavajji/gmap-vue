@@ -1,4 +1,4 @@
-import mapElementFactory from './mapElementFactory.js'
+import mapElementFactory from '../factories/map-element'
 
 const props = {
   draggable: {
@@ -71,7 +71,7 @@ export default mapElementFactory({
 
         const mvcArray = inst.getPaths()
         for (let i = 0; i < mvcArray.getLength(); i++) {
-          let mvcPath = mvcArray.getAt(i)
+          const mvcPath = mvcArray.getAt(i)
           eventListeners.push([mvcPath, mvcPath.addListener('insert_at', updatePaths)])
           eventListeners.push([mvcPath, mvcPath.addListener('remove_at', updatePaths)])
           eventListeners.push([mvcPath, mvcPath.addListener('set_at', updatePaths)])

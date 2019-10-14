@@ -1,10 +1,9 @@
-import Lab from 'lab'
 import assert from 'assert'
 import fs from 'fs'
 import path from 'path'
 import { getPage, loadFile } from './test-setup/test-common'
-
-export const lab = Lab.script()
+const Lab = require('@hapi/lab')
+const lab = exports.lab = Lab.script()
 
 lab.experiment('Examples test', { timeout: 15000 }, function () {
   let page = null
@@ -30,7 +29,7 @@ lab.experiment('Examples test', { timeout: 15000 }, function () {
 
     assert(!isErrored)
 
-    for (let file of files) {
+    for (const file of files) {
       await loadPage('../examples/' + file)
       if (isErrored) {
         throw new Error(`The example file ../examples/${file} threw an error ${isErrored}`)
