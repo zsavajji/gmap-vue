@@ -188,6 +188,7 @@ The list of officially support components are:
 
 - Rectangle, Circle
 - Polygon, Polyline
+- KML Layer
 - Marker
 - InfoWindow
 - Autocomplete
