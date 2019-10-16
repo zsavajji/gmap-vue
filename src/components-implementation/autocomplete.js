@@ -26,6 +26,12 @@ const props = {
     type: Boolean,
     default: false
   },
+  // the name of the ref to obtain the input (if its a child  of component in the slot)
+  childRefName: {
+    required: false,
+    type: String,
+    default: 'input'
+    },
   options: {
     type: Object
   }
@@ -34,6 +40,14 @@ const props = {
 export default {
   mounted () {
     this.$gmapApiPromiseLazy().then(() => {
+      var scopedInput = null
+      if  (this.$scopedSlots.input)  {
+        scopedInput = this.$scopedSlots.input()[0].context.$refs.input
+        if (scopedInput && scopedInput.$refs) {
+          scopedInput = scopedInput.$refs[this.childRefName || 'input']
+        }
+        if (scopedInput) { this.$refs.input = scopedInput }
+      }
       if (this.selectFirstOnEnter) {
         downArrowSimulator(this.$refs.input)
       }
