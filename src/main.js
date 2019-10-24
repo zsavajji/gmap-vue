@@ -15,9 +15,9 @@ import StreetViewPanorama from './components/street-view-panorama.vue'
 import PlaceInput from './components/place-input.vue'
 import Autocomplete from './components/autocomplete.vue'
 
-import mapElementMixin from './mixins/map-element'
-import mapElementFactory from './factories/map-element'
-import mountableMixin from './mixins/mountable'
+import MapElementMixin from './mixins/map-element'
+import MapElementFactory from './factories/map-element'
+import MountableMixin from './mixins/mountable'
 
 // HACK: Cluster should be loaded conditionally
 // However in the web version, it's not possible to write
@@ -34,8 +34,8 @@ let GmapApi = null
 // export everything
 export {
   loadGmapApi, KmlLayer, Marker, Polyline, Polygon, Circle, Cluster, Rectangle,
-  InfoWindow, Map, PlaceInput, mapElementMixin, mapElementFactory, Autocomplete,
-  mountableMixin, StreetViewPanorama
+  InfoWindow, Map, PlaceInput, MapElementMixin, MapElementFactory, Autocomplete,
+  MountableMixin, StreetViewPanorama
 }
 
 export function install (Vue, options) {
