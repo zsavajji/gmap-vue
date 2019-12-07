@@ -31,7 +31,7 @@ const props = {
     required: false,
     type: String,
     default: 'input'
-    },
+  },
   options: {
     type: Object
   }
@@ -41,7 +41,7 @@ export default {
   mounted () {
     this.$gmapApiPromiseLazy().then(() => {
       var scopedInput = null
-      if  (this.$scopedSlots.input)  {
+      if (this.$scopedSlots.input) {
         scopedInput = this.$scopedSlots.input()[0].context.$refs.input
         if (scopedInput && scopedInput.$refs) {
           scopedInput = scopedInput.$refs[this.childRefName || 'input']
