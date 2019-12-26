@@ -34,6 +34,11 @@ const props = {
   },
   options: {
     type: Object
+  },
+  fields: {
+    required: false,
+    type: Array,
+    default: null
   }
 }
 
