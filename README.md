@@ -150,7 +150,7 @@ Example of [MapOptions](https://developers.google.com/maps/documentation/javascr
     streetViewControl: false,
     rotateControl: false,
     fullscreenControl: true,
-    disableDefaultUi: false
+    disableDefaultUI: false
   }"
 >
 </GmapMap>
