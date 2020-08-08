@@ -11,7 +11,7 @@
     "build": "lerna run build",
     "test": "lerna run test",
     "lint": "lerna run lint",
-    "release": "lerna version --conventional-commits --create-release github --yes"
+    "release": "lerna version --conventional-commits"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",
