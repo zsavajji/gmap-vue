@@ -1,11 +1,11 @@
-name: publish
+name: npm-publish
 on:
   push:
     branches:
       - master
 jobs:
-  release:
-    name: publish
+  npm-publish:
+    name: npm-publish
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
@@ -16,9 +16,11 @@ jobs:
         node-version: 10.0.0
     - name: Publish if version has been updated
       uses: pascalgn/npm-publish-action@06e0830ea83eea10ed4a62654eeaedafb8bf50fc
+      run: cd ./packages/gmap-vue && pwd
+      working-directory: ./packages/gmap-vue
       with: # All of theses inputs are optional
         tag_name: "gmap-vue@%s"
-        # tag_message: "v%s"
+        tag_message: "gmap-vue@%s"
         # commit_pattern: "^chore(release): (\\S+)"
         workspace: "."
       env: # More info about the environment variables in the README
