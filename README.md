@@ -40,7 +40,7 @@ This is a fork of the popular vue2-google-maps. As the author of the library no 
 
 ## CONTRIBUTORS ARE WELCOME
 
-If you have time to contribute to a rather frequently used library, feel free to make a PR!
+If you have time to contribute to a rather frequently used library, feel free to make a PR!, but first please read our [contributing guide](https://github.com/diegoazh/gmap-vue/blob/master/CONTRIBUTING.md).
 
 What's urgently needed are:
 
