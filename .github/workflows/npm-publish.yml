@@ -14,10 +14,13 @@ jobs:
       uses: actions/setup-node@master
       with:
         node-version: 12
-        registry-url: https://registry.npmjs.org
     - name: Publish if version has been updated
-      run: cd ./packages/gmap-vue && npm publish --access public
-      working-directory: ./
+      uses: pascalgn/npm-publish-action@06e0830ea83eea10ed4a62654eeaedafb8bf50fc
+      with: # All of theses inputs are optional
+        # tag_name: "gmap-vue@%s"
+        # tag_message: "gmap-vue@%s"
+        # commit_pattern: "^chore(release): (\\S+)"
+        workspace: "./packages/gmap-vue"
       env: # More info about the environment variables in the README
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Leave this as is, it's automatically generated
         NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }} # You need to set this in your repo settings
