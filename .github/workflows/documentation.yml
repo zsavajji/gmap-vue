@@ -10,8 +10,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Print dirs
-        run: ls -la .
+      - name: Install dependencies
+        run: npm ci
+      - name: Build monorepo
+        run: npm run build
       - name: GitHub Pages
         uses: crazy-max/ghaction-github-pages@v2.1.2
         with:
