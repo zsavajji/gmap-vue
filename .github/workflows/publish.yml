@@ -25,6 +25,7 @@ jobs:
           email: '${{ secrets.GH_EMAIL }}'
           actor: '${{ secrets.GH_FULL_NAME }}'
           token: '${{ secrets.GH_PAT_WEB_CENTRAL }}'
+      - name: Update origin push URI
         run: |
           git remote set-url origin "https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ secrets.GH_USER }}/${{ secrets.GH_REPOSITORY }}.git" > /dev/null 2>&1
           git checkout master
