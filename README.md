@@ -28,15 +28,15 @@ The new documentation site is ready and it contains all examples for all compone
 
 If you find some parts of the plugin that was not documented, or if you think that some parts of the documentation are dark or can be improved please open an issue following our issue template rules.
 
-You can use your own google maps api key in order to use the live examples section.
+You can use your google maps API key to use the live examples section.
 
-We have planed improve and grow all required documentation about the plugin.
+We have planned to improve and grow all required documentation about the plugin.
 
-Please follow next link to our [documentation](https://diegoazh.github.io/gmap-vue/).
+Please follow the next link to our [documentation](https://diegoazh.github.io/gmap-vue/).
 
 ## Fork of vue2-google-maps
 
-This is a fork of the popuplar vue2-google-maps. As the author of the library no longer commit to maintain the project, we forked it to develop and maintain the project.
+This is a fork of the popular vue2-google-maps. As the author of the library no longer commits to maintain the project, we forked it to develop and maintain the project.
 
 ## CONTRIBUTORS ARE WELCOME
 
@@ -44,16 +44,16 @@ If you have time to contribute to a rather frequently used library, feel free to
 
 What's urgently needed are:
 
-1. Better automated tests (unit with jest, e2e with cypress).
+1. Better automated tests (unit with Jest, e2e with Cypress).
 2. Better integration tests with the popular frameworks, especially Nuxt and Vue template
-3. Migrated to VueJs v3.0
-4. ~Better documentation (examples, recommendations)~
+3. Migrate to VueJs v3.0
+4. ~~Better documentation (examples, recommendations)~~
 
 Please feel free to fork the project and make a PR to improve the plugin.
 
 ## Monorepo
 
-This project use [lerna](https://github.com/lerna/lerna) to manage the plugin and documentation site.
+This project uses [Lerna](https://github.com/lerna/lerna) to manage the plugin and documentation site.
 
 - Clone the repository
 
@@ -63,15 +63,15 @@ This project use [lerna](https://github.com/lerna/lerna) to manage the plugin an
 npm install
 ```
 
-- After that you can use the the html examples inside the examples folder on the `gmap-vue` package, take in mind that this folder will be disappear in a near feature. When this happen you only could test with the live example on the documentation site with your own google maps api key
+- After that you can use the HTML examples inside the examples folder on the `gmap-vue` package, take in mind that this folder will disappear in a near feature. When this happens you only could test with the live example on the documentation site with your own google maps API key
 
-- To start locally the documentation site you can run following command, it starts the documentation page on [http://localhost:8080/](http://localhost:8080/)
+- To start the documentation site locally you can run following command, it starts the documentation page on [http://localhost:8080/](http://localhost:8080/)
 
 ```sh
 npm run start:docs
 ```
 
-- To test the plugin you also can a cdn like [jsdelivr](https://diegoazh.github.io/gmap-vue/#jsdelivr) or [unpkg](https://diegoazh.github.io/gmap-vue/#unpkg), in the way that the documentation shows you
+- To test the plugin you also can use a CDN like [jsdelivr](https://diegoazh.github.io/gmap-vue/#jsdelivr) or [unpkg](https://diegoazh.github.io/gmap-vue/#unpkg), in the way that the documentation shows you
 
 ## README of GmapVue
 
