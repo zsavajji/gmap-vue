@@ -12,9 +12,22 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 10
-      - run: npm install
-      - run: npm test
-      - uses: JS-DevTools/npm-publish@v1
+      - name: Install dependencies
+        run: npm ci
+      - name: Run tests
+        run: npm run test
+      - name: Build monorepo
+        run: npm run build
+      - name: Configure git
+        run: |
+          git config --global user.email ${secrets.GH_EMAIL}
+          git config --global user.name ${secrets.GH_USER}
+          git remote set-url origin "https://${secrets.GITHUB_TOKEN}@github.com/diegoazh/gmap-vue.git" > /dev/null 2>&1
+          git checkout master
+      - name: Run lerna version
+        run: npm run release
+      - name: Publish new version to npm
+        uses: JS-DevTools/npm-publish@v1
         with:
           token: ${{ secrets.NPM_AUTH_TOKEN }}
           package: ./packages/gmap-vue/package.json
