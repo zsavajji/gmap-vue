@@ -2,7 +2,7 @@
 
 ## Commit convention
 
-We follow the [convention commit style](https://www.conventionalcommits.org/en/v1.0.0/) to write our commits and can follow a semantic version of each package.
+We follow the [conventional commit style](https://www.conventionalcommits.org/en/v1.0.0/) to write our commits and can follow a semantic version of each package.
 
 The commit structure is the follow for inline commits
 
