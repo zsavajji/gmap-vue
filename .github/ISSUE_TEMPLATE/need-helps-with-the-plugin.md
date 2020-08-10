@@ -29,6 +29,11 @@ Explain to us how to get the same problem or provide a small example repository 
 - [ ] Linux (write here the name and version of your distribution)
 - [ ] Windows
 
+## Mobile
+
+- [ ] iOS
+- [ ] Android
+
 ## Versions
 
 - Node:

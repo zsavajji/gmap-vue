@@ -40,12 +40,6 @@ If applicable, add screenshots to help explain your problem.
 **Additional context**
 Add any other context about the problem here.
 
-## Os
-
-- [ ] Mac Os X
-- [ ] Linux (write here the name and version of your distribution)
-- [ ] Windows
-
 ## Versions
 
 - Node:
