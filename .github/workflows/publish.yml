@@ -27,7 +27,7 @@ jobs:
           token: '${{ secrets.GITHUB_TOKEN }}'
       - name: Update origin push URI
         run: |
-          git remote set-url origin "https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ secrets.GH_USER }}/${{ secrets.GH_REPOSITORY }}.git" > /dev/null 2>&1
+          git remote set-url origin "https://${{ secrets.GH_TOKEN_LERNA }}@github.com/${{ secrets.GH_USER }}/${{ secrets.GH_REPOSITORY }}.git" > /dev/null 2>&1
           git checkout master
       - name: Run lerna version
         run: npm run release
