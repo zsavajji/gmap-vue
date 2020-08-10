@@ -39,3 +39,28 @@ If applicable, add screenshots to help explain your problem.
 
 **Additional context**
 Add any other context about the problem here.
+
+## Os
+
+- [ ] Mac Os X
+- [ ] Linux (write here the name and version of your distribution)
+- [ ] Windows
+
+## Versions
+
+- Node:
+- NPM:
+- Yarn:
+
+## Package manager
+
+- [ ] NPM
+- [ ] Yarn
+
+## Plugin version
+
+- [ ] 1.4.0
+- [ ] 1.2.2
+- [ ] 1.2.1
+- [ ] 1.2.0
+- [ ] 1.0.0

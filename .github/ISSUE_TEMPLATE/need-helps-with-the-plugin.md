@@ -31,11 +31,19 @@ Explain to us how to get the same problem or provide a small example repository 
 
 ## Versions
 
-- Node: 
-- NPM: 
-- Yarn: 
+- Node:
+- NPM:
+- Yarn:
 
 ## Package manager
 
 - [ ] NPM
 - [ ] Yarn
+
+## Plugin version
+
+- [ ] 1.4.0
+- [ ] 1.2.2
+- [ ] 1.2.1
+- [ ] 1.2.0
+- [ ] 1.0.0
