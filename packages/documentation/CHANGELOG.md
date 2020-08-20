@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.6](https://github.com/diegoazh/gmap-vue/compare/docs@1.0.5...docs@1.0.6) (2020-08-20)
+
+
+### Bug Fixes
+
+* packages/documentation/package.json & packages/documentation/package-lock.json to reduce vulnerabilities ([c2a8b0a](https://github.com/diegoazh/gmap-vue/commit/c2a8b0ac291fa84a76f58c817ae4978d27a3b183))
+
+
+
+
+
 ## [1.0.5](https://github.com/diegoazh/gmap-vue/compare/docs@1.0.4...docs@1.0.5) (2020-08-10)
 
 **Note:** Version bump only for package docs
