@@ -79,7 +79,7 @@ In your `main.js` or inside a Nuxt plugin:
 
 ```js
 import Vue from 'vue'
-import * as VueGoogleMaps from 'vue2-google-maps'
+import * as VueGoogleMaps from 'gmap-vue'
 
 Vue.use(VueGoogleMaps, {
   load: {
@@ -100,7 +100,7 @@ Vue.use(VueGoogleMaps, {
   // autobindAllEvents: false,
 
   //// If you want to manually install components, e.g.
-  //// import {GmapMarker} from 'vue2-google-maps/src/components/marker'
+  //// import {GmapMarker} from 'gmap-vue/src/components/marker'
   //// Vue.component('GmapMarker', GmapMarker)
   //// then set installComponents to 'false'.
   //// If you want to automatically install all the components this property must be set to 'true':
@@ -180,7 +180,7 @@ Vue.use(VueGoogleMaps, {
 For Nuxt.js projects, please import VueGoogleMaps in the following manner:
 
 ```js
-import * as VueGoogleMaps from '~/node_modules/vue2-google-maps'
+import * as VueGoogleMaps from '~/node_modules/gmap-vue'
 ```
 
 Add the following to your `nuxt.config.js`'s `build.extend()`:
@@ -244,7 +244,7 @@ It should be relatively easy to add your own components (e.g. Heatmap, GroundOve
 Example for [DirectionsRenderer](https://developers.google.com/maps/documentation/javascript/reference/3/#DirectionsRenderer):
 ```js
 // DirectionsRenderer.js
-import {MapElementFactory} from 'vue2-google-maps'
+import {MapElementFactory} from 'gmap-vue'
 
 export default MapElementFactory({
   name: 'directionsRenderer',
