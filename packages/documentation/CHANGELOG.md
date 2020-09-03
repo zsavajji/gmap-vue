@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.7](https://github.com/diegoazh/gmap-vue/compare/docs@1.0.6...docs@1.0.7) (2020-09-03)
+
+
+### Bug Fixes
+
+* **documentation:** upgrade snyk from 1.370.1 to 1.372.0 ([#85](https://github.com/diegoazh/gmap-vue/issues/85)) ([916cb2b](https://github.com/diegoazh/gmap-vue/commit/916cb2bb7f08d1487d665fd255ac74954cfe3f77))
+
+
+
+
+
 ## [1.0.6](https://github.com/diegoazh/gmap-vue/compare/docs@1.0.5...docs@1.0.6) (2020-08-20)
 
 
