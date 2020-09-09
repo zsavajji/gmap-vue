@@ -10,7 +10,7 @@ const webConfig = {
   ...config,
   externals: {
     vue: 'Vue',
-    'marker-clusterer-plus': 'MarkerClusterer'
+    '@google/markerclustererplus': 'MarkerClusterer'
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
