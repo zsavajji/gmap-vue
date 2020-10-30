@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.10](https://github.com/diegoazh/gmap-vue/compare/docs@1.0.9...docs@1.0.10) (2020-10-30)
+
+
+### Bug Fixes
+
+* upgrade snyk from 1.373.1 to 1.401.0 ([deb8c72](https://github.com/diegoazh/gmap-vue/commit/deb8c7249849adf3140e35d7b245d8466522483a))
+* **documentation:** upgrade vuepress from 1.5.4 to 1.6.0 ([#108](https://github.com/diegoazh/gmap-vue/issues/108)) ([dac60ad](https://github.com/diegoazh/gmap-vue/commit/dac60ada3e1e8321f92f6e6ee01b746b2b5e16ed))
+
+
+
+
+
 ## [1.0.9](https://github.com/diegoazh/gmap-vue/compare/docs@1.0.8...docs@1.0.9) (2020-10-17)
 
 
