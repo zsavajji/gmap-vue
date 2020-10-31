@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0](https://github.com/diegoazh/gmap-vue/compare/docs@1.0.10...docs@1.1.0) (2020-10-31)
+
+
+### Bug Fixes
+
+* **gmap-vue:** fix ref conflict on autocomplete component ([#101](https://github.com/diegoazh/gmap-vue/issues/101)) ([0471e32](https://github.com/diegoazh/gmap-vue/commit/0471e329f9c0be4d0a9e8866579dd3c50f615adc))
+
+
+### Features
+
+* **gmap-vue:** upgrade markerclustererplus ([e64eafa](https://github.com/diegoazh/gmap-vue/commit/e64eafad74dd3c250cbb376250a669901f78fad6))
+
+
+
+
+
 ## [1.0.10](https://github.com/diegoazh/gmap-vue/compare/docs@1.0.9...docs@1.0.10) (2020-10-30)
 
 
