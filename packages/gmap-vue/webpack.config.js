@@ -1,6 +1,8 @@
 const path = require('path')
+
 const env = process.env.NODE_ENV
 
+// eslint-disable-next-line import/no-dynamic-require -- this will change in a near future
 const config = require(`./config/webpack.${env}.config`)
 
 /**
@@ -10,7 +12,7 @@ const webConfig = {
   ...config,
   externals: {
     vue: 'Vue',
-    'marker-clusterer-plus': 'MarkerClusterer'
+    '@google/markerclustererplus': 'MarkerClusterer'
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
