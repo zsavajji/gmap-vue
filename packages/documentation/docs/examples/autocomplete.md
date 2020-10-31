@@ -96,7 +96,34 @@ The autocomplete supports cutsom text field via scoped slot
         </gmap-autocomplete>
 ```
 
-The ref on the element must be called input, if the element is a vue component then it must have a child ref called input (like in vuetify text-field) or speciy a custom name via childRefName property (only works one level deep into a component).
+The ref on the element must be unique. If you create more than one autocomplete, each one should have a unique ref and it must be mentioned in the slot-ref-name prop. Like this:
+
+```html
+          <gmap-autocomplete class="introInput" >
+                    <template v-slot:input="slotProps">
+                        <v-text-field outlined
+                                      prepend-inner-icon="place"
+                                      placeholder="Location Of Event"
+                                      ref="input"
+                                      v-on:listeners="slotProps.listeners"
+                                      v-on:attrs="slotProps.attrs">
+                        </v-text-field>
+                    </template>
+        </gmap-autocomplete>
+        <gmap-autocomplete class="introInput" slot-ref-name="input2">
+                    <template v-slot:input="slotProps">
+                        <v-text-field outlined
+                                      prepend-inner-icon="place"
+                                      placeholder="Location Of Event"
+                                      ref="input2"
+                                      v-on:listeners="slotProps.listeners"
+                                      v-on:attrs="slotProps.attrs">
+                        </v-text-field>
+                    </template>
+        </gmap-autocomplete>
+```
+
+If the element in the slot is a vue component then it must have a child ref called input (like in vuetify text-field) or specify a custom name via the child-ref-name prop (only works one level deep into a component).
 
 The v-on:listeners is rquired, v-on:attrs may or may not be required depending on your implementation.
 :::
