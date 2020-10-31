@@ -30,7 +30,7 @@ const props = {
   slotRefName: {
     required: false,
     type: String,
-    default: 'input'
+    default: 'input',
   },
   // the name of the ref to obtain the input (if its a child of component in the slot)
   childRefName: {
@@ -53,7 +53,9 @@ export default {
     this.$gmapApiPromiseLazy().then(() => {
       let scopedInput = null;
       if (this.$scopedSlots.input) {
-        scopedInput = this.$scopedSlots.input()[0].context.$refs[this.slotRefName];
+        scopedInput = this.$scopedSlots.input()[0].context.$refs[
+          this.slotRefName
+        ];
         if (scopedInput && scopedInput.$refs) {
           scopedInput = scopedInput.$refs[this.childRefName || 'input'];
         }

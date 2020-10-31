@@ -7,7 +7,7 @@
   List of properties from
   https://github.com/googlemaps/v3-utility-library/blob/master/markerclustererplus/src/markerclusterer.js
 * */
-import MarkerClusterer from 'marker-clusterer-plus';
+import MarkerClusterer from '@google/markerclustererplus';
 import mapElementFactory from '../factories/map-element';
 
 const props = {
@@ -53,6 +53,10 @@ const props = {
   },
   minimumClusterSize: {
     type: Number,
+    twoWay: false,
+  },
+  clusterClass: {
+    type: String,
     twoWay: false,
   },
   styles: {
