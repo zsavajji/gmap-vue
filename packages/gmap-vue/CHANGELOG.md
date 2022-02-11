@@ -1,3 +1,10 @@
+## [2.0.4](https://github.com/diegoazh/gmap-vue/compare/v2.0.3...v2.0.4) (2022-02-11)
+
+
+### Bug Fixes
+
+* **gmap-vue:** fix fields error on autocomplete component ([a6b8712](https://github.com/diegoazh/gmap-vue/commit/a6b8712097b863894a7839ab17f1640abc993f85)), closes [#118](https://github.com/diegoazh/gmap-vue/issues/118)
+
 ## [2.0.3](https://github.com/diegoazh/gmap-vue/compare/v2.0.2...v2.0.3) (2022-02-09)
 
 
