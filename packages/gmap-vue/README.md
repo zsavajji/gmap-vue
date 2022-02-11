@@ -79,9 +79,9 @@ In your `main.js` or inside a Nuxt plugin:
 
 ```js
 import Vue from 'vue'
-import * as VueGoogleMaps from 'gmap-vue'
+import GmapVue from 'gmap-vue'
 
-Vue.use(VueGoogleMaps, {
+Vue.use(GmapVue, {
   load: {
     key: 'YOUR_API_TOKEN',
     libraries: 'places', // This is required if you use the Autocomplete plugin
@@ -167,7 +167,7 @@ Add region and language localization:
 
 Example for [Localization](https://developers.google.com/maps/documentation/javascript/localization):
 ```vue
-Vue.use(VueGoogleMaps, {
+Vue.use(GmapVue, {
   load: {
     region: 'VI',
     language: 'vi',
@@ -177,10 +177,10 @@ Vue.use(VueGoogleMaps, {
 
 ### Nuxt.js config
 
-For Nuxt.js projects, please import VueGoogleMaps in the following manner:
+For Nuxt.js projects, please import GmapVue in the following manner:
 
 ```js
-import * as VueGoogleMaps from '~/node_modules/gmap-vue'
+import GmapVue from '~/node_modules/gmap-vue'
 ```
 
 Add the following to your `nuxt.config.js`'s `build.extend()`:
