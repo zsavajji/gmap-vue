@@ -16,7 +16,7 @@ This component save the original marker object provided by Google Maps in a prop
 
 ## Source code
 
-:::details Click to se the source code of <code>info-window.vue</code> component
+:::details Click to se the source code of <code>marker-icon.vue</code> component
 
 ```vue
 <script>
@@ -25,81 +25,8 @@ import { getPropsValues, bindEvents, bindProps } from '../utils/helpers';
 import { markerMappedProps } from '../utils/mapped-props-by-map-element';
 
 export default {
+  name: 'MarkerIcon',
   mixins: [MapElementMixin],
-  props: {
-    animation: {
-      type: Number,
-    },
-    attribution: {
-      type: Object,
-    },
-    clickable: {
-      type: Boolean,
-      default: true,
-    },
-    cursor: {
-      type: String,
-    },
-    draggable: {
-      type: Boolean,
-      default: false,
-    },
-    icon: {
-      type: [String, Object],
-    },
-    label: {
-      type: [String, Object],
-    },
-    opacity: {
-      type: Number,
-      default: 1,
-    },
-    options: {
-      type: Object,
-    },
-    place: {
-      type: Object,
-    },
-    position: {
-      type: Object,
-    },
-    shape: {
-      type: Object,
-    },
-    title: {
-      type: String,
-    },
-    visible: {
-      type: Boolean,
-      default: true,
-    },
-    zIndex: {
-      type: Number,
-    },
-  },
-  render(h) {
-    if (!this.$slots.default || this.$slots.default.length === 0) {
-      return '';
-    }
-    if (this.$slots.default.length === 1) {
-      // So that infowindows can have a marker parent
-      return this.$slots.default[0];
-    }
-
-    return h('div', this.$slots.default);
-  },
-  destroyed() {
-    if (!this.$markerObject) {
-      return;
-    }
-
-    if (this.$clusterObject) {
-      // Repaint will be performed in `updated()` of cluster
-      this.$clusterObject.removeMarker(this.$markerObject, true);
-    } else if (this.$markerObject && this.$markerObject.setMap) {
-      this.$markerObject.setMap(null);
-    }
-  },
   inject: {
     $clusterPromise: {
       default: null,
@@ -125,6 +52,7 @@ export default {
 
         // Initialize the maps with the given options
         const initialOptions = {
+          // TODO: analyze the below line because I think it can be removed
           ...this.options,
           map,
           ...getPropsValues(this, markerMappedProps),
@@ -157,9 +85,96 @@ export default {
     this.$markerPromise = promise;
     return { $markerPromise: promise };
   },
+  props: {
+    animation: {
+      type: Number,
+      default: undefined,
+    },
+    attribution: {
+      type: Object,
+      default: undefined,
+    },
+    clickable: {
+      type: Boolean,
+      default: true,
+    },
+    cursor: {
+      type: String,
+      default: undefined,
+    },
+    draggable: {
+      type: Boolean,
+      default: false,
+    },
+    icon: {
+      type: [String, Object],
+      default: undefined,
+    },
+    label: {
+      type: [String, Object],
+      default: undefined,
+    },
+    opacity: {
+      type: Number,
+      default: 1,
+    },
+    options: {
+      type: Object,
+      default: undefined,
+    },
+    place: {
+      type: Object,
+      default: undefined,
+    },
+    position: {
+      type: Object,
+      default: undefined,
+    },
+    shape: {
+      type: Object,
+      default: undefined,
+    },
+    title: {
+      type: String,
+      default: undefined,
+    },
+    visible: {
+      type: Boolean,
+      default: true,
+    },
+    zIndex: {
+      type: Number,
+      default: undefined,
+    },
+  },
+  destroyed() {
+    if (!this.$markerObject) {
+      return;
+    }
+
+    if (this.$clusterObject) {
+      // Repaint will be performed in `updated()` of cluster
+      this.$clusterObject.removeMarker(this.$markerObject, true);
+    } else if (this.$markerObject && this.$markerObject.setMap) {
+      this.$markerObject.setMap(null);
+    }
+  },
+  render(h) {
+    if (!this.$slots.default || this.$slots.default.length === 0) {
+      return '';
+    }
+    if (this.$slots.default.length === 1) {
+      // So that infowindows can have a marker parent
+      return this.$slots.default[0];
+    }
+
+    /**
+     * @slot Default slot of the component.
+     */
+    return h('div', this.$slots.default);
+  },
 };
 </script>
-
 ```
 
 :::
