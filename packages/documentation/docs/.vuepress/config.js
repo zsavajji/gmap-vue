@@ -1,9 +1,10 @@
 const { sidebarTree } = require("../code/config");
 const apiDocs = sidebarTree("API docs");
+const gmpaVuePackage = require('../../../gmap-vue/package.json');
 
 module.exports = {
   base: "/gmap-vue/",
-  title: "Gmap-vue plugin",
+  title: `Gmap-vue v${gmpaVuePackage.version}`,
   description: "Documentation for gmap-vue plugin",
   themeConfig: {
     sidebarDepth: 4,
