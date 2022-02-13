@@ -1,3 +1,15 @@
+# [3.0.0](https://github.com/diegoazh/gmap-vue/compare/v2.0.4...v3.0.0) (2022-02-13)
+
+
+### Features
+
+* **gmap-vue:** add custom callback option to config ([b8409e3](https://github.com/diegoazh/gmap-vue/commit/b8409e39702114e6b1b4f18923ca6840ee3a2207)), closes [#143](https://github.com/diegoazh/gmap-vue/issues/143)
+
+
+### BREAKING CHANGES
+
+* **gmap-vue:** reuse existing google maps api and rename functions
+
 ## [2.0.4](https://github.com/diegoazh/gmap-vue/compare/v2.0.3...v2.0.4) (2022-02-11)
 
 
