@@ -110,6 +110,7 @@ Vue.use(GmapVue, {
     // [OPTIONAL] If you want to set the version, you can do so:
     v: '3.26',
 
+    // This option was added on v3.0.0 but will be removed in the next major release.
     // If you already have an script tag that loads Google Maps API and you want to use it set you callback
     // here and our callback `GoogleMapsCallback` will execute your custom callback at the end; it must attached
     // to the `window` object, is the only requirement.
@@ -133,6 +134,14 @@ Vue.use(GmapVue, {
 
 ::: tip
 
+### v3.2.0
+
+From v3.2.0 when you load the Google Maps API externally, from an HTML file for example, now you can load the plugin without any load option, and you don't need to change anything from you Google Map script tag in the HTML file, in that sort of cases if the callback is not called after **1 seconds** from be initialized the plugin will be check **every 0.5 second** if the object `window.google.maps` is populated and ready to use it.
+
+### v3.0.0
+
+**We encourage to use the new way introduced from v3.2.0 and explained above**
+
 If you already have an script tag that loads Google Maps API and you want to use it set you callback in the `customCallback` option and our `GoogleMapsCallback` callback will execute your custom callback at the end.
 
  **It must attached to the `window` object**, is the only requirement.
@@ -140,6 +149,12 @@ If you already have an script tag that loads Google Maps API and you want to use
 ```js
 window.MyCustomCallback = () => { console.info('MyCustomCallback was executed') }
 ```
+
+:::
+
+::: warning
+
+The new option `customCallback` inside the `load` object in the plugin configuration will be removed in the next major version.
 
 :::
 

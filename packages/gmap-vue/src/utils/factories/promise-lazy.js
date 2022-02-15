@@ -21,7 +21,7 @@ function getPromiseLazyCreatorFn(googleMapsApiInitializer, GoogleMapsApi) {
    * @param  {string} options.load.libraries=places the Google Maps libraries that you will use eg: 'places,drawing,visualization'
    * @param  {string|undefined} options.load.v=undefined the Google Maps API version, default latest
    * @param  {string|undefined} options.load.callback=GoogleMapsCallback This must be ignored if have another callback that you need to run when Google Maps API is ready please use the `customCallback` option.
-   * @param  {string|undefined} options.load.customCallback=undefined If you already have an script tag that loads Google Maps API and you want to use it set you callback in the `customCallback` option and our `GoogleMapsCallback` callback will execute your custom callback at the end; it must attached to the `window` object, is the only requirement.
+   * @param  {string|undefined} options.load.customCallback=undefined This option was added on v3.0.0 but will be removed in the next major release. If you already have an script tag that loads Google Maps API and you want to use it set you callback in the `customCallback` option and our `GoogleMapsCallback` callback will execute your custom callback at the end; it must attached to the `window` object, is the only requirement.
    */
   const promiseLazyCreator = (options) => {
     /**
@@ -65,10 +65,30 @@ function getPromiseLazyCreatorFn(googleMapsApiInitializer, GoogleMapsApi) {
         // Do nothing if run from server-side
         return;
       }
+
+      let callbackExecuted = false;
+
       window.GoogleMapsCallback = () => {
         resolve();
+        callbackExecuted = true;
+        // TODO: this should be removed on the next major release
         window[options?.load?.customCallback]?.();
       };
+
+      let timeoutId = setTimeout(() => {
+        let intervalId = setInterval(() => {
+          if (timeoutId) {
+            clearTimeout(timeoutId);
+            timeoutId = undefined;
+          }
+
+          if (window?.google?.maps != null && !callbackExecuted) {
+            window.GoogleMapsCallback();
+            clearInterval(intervalId);
+            intervalId = undefined;
+          }
+        }, 500);
+      }, 1000);
     }).then(onMapsReady);
 
     return getLazyValue(() => promise);

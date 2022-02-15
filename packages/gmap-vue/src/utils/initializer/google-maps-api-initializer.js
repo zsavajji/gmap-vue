@@ -21,7 +21,7 @@ function createGoogleMapsAPIInitializer() {
    * @param  {string} options.libraries=places The Google Maps libraries that you will use eg: 'places,drawing,visualization', can be given as an array too (@see https://developers.google.com/maps/documentation/javascript/libraries)
    * @param  {string|undefined} options.v=undefined The Google Maps API version, default latest
    * @param  {string|undefined} options.callback=GoogleMapsCallback This must be ignored if have another callback that you need to run when Google Maps API is ready please use the `customCallback` option.
-   * @param  {string|undefined} options.customCallback=undefined If you already have an script tag that loads Google Maps API and you want to use it set you callback in the `customCallback` option and our `GoogleMapsCallback` callback will execute your custom callback at the end; it must attached to the `window` object, is the only requirement.
+   * @param  {string|undefined} options.customCallback=undefined This option was added on v3.0.0 but will be removed in the next major release. If you already have an script tag that loads Google Maps API and you want to use it set you callback in the `customCallback` option and our `GoogleMapsCallback` callback will execute your custom callback at the end; it must attached to the `window` object, is the only requirement.
    * @param {boolean} loadCn=false    Boolean. If set to true, the map will be loaded from google maps China
    *                  (@see https://developers.google.com/maps/documentation/javascript/basics#GoogleMapsChina)
    */
