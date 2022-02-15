@@ -1,3 +1,10 @@
+# [3.1.0](https://github.com/diegoazh/gmap-vue/compare/v3.0.0...v3.1.0) (2022-02-15)
+
+
+### Features
+
+* **gmap-vue:** emit update:position event on markers ([6a34bb7](https://github.com/diegoazh/gmap-vue/commit/6a34bb765d76822e7b5ada2875955a8ce48cf923)), closes [#14](https://github.com/diegoazh/gmap-vue/issues/14)
+
 # [3.0.0](https://github.com/diegoazh/gmap-vue/compare/v2.0.4...v3.0.0) (2022-02-13)
 
 
