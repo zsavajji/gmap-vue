@@ -1,3 +1,10 @@
+# [3.2.0](https://github.com/diegoazh/gmap-vue/compare/v3.1.0...v3.2.0) (2022-02-15)
+
+
+### Features
+
+* **gmap-vue:** auto detect when google maps api is loaded ([93a9ecc](https://github.com/diegoazh/gmap-vue/commit/93a9eccbe4729e26d83d773805bc11c59e91891b))
+
 # [3.1.0](https://github.com/diegoazh/gmap-vue/compare/v3.0.0...v3.1.0) (2022-02-15)
 
 
