@@ -15,6 +15,7 @@ import { bindProps, getPropsValues } from '../utils/helpers';
  * @displayName GmapDrawingManager
  * @see [source code](/guide/drawing-manager.html#source-code)
  * @see [Official documentation](https://developers.google.com/maps/documentation/javascript/drawinglayer)
+ * @see [Official reference](https://developers.google.com/maps/documentation/javascript/reference/drawing)
  */
 export default {
   name: 'DrawingManager',
