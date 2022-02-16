@@ -383,7 +383,7 @@ There is a second slot named **"visible"** that must be used if you want to disp
 
 > Thanks to [@davydnorris](https://github.com/davydnorris) to document this part of GmapVue.
 
-### Exported utilities from the GmapVue plugin
+### Exported objects from the GmapVue plugin
 
 In previous version the plugin exports all without any organization, from version 2 the plugin exports a default object with the install function required for Vue.js to install this plugin and two objects, `helpers` and `components`.
 
@@ -483,7 +483,7 @@ Example for [DirectionsRenderer](https://developers.google.com/maps/documentatio
 import { helpers } from 'gmap-vue'
 const { MapElementFactory } = helpers;
 
-export default mapElementFactory({
+export default MapElementFactory({
   name: 'directionsRenderer',
   ctr: () => google.maps.DirectionsRenderer,
   //// The following is optional, but necessary if the constructor takes multiple arguments
