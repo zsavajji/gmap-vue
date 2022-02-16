@@ -1,3 +1,10 @@
+# [3.4.0](https://github.com/diegoazh/gmap-vue/compare/v3.3.0...v3.4.0) (2022-02-16)
+
+
+### Features
+
+* **gmap-vue:** update kml-layer adding all options as props ([d8cb91f](https://github.com/diegoazh/gmap-vue/commit/d8cb91fa6acb3c7d28d717705c1a81206016cf22)), closes [#148](https://github.com/diegoazh/gmap-vue/issues/148)
+
 # [3.3.0](https://github.com/diegoazh/gmap-vue/compare/v3.2.0...v3.3.0) (2022-02-16)
 
 
