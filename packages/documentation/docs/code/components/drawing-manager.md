@@ -13,6 +13,7 @@ title: drawing-manager
   
   [See]([source code](/guide/drawing-manager.html#source-code))
 ,[See]([Official documentation](https://developers.google.com/maps/documentation/javascript/drawinglayer))
+,[See]([Official reference](https://developers.google.com/maps/documentation/javascript/reference/drawing))
 
   
 
