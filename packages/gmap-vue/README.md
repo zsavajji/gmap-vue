@@ -49,6 +49,7 @@ The above three will go a long way to keeping the project maintainable and contr
   - `components`: it has all components and mountable mixin)
   - `helpers`: it has promise lazy factory function, gmapApi function and map element mixin
 - The plugin now exports by default the install function, this means that you can do the following
+- From **v2.0.0** and above, the `autocomplete` component uses the `default` slot instead of the named `input` slot, from v1.5.0 the `input` slot on the autocomplete component still works.
 
   ```js
   import GmapVue from 'gmap-vue';
