@@ -140,7 +140,7 @@ Vue.use(GmapVue, {
 
 ### v3.2.0
 
-From v3.2.0 when you load the Google Maps API externally, from an HTML file for example, now you can load the plugin without any load option, and you don't need to change anything from you Google Map script tag in the HTML file, in that sort of cases if the callback is not called after **1 seconds** from be initialized the plugin will be check **every 0.5 second** if the object `window.google.maps` is populated and ready to use it.
+From v3.2.0 when you load the Google Maps API externally, from an HTML file for example, now you can load the plugin without any load option, and you don't need to change anything from you Google Map script tag in the HTML file, in that sort of cases if the callback is not called after **1 second** from be initialized the plugin will be check **every 0.5 second** if the object `window.google.maps` is populated and ready to use it.
 
 ### v3.0.0
 
@@ -187,6 +187,7 @@ In you components or `.vue` files add the following
 If you need to initialize the Google Maps API in a dynamic way you can use the `dynamicLoad` option of the plugin configuration, this option start the plugin but it doesn't load the Google Maps API, you need to load it manually using the `googleMapsApiInitializer` helper as we show below
 
 ```vue
+<script>
 import { helpers } from 'gmap-vue';
 const { googleMapsApiInitializer } = helpers;
 
@@ -199,6 +200,7 @@ export default {
   }
   // ...
 }
+</script>
 ```
 
 If you want to know the **`googleMapsApiInitializer` API** please check it [here](https://diegoazh.github.io/gmap-vue/code/utils/initializer/google-maps-api-initializer.html#creategooglemapsapiinitializer-googlemapsapiinitializer-options-loadcn).
