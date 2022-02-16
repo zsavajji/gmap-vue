@@ -182,7 +182,13 @@ In you components or `.vue` files add the following
 </GmapMap>
 ```
 
-### Dynamic load (from v3.3.0 and above)
+### Dynamic load
+
+::: tip
+
+Available from **v3.3.0** and above
+
+:::
 
 If you need to initialize the Google Maps API in a dynamic way you can use the `dynamicLoad` option of the plugin configuration, this option start the plugin but it doesn't load the Google Maps API, you need to load it manually using the `googleMapsApiInitializer` helper as we show below
 
