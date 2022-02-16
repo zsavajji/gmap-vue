@@ -17,7 +17,7 @@
 
 |Name|Version|
 |----|-------|
-|*lerna*|[![npm version](https://badge.fury.io/js/lerna.svg)](https://badge.fury.io/js/lerna)|
+|*pnpm*|[![npm version](https://badge.fury.io/js/pnpm.svg)](https://badge.fury.io/js/pnpm)|
 |*commitlint*|[![npm version](https://badge.fury.io/js/commitlint.svg)](https://badge.fury.io/js/commitlint)|
 |*husky*|[![npm version](https://badge.fury.io/js/husky.svg)](https://badge.fury.io/js/husky)|
 |*lint-staged*|[![npm version](https://badge.fury.io/js/lint-staged.svg)](https://badge.fury.io/js/lint-staged)|
@@ -53,7 +53,7 @@ Please feel free to fork the project and make a PR to improve the plugin.
 
 ## Monorepo
 
-This project uses [Lerna](https://github.com/lerna/lerna) to manage the plugin and documentation site.
+This project uses [pnpm](https://pnpm.io/es/) to manage the plugin and documentation site.
 
 - Clone the repository
 
@@ -63,12 +63,18 @@ This project uses [Lerna](https://github.com/lerna/lerna) to manage the plugin a
 npm install
 ```
 
-- After that you can use the HTML examples inside the examples folder on the `gmap-vue` package, take in mind that this folder will disappear in a near feature. When this happens you only could test with the live example on the documentation site with your own google maps API key
-
-- To start the documentation site locally you can run following command, it starts the documentation page on [http://localhost:8080/](http://localhost:8080/)
+or if you have installed `pnpm`
 
 ```sh
-npm run start:docs
+pnpm install
+```
+
+- After that you can test the component or documentation locally
+
+- To start the documentation site locally you can run the below command, it starts the documentation page on [http://localhost:8080/](http://localhost:8080/)
+
+```sh
+pnpm run serve:docs
 ```
 
 - To test the plugin you also can use a CDN like [jsdelivr](https://diegoazh.github.io/gmap-vue/#jsdelivr) or [unpkg](https://diegoazh.github.io/gmap-vue/#unpkg), in the way that the documentation shows you
