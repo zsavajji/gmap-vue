@@ -1,3 +1,10 @@
+# [3.3.0](https://github.com/diegoazh/gmap-vue/compare/v3.2.0...v3.3.0) (2022-02-16)
+
+
+### Features
+
+* **gmap-vue:** add dynamic loading for google maps api ([7825dba](https://github.com/diegoazh/gmap-vue/commit/7825dbabd16cbe6181d2a6f33fc04d4830d3c4fb)), closes [#239](https://github.com/diegoazh/gmap-vue/issues/239)
+
 # [3.2.0](https://github.com/diegoazh/gmap-vue/compare/v3.1.0...v3.2.0) (2022-02-15)
 
 
