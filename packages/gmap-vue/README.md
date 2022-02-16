@@ -408,18 +408,16 @@ export const components = {
   MapLayer,
   PlaceInput,
   Autocomplete,
-  MountableMixin,
   StreetViewPanorama,
+  MapElementMixin,
+  MountableMixin,
 };
 
 /**
  * Export all helpers
  */
-
 export const helpers = {
-  gmapApi,
-  loadGmapApi,
-  MapElementMixin,
+  googleMapsApiInitializer,
   MapElementFactory,
 };
 
