@@ -1,3 +1,24 @@
+# [3.3.0](https://github.com/diegoazh/gmap-vue/compare/v3.2.0...v3.3.0) (2022-02-16)
+
+
+### Features
+
+* **gmap-vue:** add dynamic loading for google maps api ([7825dba](https://github.com/diegoazh/gmap-vue/commit/7825dbabd16cbe6181d2a6f33fc04d4830d3c4fb)), closes [#239](https://github.com/diegoazh/gmap-vue/issues/239)
+
+# [3.2.0](https://github.com/diegoazh/gmap-vue/compare/v3.1.0...v3.2.0) (2022-02-15)
+
+
+### Features
+
+* **gmap-vue:** auto detect when google maps api is loaded ([93a9ecc](https://github.com/diegoazh/gmap-vue/commit/93a9eccbe4729e26d83d773805bc11c59e91891b))
+
+# [3.1.0](https://github.com/diegoazh/gmap-vue/compare/v3.0.0...v3.1.0) (2022-02-15)
+
+
+### Features
+
+* **gmap-vue:** emit update:position event on markers ([6a34bb7](https://github.com/diegoazh/gmap-vue/commit/6a34bb765d76822e7b5ada2875955a8ce48cf923)), closes [#14](https://github.com/diegoazh/gmap-vue/issues/14)
+
 # [3.0.0](https://github.com/diegoazh/gmap-vue/compare/v2.0.4...v3.0.0) (2022-02-13)
 
 
