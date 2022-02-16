@@ -118,6 +118,7 @@ GmapVue install function
 | --- | --- | --- | --- |
 | Vue | <code>Object</code> |  | the vue instance |
 | options | <code>Object</code> \| <code>undefined</code> |  | configuration object to initialize the GmapVue plugin |
+| options.dynamicLoad | <code>boolean</code> | <code>false</code> | load the Google Maps API dynamically, if you set this to `true` the plugin doesn't load the Google Maps API |
 | options.installComponents | <code>boolean</code> | <code>true</code> | install all components |
 | options.autoBindAllEvents | <code>boolean</code> | <code>false</code> | auto bind all Google Maps API events |
 | options.load | <code>Object</code> \| <code>undefined</code> |  | options to configure the Google Maps API |
@@ -125,7 +126,7 @@ GmapVue install function
 | options.load.libraries | <code>string</code> | <code>&quot;places&quot;</code> | the Google Maps libraries that you will use eg: 'places,drawing,visualization' |
 | options.load.v | <code>string</code> \| <code>undefined</code> |  | the Google Maps API version, default latest |
 | options.load.callback | <code>string</code> \| <code>undefined</code> | <code>&quot;GoogleMapsCallback&quot;</code> | This must be ignored if have another callback that you need to run when Google Maps API is ready please use the `customCallback` option. |
-| options.load.customCallback | <code>string</code> \| <code>undefined</code> |  | If you already have an script tag that loads Google Maps API and you want to use it set you callback here and our callback `GoogleMapsCallback` will execute your custom callback at the end; it must attached to the `window` object, is the only requirement. |
+| options.load.customCallback | <code>string</code> \| <code>undefined</code> |  | This option was added on v3.0.0 but will be removed in the next major release. If you already have an script tag that loads Google Maps API and you want to use it set you callback in the `customCallback` option and our `GoogleMapsCallback` callback will execute your custom callback at the end; it must attached to the `window` object, is the only requirement. |
 
 
 * [gmapVuePluginInstallFn(Vue, options)](#gmapVuePluginInstallFn)

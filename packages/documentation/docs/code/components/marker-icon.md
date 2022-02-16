@@ -41,6 +41,13 @@ title: marker-icon
   
   
   
+## Events
+
+  | Event name     | Properties     | Description  |
+  | -------------- |--------------- | -------------|
+  | update:position | **position** `Object` - Object with lat and lng values, eg: { lat: 10.0, lng: 10.0 } | An event to detect when a position changes
+
+  
   
 ## Slots
 
