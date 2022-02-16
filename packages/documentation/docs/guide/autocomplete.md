@@ -369,9 +369,11 @@ If you need to know the **API of this component** please read it [here](/code/co
 ::: tip
 The autocomplete supports cutsom text field via scoped slot
 
+> **Important**: from v1.5.0 and below you must use `v-slot:input` instead of `v-slot:default`.
+
 ```html
           <gmap-autocomplete class="introInput" >
-                    <template v-slot:input="slotProps">
+                    <template v-slot:default="slotProps">
                         <v-text-field outlined
                                       prepend-inner-icon="place"
                                       placeholder="Location Of Event"
@@ -387,7 +389,7 @@ The ref on the element must be unique. If you create more than one autocomplete,
 
 ```html
           <gmap-autocomplete class="introInput" >
-                    <template v-slot:input="slotProps">
+                    <template v-slot:default="slotProps">
                         <v-text-field outlined
                                       prepend-inner-icon="place"
                                       placeholder="Location Of Event"
@@ -398,7 +400,7 @@ The ref on the element must be unique. If you create more than one autocomplete,
                     </template>
         </gmap-autocomplete>
         <gmap-autocomplete class="introInput" slot-ref-name="input2">
-                    <template v-slot:input="slotProps">
+                    <template v-slot:default="slotProps">
                         <v-text-field outlined
                                       prepend-inner-icon="place"
                                       placeholder="Location Of Event"
