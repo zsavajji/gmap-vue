@@ -1,3 +1,11 @@
+## [3.4.1](https://github.com/diegoazh/gmap-vue/compare/v3.4.0...v3.4.1) (2022-02-18)
+
+
+### Bug Fixes
+
+* **gmap-vue:** change repaint method by render ([4d7b7c9](https://github.com/diegoazh/gmap-vue/commit/4d7b7c93de0ed517395e2c18fa52b0aafb565450)), closes [#247](https://github.com/diegoazh/gmap-vue/issues/247)
+* **gmap-vue:** clear interval when callback was successfully called ([302c6e1](https://github.com/diegoazh/gmap-vue/commit/302c6e1efba0976fb5e13f44dabdfd2a24bb6ed5))
+
 # [3.4.0](https://github.com/diegoazh/gmap-vue/compare/v3.3.0...v3.4.0) (2022-02-16)
 
 
