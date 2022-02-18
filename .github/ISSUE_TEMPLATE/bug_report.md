@@ -7,7 +7,7 @@ assignees: ''
 
 ---
 
-> Please complete all the sections that you can but please **don't remove any section**, otherwise the bot will close your issue because it doesn't follow our issue template (you can remove this comment)
+> Please complete all sections that you can but please **don't remove any section**, otherwise the bot will close your issue because it doesn't meet our issue template (you can remove this comment)
 
 ## Describe the bug
 
