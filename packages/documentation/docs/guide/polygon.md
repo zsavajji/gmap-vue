@@ -31,11 +31,45 @@ export default {
       type: Boolean,
       default: false,
     },
+    clickable: {
+      type: Boolean,
+      default: false,
+    },
     draggable: {
       type: Boolean,
+      default: false,
     },
     editable: {
       type: Boolean,
+      default: false,
+    },
+    fillColor: {
+      type: String,
+      default: '',
+    },
+    fillOpacity: {
+      type: Number,
+      default: 1,
+    },
+    strokeColor: {
+      type: String,
+      default: '',
+    },
+    strokeOpacity: {
+      type: Number,
+      default: 1,
+    },
+    strokePosition: {
+      type: Number,
+      default: 0,
+    },
+    strokeWeight: {
+      type: Number,
+      default: 1,
+    },
+    visible: {
+      type: Boolean,
+      default: true,
     },
     options: {
       type: Object,
@@ -204,10 +238,34 @@ If you need to know what are `mappedProps` please read the general concepts of t
 
 ```javascript
 export const polygonMappedProps = {
+  clickable: {
+    type: Boolean,
+  },
   draggable: {
     type: Boolean,
   },
   editable: {
+    type: Boolean,
+  },
+  fillColor: {
+    type: String,
+  },
+  fillOpacity: {
+    type: Number,
+  },
+  strokeColor: {
+    type: String,
+  },
+  strokeOpacity: {
+    type: Number,
+  },
+  strokePosition: {
+    type: Number,
+  },
+  strokeWeight: {
+    type: Number,
+  },
+  visible: {
     type: Boolean,
   },
   options: {

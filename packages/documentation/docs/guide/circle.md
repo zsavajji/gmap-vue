@@ -33,6 +33,11 @@ export default {
     },
     radius: {
       type: Number,
+      default: 10,
+    },
+    clickable: {
+      type: Boolean,
+      default: false,
     },
     draggable: {
       type: Boolean,
@@ -41,6 +46,34 @@ export default {
     editable: {
       type: Boolean,
       default: false,
+    },
+    fillColor: {
+      type: String,
+      default: '',
+    },
+    fillOpacity: {
+      type: Number,
+      default: 1,
+    },
+    strokeColor: {
+      type: String,
+      default: '',
+    },
+    strokeOpacity: {
+      type: Number,
+      default: 1,
+    },
+    strokePosition: {
+      type: Number,
+      default: 0,
+    },
+    strokeWeight: {
+      type: Number,
+      default: 1,
+    },
+    visible: {
+      type: Boolean,
+      default: true,
     },
     options: {
       type: Object,
@@ -118,6 +151,9 @@ export const circleMappedProps = {
     type: Number,
     twoWay: true,
   },
+  clickable: {
+    type: Boolean,
+  },
   draggable: {
     type: Boolean,
     default: false,
@@ -125,6 +161,27 @@ export const circleMappedProps = {
   editable: {
     type: Boolean,
     default: false,
+  },
+  fillColor: {
+    type: String,
+  },
+  fillOpacity: {
+    type: Number,
+  },
+  strokeColor: {
+    type: String,
+  },
+  strokeOpacity: {
+    type: Number,
+  },
+  strokePosition: {
+    type: Number,
+  },
+  strokeWeight: {
+    type: Number,
+  },
+  visible: {
+    type: Boolean,
   },
   options: {
     type: Object,

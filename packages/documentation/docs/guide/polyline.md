@@ -31,11 +31,31 @@ export default {
       type: Boolean,
       default: false,
     },
+    clickable: {
+      type: Boolean,
+      default: false,
+    },
     draggable: {
       type: Boolean,
     },
     editable: {
       type: Boolean,
+    },
+    strokeColor: {
+      type: String,
+      default: '',
+    },
+    strokeOpacity: {
+      type: Number,
+      default: 1,
+    },
+    strokeWeight: {
+      type: Number,
+      default: 1,
+    },
+    visible: {
+      type: Boolean,
+      default: true,
     },
     options: {
       type: Object,
@@ -139,10 +159,25 @@ If you need to know what are `mappedProps` please read the general concepts of t
 
 ```javascript
 export const polylineMappedProps = {
+  clickable: {
+    type: Boolean,
+  },
   draggable: {
     type: Boolean,
   },
   editable: {
+    type: Boolean,
+  },
+  strokeColor: {
+    type: String,
+  },
+  strokeOpacity: {
+    type: Number,
+  },
+  strokeWeight: {
+    type: Number,
+  },
+  visible: {
     type: Boolean,
   },
   options: {
