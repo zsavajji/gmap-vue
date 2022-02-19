@@ -263,7 +263,14 @@ If you need to gain access to the `Map` instance (e.g. to call `panToBounds`, `p
 
 ### Accessing Google Maps API
 
-If you need to access the Google maps API directly you can use the exported `gmapApi()` function like this
+::: warn
+
+- From v3.0.0 and above the function is exported as `getGoogleMapsAPI`.
+- Versions below v3.0.0 export the function as `gmapApi`
+
+:::
+
+If you need to access the Google maps API directly you can use the exported `getGoogleMapsAPI()` function like this
 
 ```vue
 <template>
@@ -272,16 +279,16 @@ If you need to access the Google maps API directly you can use the exported `gma
   </GmapMap>
 </template>
 <script>
-import { gmapApi } from 'gmap-vue';
+import { getGoogleMapsAPI } from 'gmap-vue';
 
 export default {
   name: 'your-component-name',
   computed: {
     // The below example is the same as writing
     // google() {
-    //   return gmapApi();
+    //   return getGoogleMapsAPI();
     // },
-    google: gmapApi,
+    google: getGoogleMapsAPI,
   },
 };
 </script>
