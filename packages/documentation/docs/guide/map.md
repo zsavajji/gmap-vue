@@ -330,9 +330,9 @@ const events = [
 
 If you need to use the `getBounds` method of the `$mapObject` you can do it with a reference as in the below example, but if you use the `getBounds` method in the mounted hook you need to take care about three things:
 
-1- the center should be defined
-2- the zoom should be defined
-3- the map should be visible
+1. the center should be defined
+2. the zoom should be defined
+3. the map should be visible
 
 In the [official documentation](https://developers.google.com/maps/documentation/javascript/reference/map#Map.getBounds) it says:
 
