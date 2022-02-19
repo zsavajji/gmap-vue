@@ -1,3 +1,10 @@
+## [3.4.2](https://github.com/diegoazh/gmap-vue/compare/v3.4.1...v3.4.2) (2022-02-19)
+
+
+### Bug Fixes
+
+* **gmap-vue:** add missing props to all shapes for drawing over the map ([c39c500](https://github.com/diegoazh/gmap-vue/commit/c39c50048ebbdc1411701bebd4f37e9718c0ed6e)), closes [#138](https://github.com/diegoazh/gmap-vue/issues/138)
+
 ## [3.4.1](https://github.com/diegoazh/gmap-vue/compare/v3.4.0...v3.4.1) (2022-02-18)
 
 
