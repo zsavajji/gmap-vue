@@ -326,6 +326,61 @@ const events = [
 
 :::
 
+### Some tricky parts
+
+If you need to use the `getBounds` method of the `$mapObject` you can do it with a reference as in the below example, but if you use the `getBounds` method in the mounted hook you need to take care about three things:
+
+1- the center should be defined
+2- the zoom should be defined
+3- the map should be visible
+
+In the [official documentation](https://developers.google.com/maps/documentation/javascript/reference/map#Map.getBounds) it says:
+
+> If the map is not yet initialized or center and zoom have not been set then the result is undefined.
+
+Because of that behaviour you must listen for the `tilesloaded` event in the map component, this event is fired when the maps is visible and allows you to accomplish with the three requirements mentioned above.
+
+> You can refer to the [issue #67](https://github.com/diegoazh/gmap-vue/issues/67)
+
+```vue
+<template>
+  <div>
+    <GmapMap
+      @tilesloaded="tilesloadedEvent"
+      :center="center"
+      :zoom="11"
+      style="width: 100%; height: 500px"
+      ref="gmap">
+        ....
+    </GmapMap>
+  </div>
+</template>
+
+<script>
+export default {
+  // ...
+  async mounted() {
+    // this is a good practice
+    await this.$gmapApiPromiseLazy();
+
+    // you can do the same in the following way but is more verbose
+    // this.$refs.gmap.$mapObject.addListener('tilesloaded', () => {
+    //   console.log('>>>>>>>>>> getCenter', this.$refs.gmap.$mapObject.getCenter())
+    //   console.log('>>>>>>>>>> getZoom', this.$refs.gmap.$mapObject.getZoom())
+    //   console.log('>>>>>>>>>> getBounds', this.$refs.gmap.$mapObject.getBounds())
+    // });
+  },
+  methods: {
+    tilesloadedEvent() {
+      console.log('>>>>>>>>>> getCenter', this.$refs.gmap.$mapObject.getCenter())
+      console.log('>>>>>>>>>> getZoom', this.$refs.gmap.$mapObject.getZoom())
+      console.log('>>>>>>>>>> getBounds', this.$refs.gmap.$mapObject.getBounds())
+    }
+  }
+};
+</script>
+```
+
 ## How to use it
 
 ```vue
