@@ -18,6 +18,7 @@ import { bindEvents, bindProps, getPropsValues } from '../utils/helpers';
  * @displayName Info-Window
  * @see [source code](/guide/info-window.html#source-code)
  * @see [Official documentation](https://developers.google.com/maps/documentation/javascript/infowindows)
+ * @see [Official reference](https://developers.google.com/maps/documentation/javascript/reference/info-window)
  */
 export default {
   name: 'InfoWindow',
@@ -83,11 +84,44 @@ export default {
   },
   props: {
     /**
+     * Content to display in the InfoWindow. This can be an HTML element, a plain-text string, or a string containing HTML. The InfoWindow will be sized according to the content. To set an explicit size for the content, set content to be a HTML element with that size.
+     * @value ''
+     * @see [InfoWindow content](https://developers.google.com/maps/documentation/javascript/reference/info-window#InfoWindowOptions.content)
+     */
+    content: {
+      type: [String, Object],
+      default: '',
+    },
+    /**
      * Determines if the info-window is open or not
      */
     opened: {
       type: Boolean,
       default: true,
+    },
+    /**
+     * Contains the LatLng at which this info window is anchored.
+     * Note: An InfoWindow may be attached either to a Marker object
+     * (in which case its position is based on the marker's location)
+     * or on the map itself at a specified LatLng.
+     *
+     * The LatLng at which to display this InfoWindow. If the InfoWindow is opened with an anchor, the anchor's position will be used instead.
+     * @value undefined
+     * @type LatLng|LatLngLiteral
+     * @see [InfoWindow position](https://developers.google.com/maps/documentation/javascript/reference/info-window#InfoWindowOptions.position)
+     */
+    position: {
+      type: Object,
+      default: undefined,
+    },
+    /**
+     * All InfoWindows are displayed on the map in order of their zIndex, with higher values displaying in front of InfoWindows with lower values. By default, InfoWindows are displayed according to their latitude, with InfoWindows of lower latitudes appearing in front of InfoWindows at higher latitudes. InfoWindows are always displayed in front of markers.
+     * @value 0
+     * @see [InfoWindow position](https://developers.google.com/maps/documentation/javascript/reference/info-window#InfoWindowOptions.zIndex)
+     */
+    zIndex: {
+      type: Number,
+      default: 0,
     },
     /**
      * Extra options that you want to pass to the component
@@ -96,23 +130,6 @@ export default {
       type: Object,
       required: false,
       default: undefined,
-    },
-    /**
-     * Contains the LatLng at which this info window is anchored.
-     * Note: An InfoWindow may be attached either to a Marker object
-     * (in which case its position is based on the marker's location)
-     * or on the map itself at a specified LatLng.
-     */
-    position: {
-      type: Object,
-      default: undefined,
-    },
-    /**
-     * The z-index property of the window
-     */
-    zIndex: {
-      type: Number,
-      default: 0,
     },
   },
   mounted() {

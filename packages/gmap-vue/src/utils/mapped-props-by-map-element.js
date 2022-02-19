@@ -75,6 +75,10 @@ export const heatMapLayerMappedProps = {
 };
 
 export const infoWindowMappedProps = {
+  content: {
+    type: Object,
+    twoWay: true,
+  },
   options: {
     type: Object,
     required: false,

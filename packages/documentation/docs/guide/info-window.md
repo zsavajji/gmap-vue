@@ -37,6 +37,10 @@ import { bindEvents, bindProps, getPropsValues } from '../utils/helpers';
 export default {
   mixins: [MapElementMixin],
   props: {
+    content: {
+      type: [String, Object],
+      default: '',
+    },
     opened: {
       type: Boolean,
       default: true,
@@ -150,6 +154,10 @@ If you need to know what are `mappedProps` please read the general concepts of t
 
 ```javascript
 export const infoWindowMappedProps = {
+  content: {
+    type: Object,
+    twoWay: true,
+  },
   options: {
     type: Object,
     required: false,
