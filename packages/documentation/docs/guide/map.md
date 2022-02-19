@@ -328,6 +328,8 @@ const events = [
 
 ### Some tricky parts
 
+#### `getBounds`
+
 If you need to use the `getBounds` method of the `$mapObject` you can do it with a reference as in the below example, but if you use the `getBounds` method in the mounted hook you need to take care about three things:
 
 1. the center should be defined
@@ -377,6 +379,67 @@ export default {
       console.log('>>>>>>>>>> getBounds', this.$refs.gmap.$mapObject.getBounds())
     }
   }
+};
+</script>
+```
+
+#### `PlacesService`
+
+If want to use the `google.maps.places.PlacesService` class we let you here an example about how to implement it.
+
+> You can refer to the [issue #130](https://github.com/diegoazh/gmap-vue/issues/130)
+
+```vue
+<template>
+  <div>
+    <GmapMap
+      :center="center"
+      :zoom="zoom"
+      style="width: 100%; height: 500px"
+      ref="googleMap"
+    >
+    </GmapMap>
+  </div>
+</template>
+
+<script>
+import { getGoogleMapsAPI } from "gmap-vue";
+
+export default {
+  data() {
+    return {
+      center: { lat: 10, lng: 10 },
+      zoom: 11,
+    };
+  },
+  async mounted() {
+    await this.$gmapApiPromiseLazy();
+
+    const google = getGoogleMapsAPI();
+    console.log(">>>>>>>>>>>> placesService", google.maps.places);
+    console.log(">>>>>>>>>>>> $mapObject", this.$refs.googleMap.$mapObject);
+
+    const service = new google.maps.places.PlacesService(
+      document.createElement("div") // if you pass the map object here it doesn't work
+    );
+
+    console.log("service", service);
+
+    const request = {
+      query: "Museum of Contemporary Art Australia",
+      fields: ["name", "geometry"],
+    };
+
+    const self = this;
+    service.findPlaceFromQuery(request, function (results, status) {
+      if (status === google.maps.places.PlacesServiceStatus.OK) {
+        for (var i = 0; i < results.length; i++) {
+          console.log(results[i]);
+        }
+        self.$refs.googleMap.$mapObject.setCenter(results[0].geometry.location);
+      }
+    });
+  },
 };
 </script>
 ```
