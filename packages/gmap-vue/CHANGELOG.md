@@ -1,3 +1,10 @@
+## [3.4.3](https://github.com/diegoazh/gmap-vue/compare/v3.4.2...v3.4.3) (2022-02-21)
+
+
+### Bug Fixes
+
+* **gmap-vue:** add prop content to info-window component ([29dface](https://github.com/diegoazh/gmap-vue/commit/29dfacee6526ea5e5754f62306ff2d82f363553a))
+
 ## [3.4.2](https://github.com/diegoazh/gmap-vue/compare/v3.4.1...v3.4.2) (2022-02-19)
 
 
