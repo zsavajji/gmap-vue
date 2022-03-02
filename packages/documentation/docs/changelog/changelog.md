@@ -1,3 +1,17 @@
+## [3.4.4](https://github.com/diegoazh/gmap-vue/compare/v3.4.3...v3.4.4) (2022-03-02)
+
+
+### Bug Fixes
+
+* **gmap-vue:** set default vallue of contentn prop to undefined ([bee86ad](https://github.com/diegoazh/gmap-vue/commit/bee86ad6d5537b271676262df18b868356306b12)), closes [#254](https://github.com/diegoazh/gmap-vue/issues/254)
+
+## [3.4.3](https://github.com/diegoazh/gmap-vue/compare/v3.4.2...v3.4.3) (2022-02-21)
+
+
+### Bug Fixes
+
+* **gmap-vue:** add prop content to info-window component ([29dface](https://github.com/diegoazh/gmap-vue/commit/29dfacee6526ea5e5754f62306ff2d82f363553a))
+
 ## [3.4.2](https://github.com/diegoazh/gmap-vue/compare/v3.4.1...v3.4.2) (2022-02-19)
 
 
