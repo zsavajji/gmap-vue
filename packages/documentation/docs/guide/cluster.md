@@ -102,12 +102,14 @@ this.$clusterObject = new MarkerClusterer(...);
 <script>
 import { MarkerClusterer } from '@googlemaps/markerclusterer';
 import MapElementMixin from '../mixins/map-element';
+import { clusterIconMappedProps } from '../utils/mapped-props-by-map-element';
 import { bindEvents, getPropsValues, bindProps } from '../utils/helpers';
 
 export default {
-  name: 'cluster',
+  name: 'ClusterIcon',
   mixins: [MapElementMixin],
   provide() {
+    // events to bind with toWay
     const events = [
       'click',
       'rightclick',
@@ -121,14 +123,16 @@ export default {
       'mouseout',
     ];
 
+    // Infowindow needs this to be immediately available
     const promise = this.$mapPromise
       .then((map) => {
         this.$map = map;
 
+        // Initialize the maps with the given options
         const initialOptions = {
           ...this.options,
           map,
-          ...getPropsValues(this, {}),
+          ...getPropsValues(this, clusterIconMappedProps),
         };
         const { options: extraOptions, ...finalOptions } = initialOptions;
 
@@ -230,7 +234,20 @@ If you need to know what are `mappedProps` please read the general concepts of t
 ::: details Mapped Props of <code>GmapCluster</code> component
 
 ```javascript
-// it doesn't has mapped properties
+export const clusterIconMappedProps = {
+  algorithm: {
+    type: Object,
+  },
+  onClusterClick: {
+    type: Function,
+  },
+  renderer: {
+    type: Object,
+  },
+  options: {
+    type: Object,
+  },
+};
 ```
 
 :::

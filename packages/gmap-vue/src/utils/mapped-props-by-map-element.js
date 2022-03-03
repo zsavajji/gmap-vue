@@ -462,6 +462,21 @@ export const placeInputMappedProps = {
   },
 };
 
+export const clusterIconMappedProps = {
+  algorithm: {
+    type: Object,
+  },
+  onClusterClick: {
+    type: Function,
+  },
+  renderer: {
+    type: Object,
+  },
+  options: {
+    type: Object,
+  },
+};
+
 export default {
   autocompleteMappedProps,
   circleMappedProps,
@@ -476,4 +491,5 @@ export default {
   polylineMappedProps,
   rectangleMappedProps,
   placeInputMappedProps,
+  clusterIconMappedProps,
 };

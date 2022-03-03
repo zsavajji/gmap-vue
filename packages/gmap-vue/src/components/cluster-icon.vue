@@ -8,6 +8,7 @@
 <script>
 import { MarkerClusterer } from '@googlemaps/markerclusterer';
 import MapElementMixin from '../mixins/map-element';
+import { clusterIconMappedProps } from '../utils/mapped-props-by-map-element';
 import { bindEvents, getPropsValues, bindProps } from '../utils/helpers';
 
 /**
@@ -45,7 +46,7 @@ export default {
           // TODO: analyze the below line because I think it can be removed
           ...this.options,
           map,
-          ...getPropsValues(this, {}),
+          ...getPropsValues(this, clusterIconMappedProps),
         };
         const { options: extraOptions, ...finalOptions } = initialOptions;
 
