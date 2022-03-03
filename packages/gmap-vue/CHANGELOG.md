@@ -1,3 +1,10 @@
+# [3.5.0](https://github.com/diegoazh/gmap-vue/compare/v3.4.5...v3.5.0) (2022-03-03)
+
+
+### Features
+
+* **gmap-vue:** add render, on-cluster-click and options props to cluster component ([8552070](https://github.com/diegoazh/gmap-vue/commit/8552070f43395ac138601405a3aa2906a5004fe9))
+
 ## [3.4.5](https://github.com/diegoazh/gmap-vue/compare/v3.4.4...v3.4.5) (2022-03-03)
 
 
