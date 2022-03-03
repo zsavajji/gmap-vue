@@ -11,7 +11,7 @@
 |Name|Version|
 |----|-------|
 |*vue*|[![npm version](https://badge.fury.io/js/vue.svg)](https://badge.fury.io/js/vue)|
-|*marker-clusterer-plus*|[![npm version](https://badge.fury.io/js/marker-clusterer-plus.svg)](https://badge.fury.io/js/marker-clusterer-plus)|
+|*@googlemaps/markerclusterer*|[![npm version](https://badge.fury.io/js/@googlemaps%2Fmarkerclusterer.svg)](https://badge.fury.io/js/@googlemaps%2Fmarkerclusterer)|
 
 ## Project dependencies
 
