@@ -91,11 +91,41 @@ export default {
     return { $clusterPromise: promise };
   },
   props: {
+    /**
+     * An algorithm to cluster markers. Default is SuperClusterAlgorithm. Must provide a
+     * calculate method accepting AlgorithmInput and returning an array of Cluster.
+     * @values undefined
+     * @see [algorithm](https://googlemaps.github.io/js-markerclusterer/interfaces/MarkerClustererOptions.html#algorithm)
+     */
     algorithm: {
       type: Object,
-      default() {
-        return null;
-      },
+      default: undefined,
+    },
+    /**
+     * Function to run when the user clicks the cluster.
+     * @values undefined
+     * @see [onClusterClick](https://googlemaps.github.io/js-markerclusterer/interfaces/MarkerClustererOptions.html#onClusterClick)
+     */
+    onClusterClick: {
+      type: Function,
+      default: undefined,
+    },
+    /**
+     * An object that converts a Cluster into a `google.maps.Marker`. Default is DefaultRenderer.
+     * @values undefined
+     * @see [renderer](https://googlemaps.github.io/js-markerclusterer/interfaces/MarkerClustererOptions.html#renderer)
+     */
+    renderer: {
+      type: Object,
+      default: undefined,
+    },
+    /**
+     * Other options that you can pass to the MarkerClusterer
+     * @values undefined
+     */
+    options: {
+      type: Object,
+      default: undefined,
     },
   },
   beforeDestroy() {

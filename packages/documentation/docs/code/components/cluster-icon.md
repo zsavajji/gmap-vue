@@ -22,7 +22,10 @@ title: cluster-icon
 
   | Prop name     | Description | Type      | Values      | Default     |
   | ------------- | ----------- | --------- | ----------- | ----------- |
-  | algorithm |  | object | - | null |
+  | algorithm | An algorithm to cluster markers. Default is SuperClusterAlgorithm. Must provide a<br/>calculate method accepting AlgorithmInput and returning an array of Cluster.<br/>`@see` [algorithm](https://googlemaps.github.io/js-markerclusterer/interfaces/MarkerClustererOptions.html#algorithm) | object | `undefined` | undefined |
+| onClusterClick | Function to run when the user clicks the cluster.<br/>`@see` [onClusterClick](https://googlemaps.github.io/js-markerclusterer/interfaces/MarkerClustererOptions.html#onClusterClick) | func | `undefined` | undefined |
+| renderer | An object that converts a Cluster into a `google.maps.Marker`. Default is DefaultRenderer.<br/>`@see` [renderer](https://googlemaps.github.io/js-markerclusterer/interfaces/MarkerClustererOptions.html#renderer) | object | `undefined` | undefined |
+| options | Other options that you can pass to the MarkerClusterer | object | `undefined` | undefined |
 
   
   

@@ -175,9 +175,19 @@ export default {
   props: {
     algorithm: {
       type: Object,
-      default() {
-        return null;
-      },
+      default: undefined,
+    },
+    onClusterClick: {
+      type: Function,
+      default: undefined,
+    },
+    renderer: {
+      type: Object,
+      default: undefined,
+    },
+    options: {
+      type: Object,
+      default: undefined,
     },
   },
   beforeDestroy() {
