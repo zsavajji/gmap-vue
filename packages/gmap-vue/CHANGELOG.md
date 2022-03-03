@@ -1,3 +1,10 @@
+## [3.5.1](https://github.com/diegoazh/gmap-vue/compare/v3.5.0...v3.5.1) (2022-03-03)
+
+
+### Bug Fixes
+
+* **gmap-vue:** add mapped props to cluster-icon component ([f008a35](https://github.com/diegoazh/gmap-vue/commit/f008a35595c92fc075286400af4c80d47b389113))
+
 # [3.5.0](https://github.com/diegoazh/gmap-vue/compare/v3.4.5...v3.5.0) (2022-03-03)
 
 
