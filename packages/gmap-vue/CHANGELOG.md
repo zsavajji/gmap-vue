@@ -1,3 +1,10 @@
+## [3.4.5](https://github.com/diegoazh/gmap-vue/compare/v3.4.4...v3.4.5) (2022-03-03)
+
+
+### Bug Fixes
+
+* **gmap-vue:** add missing options on marker-clusterer constructor ([7b4d573](https://github.com/diegoazh/gmap-vue/commit/7b4d5739b01c2db38a9e028309a33f46da282ffb)), closes [#255](https://github.com/diegoazh/gmap-vue/issues/255)
+
 ## [3.4.4](https://github.com/diegoazh/gmap-vue/compare/v3.4.3...v3.4.4) (2022-03-02)
 
 
