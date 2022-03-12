@@ -88,7 +88,7 @@ That is, instead of writing `<GmapMap>`, you need to write `<gmap-map>`.
 
 [Live example](https://diegoazh.github.io/gmap-vue/guide/).
 
-::: warn
+::: warning
 
 ### Vue-CLI v4 applications
 
