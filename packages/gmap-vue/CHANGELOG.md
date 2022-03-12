@@ -1,3 +1,11 @@
+## [3.5.2](https://github.com/diegoazh/gmap-vue/compare/v3.5.1...v3.5.2) (2022-03-12)
+
+
+### Bug Fixes
+
+* **gmap-vue:** fix mapped props and kml-layer component ([2cc7157](https://github.com/diegoazh/gmap-vue/commit/2cc7157fd506555789d167b0327e9f40dc80e742))
+* **gmap-vue:** move from webpack to rollup and make differente builds ([dbafc84](https://github.com/diegoazh/gmap-vue/commit/dbafc845a9b38389f773e20d666ac2b89de0a875)), closes [#231](https://github.com/diegoazh/gmap-vue/issues/231)
+
 ## [3.5.1](https://github.com/diegoazh/gmap-vue/compare/v3.5.0...v3.5.1) (2022-03-03)
 
 
