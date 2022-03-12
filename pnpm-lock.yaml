@@ -18,7 +18,7 @@ importers:
 
   packages/documentation:
     specifiers:
-      gmap-vue: ^3.5.1
+      gmap-vue: ^3.5.2
       lodash: ^4.17.21
       snyk: ^1.868.0
       vuepress: ^1.9.7
