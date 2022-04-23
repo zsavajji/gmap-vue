@@ -1,7 +1,10 @@
 <template>
   <div>
     <!-- @slot Used to set your drawing manager -->
-    <slot :setDrawingMode="setDrawingMode" :deleteSelection="deleteSelection" />
+    <slot
+      :set-drawing-mode="setDrawingMode"
+      :delete-selection="deleteSelection"
+    />
   </div>
 </template>
 

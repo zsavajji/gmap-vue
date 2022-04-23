@@ -6,19 +6,19 @@
   "author": "\"Daniel Sim, Guillaume Leclerc\",",
   "license": "MIT",
   "scripts": {
-    "serve:docs": "pnpm run gen:api:docs -r && pnpm run serve:docs -r",
-    "build:all": "pnpm run build -r && pnpm run build:docs -r",
-    "test": "pnpm run test -r",
-    "lint": "pnpm run lint -r",
-    "gen:docs": "pnpm run gen:api:docs -r",
+    "serve:docs": "pnpm run gen:api:docs --recursive && pnpm run serve:docs --recursive",
+    "build:all": "pnpm run gen:api:docs && pnpm run build --recursive && pnpm run build:docs --recursive",
+    "test": "pnpm run test --recursive",
+    "lint": "pnpm run lint --recursive",
+    "gen:api:docs": "pnpm run gen:api:docs --recursive",
     "clean": "rimraf ./packages/**/node_modules && rimraf ./packages/**/package-lock.json && rimraf ./pnpm-lock.yaml && rimraf ./node_modules",
     "prepare": "husky install"
   },
   "devDependencies": {
-    "@commitlint/cli": "^16.2.1",
+    "@commitlint/cli": "^16.2.3",
     "@commitlint/config-conventional": "^16.2.1",
     "husky": "^7.0.4",
-    "lint-staged": "^12.3.5",
+    "lint-staged": "^12.4.0",
     "rimraf": "^3.0.2"
   }
 }

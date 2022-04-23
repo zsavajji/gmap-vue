@@ -299,7 +299,7 @@ If you need to gain access to the `Map` instance (e.g. to call `panToBounds`, `p
 
 ### Accessing Google Maps API
 
-::: warn
+::: warning
 
 - From v3.0.0 and above the function is exported as `getGoogleMapsAPI`.
 - Versions below v3.0.0 export the function as `gmapApi`
