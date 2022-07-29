@@ -8,11 +8,11 @@ module.exports = {
     'scope-empty': [2, 'never'],
     'subject-case': [2, 'always', 'lowerCase'],
     'subject-min-length': [2, 'always', 15],
-    'subject-max-length': [2, 'always', 75],
+    'subject-max-length': [2, 'always', 100],
     'header-case': [2, 'always', 'lowerCase'],
     'body-leading-blank': [2, 'always'],
     'body-max-length': [2, 'always', 1000],
     'footer-leading-blank': [2, 'always'],
-    'footer-max-length': [2, 'always', 100],
+    'footer-max-length': [2, 'always', 300],
   },
 };
