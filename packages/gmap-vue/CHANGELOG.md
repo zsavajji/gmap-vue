@@ -1,3 +1,10 @@
+## [3.5.3](https://github.com/diegoazh/gmap-vue/compare/v3.5.2...v3.5.3) (2022-07-29)
+
+
+### Bug Fixes
+
+* **gmap-vue:** remove core and runtime from package.json ([4b803d3](https://github.com/diegoazh/gmap-vue/commit/4b803d3d540a9cff576b9432bb2f3de133b72818)), closes [#274](https://github.com/diegoazh/gmap-vue/issues/274)
+
 ## [3.5.2](https://github.com/diegoazh/gmap-vue/compare/v3.5.1...v3.5.2) (2022-03-12)
 
 
