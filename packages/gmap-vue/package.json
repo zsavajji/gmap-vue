@@ -41,9 +41,7 @@
   },
   "homepage": "https://github.com/diegoazh/gmap-vue#readme",
   "dependencies": {
-    "@googlemaps/markerclusterer": "^2.0.4",
-    "core-js": "^3.22.2",
-    "regenerator-runtime": "^0.13.9"
+    "@googlemaps/markerclusterer": "^2.0.4"
   },
   "peerDependencies": {
     "vue": "^2.6.14"
