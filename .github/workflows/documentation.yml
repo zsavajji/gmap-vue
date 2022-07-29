@@ -17,7 +17,7 @@ jobs:
         with:
           node-version: 16
       - name: Install pnpm
-        run: npm install -g pnpm
+        run: npm install --location=global pnpm
       - name: Remove pnpm-workspace.yaml
         run: rm -rf ./pnpm-workspace.yaml
       - name: Install dependencies

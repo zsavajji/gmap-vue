@@ -43,7 +43,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Install pnpm
-        run: npm install -g pnpm
+        run: npm install --location=global pnpm
       - name: Install dependencies
         run: pnpm install
       - name: Build package
