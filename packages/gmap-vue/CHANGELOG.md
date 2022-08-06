@@ -1,3 +1,11 @@
+## [3.5.4](https://github.com/diegoazh/gmap-vue/compare/v3.5.3...v3.5.4) (2022-08-06)
+
+
+### Bug Fixes
+
+* **gmap-vue:** document is undefined ssr ([5b97124](https://github.com/diegoazh/gmap-vue/commit/5b971249bed2cec7a61bcd5a0255f00d2fe354da))
+* **gmap-vue:** remove optional conditional operator ([0613d8e](https://github.com/diegoazh/gmap-vue/commit/0613d8e6df4fb539547b0be9004074e8918e5807))
+
 ## [3.5.3](https://github.com/diegoazh/gmap-vue/compare/v3.5.2...v3.5.3) (2022-07-29)
 
 
