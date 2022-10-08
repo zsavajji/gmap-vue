@@ -47,11 +47,11 @@
     "vue": "^2.6.14"
   },
   "devDependencies": {
-    "@babel/cli": "^7.18.10",
-    "@babel/core": "^7.19.1",
+    "@babel/cli": "^7.19.3",
+    "@babel/core": "^7.19.3",
     "@babel/eslint-parser": "^7.19.1",
-    "@babel/preset-env": "^7.19.1",
-    "@rollup/plugin-babel": "^5.3.1",
+    "@babel/preset-env": "^7.19.3",
+    "@rollup/plugin-babel": "^6.0.0",
     "@rollup/plugin-commonjs": "^22.0.2",
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^14.1.0",
@@ -63,7 +63,7 @@
     "better-docs": "^2.7.2",
     "cross-env": "^7.0.3",
     "documentation": "^14.0.0",
-    "eslint": "^8.24.0",
+    "eslint": "^8.25.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-config-standard": "^17.0.0",
@@ -72,7 +72,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.0.1",
     "eslint-plugin-standard": "^5.0.0",
-    "eslint-plugin-vue": "^9.5.1",
+    "eslint-plugin-vue": "^9.6.0",
     "gh-pages": "^4.0.0",
     "jsdoc": "^3.6.11",
     "prettier": "^2.7.1",
@@ -87,7 +87,7 @@
     "vue-docgen-api": "^4.52.0",
     "vue-loader": "^17.0.0",
     "vue-template-compiler": "^2.7.10",
-    "vuepress-jsdoc": "4.3.0"
+    "vuepress-jsdoc": "4.3.1"
   },
   "author": "Diego A. Zapata Häntsch, Daniel Sim, Guillaume Leclerc",
   "license": "MIT"
