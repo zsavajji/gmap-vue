@@ -218,7 +218,7 @@ If you need to know the **API of this component** please read it [here](/code/co
     </gmap-map>
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.js"></>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gmap-vue/dist/gmap-vue.min.js"></script>
 
   <script>
