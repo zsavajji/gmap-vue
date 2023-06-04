@@ -22,7 +22,7 @@
     "dev": "vite",
     "dev:e2e": "pnpm run build && vite --config cypress/runner/vite.config.js",
     "preview": "vite preview --port 4173",
-    "build": "vite build",
+    "build": "vite build && pnpm run copy:components",
     "tsc:build": "tsc --project tsconfig.app.json",
     "vite:build": "run-p type-check build",
     "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
@@ -37,7 +37,7 @@
     "test:e2e:node:server": "pnpm run test:e2e:build && node cypress/runner/runner.cjs",
     "lint": "prettier --write ./src && eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "lint-staged": "lint-staged",
-    "copy:components": "cpx \"./src/components/*.vue\" \"./build/src/components\" --verbose",
+    "copy:components": "cpx \"./src/components/*.vue\" \"./dist/components\" --verbose",
     "release": "semantic-release"
   },
   "exports": {
