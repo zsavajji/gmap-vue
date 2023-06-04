@@ -1,3 +1,10 @@
+## [3.5.5](https://github.com/diegoazh/gmap-vue/compare/v3.5.4...v3.5.5) (2023-06-04)
+
+
+### Bug Fixes
+
+* **v3:** add all single file components to the npm package ([79839af](https://github.com/diegoazh/gmap-vue/commit/79839afd65a582faec977f0eabea8a4309fb9d6c))
+
 ## [3.5.2](https://github.com/diegoazh/gmap-vue/compare/v3.5.1...v3.5.2) (2022-03-12)
 
 
