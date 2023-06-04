@@ -32,6 +32,10 @@
           {
             "scope": "root",
             "release": false
+          },
+          {
+            "scope": "gmap-vue-next",
+            "release": false
           }
         ]
       }
