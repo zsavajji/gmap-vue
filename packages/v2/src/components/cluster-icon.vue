@@ -9,7 +9,7 @@
 import { MarkerClusterer } from '@googlemaps/markerclusterer';
 import MapElementMixin from '../mixins/map-element';
 import { clusterIconMappedProps } from '../utils/mapped-props-by-map-element';
-import { bindEvents, getPropsValues, bindProps } from '../utils/helpers';
+import { bindEvents, bindProps, getPropsValues } from '../utils/helpers';
 
 /**
  * Cluster component

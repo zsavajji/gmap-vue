@@ -4,11 +4,10 @@ on:
     branches:
       - master
   pull_request:
-    branches: '*'
+    branches: "*"
 
 jobs:
   build:
-
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -26,11 +25,16 @@ jobs:
         run: npm install -g pnpm
       - name: Install dependencies
         run: pnpm install
+      - name: Create env file
+        run: |
+          touch ./packages/v3/cypress/runner/.env
+          echo VITE_GOOGLE_API_KEY=${{ secrets.VITE_GOOGLE_API_KEY }} >> ./packages/v3/cypress/runner/.env
       - name: Run tests
         run: pnpm run test
+      - name: Run e2e tests
+        run: pnpm run test:e2e
 
   publish:
-
     name: npm publish
     runs-on: ubuntu-latest
     if: ${{ github.ref == 'refs/heads/master'}}
@@ -47,22 +51,22 @@ jobs:
       - name: Install dependencies
         run: pnpm install
       - name: Build package
-        working-directory: ./packages/gmap-vue
+        working-directory: ./packages/v3
         run: pnpm run build
       - name: Configure git credentials
         uses: OleksiyRudenko/gha-git-credentials@v2-latest
         with:
           global: true
-          name: '${{ secrets.GH_USER }}'
-          email: '${{ secrets.GH_EMAIL }}'
-          actor: '${{ secrets.GH_FULL_NAME }}'
-          token: '${{ secrets.GITHUB_TOKEN }}'
+          name: "${{ secrets.GH_USER }}"
+          email: "${{ secrets.GH_EMAIL }}"
+          actor: "${{ secrets.GH_FULL_NAME }}"
+          token: "${{ secrets.GITHUB_TOKEN }}"
       - name: Update origin push URI
         run: |
           git remote set-url origin "https://${{ secrets.GH_TOKEN_LERNA }}@github.com/${{ secrets.GH_USER }}/${{ secrets.GH_REPOSITORY }}.git" > /dev/null 2>&1
           git checkout master
       - name: Semantic Release
-        working-directory: ./packages/gmap-vue
+        working-directory: ./packages/v3
         run: pnpm run release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -71,4 +75,4 @@ jobs:
         uses: JS-DevTools/npm-publish@v2
         with:
           token: ${{ secrets.NPM_AUTH_TOKEN }}
-          package: ./packages/gmap-vue/package.json
+          package: ./packages/v3/package.json

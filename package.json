@@ -7,18 +7,19 @@
   "license": "MIT",
   "scripts": {
     "serve:docs": "pnpm run --recursive gen:api:docs && pnpm run --recursive serve:docs",
-    "build:all": "pnpm run gen:api:docs && pnpm run --recursive build && pnpm run --recursive build:docs",
+    "build:all": "pnpm run --recursive gen:api:docs && pnpm run --recursive build && pnpm run --recursive build:docs",
     "test": "pnpm run --recursive test",
+    "test:e2e": "pnpm run --recursive test:e2e:ci",
     "lint": "pnpm run --recursive lint",
     "gen:api:docs": "pnpm run --recursive gen:api:docs",
     "clean": "rimraf ./packages/**/node_modules && rimraf ./packages/**/package-lock.json && rimraf ./pnpm-lock.yaml && rimraf ./node_modules",
     "prepare": "husky install"
   },
   "devDependencies": {
-    "@commitlint/cli": "^17.1.2",
-    "@commitlint/config-conventional": "^17.1.0",
-    "husky": "^8.0.1",
-    "lint-staged": "^13.0.3",
-    "rimraf": "^3.0.2"
+    "@commitlint/cli": "^17.6.3",
+    "@commitlint/config-conventional": "^17.6.3",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.2",
+    "rimraf": "^5.0.1"
   }
 }

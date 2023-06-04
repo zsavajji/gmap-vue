@@ -1,5 +1,5 @@
 {
-  "name": "gmap-vue",
+  "name": "@gmap-vue/v2",
   "version": "3.5.4",
   "description": "This is a google map component for Vue.js, updated for Vue 2 compatibility",
   "type": "module",
@@ -14,6 +14,9 @@
     "node": ">=12",
     "npm": ">6"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "clean:build": "rimraf ./dist",
     "build": "pnpm run clean:build && cross-env NODE_ENV=production rollup --config",
@@ -22,7 +25,7 @@
     "lint": "prettier --write ./src && eslint --fix --ext .vue,.js,.html ./src",
     "test": "echo 'not implemented yet'",
     "lint-staged": "lint-staged",
-    "gen:api:docs": "rimraf ../documentation/docs/code && npx vuepress-jsdoc -d ../documentation/docs -t \"GmapVue API\" -r ./README.md",
+    "gen:api:docs": "rimraf ../documentation/docs/code && npx vuepress-jsdoc --dist ../documentation/docs --title \"GmapVue API\" --readme ./README.md",
     "release": "semantic-release"
   },
   "exports": {
