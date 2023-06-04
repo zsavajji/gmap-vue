@@ -1,6 +1,6 @@
 const { sidebarTree } = require("../code/config");
 const apiDocs = sidebarTree("API docs");
-const gmpaVuePackage = require('../../../gmap-vue/package.json');
+const gmpaVuePackage = require("../../../v2/package.json");
 
 module.exports = {
   base: "/gmap-vue/",
@@ -57,7 +57,7 @@ module.exports = {
               path: "/guide/map-element-factory",
               children: [
                 ["map-element-factory", "mapElement factory"],
-                ["promise-lazy-factory", "promiseLazy factory"]
+                ["promise-lazy-factory", "promiseLazy factory"],
               ],
             },
           ],
@@ -77,9 +77,7 @@ module.exports = {
               title: "License",
               collapsable: false,
               path: "/developers/license",
-              children: [
-                ["license", "License"],
-              ],
+              children: [["license", "License"]],
             },
           ],
         },
