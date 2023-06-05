@@ -60,19 +60,19 @@ jobs:
           name: "${{ secrets.GH_USER }}"
           email: "${{ secrets.GH_EMAIL }}"
           actor: "${{ secrets.GH_FULL_NAME }}"
-          token: "${{ secrets.GITHUB_TOKEN }}"
+          token: "${{ secrets.GH_TOKEN_REPO }}"
       - name: Update origin push URI
         run: |
-          git remote set-url origin "https://${{ secrets.GH_TOKEN_LERNA }}@github.com/${{ secrets.GH_USER }}/${{ secrets.GH_REPOSITORY }}.git" > /dev/null 2>&1
+          git remote set-url origin "https://${{ secrets.GH_TOKEN_REPO }}@github.com/${{ secrets.GH_USER }}/${{ secrets.GH_REPOSITORY }}.git" > /dev/null 2>&1
           git checkout master
       - name: Semantic Release
         working-directory: ./packages/v3
         run: pnpm run release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN_REPO }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Publish new version to npm
         uses: JS-DevTools/npm-publish@v2
         with:
-          token: ${{ secrets.NPM_AUTH_TOKEN }}
+          token: ${{ secrets.NPM_TOKEN }}
           package: ./packages/v3/package.json
