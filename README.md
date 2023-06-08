@@ -5,6 +5,26 @@
 
 A plugin for Vue that help you to manage Google Maps API on your Vue app.
 
+## Install
+
+### PNPM
+
+```sh
+pnpm add @gmap-vue/v3
+```
+
+### NPM
+
+```sh
+npm install @gmap-vue/v3
+```
+
+### Yarn
+
+```sh
+yarn add @gmap-vue/v3
+```
+
 ## Plugin dependencies
 
 |Name|Version|
