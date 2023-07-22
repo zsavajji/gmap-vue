@@ -1,3 +1,11 @@
+## [1.0.2](https://github.com/diegoazh/gmap-vue/compare/gmv3_v1.0.1...gmv3_v1.0.2) (2023-07-22)
+
+
+### Bug Fixes
+
+* **docs:** update path on import to the new structure ([3a0a0ad](https://github.com/diegoazh/gmap-vue/commit/3a0a0adf0870c5fc0d2e20ffabaa0bdb659198a7))
+* **v3:** fix visibility issue excluding only null and undefined values from props ([159b048](https://github.com/diegoazh/gmap-vue/commit/159b04878c2a285f4cbf3ee259350da369b0cb73))
+
 # [1.0.1](https://github.com/diegoazh/gmap-vue/compare/gmv3_v1.0.0...gmv3_v1.0.1) (2023-06-04)
 
 
