@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/diegoazh/gmap-vue/compare/gmv3_v1.0.2...gmv3_v1.0.3) (2023-07-23)
+
+
+### Bug Fixes
+
+* **v3:** fix reactivity problems with google maps objects ([#303](https://github.com/diegoazh/gmap-vue/issues/303)) ([0ef42e7](https://github.com/diegoazh/gmap-vue/commit/0ef42e7d04e522cc5ef72d8264fea15c5f273346)), closes [#301](https://github.com/diegoazh/gmap-vue/issues/301)
+
 ## [1.0.2](https://github.com/diegoazh/gmap-vue/compare/gmv3_v1.0.1...gmv3_v1.0.2) (2023-07-22)
 
 
