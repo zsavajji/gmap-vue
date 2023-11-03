@@ -247,8 +247,6 @@ export default {
     },
     clearSelection() {
       if (this.selectedShape) {
-        this.selectedShape.overlay.set('fillColor', '#777');
-        this.selectedShape.overlay.set('strokeColor', '#999');
         this.selectedShape.overlay.setEditable(false);
         this.selectedShape.overlay.setDraggable(false);
         this.selectedShape = null;
@@ -259,8 +257,6 @@ export default {
       this.selectedShape = shape;
       shape.overlay.setEditable(true);
       shape.overlay.setDraggable(true);
-      this.selectedShape.overlay.set('fillColor', '#555');
-      this.selectedShape.overlay.set('strokeColor', '#777');
     },
     /**
      * The deleteSelection method is binded into the default component slot
